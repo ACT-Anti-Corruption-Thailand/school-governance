@@ -25,7 +25,8 @@
 	<div>
 		<a href="/">Home</a>
 		<a href="/search">Search</a>
-		<a href="/school">School</a>
+		<a href="/school/1">School 1</a>
+		<a href="/school/2">School 2</a>
 	</div>
 </nav>
 <main>
