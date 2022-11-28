@@ -13,21 +13,19 @@
 </script>
 
 <Firebase />
-<nav>
-	<div>
-		{#if $currentUser}
-			Current User is {$currentUser.uid}&emsp;
-			<button type="button" on:click={logout}>LOGOUT</button>
-		{:else}
-			<button type="button" on:click={login}>LOGIN :D</button>
-		{/if}
-	</div>
-	<div>
-		<a href="/">Home</a>
-		<a href="/search">Search</a>
-		<a href="/school/1">School 1</a>
-		<a href="/school/2">School 2</a>
-	</div>
+<div>
+	{#if $currentUser}
+		Current User is {$currentUser.uid}&emsp;
+		<button type="button" on:click={logout}>LOGOUT</button>
+	{:else}
+		<button type="button" on:click={login}>LOGIN :D</button>
+	{/if}
+</div>
+<nav style="position:sticky;top:0">
+	<a href="/">Home</a>
+	<a href="/search">Search</a>
+	<a href="/school/1">School 1</a>
+	<a href="/school/2">School 2</a>
 </nav>
 <main>
 	<slot />
