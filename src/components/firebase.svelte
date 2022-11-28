@@ -2,7 +2,7 @@
 	import { initializeApp } from 'firebase/app';
 	import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
-	import { app, auth, currentUser } from '../stores/firebaseapp';
+	import { app, auth, currentUser } from 'stores/firebaseapp';
 
 	const firebaseConfig = {
 		apiKey: 'AIzaSyDeazuYKUizHGDa4iCZCWBYDzAv1NCJb50',

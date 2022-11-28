@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentUser } from '../../../../stores/firebaseapp';
+	import { currentUser } from 'stores/firebaseapp';
 </script>
 
 <h1>School Comments</h1>
