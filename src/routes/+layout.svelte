@@ -3,10 +3,12 @@
 
 	import Firebase from 'components/firebase.svelte';
 	import MainNav from 'components/Navbar.svelte';
+	import CookieConsent from 'components/CookieConsent.svelte';
 </script>
 
 <Firebase />
 <MainNav />
+<CookieConsent />
 <main id="#main">
 	<slot />
 	<section style="background:azure;height:100vh" />
