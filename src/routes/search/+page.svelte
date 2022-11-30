@@ -28,7 +28,9 @@
 	<li>
 		<a href="/school/1010720003">ราชวินิต (ทดสอบ)</a>
 	</li>
-	{#each result as { schoolId, nameTh } (schoolId)}
-		<li><a href="/school/{schoolId}">โรงเรียน{nameTh}</a></li>
-	{/each}
+	{#if Array.isArray(result)}
+		{#each result as { schoolId, nameTh } (schoolId)}
+			<li><a href="/school/{schoolId}">โรงเรียน{nameTh}</a></li>
+		{/each}
+	{/if}
 </ul>
