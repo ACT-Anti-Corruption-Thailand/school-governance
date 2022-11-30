@@ -2,7 +2,7 @@
 	import 'styles/main.scss';
 
 	import Firebase from 'components/firebase.svelte';
-	import MainNav from 'components/navbar/MainNav.svelte';
+	import MainNav from 'components/Navbar.svelte';
 </script>
 
 <Firebase />
