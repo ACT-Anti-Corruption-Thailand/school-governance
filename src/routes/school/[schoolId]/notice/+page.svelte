@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { PUBLIC_NOCO_AUTH_KEY } from '$env/static/public';
+	import SchoolHeader from 'components/SchoolHeader.svelte';
 
 	$: pageData = $page.params.schoolId;
 
@@ -22,5 +23,5 @@
 	});
 </script>
 
-<h1>School Notice</h1>
-<pre><code>{JSON.stringify(data, null, 2)}</code></pre>
+<SchoolHeader pageData={{ name: 'ประกาศ', color: '#FC5858' }} />
+<pre><code>{data ? JSON.stringify(data, null, 2) : ''}</code></pre>

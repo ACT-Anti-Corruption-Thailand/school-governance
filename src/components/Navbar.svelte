@@ -3,13 +3,14 @@
 	import { scroll } from 'motion';
 	import { signInAnonymously, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 	import { auth, currentUser } from 'stores/firebaseapp';
+	import { navbar_show } from 'stores/navbar';
 
 	import { page } from '$app/stores';
 	let PAGE_BASE = $page.route.id?.split('/')[1];
 
 	let show_when: 'not_top' | 'always' | 'scroll_up' =
 		PAGE_BASE === '' ? 'not_top' : PAGE_BASE === 'search' ? 'always' : 'scroll_up';
-	let show = show_when !== 'not_top';
+	$navbar_show = show_when !== 'not_top';
 
 	let show_menu = false;
 
@@ -28,13 +29,13 @@
 	onMount(() => {
 		scroll(({ y }) => {
 			if (show_when === 'not_top') {
-				if (y.progress !== 0 && show === false) return (show = true);
-				if (y.progress === 0 && show === true) return (show = show_menu = false);
+				if (y.progress !== 0 && $navbar_show === false) return ($navbar_show = true);
+				if (y.progress === 0 && $navbar_show === true) return ($navbar_show = show_menu = false);
 				return;
 			}
 			if (show_when === 'scroll_up') {
-				if (y.velocity < 0 && show === false) return (show = true);
-				if (y.velocity > 0 && show === true) return (show = show_menu = false);
+				if (y.velocity < 0 && $navbar_show === false) return ($navbar_show = true);
+				if (y.velocity > 0 && $navbar_show === true) return ($navbar_show = show_menu = false);
 				return;
 			}
 		});
@@ -43,11 +44,11 @@
 	$: {
 		PAGE_BASE = $page.route.id?.split('/')[1];
 		show_when = PAGE_BASE === '' ? 'not_top' : PAGE_BASE === 'search' ? 'always' : 'scroll_up';
-		show = show_when !== 'not_top';
+		$navbar_show = show_when !== 'not_top';
 	}
 </script>
 
-<nav class="f main-nav" class:show>
+<nav class="f main-nav" class:show={$navbar_show}>
 	<a href="#main" class="skip-link">Skip to main content</a>
 	{#if PAGE_BASE === 'search'}
 		<div class="nav-left">
