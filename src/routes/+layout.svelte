@@ -9,5 +9,5 @@
 <MainNav />
 <main id="#main">
 	<slot />
-	<section style="background:red;height:100vh" />
+	<section style="background:azure;height:100vh" />
 </main>
