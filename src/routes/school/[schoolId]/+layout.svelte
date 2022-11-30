@@ -1,13 +1,22 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	$: pageData = $page.params.schoolId;
+	import { currentSchool, currentSchoolId } from 'stores/school';
+
+	const updateData = (schoolId: number) => {
+		$currentSchoolId = schoolId;
+		fetch(`/data/schools/${$page.params.schoolId}.json`)
+			.then((resp) => resp.json())
+			.then((data) => ($currentSchool = data));
+	};
+
+	$: if ($currentSchoolId !== +$page.params.schoolId) updateData(+$page.params.schoolId);
 	$: PAGE_BASE = $page.route.id?.split('/')[3] ?? '';
 </script>
 
 <slot />
 <nav class="f school-nav" aria-label="School Navigation">
-	<a class="f nav-menu" class:active={PAGE_BASE === ''} href="/school/{pageData}/">
+	<a class="f nav-menu" class:active={PAGE_BASE === ''} href="/school/{$currentSchoolId}/">
 		<svg class="home-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"
 			><path
 				stroke="currentColor"
@@ -27,7 +36,7 @@
 		>
 		<span>โรงเรียน</span>
 	</a>
-	<a class="f nav-menu" class:active={PAGE_BASE === 'data'} href="/school/{pageData}/data">
+	<a class="f nav-menu" class:active={PAGE_BASE === 'data'} href="/school/{$currentSchoolId}/data">
 		<svg class="data-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"
 			><path
 				stroke="currentColor"
@@ -38,7 +47,11 @@
 		>
 		<span>ข้อมูล</span>
 	</a>
-	<a class="f nav-menu" class:active={PAGE_BASE === 'rating'} href="/school/{pageData}/rating">
+	<a
+		class="f nav-menu"
+		class:active={PAGE_BASE === 'rating'}
+		href="/school/{$currentSchoolId}/rating"
+	>
 		<svg class="rating-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"
 			><path
 				stroke="currentColor"
@@ -50,7 +63,11 @@
 		>
 		<span>คะแนน</span>
 	</a>
-	<a class="f nav-menu" class:active={PAGE_BASE === 'comments'} href="/school/{pageData}/comments">
+	<a
+		class="f nav-menu"
+		class:active={PAGE_BASE === 'comments'}
+		href="/school/{$currentSchoolId}/comments"
+	>
 		<svg class="comments-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"
 			><path
 				stroke="currentColor"
@@ -62,7 +79,11 @@
 		>
 		<span>ความเห็น</span>
 	</a>
-	<a class="f nav-menu" class:active={PAGE_BASE === 'notice'} href="/school/{pageData}/notice">
+	<a
+		class="f nav-menu"
+		class:active={PAGE_BASE === 'notice'}
+		href="/school/{$currentSchoolId}/notice"
+	>
 		<svg class="notice-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"
 			><path
 				stroke="currentColor"
