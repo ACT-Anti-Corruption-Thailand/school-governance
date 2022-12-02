@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { navbar_show } from 'stores/navbar';
 
 	import { currentSchool, currentSchoolId } from 'stores/school';
 
@@ -19,7 +18,7 @@
 	$: if ($currentSchoolId !== +$page.params.schoolId) updateData(+$page.params.schoolId);
 </script>
 
-<header class="f school-header" class:navbar-shown={$navbar_show}>
+<header class="f school-header">
 	<hgroup>
 		<h1>โรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'}</h1>
 		{#if pageData}
@@ -65,17 +64,10 @@
 		padding: 12px 16px;
 
 		position: sticky;
-		top: 0;
+		top: var(--navbar-height);
 		transition: top 0.3s;
 		will-change: top;
-
-		&.navbar-shown {
-			top: 48px;
-
-			@media screen and (min-width: 992px) {
-				top: 72px;
-			}
-		}
+		z-index: 10;
 
 		> hgroup {
 			color: #3c55ab;

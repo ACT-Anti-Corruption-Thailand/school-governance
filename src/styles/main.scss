@@ -1,5 +1,16 @@
+@import 'reseter';
+
 html {
 	scroll-behavior: smooth;
+	--navbar-height: 0;
+}
+
+.navbar-shown {
+	--navbar-height: 48px;
+
+	@media screen and (min-width: 992px) {
+		--navbar-height: 72px;
+	}
 }
 
 body {

@@ -11,5 +11,4 @@
 <CookieConsent />
 <main id="#main">
 	<slot />
-	<section style="background:azure;height:100vh" />
 </main>
