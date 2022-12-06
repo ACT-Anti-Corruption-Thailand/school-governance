@@ -4,6 +4,7 @@
 	import Firebase from 'components/Firebase.svelte';
 	import MainNav from 'components/Navbar.svelte';
 	import CookieConsent from 'components/CookieConsent.svelte';
+	import GoTop from 'components/GoTop.svelte';
 </script>
 
 <Firebase />
@@ -12,3 +13,4 @@
 <main id="#main">
 	<slot />
 </main>
+<GoTop />
