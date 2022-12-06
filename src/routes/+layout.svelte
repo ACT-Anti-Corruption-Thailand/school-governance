@@ -9,7 +9,7 @@
 
 <Firebase />
 <MainNav />
-<CookieConsent />
+<!-- <CookieConsent /> -->
 <main id="#main">
 	<slot />
 </main>
