@@ -784,7 +784,6 @@
 
 		h3 {
 			font-family: 'Mitr';
-			font-style: normal;
 			font-weight: 500;
 			font-size: 1rem;
 			line-height: 125%;
@@ -809,7 +808,6 @@
 			> .card {
 				h4 {
 					font-family: 'Mitr';
-					font-style: normal;
 					font-weight: 500;
 					font-size: 1rem;
 					line-height: 125%;
@@ -838,7 +836,6 @@
 
 		h2 {
 			font-family: 'Mitr';
-			font-style: normal;
 			font-weight: 500;
 			font-size: 1.25rem;
 			line-height: 125%;
@@ -875,7 +872,6 @@
 
 				h3 {
 					font-family: 'Mitr';
-					font-style: normal;
 					font-weight: 500;
 					font-size: 1rem;
 					line-height: 125%;
