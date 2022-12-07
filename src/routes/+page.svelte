@@ -286,7 +286,7 @@
 		เพื่อหวังจะเห็นความเปลี่ยนแปลง
 	</p>
 	<figure>
-		<img src="/index/balloon.svg" alt="" />
+		<img class="balloon-img" src="/index/balloon.svg" alt="" />
 		<figcaption>
 			ที่มา: <a href="https://www.thaipbs.or.th/news/content/315668"
 				>https://www.thaipbs.or.th/news/content/315668</a
@@ -302,12 +302,12 @@
 		ซึ่งไม่ได้มาจากแค่นักเรียนอย่างพวกเราเพียงฝ่ายเดียว แต่ผู้อำนวยการ คุณครู บุคลากร ฯลฯ ก็เป็นกำลังสำคัญในการร่วมรับรู้ข้อมูลของโรงเรียน
 		ก่อนนำไปสู่การแลกเปลี่ยน แสดงความคิดเห็นและแก้ปัญหาเพื่อพัฒนาโรงเรียนไปพร้อมกับพวกเราด้วย
 	</p>
-	<img src="/index/contribute.svg" alt="" />
+	<img class="contribute-img" src="/index/contribute.svg" alt="" />
 </section>
 
 <section class="origin">
-	<p>นี่คือที่มาของ</p>
-	<img class="header-logo" src="/logo.svg" alt="" width="224" height="83" />
+	<p class="origin-title">นี่คือที่มาของ</p>
+	<img class="origin-logo" src="/logo.svg" alt="" width="224" height="83" />
 	<p>
 		เครื่องมือที่จะแสดง <a href="https://data.bopp-obec.info/emis/index.php">ฐานข้อมูลโรงเรียน</a>
 		ซึ่งรวบรวมโดยสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน (สพฐ.) เพื่อช่วยให้ทุกคนสามารถตรวจสอบข้อมูลสำคัญต่าง
@@ -359,7 +359,7 @@
 			ยังต้องมีพื้นที่ สำหรับตรวจสอบ รายงาน ไปจนถึงสามารถ แลกเปลี่ยนความคิดเห็นร่วมกันได้
 		</strong>
 	</p>
-	<img src="/index/openjoinlearn.svg" alt="" />
+	<img class="openjoinlearn-img" src="/index/openjoinlearn.svg" alt="" />
 	<p>
 		การสร้างพื้นที่ปลอดภัยให้ทุกคนมีส่วนร่วมจึงสำคัญมาก ไม่เพียงเพื่อให้โรงเรียนก้าวไปข้างหน้าได้
 		<strong>แต่เพื่อส่งเสริมให้เกิดบรรยากาศของการบริหารจัดการที่โปร่งใส</strong> และเราในฐานะนักเรียนก็จะได้
@@ -443,7 +443,7 @@
 		<strong>#schoolgovernanceTH</strong>
 	</p>
 	<div class="f social-links">
-		<a href="">
+		<a href="http://www.facebook.com/sharer/sharer.php?u=https://wevis.info">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -457,7 +457,7 @@
 				/></svg
 			>
 		</a>
-		<a href="">
+		<a href="https://twitter.com/intent/tweet?url=https://wevis.info">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -471,7 +471,7 @@
 				/></svg
 			>
 		</a>
-		<a href="">
+		<a href="https://social-plugins.line.me/lineit/share?url=https://wevis.info">
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"
@@ -523,6 +523,17 @@
 </footer>
 
 <style lang="scss">
+	.header,
+	.school-list-container,
+	.information,
+	.origin,
+	.open-join-learn,
+	.feature,
+	.ending,
+	.footer {
+		font-size: 0.8125rem;
+	}
+
 	.header {
 		background: #3c55ab;
 		border-radius: 0px 0px 24px 24px;
@@ -544,21 +555,20 @@
 
 	.header-detail {
 		gap: 24px;
+		align-items: flex-start;
 	}
 
 	.header-detail-col {
 		flex-direction: column;
 		gap: 8px;
+		flex: 1 1 0;
 
 		> span {
 			display: block;
 
 			font-family: 'Mitr';
 			font-weight: 500;
-			font-size: 0.8125rem;
 			line-height: 125%;
-
-			// text-align: center;
 			letter-spacing: 0.02em;
 		}
 	}
@@ -575,9 +585,7 @@
 		padding: 0 16px;
 		gap: 8px;
 
-		font-size: 0.8125rem;
 		line-height: 136%;
-
 		color: #3c55ab;
 		text-decoration: none;
 	}
@@ -615,6 +623,8 @@
 			font-size: 0.8125rem;
 			line-height: 136%;
 			color: #3da4df;
+
+			cursor: pointer;
 		}
 
 		&:checked + .radio-pill {
@@ -654,9 +664,8 @@
 				font-family: 'Mitr';
 				font-weight: 500;
 				font-size: 0.8125rem;
-				line-height: 125%;
+				line-height: 16px;
 				text-align: center;
-
 				letter-spacing: 0.02em;
 				color: #fff;
 			}
@@ -664,10 +673,8 @@
 			.school-list-title {
 				font-family: 'Mitr';
 				font-weight: 700;
-				font-size: 0.8125rem;
-				line-height: 125%;
+				line-height: 1.25;
 				letter-spacing: 0.02em;
-
 				color: #3c55ab;
 
 				margin-bottom: 4px;
@@ -732,6 +739,7 @@
 		.info-title2 {
 			font-size: 1rem;
 			margin: 24px 0;
+			font-weight: 500;
 		}
 
 		.info-title3 {
@@ -741,7 +749,6 @@
 		}
 
 		p {
-			font-size: 0.8125rem;
 			line-height: 136%;
 			margin-bottom: 24px;
 		}
@@ -763,8 +770,11 @@
 		color: #fff;
 		text-align: center;
 
+		.origin-logo {
+			margin: 16px 0;
+		}
+
 		p {
-			font-size: 0.8125rem;
 			line-height: 136%;
 		}
 
@@ -812,7 +822,6 @@
 				border-radius: 5px;
 				padding: 12px 16px;
 				color: #3c55ab;
-				font-size: 13px;
 				line-height: 136%;
 				flex: 1 1 0;
 			}
@@ -861,7 +870,6 @@
 				background: rgba(255, 255, 255, 0.1);
 				border-radius: 5px;
 				padding: 16px;
-				font-size: 0.8125rem;
 				line-height: 136%;
 				flex: 1 1 0;
 
@@ -916,7 +924,6 @@
 		border-radius: 24px 24px 0px 0px;
 		color: #fff;
 		text-align: center;
-		font-size: 0.8125rem;
 		line-height: 136%;
 
 		gap: 16px;
@@ -940,14 +947,135 @@
 		.ending,
 		.footer {
 			padding-inline: 25%;
+			font-size: 1rem;
 		}
 
 		.hide-desktop {
 			display: none;
 		}
 
-		.information > h2 {
+		.header {
+			p {
+				font-size: 1.25rem;
+			}
+
+			.header-detail {
+				gap: 32px;
+
+				.header-detail-col {
+					img {
+						width: 64px;
+						height: 64px;
+					}
+				}
+			}
+		}
+
+		.search-box {
+			padding: 16px;
+			height: 56px;
+			margin-bottom: -28px;
+		}
+
+		.school-list-container {
+			padding-block: 40px;
+
+			.school-list-header {
+				font-size: 1rem;
+			}
+
+			.school-list > article {
+				gap: 16px;
+
+				&::before {
+					width: 24px;
+					height: 24px;
+					flex: 0 0 24px;
+					line-height: 24px;
+					font-size: 1rem;
+				}
+
+				.school-list-date {
+					font-size: 0.8125rem;
+				}
+			}
+		}
+
+		.information {
+			> h2 {
+				gap: 32px;
+
+				> span {
+					font-size: 1.25rem;
+				}
+			}
+
+			.info-title1 {
+				font-size: 1.5625rem;
+			}
+
+			.info-title2 {
+				font-size: 1.25rem;
+			}
+
+			.info-title3 {
+				font-size: 1.9375rem;
+			}
+
+			figcaption,
+			figcaption > a {
+				font-size: 0.8125rem;
+			}
+		}
+
+		.origin {
+			.origin-title {
+				font-size: 1.25rem;
+			}
+
+			h3 {
+				font-size: 1.25rem;
+			}
+
+			.data-cards {
+				> .card {
+					h4 {
+						font-size: 1.25rem;
+					}
+				}
+			}
+		}
+
+		.open-join-learn {
 			gap: 32px;
+
+			h2 {
+				font-size: 1.5625rem;
+			}
+		}
+
+		.feature {
+			padding: 40px 25% 0;
+			margin-bottom: 28px;
+
+			.feature-card-container .feature-card h3 {
+				margin-bottom: 16px;
+			}
+		}
+
+		.ending {
+			font-size: 1.25rem;
+		}
+
+		.balloon-img,
+		.contribute-img {
+			width: 480px;
+			height: auto;
+		}
+
+		.openjoinlearn-img {
+			width: 350px;
+			height: auto;
 		}
 	}
 </style>
