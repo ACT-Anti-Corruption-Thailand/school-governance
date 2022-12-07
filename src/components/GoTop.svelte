@@ -2,16 +2,26 @@
 	import { scroll } from 'motion';
 	import { onMount } from 'svelte';
 
+	let goTop = () => {};
+
 	let show = false;
 	onMount(() => {
 		scroll(({ y }) => {
 			if (y.current > y.containerLength && !show) return (show = true);
 			if (y.current < y.containerLength && show) return (show = false);
 		});
+
+		goTop = () => {
+			window.scrollTo({
+				top: 0,
+				left: 0,
+				behavior: 'smooth'
+			});
+		};
 	});
 </script>
 
-<button class="gotop" type="button" class:show aria-label="กลับด้านบน">
+<button class="gotop" type="button" class:show aria-label="กลับด้านบน" on:click={goTop}>
 	<svg width="14" height="8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8"
 		><path
 			stroke="#fff"
