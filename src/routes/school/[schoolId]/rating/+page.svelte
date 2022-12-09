@@ -14,7 +14,7 @@
 </script>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
-	<Dropdown options={DROPDOWN_DATA} bind:selectedOption={dropdown_choice} />
+	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
 <p>
 	Lorem ipsum dolor, sit amet consectetur adipisicing elit. Explicabo corporis, ratione, amet

@@ -3,6 +3,7 @@
 	import { scroll } from 'motion';
 	import { signInAnonymously, signInWithPopup, GoogleAuthProvider, signOut } from 'firebase/auth';
 	import { auth, currentUser } from 'stores/firebaseapp';
+	import { show_search, search_string } from 'stores/search';
 
 	import { page } from '$app/stores';
 	let PAGE_BASE = $page.route.id?.split('/')[1];
@@ -12,7 +13,6 @@
 	let show = show_when !== 'not_top';
 
 	let show_menu = false;
-	let show_search = false;
 
 	const ggProvider = new GoogleAuthProvider();
 	const login = () => {
@@ -54,11 +54,11 @@
 	}
 </script>
 
-<nav class="f main-nav" class:show class:show_search>
+<nav class="f main-nav" class:show class:show_search={$show_search}>
 	<a href="#main" class="skip-link">Skip to main content</a>
 	{#if PAGE_BASE === 'search'}
 		<div class="nav-left">
-			<button class="f jcc nav-btn" type="button" on:click={() => (show_search = !show_search)}>
+			<button class="f jcc nav-btn" type="button" on:click={() => ($show_search = true)}>
 				<img src="/icons/nav-search.svg" alt="ค้นหา" width="32" height="32" />
 			</button>
 		</div>
@@ -79,9 +79,20 @@
 					d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35"
 				/></svg
 			>
-			<input type="text" placeholder="พิมพ์ชื่อโรงเรียนหรือจังหวัดที่คุณอยากค้นหา" />
+			<input
+				type="text"
+				placeholder="พิมพ์ชื่อโรงเรียนหรือจังหวัดที่คุณอยากค้นหา"
+				bind:value={$search_string}
+			/>
 		</label>
-		<button class="f" type="button" on:click={() => (show_search = !show_search)}>
+		<button
+			class="f"
+			type="button"
+			on:click={() => {
+				$show_search = false;
+				$search_string = '';
+			}}
+		>
 			<svg
 				xmlns="http://www.w3.org/2000/svg"
 				fill="none"

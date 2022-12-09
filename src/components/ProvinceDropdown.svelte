@@ -5,18 +5,18 @@
 		ListboxOptions,
 		ListboxOption
 	} from '@rgossiaux/svelte-headlessui';
-	import { PROVINCES } from 'data/provinces';
 
-	export let selectedOption = PROVINCES[1];
+	export let options: string[];
+	export let selected_option = options[0];
 </script>
 
 <Listbox
 	class="dropdown-root"
-	value={selectedOption}
-	on:change={(e) => (selectedOption = e.detail)}
+	value={selected_option}
+	on:change={(e) => (selected_option = e.detail)}
 >
 	<ListboxButton class="f dropdown-button">
-		<span>{selectedOption}</span>
+		<span>{selected_option}</span>
 		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24"
 			><path
 				stroke="#3C55AB"
@@ -28,7 +28,7 @@
 		>
 	</ListboxButton>
 	<ListboxOptions class="dropdown-list">
-		{#each PROVINCES as option (option)}
+		{#each options as option (option)}
 			<ListboxOption value={option} class={({ active }) => (active ? 'active' : '')}>
 				{option}
 			</ListboxOption>

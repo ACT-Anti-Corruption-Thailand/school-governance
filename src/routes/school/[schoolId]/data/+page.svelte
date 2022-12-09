@@ -15,7 +15,7 @@
 </script>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
-	<Dropdown options={DROPDOWN_DATA} bind:selectedOption={dropdown_choice} />
+	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
 {#if $currentSchool}
 	<div class="overflow">

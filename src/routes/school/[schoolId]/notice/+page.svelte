@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { PUBLIC_NOCO_AUTH_KEY } from '$env/static/public';
+	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
 
 	import SchoolHeader from 'components/SchoolHeader.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
@@ -32,7 +32,7 @@
 			{
 				method: 'GET',
 				headers: {
-					'xc-auth': PUBLIC_NOCO_AUTH_KEY
+					'xc-token': PUBLIC_NOCO_TOKEN_KEY
 				}
 			}
 		)
@@ -43,6 +43,6 @@
 </script>
 
 <SchoolHeader pageData={{ name: 'ประกาศ', color: '#FC5858' }}>
-	<Dropdown options={DROPDOWN_DATA} bind:selectedOption={dropdown_choice} />
+	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
 <pre><code>{data ? JSON.stringify(data, null, 2) : ''}</code></pre>

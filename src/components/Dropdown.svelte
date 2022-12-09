@@ -10,16 +10,16 @@
 		value: string;
 		label?: string;
 	}[];
-	export let selectedOption = options[0];
+	export let selected_option = options[0];
 </script>
 
 <Listbox
 	class="dropdown-root"
-	value={selectedOption}
-	on:change={(e) => (selectedOption = e.detail)}
+	value={selected_option}
+	on:change={(e) => (selected_option = e.detail)}
 >
 	<ListboxButton class="dropdown-button">
-		<span>{selectedOption.label ?? selectedOption.value}</span>
+		<span>{selected_option.label ?? selected_option.value}</span>
 		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24"
 			><path
 				stroke="#3C55AB"
