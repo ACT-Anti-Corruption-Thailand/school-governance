@@ -12,6 +12,7 @@
 	let show = show_when !== 'not_top';
 
 	let show_menu = false;
+	let show_search = false;
 
 	const ggProvider = new GoogleAuthProvider();
 	const login = () => {
@@ -53,11 +54,11 @@
 	}
 </script>
 
-<nav class="f main-nav" class:show>
+<nav class="f main-nav" class:show class:show_search>
 	<a href="#main" class="skip-link">Skip to main content</a>
 	{#if PAGE_BASE === 'search'}
 		<div class="nav-left">
-			<button class="f jcc nav-btn" type="button" on:click={() => (show_menu = !show_menu)}>
+			<button class="f jcc nav-btn" type="button" on:click={() => (show_search = !show_search)}>
 				<img src="/icons/nav-search.svg" alt="ค้นหา" width="32" height="32" />
 			</button>
 		</div>
@@ -66,6 +67,37 @@
 		<a href="/" on:click={() => (show_menu = false)}>
 			<img src="/logo.svg" alt="" width="108" height="40" />
 		</a>
+	</div>
+	<div class="nav-right nav-search">
+		<label class="f">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24"
+				><path
+					stroke="#9DAAD5"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35"
+				/></svg
+			>
+			<input type="text" placeholder="พิมพ์ชื่อโรงเรียนหรือจังหวัดที่คุณอยากค้นหา" />
+		</label>
+		<button class="f" type="button" on:click={() => (show_search = !show_search)}>
+			<svg
+				xmlns="http://www.w3.org/2000/svg"
+				fill="none"
+				viewBox="0 0 20 20"
+				width="20"
+				height="20"
+				aria-label="ปิด"
+				><path
+					stroke="#3C55AB"
+					stroke-linecap="round"
+					stroke-linejoin="round"
+					stroke-width="2"
+					d="M14.667 5.333l-9.334 9.334M5.333 5.333l9.334 9.334"
+				/></svg
+			>
+		</button>
 	</div>
 	<div class="f nav-right">
 		{#if $currentUser}
@@ -143,6 +175,52 @@
 		> .nav-right {
 			margin-left: auto;
 			gap: 8px;
+		}
+
+		> .nav-search {
+			display: none;
+		}
+
+		&.show_search {
+			> :not(.nav-search) {
+				display: none;
+			}
+
+			> .nav-search {
+				display: flex;
+				align-items: center;
+
+				background: #fff;
+				box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+				border-radius: 30px;
+
+				width: 100%;
+				height: 40px;
+
+				padding: 0 16px;
+
+				> label {
+					gap: 8px;
+					flex: 1 1 0;
+
+					> input {
+						flex: 1 1 0;
+
+						border: none;
+						padding: 0;
+						outline: none;
+
+						height: 40px;
+						font-size: 0.8125rem;
+						font-family: inherit;
+						color: #3c55ab;
+
+						&::placeholder {
+							color: #9daad5;
+						}
+					}
+				}
+			}
 		}
 	}
 

@@ -7,7 +7,7 @@
 	} from '@rgossiaux/svelte-headlessui';
 	import { PROVINCES } from 'data/provinces';
 
-	export let selectedOption = PROVINCES[0];
+	export let selectedOption = PROVINCES[1];
 </script>
 
 <Listbox
