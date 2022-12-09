@@ -13,6 +13,10 @@ html {
 	}
 }
 
+* {
+	overscroll-behavior: none;
+}
+
 body {
 	font-family: 'IBM Plex Sans Thai Looped', ui-sans-serif, system-ui, -apple-system,
 		BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans',

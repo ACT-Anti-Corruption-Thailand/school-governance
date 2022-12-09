@@ -5,16 +5,20 @@
 		ListboxOptions,
 		ListboxOption
 	} from '@rgossiaux/svelte-headlessui';
+	import { createEventDispatcher } from 'svelte';
 
 	export let options: string[];
 	export let selected_option = options[0];
+
+	const dispatch = createEventDispatcher();
+
+	const setOption = (option: string) => {
+		selected_option = option;
+		dispatch('change', option);
+	};
 </script>
 
-<Listbox
-	class="dropdown-root"
-	value={selected_option}
-	on:change={(e) => (selected_option = e.detail)}
->
+<Listbox class="dropdown-root" value={selected_option} on:change={(e) => setOption(e.detail)}>
 	<ListboxButton class="f dropdown-button">
 		<span>{selected_option}</span>
 		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24"

@@ -128,6 +128,22 @@
 					line-height: 136%;
 					color: #b1b2b3;
 				}
+
+				@media screen and (min-width: 992px) {
+					gap: 16px;
+
+					&::before {
+						width: 24px;
+						height: 24px;
+						flex: 0 0 24px;
+						line-height: 24px;
+						font-size: 1rem;
+					}
+
+					.school-list-date {
+						font-size: 0.8125rem;
+					}
+				}
 			}
 
 			&:last-of-type > a {
