@@ -442,11 +442,11 @@
 		padding: 0 16px 48px;
 
 		> h2 {
-			font-family: 'IBM Plex Sans Thai Looped';
-			font-size: 1rem;
-			font-weight: 400;
-			line-height: 136%;
-			color: #16338f;
+			font-family: 'Mitr';
+			font-weight: 500;
+			font-size: 20px;
+			line-height: 125%;
+			letter-spacing: 0.02em;
 			gap: 8px;
 		}
 
@@ -530,7 +530,7 @@
 			align-items: stretch;
 			margin-bottom: 24px;
 
-			@media screen and (min-width: 992px) {
+			@media screen and (min-width: 768px) {
 				flex-direction: row;
 				margin-inline: calc(-50% + 56px);
 			}
@@ -588,7 +588,7 @@
 			align-items: stretch;
 			flex-direction: column;
 
-			@media screen and (min-width: 992px) {
+			@media screen and (min-width: 768px) {
 				flex-direction: row;
 				margin-inline: calc(-50% + 56px);
 			}
@@ -663,7 +663,7 @@
 		}
 	}
 
-	@media screen and (min-width: 992px) {
+	@media screen and (min-width: 768px) {
 		.header,
 		.school-list-container,
 		.information,

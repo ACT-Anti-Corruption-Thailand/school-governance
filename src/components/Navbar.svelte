@@ -52,6 +52,8 @@
 	$: if (is_mounted) {
 		document.documentElement.classList.toggle('navbar-shown', show);
 	}
+
+	// TODO: Implement Tablet Nav
 </script>
 
 <nav class="f main-nav" class:show class:show_search={$show_search}>

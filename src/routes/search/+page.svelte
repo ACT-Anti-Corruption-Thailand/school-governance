@@ -141,6 +141,8 @@
 			console.error(e);
 		}
 	};
+
+	// TODO: Implement แบ่งเขต
 </script>
 
 <div class="search-container">
@@ -267,9 +269,7 @@
 		}
 
 		&.inline {
-			margin-top: 8px;
-			box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
-			border-radius: 8px;
+			margin: 16px -16px 0;
 		}
 
 		h2,
