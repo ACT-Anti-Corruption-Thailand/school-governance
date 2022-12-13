@@ -152,6 +152,8 @@
 		on:change={getSchoolByProvince}
 	/>
 
+	<a class="f" href="/school/1010720003"> ราชวินิต (Debug) </a>
+
 	{#if school_by_province.length}
 		<section class="search-result inline">
 			<!-- <h2 class="f">
