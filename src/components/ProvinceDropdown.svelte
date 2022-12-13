@@ -41,11 +41,11 @@
 </Listbox>
 
 <style lang="scss">
-	:global(.dropdown-root) {
+	:global(.province-dropdown-root) {
 		position: relative;
 	}
 
-	:global(.dropdown-button) {
+	:global(.province-dropdown-button) {
 		flex-direction: row;
 		justify-content: space-between;
 		padding: 0 12px 0 16px;
@@ -60,11 +60,11 @@
 		color: #3c55ab;
 	}
 
-	:global(.dropdown-button[aria-expanded='true'] > svg) {
+	:global(.province-dropdown-button[aria-expanded='true'] > svg) {
 		transform: rotate(180deg);
 	}
 
-	:global(.dropdown-list) {
+	:global(.province-dropdown-list) {
 		position: absolute;
 		top: 44px;
 		margin: 0;
@@ -86,7 +86,7 @@
 		color: #3c55ab;
 	}
 
-	:global(.dropdown-list > li) {
+	:global(.province-dropdown-list > li) {
 		padding: 0 16px;
 		height: 40px;
 		width: 100%;
@@ -99,7 +99,7 @@
 		user-select: none;
 	}
 
-	:global(.dropdown-list > li.active) {
+	:global(.province-dropdown-list > li.active) {
 		background: #ecf7f7;
 	}
 </style>
