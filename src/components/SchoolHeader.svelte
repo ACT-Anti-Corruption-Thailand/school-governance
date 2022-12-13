@@ -20,7 +20,7 @@
 
 <header class="f school-header">
 	<hgroup>
-		<h1>โรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'}</h1>
+		<h1>{$currentSchool?.name_th ?? '(ไม่พบชื่อ)'}</h1>
 		{#if pageData}
 			<h2 style="color:{pageData.color}">{pageData.name}</h2>
 		{:else if $currentSchool?.name_en}
