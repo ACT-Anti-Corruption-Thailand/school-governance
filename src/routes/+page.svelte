@@ -1,5 +1,6 @@
 <script lang="ts">
 	import SchoolList from 'components/SchoolList.svelte';
+	import ActAiBanner from 'components/ActAiBanner.svelte';
 </script>
 
 <header class="f header">
@@ -142,6 +143,11 @@
 			<h4>ข้อมูลสิ่งปลูกสร้าง</h4>
 			<p>เช็คสภาพสิ่งปลูกสร้าง จำนวนห้องเรียน ตรงกับความเป็นจริงแค่ไหน</p>
 		</div>
+	</div>
+	<div class="act-banner">
+		<ActAiBanner
+			text="โดยทุกคนยังสามารถค้นหาข้อมูลเพิ่มเติมเกี่ยวกับอุปกรณ์ในโรงเรียนและการก่อสร้างอาคารได้ที่เครื่องมือ "
+		/>
 	</div>
 	<p>
 		พร้อมเทียบข้อมูลระหว่างปีการศึกษา เมื่อมีการอัปเดตข้อมูลใหม่ และ Download ไปใช้งานต่อในรูปแบบ
@@ -528,7 +534,6 @@
 			gap: 16px;
 			flex-direction: column;
 			align-items: stretch;
-			margin-bottom: 24px;
 
 			@media screen and (min-width: 768px) {
 				flex-direction: row;
@@ -553,6 +558,11 @@
 				line-height: 136%;
 				flex: 1 1 0;
 			}
+		}
+
+		.act-banner {
+			margin: 16px auto 24px;
+			max-width: 320px;
 		}
 	}
 

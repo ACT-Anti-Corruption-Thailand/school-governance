@@ -1,9 +1,11 @@
 <script lang="ts">
 	export let margin = false;
+	export let text =
+		'ค้นหาข้อมูลเพิ่มเติมเกี่ยวกับวัสดุอุปกรณ์และการก่อสร้างอาคารของโรงเรียนได้ที่นี่';
 </script>
 
 <a href="https://actai.co/" class="f act-banner" class:margin>
-	<span> ค้นหาข้อมูลเพิ่มเติมเกี่ยวกับวัสดุอุปกรณ์และการก่อสร้างอาคารของโรงเรียนได้ที่นี่ </span>
+	<span>{text}</span>
 	<img src="/act_logo.png" alt="" width="69" height="48" />
 </a>
 
@@ -16,6 +18,7 @@
 		color: #fff;
 		text-decoration: none;
 		gap: 16px;
+		text-align: left;
 
 		&.margin {
 			margin: 16px;
