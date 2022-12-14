@@ -21,9 +21,15 @@
 <SchoolNav />
 
 <style lang="scss">
+	.school-container {
+		color: #3c55ab;
+		font-size: 0.8125rem;
+	}
+
 	@media screen and (min-width: 992px) {
 		.school-container {
 			margin-left: 64px;
+			font-size: 1rem;
 		}
 	}
 </style>

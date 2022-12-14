@@ -18,130 +18,215 @@
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
 {#if $currentSchool}
-	<h2>
-		<span>นักเรียน <small>คน</small></span>
+	<h2 class="f">
+		<span>นักเรียน <small>(คน)</small></span>
 		<span>1000</span>
 	</h2>
 	<section>
-		<div>
+		<div class="f">
 			<span>
 				เฉลี่ยนักเรียนห้องละ <small>(คน)</small>
 			</span>
-			<span>40</span>
+			<span class="mitr">40</span>
 		</div>
 		<hr />
-		<span>โรงเรียนขนาดใหญ่</span>
-		<details>
-			<summary>ICON ดูเกณฑ์การแบ่งขนาดโรงเรียน DROPICON</summary>
-			<h4>ขนาดโรงเรียนสังกัดสำนักงานเขตพื้นที่ประถมศึกษา</h4>
-			<dl>
-				<dt>เล็ก</dt>
-				<dd>มีนักเรียน 1 &ndash; 120 คน</dd>
-				<dt>กลาง</dt>
-				<dd>มีนักเรียน 121 &ndash; 600 คน</dd>
-				<dt>ใหญ่</dt>
-				<dd>มีนักเรียน 601 &ndash; 1,500 คน</dd>
-				<dt>ใหญ่พิเศษ</dt>
-				<dd>มีนักเรียน 1,501 คนขึ้นไป</dd>
-			</dl>
-			<h4>ขนาดโรงเรียนสังกัดสำนักงานเขตพื้นที่มัธยมศึกษา</h4>
-			<dl>
-				<dt>เล็ก</dt>
-				<dd>มีนักเรียน 1 &ndash; 499 คน</dd>
-				<dt>กลาง</dt>
-				<dd>มีนักเรียน 500 &ndash; 1,499 คน</dd>
-				<dt>ใหญ่</dt>
-				<dd>มีนักเรียน 1,500 &ndash; 2,499 คน</dd>
-				<dt>ใหญ่พิเศษ</dt>
-				<dd>มีนักเรียน 2,500 คนขึ้นไป</dd>
-			</dl>
+		<span class="mitr">โรงเรียนขนาดใหญ่</span>
+		<details class="school-size-detail">
+			<summary>
+				<span class="f">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 16 16"
+						width="16"
+						height="16"
+						><g
+							stroke="#3C55AB"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1.5"
+							clip-path="url(#a)"
+							><path
+								d="M8 14.667A6.667 6.667 0 108 1.333a6.667 6.667 0 000 13.334zM8 10.667V8M8 5.333h.007"
+							/></g
+						><defs><clipPath id="a"><path fill="#fff" d="M0 0h16v16H0z" /></clipPath></defs></svg
+					>
+					<span>ดูเกณฑ์การแบ่งขนาดโรงเรียน</span>
+					<svg
+						class="chevron"
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 24 24"
+						width="24"
+						height="24"
+						><path
+							stroke="#3C55AB"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="1.5"
+							d="M6 9l6 6 6-6"
+						/></svg
+					>
+				</span>
+			</summary>
+			<div class="school-size-flex">
+				<div>
+					<h4>ขนาดโรงเรียนสังกัดสำนักงานเขตพื้นที่ประถมศึกษา</h4>
+					<dl class="list-grid">
+						<dt>เล็ก</dt>
+						<dd>มีนักเรียน 1 &ndash; 120 คน</dd>
+						<dt>กลาง</dt>
+						<dd>มีนักเรียน 121 &ndash; 600 คน</dd>
+						<dt>ใหญ่</dt>
+						<dd>มีนักเรียน 601 &ndash; 1,500 คน</dd>
+						<dt>ใหญ่พิเศษ</dt>
+						<dd>มีนักเรียน 1,501 คนขึ้นไป</dd>
+					</dl>
+				</div>
+				<div>
+					<h4>ขนาดโรงเรียนสังกัดสำนักงานเขตพื้นที่มัธยมศึกษา</h4>
+					<dl class="list-grid">
+						<dt>เล็ก</dt>
+						<dd>มีนักเรียน 1 &ndash; 499 คน</dd>
+						<dt>กลาง</dt>
+						<dd>มีนักเรียน 500 &ndash; 1,499 คน</dd>
+						<dt>ใหญ่</dt>
+						<dd>มีนักเรียน 1,500 &ndash; 2,499 คน</dd>
+						<dt>ใหญ่พิเศษ</dt>
+						<dd>มีนักเรียน 2,500 คนขึ้นไป</dd>
+					</dl>
+				</div>
+			</div>
 		</details>
 	</section>
 	<section>
-		สัดส่วนจากนักเรียนทั้งหมด
-		<div>
-			<div>10%</div>
-			<div>50%</div>
-			<div>20%</div>
-			<div>20%</div>
+		<div class="mb8">สัดส่วนจากนักเรียนทั้งหมด</div>
+		<div class="student-chart">
+			<div class="student-color-1 student-section mitr" style="--std-chart-ratio:10">10%</div>
+			<div class="student-color-2 student-section mitr" style="--std-chart-ratio:50">50%</div>
+			<div class="student-color-3 student-section mitr" style="--std-chart-ratio:20">20%</div>
+			<div class="student-color-4 student-section mitr" style="--std-chart-ratio:20">20%</div>
 		</div>
-		<button type="button">
-			<span>COLOR</span>
+		<button type="button" class="mitr f student-size-btn">
+			<span class="student-color-1 std-size-color" />
 			<span>อนุบาล</span>
-			<span>100</span>
-			<span>ICON</span>
+			<span class="std-size-count">100</span>
+			<img src="/chevron/right.svg" alt="" width="24" height="24" />
 		</button>
-		<button type="button">
-			<span>COLOR</span>
+		<button type="button" class="mitr f student-size-btn">
+			<span class="student-color-2 std-size-color" />
 			<span>ประถม</span>
-			<span>100</span>
-			<span>ICON</span>
+			<span class="std-size-count">100</span>
+			<img src="/chevron/right.svg" alt="" width="24" height="24" />
 		</button>
-		<button type="button">
-			<span>COLOR</span>
+		<button type="button" class="mitr f student-size-btn">
+			<span class="student-color-3 std-size-color" />
 			<span>มัธยมต้น</span>
-			<span>100</span>
-			<span>ICON</span>
+			<span class="std-size-count">100</span>
+			<img src="/chevron/right.svg" alt="" width="24" height="24" />
 		</button>
-		<button type="button">
-			<span>COLOR</span>
+		<button type="button" class="mitr f student-size-btn">
+			<span class="student-color-4 std-size-color" />
 			<span>มัธยมปลาย</span>
-			<span>100</span>
-			<span>ICON</span>
+			<span class="std-size-count">100</span>
+			<img src="/chevron/right.svg" alt="" width="24" height="24" />
 		</button>
 	</section>
 	<section>
-		<h3>เปรียบเทียบจำนวนนักเรียน 6 ปีที่ผ่านมา</h3>
-		<div>
+		<h3 class="mb16">เปรียบเทียบจำนวนนักเรียน 6 ปีที่ผ่านมา</h3>
+		<div class="f fw500">
 			<span>ปี</span>
 			<span>คน</span>
 		</div>
-		<div>
-			<span>65</span>
-			<div>10%</div>
-			<div>50%</div>
-			<div>20%</div>
-			<div>20%</div>
-			<span>1000</span>
+		<div class="compare-chart">
+			<div>65</div>
+			<div class="cmp-chart-body student-chart">
+				<div class="student-color-1 student-section" style="--std-chart-ratio:25">250</div>
+				<div class="student-color-2 student-section" style="--std-chart-ratio:25">250</div>
+				<div class="student-color-3 student-section" style="--std-chart-ratio:25">250</div>
+				<div class="student-color-4 student-section" style="--std-chart-ratio:25">250</div>
+				<div class="student-section separator" style="--std-chart-ratio:0" />
+			</div>
+			<div>1000</div>
+			<div>64</div>
+			<div class="cmp-chart-body student-chart">
+				<div class="student-color-1 student-section" style="--std-chart-ratio:20">200</div>
+				<div class="student-color-2 student-section" style="--std-chart-ratio:20">200</div>
+				<div class="student-color-3 student-section" style="--std-chart-ratio:20">200</div>
+				<div class="student-color-4 student-section" style="--std-chart-ratio:20">200</div>
+				<div class="student-section separator" style="--std-chart-ratio:20" />
+			</div>
+			<div>800</div>
+			<div>63</div>
+			<div class="cmp-chart-body student-chart">
+				<div class="student-color-1 student-section" style="--std-chart-ratio:15">150</div>
+				<div class="student-color-2 student-section" style="--std-chart-ratio:15">150</div>
+				<div class="student-color-3 student-section" style="--std-chart-ratio:15">150</div>
+				<div class="student-color-4 student-section" style="--std-chart-ratio:15">150</div>
+				<div class="student-section separator" style="--std-chart-ratio:40" />
+			</div>
+			<div>600</div>
 		</div>
 	</section>
 
-	<h2>
+	<h2 class="f">
 		<span>ครู/บุคลากร <small>(คน)</small></span>
 		<span>60</span>
 	</h2>
 	<section>
-		<button type="button">
-			<h3>
+		<button type="button" class="teacher-size-btn mb8">
+			<h3 class="mitr f">
 				<span>ครู</span>
-				<span>37</span>
-				<span>ICON</span>
+				<span class="tch-size-count">37</span>
+				<img src="/chevron/right.svg" alt="" width="24" height="24" />
 			</h3>
 			<p>ครูทั่วไป, ครูผู้ช่วย, ชำนาญการ, ชำนาญการพิเศษ...</p>
 		</button>
-		<div>
+		<div class="f">
 			<span>สัดส่วนครู ต่อ นักเรียน</span>
-			<span>1:20</span>
+			<span class="mitr fs20">1:20</span>
 		</div>
 		<hr />
-		<div>
-			<span>ครู</span><span>นักเรียน</span>
+		<div class="f">
+			<span>ครู</span>
+			<span class="cy">นักเรียน</span>
 		</div>
-		<div>
-			<div>ครู</div>
-			<div>นักเรียนๆๆๆๆ</div>
+		<div class="f">
+			<div>
+				<img src="/person-b.svg" alt="" width="24" height="24" />
+			</div>
+			<div>
+				<img src="/person-y.svg" alt="" width="24" height="24" />
+				<img src="/person-y.svg" alt="" width="24" height="24" />
+				<img src="/person-y.svg" alt="" width="24" height="24" />
+			</div>
 		</div>
 	</section>
 	<section>
-		<h3>เปรียบเทียบจำนวนครู 6 ปีที่ผ่านมา</h3>
-		<div>
+		<h3 class="mb16">เปรียบเทียบจำนวนครู 6 ปีที่ผ่านมา</h3>
+		<div class="f fw500">
 			<span>ปี</span>
 			<span>คน</span>
 		</div>
-		<div>
-			<span>65</span>
-			<div>1:20</div>
-			<span>1000</span>
+		<div class="compare-chart">
+			<div>65</div>
+			<div class="cmp-chart-body student-chart">
+				<div class="primary-color student-section" style="--std-chart-ratio:100">1:1</div>
+				<div class="student-section separator" style="--std-chart-ratio:0" />
+			</div>
+			<div>1000</div>
+			<div>64</div>
+			<div class="cmp-chart-body student-chart">
+				<div class="primary-color student-section" style="--std-chart-ratio:80">1:2</div>
+				<div class="student-section separator" style="--std-chart-ratio:20" />
+			</div>
+			<div>800</div>
+			<div>63</div>
+			<div class="cmp-chart-body student-chart">
+				<div class="primary-color student-section" style="--std-chart-ratio:60">1:3</div>
+				<div class="student-section separator" style="--std-chart-ratio:40" />
+			</div>
+			<div>600</div>
 		</div>
 	</section>
 	<button type="button">
@@ -170,7 +255,7 @@
 		</p>
 	</section>
 
-	<h2>
+	<h2 class="f">
 		<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
 		<span>80%</span>
 	</h2>
@@ -271,7 +356,7 @@
 	</section>
 	<section>ACT LINK</section>
 
-	<h2>
+	<h2 class="f">
 		<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 		<span>80%</span>
 	</h2>
@@ -367,7 +452,7 @@
 	</section>
 	<section>ACT LINK</section>
 
-	<h2>
+	<h2 class="f">
 		<span>ข้อมูลทั่วไป</span>
 	</h2>
 	<section>
@@ -412,7 +497,208 @@
 {/if}
 
 <style lang="scss">
-	// .overflow {
-	// 	overflow: scroll;
-	// }
+	.f {
+		justify-content: space-between;
+	}
+
+	.student-color-1 {
+		--std-color: #3f836e;
+	}
+
+	.student-color-2 {
+		--std-color: #b1a215;
+	}
+
+	.student-color-3 {
+		--std-color: #f09326;
+	}
+
+	.student-color-4 {
+		--std-color: #ffc700;
+	}
+
+	.primary-color {
+		--std-color: #3c55ab;
+	}
+
+	.mb8 {
+		margin-bottom: 8px;
+	}
+
+	.mb16 {
+		margin-bottom: 16px;
+	}
+
+	.fw500 {
+		font-weight: 500;
+	}
+
+	.fs20 {
+		font-size: 1.25rem;
+	}
+
+	.cy {
+		color: #ffce4f;
+	}
+
+	small {
+		font-weight: 400;
+		font-size: 0.625rem;
+		line-height: 136%;
+		color: #9daad5;
+	}
+
+	.mitr,
+	h2,
+	h3 {
+		font-family: 'Mitr';
+		font-weight: 500;
+		line-height: 125%;
+		letter-spacing: 0.02em;
+	}
+
+	h2 {
+		font-size: 1.25rem;
+		background: #ffe599;
+		padding: 16px;
+
+		small {
+			font-family: 'IBM Plex Sans Thai Looped';
+			color: inherit;
+		}
+	}
+
+	section {
+		background: #fff;
+		padding: 16px;
+		margin-bottom: 8px;
+	}
+
+	hr {
+		border: none;
+		border-bottom: 1px dashed #ced5ea;
+		margin: 8px 0;
+	}
+
+	.school-size-detail {
+		font-size: 0.625rem;
+
+		> summary {
+			cursor: pointer;
+
+			list-style: none;
+
+			&::-webkit-details-marker {
+				display: none;
+			}
+
+			> span {
+				justify-content: start;
+				gap: 8px;
+			}
+		}
+
+		&[open] > summary > span > .chevron {
+			transform: rotate(180deg);
+		}
+	}
+
+	.school-size-flex {
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+		margin-top: 4px;
+	}
+
+	h4 {
+		font-weight: 500;
+		margin-bottom: 4px;
+	}
+
+	.list-grid {
+		display: grid;
+		gap: 0 16px;
+		grid-template-columns: max-content auto;
+		margin: 0;
+	}
+
+	.student-chart {
+		display: flex;
+		gap: 2px;
+
+		.student-section {
+			border-radius: 2px;
+			flex: var(--std-chart-ratio) var(--std-chart-ratio) 0;
+			padding: 8px;
+			text-align: center;
+			color: #fff;
+			background: var(--std-color);
+		}
+	}
+
+	.student-size-btn {
+		width: 100%;
+		padding: 8px 0;
+		margin: 16px 0;
+
+		&.f {
+			justify-content: start;
+			gap: 8px;
+		}
+
+		> .std-size-color {
+			width: 12px;
+			height: 12px;
+			background: var(--std-color);
+			border-radius: 1px;
+			display: block;
+		}
+
+		> .std-size-count {
+			margin-left: auto;
+		}
+	}
+
+	.compare-chart {
+		display: grid;
+		align-items: center;
+		grid-template-columns: max-content auto max-content;
+		gap: 4px;
+
+		> div:nth-child(3n) {
+			text-align: right;
+			font-weight: 500;
+		}
+
+		> .cmp-chart-body {
+			> .student-section {
+				white-space: nowrap;
+				overflow: hidden;
+				padding: 4px;
+				text-align: right;
+			}
+
+			> .separator {
+				padding: 0;
+			}
+		}
+	}
+
+	.teacher-size-btn {
+		width: 100%;
+
+		h3 {
+			gap: 8px;
+			> .tch-size-count {
+				margin-left: auto;
+			}
+		}
+
+		p {
+			font-size: 0.625rem;
+			color: #9daad5;
+			margin-top: 4px;
+			text-align: left;
+		}
+	}
 </style>
