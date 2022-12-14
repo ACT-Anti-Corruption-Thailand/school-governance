@@ -2,6 +2,8 @@
 	import { currentSchool } from 'stores/school';
 	import SchoolHeader from 'components/SchoolHeader.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
+	import CircularProgress from 'components/CircularProgress.svelte';
+	import ActAiBanner from 'components/ActAiBanner.svelte';
 
 	const DROPDOWN_DATA = [
 		{ value: '2565' },
@@ -34,39 +36,9 @@
 		<details class="school-size-detail">
 			<summary>
 				<span class="f">
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 16 16"
-						width="16"
-						height="16"
-						><g
-							stroke="#3C55AB"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.5"
-							clip-path="url(#a)"
-							><path
-								d="M8 14.667A6.667 6.667 0 108 1.333a6.667 6.667 0 000 13.334zM8 10.667V8M8 5.333h.007"
-							/></g
-						><defs><clipPath id="a"><path fill="#fff" d="M0 0h16v16H0z" /></clipPath></defs></svg
-					>
+					<img src="/info.svg" alt="" width="16" height="16" />
 					<span>ดูเกณฑ์การแบ่งขนาดโรงเรียน</span>
-					<svg
-						class="chevron"
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 24 24"
-						width="24"
-						height="24"
-						><path
-							stroke="#3C55AB"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="1.5"
-							d="M6 9l6 6 6-6"
-						/></svg
-					>
+					<img class="chevron" src="/chevron/bottom.svg" alt="" width="24" height="24" />
 				</span>
 			</summary>
 			<div class="school-size-flex">
@@ -102,10 +74,10 @@
 	<section>
 		<div class="mb8">สัดส่วนจากนักเรียนทั้งหมด</div>
 		<div class="student-chart">
-			<div class="student-color-1 student-section mitr" style="--std-chart-ratio:10">10%</div>
-			<div class="student-color-2 student-section mitr" style="--std-chart-ratio:50">50%</div>
-			<div class="student-color-3 student-section mitr" style="--std-chart-ratio:20">20%</div>
-			<div class="student-color-4 student-section mitr" style="--std-chart-ratio:20">20%</div>
+			<div class="student-color-1 student-section mitr tc" style="--std-chart-ratio:10">10%</div>
+			<div class="student-color-2 student-section mitr tc" style="--std-chart-ratio:50">50%</div>
+			<div class="student-color-3 student-section mitr tc" style="--std-chart-ratio:20">20%</div>
+			<div class="student-color-4 student-section mitr tc" style="--std-chart-ratio:20">20%</div>
 		</div>
 		<button type="button" class="mitr f student-size-btn">
 			<span class="student-color-1 std-size-color" />
@@ -189,13 +161,13 @@
 		<hr />
 		<div class="f">
 			<span>ครู</span>
-			<span class="cy">นักเรียน</span>
+			<span class="usable-color cv">นักเรียน</span>
 		</div>
-		<div class="f">
-			<div>
+		<div class="f ratio-chart">
+			<div class="f">
 				<img src="/person-b.svg" alt="" width="24" height="24" />
 			</div>
-			<div>
+			<div class="f">
 				<img src="/person-y.svg" alt="" width="24" height="24" />
 				<img src="/person-y.svg" alt="" width="24" height="24" />
 				<img src="/person-y.svg" alt="" width="24" height="24" />
@@ -210,127 +182,195 @@
 		</div>
 		<div class="compare-chart">
 			<div>65</div>
-			<div class="cmp-chart-body student-chart">
+			<div class="cmp-chart-body student-chart mitr">
 				<div class="primary-color student-section" style="--std-chart-ratio:100">1:1</div>
 				<div class="student-section separator" style="--std-chart-ratio:0" />
 			</div>
 			<div>1000</div>
 			<div>64</div>
-			<div class="cmp-chart-body student-chart">
+			<div class="cmp-chart-body student-chart mitr">
 				<div class="primary-color student-section" style="--std-chart-ratio:80">1:2</div>
 				<div class="student-section separator" style="--std-chart-ratio:20" />
 			</div>
 			<div>800</div>
 			<div>63</div>
-			<div class="cmp-chart-body student-chart">
+			<div class="cmp-chart-body student-chart mitr">
 				<div class="primary-color student-section" style="--std-chart-ratio:60">1:3</div>
 				<div class="student-section separator" style="--std-chart-ratio:40" />
 			</div>
 			<div>600</div>
 		</div>
 	</section>
-	<button type="button">
-		<h3>
+
+	<button type="button" class="teacher-size-btn emp-btn mb8">
+		<h3 class="mitr f">
 			<span>บุคลากร</span>
-			<span>23</span>
-			<span>ICON</span>
+			<span class="tch-size-count">23</span>
+			<img src="/chevron/right.svg" alt="" width="24" height="24" />
 		</h3>
 		<p>พนักงานธุรการ การเงิน บัญชี นักโภชนาการ นักการ-ภารโรง</p>
 	</button>
-	<section>
+
+	<section class="f directors">
 		<h3>ผู้อำนวยการ 1</h3>
-		<p>
-			ผศ.ดร. ปัญญา เลิศคุณธรรม<br />
-			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
-		</p>
+		<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม</p>
+		<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
 		<h3>ผู้อำนวยการ 2</h3>
-		<p>
-			ผศ.ดร. ปัญญา เลิศคุณธรรม<br />
-			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
-		</p>
+		<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม</p>
+		<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
 		<h3>รองผู้อำนวยการ</h3>
-		<p>
-			ผศ. วินัย ภาคเพียรดี<br />
-			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
-		</p>
+		<p class="fw500">ผศ. วินัย ภาคเพียรดี</p>
+		<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
 	</section>
 
 	<h2 class="f">
 		<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
-		<span>80%</span>
+		<span class="f g8">
+			<CircularProgress />
+			80%
+		</span>
 	</h2>
 	<section>
-		<dl>
-			<dt>เหลือง</dt>
+		<dl class="f status-color">
+			<dt class="usable-color">เหลือง</dt>
 			<dd>ใช้งานได้</dd>
-			<dt>เหลืองเข้ม</dt>
+			<dt class="await-color">เหลืองเข้ม</dt>
 			<dd>รอซ่อม/จำหน่าย</dd>
-			<dt>แดง</dt>
+			<dt class="unusable-color">แดง</dt>
 			<dd>ใช้งานไม่ได้</dd>
 		</dl>
 	</section>
-	<button type="button">
-		<span>อุปกรณ์การเรียน</span>
-		<span>ดูทั้งหมด</span>
-		<span>ICON</span>
+
+	<button type="button" class="teacher-size-btn emp-btn mb8">
+		<h3 class="f">
+			<span>อุปกรณ์การเรียน</span>
+			<span class="tch-size-count ibm">ดูทั้งหมด</span>
+			<img src="/chevron/right.svg" alt="" width="24" height="24" />
+		</h3>
 	</button>
+
 	<section>
-		<h3>
-			<span>โต๊ะเก้าอี้นักเรียน</span>
-			<small>(ตัว)</small>
+		<h3 class="f mb8">
+			<span>
+				โต๊ะเก้าอี้นักเรียน
+				<small>(ตัว)</small>
+			</span>
 			<span>999</span>
 		</h3>
-		<div>
-			<div>82%</div>
-			<div>a</div>
-			<div>b</div>
+		<div class="student-chart mb8">
+			<div class="usable-color student-section mitr" style="--std-chart-ratio:80">80%</div>
+			<div class="await-color student-section mitr" style="--std-chart-ratio:10" />
+			<div class="unusable-color student-section mitr" style="--std-chart-ratio:10" />
 		</div>
-		<p>979 | 20 | 20 ตัว</p>
-		<div>
+		<p class="mb8">
+			<span class="cv usable-color">979</span> | <span class="cv await-color">20</span> |
+			<span class="cv unusable-color">20</span> ตัว
+		</p>
+		<div class="f">
 			<span>สัดส่วนโต๊ะเก้าอี้ ต่อ นักเรียน</span>
-			<span>1:1</span>
+			<span class="mitr fs20">1:1</span>
 		</div>
 		<hr />
-		<div>
-			<div>ครู</div>
-			<div>นักเรียนๆๆๆๆ</div>
+		<div class="f ratio-chart">
+			<div class="f">
+				<img src="/chair.svg" alt="" width="24" height="24" />
+			</div>
+			<div class="f">
+				<img src="/person-y.svg" alt="" width="24" height="24" />
+			</div>
 		</div>
 	</section>
 	<section>
-		<h3>
-			<span>คอมพิวเตอร์</span>
-			<small>(เครื่อง)</small>
+		<h3 class="f mb8">
+			<span>
+				คอมพิวเตอร์
+				<small>(เครื่อง)</small>
+			</span>
 			<span>151</span>
 		</h3>
-		<p>ใช้วิธีการวัดคนละแบบกับอุปกรณ์อื่น <span>(ไม่มีสถานะรอซ่อม/จำหน่าย)</span></p>
-		<div>
-			<div>90%</div>
-			<div>a</div>
+		<p class="fs10 mb8">
+			ใช้วิธีการวัดคนละแบบกับอุปกรณ์อื่น <span class="cv usable-color"
+				>(ไม่มีสถานะรอซ่อม/จำหน่าย)</span
+			>
+		</p>
+		<div class="student-chart mb8">
+			<div class="usable-color student-section mitr" style="--std-chart-ratio:90">90%</div>
+			<div class="unusable-color student-section mitr" style="--std-chart-ratio:10" />
 		</div>
-		<p>140 | 11 เครื่อง</p>
-		<div>
+		<p class="mb8">
+			<span class="cv usable-color">140</span> |
+			<span class="cv unusable-color">11</span> เครื่อง
+		</p>
+		<div class="f">
 			<span>สัดส่วนคอมพิวเตอร์ ต่อ นักเรียน</span>
-			<span>1:5</span>
+			<span class="mitr fs20">1:5</span>
 		</div>
 		<hr />
-		<div>
-			<div>ครู</div>
-			<div>นักเรียนๆๆๆๆ</div>
+		<div class="f ratio-chart">
+			<div class="f">
+				<img src="/tv.svg" alt="" width="24" height="24" />
+			</div>
+			<div class="f">
+				<img src="/person-y.svg" alt="" width="24" height="24" />
+				<img src="/person-y.svg" alt="" width="24" height="24" />
+				<img src="/person-y.svg" alt="" width="24" height="24" />
+				<img src="/person-y.svg" alt="" width="24" height="24" />
+				<img src="/person-y.svg" alt="" width="24" height="24" />
+			</div>
 		</div>
-		<details>
-			<summary>ดูแหล่งที่มาของคอมพิวเตอร์</summary>
-			LOL
+		<details class="computer-details">
+			<summary>
+				<span class="f">
+					<span>ดูแหล่งที่มาของคอมพิวเตอร์</span>
+					<img class="chevron" src="/chevron/bottom.svg" alt="" width="24" height="24" />
+				</span>
+			</summary>
+			<div class="f mt8">
+				<span>งบประมาณ สพฐ <small>(เครื่อง)</small></span>
+				<span class="mitr fs20">91</span>
+			</div>
+			<div class="student-chart mb8">
+				<div class="usable-color student-section mitr" style="--std-chart-ratio:90" />
+				<div class="unusable-color student-section mitr" style="--std-chart-ratio:10" />
+				<div class="separator student-section mitr" style="--std-chart-ratio:10" />
+			</div>
+			<p class="mb8">
+				<span class="cv usable-color">140</span> |
+				<span class="cv unusable-color">11</span> เครื่อง
+			</p>
+			<div class="f">
+				<span>จัดหาเอง/บริจาค <small>(เครื่อง)</small></span>
+				<span class="mitr fs20">35</span>
+			</div>
+			<div class="student-chart mb8">
+				<div class="usable-color student-section mitr" style="--std-chart-ratio:90" />
+				<div class="unusable-color student-section mitr" style="--std-chart-ratio:10" />
+				<div class="separator student-section mitr" style="--std-chart-ratio:10" />
+			</div>
+			<p class="mb8">
+				<span class="cv usable-color">140</span> |
+				<span class="cv unusable-color">11</span> เครื่อง
+			</p>
+			<div class="f g8 ais">
+				<img src="/info.svg" alt="" width="16" height="16" />
+				<p class="fs10">
+					แหล่งที่มาของคอมพิวเตอร์สามารถช่วยประกอบการประเมินได้ว่า สพฐ. หรือ
+					ตัวโรงเรียนเองได้จัดสรรงบประมาณที่เพียงพอสำหรับจัดหาคอมพิวเตอร์หรือไม่
+				</p>
+			</div>
 		</details>
 	</section>
 	<section>
-		<h3>
-			<span>ICON</span>
-			<span>อินเทอร์เน็ต 100/30</span>
-			<small>Mbps</small>
+		<h3 class="f jcs g8 mb8">
+			<img src="/wifi.svg" alt="" width="24" height="24" />
+			<span>อินเทอร์เน็ต 100/30 <small>Mbps</small></span>
 		</h3>
-		<dl>
+		<dl class="list-grid">
 			<dt>สถานะการใช้งาน:</dt>
-			<dd>ปกติ</dd>
+			<dd class="f jcs g8">
+				<img src="/check-y.svg" alt="" width="16" height="16" />
+				ปกติ
+			</dd>
 			<dt>ผู้ให้บริการ:</dt>
 			<dd>3BB</dd>
 			<dt>งบประมาณ:</dt>
@@ -338,61 +378,73 @@
 		</dl>
 	</section>
 	<section>
-		<button type="button">
-			<span>อุปกรณ์อื่น</span>
-			<span>ดูทั้งหมด</span>
-			<span>ICON</span>
+		<button class="teacher-size-btn" type="button">
+			<h3 class="f">
+				<span>อุปกรณ์อื่น</span>
+				<span class="mla ibm">ดูทั้งหมด</span>
+				<img src="/chevron/right.svg" alt="" width="24" height="24" />
+			</h3>
 		</button>
-		<dl>
-			<dt>เครื่องใช้ไฟฟ้า</dt>
-			<dd>เครื่องปรับอากาศ, โทรทัศน์, เครื่องขยายเสียง</dd>
-			<dt>ยานพาหนะ</dt>
-			<dd>รถโดยสาร 12 ที่นั่ง, รถกระบะ</dd>
-			<dt>สำนักงาน</dt>
-			<dd>คอมพิวเตอร์, โต๊ะเก้าอี้, เครื่องถ่ายเอกสาร</dd>
-			<dt>งานบ้าน</dt>
-			<dd>เครื่องทำน้ำเย็น, ตู้เย็น, โต๊ะอาหาร...</dd>
-		</dl>
+		<ul class="other-appliance-list">
+			<li>
+				<span class="mitr">เครื่องใช้ไฟฟ้า</span>
+				<span class="fs10">เครื่องปรับอากาศ, โทรทัศน์, เครื่องขยายเสียง</span>
+			</li>
+			<li>
+				<span class="mitr">ยานพาหนะ</span>
+				<span class="fs10">รถโดยสาร 12 ที่นั่ง, รถกระบะ</span>
+			</li>
+			<li>
+				<span class="mitr">สำนักงาน</span>
+				<span class="fs10">คอมพิวเตอร์, โต๊ะเก้าอี้, เครื่องถ่ายเอกสาร</span>
+			</li>
+			<li>
+				<span class="mitr">งานบ้าน</span>
+				<span class="fs10">เครื่องทำน้ำเย็น, ตู้เย็น, โต๊ะอาหาร...</span>
+			</li>
+		</ul>
 	</section>
-	<section>ACT LINK</section>
+
+	<ActAiBanner margin />
 
 	<h2 class="f">
 		<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
-		<span>80%</span>
+		<span class="f g8">
+			<CircularProgress />
+			80%
+		</span>
 	</h2>
 	<section>
-		<dl>
-			<dt>เหลือง</dt>
+		<dl class="f status-color">
+			<dt class="usable-color">เหลือง</dt>
 			<dd>ดี 80%</dd>
-			<dt>เหลืองเข้ม</dt>
+			<dt class="await-color">เหลืองเข้ม</dt>
 			<dd>พอใช้ 13%</dd>
-			<dt>แดง</dt>
+			<dt class="unusable-color">แดง</dt>
 			<dd>ทรุดโทรม 7%</dd>
 		</dl>
 	</section>
 	<section>
-		<p>
+		<p class="f mb8">
 			<span>สภาพการใช้งาน</span>
 			<small>จากการประเมินของโรงเรียน</small>
 		</p>
-		<div>
-			<div>80%</div>
-			<div>a</div>
-			<div>b</div>
+		<div class="student-chart">
+			<div class="usable-color student-section mitr" style="--std-chart-ratio:80">80%</div>
+			<div class="await-color student-section mitr" style="--std-chart-ratio:10" />
+			<div class="unusable-color student-section mitr" style="--std-chart-ratio:10" />
 		</div>
 	</section>
 	<section>
-		<h3>
-			<span>อาคารการศึกษา</span>
-			<small>(อาคาร)</small>
+		<h3 class="f">
+			<span>อาคารการศึกษา <small>(อาคาร)</small></span>
 			<span>4</span>
 		</h3>
 	</section>
 	<section>
-		<p>
-			<span>ห้องทั้งหมด</span>
-			<small>(ห้อง)</small>
-			<span>999</span>
+		<p class="f">
+			<span>ห้องทั้งหมด <small>(ห้อง)</small></span>
+			<span class="mitr">999</span>
 		</p>
 		<hr />
 		<article>
@@ -420,11 +472,11 @@
 			<span>16 ห้อง</span>
 		</article>
 	</section>
-	<button type="button">
-		<h3>
+	<button type="button" class="teacher-size-btn emp-btn mb8">
+		<h3 class="f">
 			<span>อาคารและสิ่งก่อสร้างอื่น</span>
-			<span>ดูทั้งหมด</span>
-			<span>ICON</span>
+			<span class="tch-size-count ibm">ดูทั้งหมด</span>
+			<img src="/chevron/right.svg" alt="" width="24" height="24" />
 		</h3>
 	</button>
 	<section>
@@ -450,7 +502,8 @@
 			<dd>ถังเก็บน้ำ, ถนน, รางระบายน้ำ</dd>
 		</dl>
 	</section>
-	<section>ACT LINK</section>
+
+	<ActAiBanner margin />
 
 	<h2 class="f">
 		<span>ข้อมูลทั่วไป</span>
@@ -521,24 +574,68 @@
 		--std-color: #3c55ab;
 	}
 
+	.usable-color {
+		--std-color: #ffce4f;
+	}
+
+	.await-color {
+		--std-color: #ddab29;
+	}
+
+	.unusable-color {
+		--std-color: #fc5858;
+	}
+
 	.mb8 {
-		margin-bottom: 8px;
+		margin-bottom: 8px !important;
 	}
 
 	.mb16 {
-		margin-bottom: 16px;
+		margin-bottom: 16px !important;
+	}
+
+	.mt8 {
+		margin-top: 8px !important;
 	}
 
 	.fw500 {
-		font-weight: 500;
+		font-weight: 500 !important;
+	}
+
+	.fs10 {
+		font-size: 0.625rem !important;
 	}
 
 	.fs20 {
-		font-size: 1.25rem;
+		font-size: 1.25rem !important;
 	}
 
-	.cy {
-		color: #ffce4f;
+	.cv {
+		color: var(--std-color) !important;
+	}
+
+	.g8 {
+		gap: 8px !important;
+	}
+
+	.tc {
+		text-align: center !important;
+	}
+
+	.ibm {
+		font-family: 'IBM Plex Sans Thai Looped' !important;
+	}
+
+	.ais {
+		align-items: flex-start !important;
+	}
+
+	.jcs {
+		justify-content: start !important;
+	}
+
+	.mla {
+		margin-left: auto;
 	}
 
 	small {
@@ -617,7 +714,7 @@
 
 	.list-grid {
 		display: grid;
-		gap: 0 16px;
+		gap: 4px 16px;
 		grid-template-columns: max-content auto;
 		margin: 0;
 	}
@@ -630,9 +727,10 @@
 			border-radius: 2px;
 			flex: var(--std-chart-ratio) var(--std-chart-ratio) 0;
 			padding: 8px;
-			text-align: center;
+			text-align: right;
 			color: #fff;
 			background: var(--std-color);
+			min-height: 16px;
 		}
 	}
 
@@ -675,7 +773,6 @@
 				white-space: nowrap;
 				overflow: hidden;
 				padding: 4px;
-				text-align: right;
 			}
 
 			> .separator {
@@ -699,6 +796,80 @@
 			color: #9daad5;
 			margin-top: 4px;
 			text-align: left;
+		}
+	}
+
+	.emp-btn {
+		padding: 16px;
+		background: #fff;
+	}
+
+	.directors {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 4px;
+		line-height: 1.2;
+
+		> small {
+			margin-bottom: 4px;
+		}
+	}
+
+	.status-color {
+		gap: 4px;
+		justify-content: start;
+		margin: 0;
+
+		dt {
+			font-size: 0;
+			border-radius: 1px;
+			width: 12px;
+			height: 12px;
+			flex: 0 0 12px;
+
+			background: var(--std-color);
+		}
+
+		dd {
+			flex: 1 1 0;
+			white-space: nowrap;
+		}
+	}
+
+	.ratio-chart {
+		align-items: flex-start;
+		justify-content: flex-start;
+
+		> div {
+			flex-wrap: wrap;
+			justify-content: flex-start;
+		}
+	}
+
+	.computer-details {
+		margin-top: 16px;
+
+		> summary {
+			cursor: pointer;
+
+			list-style: none;
+
+			&::-webkit-details-marker {
+				display: none;
+			}
+		}
+
+		&[open] > summary > span > .chevron {
+			transform: rotate(180deg);
+		}
+	}
+
+	.other-appliance-list {
+		list-style: none;
+		margin: 0;
+
+		> li {
+			margin-top: 16px;
 		}
 	}
 </style>
