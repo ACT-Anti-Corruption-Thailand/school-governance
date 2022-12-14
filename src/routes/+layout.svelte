@@ -8,7 +8,7 @@
 
 	import Modal from 'components/Modal.svelte';
 
-	let isModalOpen = true;
+	let isModalOpen = false;
 </script>
 
 <Firebase />
