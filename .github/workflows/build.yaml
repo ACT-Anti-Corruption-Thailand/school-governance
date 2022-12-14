@@ -1,0 +1,26 @@
+name: Build Svelte Page
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Build
+        run: |
+          yarn
+          yarn build
+      - name: Deploy
+        uses: s0/git-publish-subdir-action@v2.3.0
+        env:
+          REPO: self
+          BRANCH: gh-pages
+          FOLDER: build
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
