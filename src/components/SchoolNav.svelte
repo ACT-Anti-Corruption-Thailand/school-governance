@@ -6,6 +6,7 @@
 	$: PAGE_BASE = $page.route.id?.split('/')[3] ?? '';
 </script>
 
+<div class="nav-compensate" />
 <nav class="f school-nav" aria-label="School Navigation">
 	<a class="f nav-menu" class:active={PAGE_BASE === ''} href="/school/{$currentSchoolId}/">
 		<svg class="home-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"
@@ -95,6 +96,10 @@
 </nav>
 
 <style lang="scss">
+	.nav-compensate {
+		height: 64px;
+	}
+
 	.school-nav {
 		position: fixed;
 		inset: 0;
@@ -159,6 +164,9 @@
 	}
 
 	@media screen and (min-width: 992px) {
+		.nav-compensate {
+			display: none;
+		}
 		.school-nav {
 			flex-direction: column;
 			inset: 0;

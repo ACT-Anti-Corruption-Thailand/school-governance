@@ -152,7 +152,13 @@
 		on:change={getSchoolByProvince}
 	/>
 
-	<a class="f" href="/school/1010720003"> ราชวินิต (Debug) </a>
+	<a class="f" href="/school/1010720001">โรงเรียนพญาไท (Debug) </a>
+	<a class="f" href="/school/1010720002">โรงเรียนโฆสิตสโมสร (Debug) </a>
+	<a class="f" href="/school/1010720003">โรงเรียนราชวินิต (Debug) </a>
+	<a class="f" href="/school/1010720004"
+		>โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ (Debug)
+	</a>
+	<a class="f" href="/school/1010720005">โรงเรียนวัดโสมนัส (Debug) </a>
 
 	{#if school_by_province.length}
 		<section class="search-result inline">

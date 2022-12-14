@@ -100,7 +100,8 @@
    "name": "โต๊ะเก้าอี้นักเรียนก่อนประถมศึกษา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 11002,
@@ -108,7 +109,8 @@
    "name": "ชุดฝึกทักษะนักเรียนก่อนประถมศึกษา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 11003,
@@ -116,7 +118,8 @@
    "name": "ตู้เก็บอุปกรณ์นักเรียนก่อนประถมศึกษา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 21001,
@@ -124,7 +127,8 @@
    "name": "เครื่องถ่ายเอกสาร",
    "working": 6,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 6
   },
   {
    "code": 21002,
@@ -132,7 +136,8 @@
    "name": "เครื่องพิมพ์สำเนาระบบดิจิตอล",
    "working": 2,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 2
   },
   {
    "code": 21003,
@@ -140,7 +145,8 @@
    "name": "เครื่องโทรสาร",
    "working": 3,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 3
   },
   {
    "code": 21004,
@@ -148,7 +154,8 @@
    "name": "เครื่องอัดสำเนา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 21005,
@@ -156,7 +163,8 @@
    "name": "เครื่องพิมพ์ดีด",
    "working": 35,
    "to_be_repaired": 10,
-   "to_be_removed": 10
+   "to_be_removed": 10,
+   "total": 55
   },
   {
    "code": 21006,
@@ -164,7 +172,8 @@
    "name": "ตู้นิรภัย",
    "working": 1,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 1
   },
   {
    "code": 21007,
@@ -172,7 +181,8 @@
    "name": "เครื่องไมโครคอมพิวเตอร์",
    "working": 108,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 108
   },
   {
    "code": 21008,
@@ -180,7 +190,8 @@
    "name": "เครื่องพิมพ์ (Printer)",
    "working": 98,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 98
   },
   {
    "code": 21009,
@@ -188,7 +199,8 @@
    "name": "เครื่องเจาะกระดาษและเข้าเล่ม",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 21010,
@@ -196,7 +208,8 @@
    "name": "เครื่องถ่ายภาพนิ่งระบบดิจิตอล",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 21011,
@@ -204,7 +217,8 @@
    "name": "คอมพิวเตอร์พกพา(Tablet)(ใช้บริหารจัดการ)",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 21012,
@@ -212,7 +226,8 @@
    "name": "เครื่องคอมพิวเตอร์พกพา(Notebook)(ใช้บริหารจัดการ)",
    "working": 7,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 7
   },
   {
    "code": 21013,
@@ -220,7 +235,8 @@
    "name": "กล้องถ่ายภาพดิจิตอล",
    "working": 5,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 5
   },
   {
    "code": 22001,
@@ -228,7 +244,8 @@
    "name": "โต๊ะเก้าอี้นักเรียน ประถมศึกษา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22002,
@@ -236,7 +253,8 @@
    "name": "โต๊ะเก้าอี้นักเรียน มัธยมศึกษา",
    "working": 1600,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 1600
   },
   {
    "code": 22003,
@@ -244,7 +262,8 @@
    "name": "ครุภัณฑ์การสอนวิทยาศาสตร์ ประถมศึกษา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22004,
@@ -252,7 +271,8 @@
    "name": "ครุภัณฑ์อุปกรณ์วิทยาศาสตร์ ม.ต้น",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22005,
@@ -260,7 +280,8 @@
    "name": "ครุภัณฑ์วิทยาศาสตร์ ม.ปลาย",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22006,
@@ -268,7 +289,8 @@
    "name": "หุ่นจำลองแสดงอวัยวะภายในมนุษย์",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22007,
@@ -276,7 +298,8 @@
    "name": "ครุภัณฑ์ไฟฟ้า",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22008,
@@ -284,7 +307,8 @@
    "name": "ครุภัณฑ์งานอาหารและโภชนาการ",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22009,
@@ -292,7 +316,8 @@
    "name": "ครุภัณฑ์งานผ้าและการตัดเย็บ",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22010,
@@ -300,7 +325,8 @@
    "name": "ครุภัณฑ์โรงฝึกงาน",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22011,
@@ -308,7 +334,8 @@
    "name": "ครุภัณฑ์งานไม้",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22012,
@@ -316,7 +343,8 @@
    "name": "ครุภัณฑ์งานโลหะ",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22013,
@@ -324,7 +352,8 @@
    "name": "ครุภัณฑ์ชางอุตสาหกรรม",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22014,
@@ -332,7 +361,8 @@
    "name": "ครุภัณฑ์งานยนต์",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22015,
@@ -340,7 +370,8 @@
    "name": "ครุภัณฑ์วิชาคหกรรม",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22016,
@@ -348,7 +379,8 @@
    "name": "ครุภัณฑ์วิชาศิลปกรรม",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22017,
@@ -356,7 +388,8 @@
    "name": "ครุภัณฑ์ห้องปฏิบัติการเพาะเห็ด",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22018,
@@ -364,7 +397,8 @@
    "name": "ฃุดอุปกรณ์วิชาชีพเกษตรกรรม",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22019,
@@ -372,7 +406,8 @@
    "name": "ครุภัณฑ์งานเขียนแบบ ม.ต้น",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22020,
@@ -380,7 +415,8 @@
    "name": "เครื่องดนตรีสากล",
    "working": 50,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 50
   },
   {
    "code": 22021,
@@ -388,7 +424,8 @@
    "name": "เครื่องดนตรีไทย ชุดเล็ก ประถมศึกษา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22022,
@@ -396,7 +433,8 @@
    "name": "เครื่องดนตรีไทย ชุดใหญ่ มัธยมศึกษา",
    "working": 54,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 54
   },
   {
    "code": 22023,
@@ -404,7 +442,8 @@
    "name": "ชุดอุปกรณ์วิชาพลานามัย",
    "working": 30,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 30
   },
   {
    "code": 22024,
@@ -412,7 +451,8 @@
    "name": "โต๊ะเทเบิลเทนนิส",
    "working": 2,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 2
   },
   {
    "code": 22025,
@@ -420,7 +460,8 @@
    "name": "ชุดอุปกรณ์เปตอง",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22026,
@@ -428,7 +469,8 @@
    "name": "โทรทัศน์สี",
    "working": 4,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 4
   },
   {
    "code": 22027,
@@ -436,7 +478,8 @@
    "name": "วิทยุ - เทป - ซีดี",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22028,
@@ -444,7 +487,8 @@
    "name": "เครื่องเล่น ดีวีดี",
    "working": 1,
    "to_be_repaired": 2,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 3
   },
   {
    "code": 22029,
@@ -452,7 +496,8 @@
    "name": "จานรับสัญญาณดาวเทียม",
    "working": 1,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 1
   },
   {
    "code": 22030,
@@ -460,7 +505,8 @@
    "name": "ครุภัณฑ์ห้องสมุด ชุดเล็ก ประถมศึกษา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22031,
@@ -468,7 +514,8 @@
    "name": "ครุภัณฑ์ห้องสมุด ชุดใหญ่ มัธยมศึกษา",
    "working": 201,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 201
   },
   {
    "code": 22032,
@@ -476,7 +523,8 @@
    "name": "เครื่องมัลติมีเดียโปรเจคเตอร์ LCD",
    "working": 4,
    "to_be_repaired": 5,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 9
   },
   {
    "code": 22033,
@@ -484,7 +532,8 @@
    "name": "เครื่องไมโครคอมพิวเตอร์",
    "working": 221,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 221
   },
   {
    "code": 22034,
@@ -492,7 +541,8 @@
    "name": "เครื่องพิมพ์ (Printer)",
    "working": 5,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 5
   },
   {
    "code": 22035,
@@ -500,7 +550,8 @@
    "name": "อุปกรณ์ห้องสมุดรร.ระดับประถมศึกษา-มัธยมศึกษา",
    "working": 25,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 25
   },
   {
    "code": 22036,
@@ -508,7 +559,8 @@
    "name": "ครุภัณฑ์พัฒนาทักษะคิดวิเคราะห์ระดับก่อนประถมศึกษา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22037,
@@ -516,7 +568,8 @@
    "name": "ครุภัณฑ์พัฒนาทักษะคิดวิเคราะห์ระดับประถมศึกษา",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22038,
@@ -524,7 +577,8 @@
    "name": "อุปกรณ์ศูนย์การเรียนรร.ขนาดเล็ก",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22039,
@@ -532,7 +586,8 @@
    "name": "อุปกรณ์ห้องปฏิบัติการวิทยาศาสตร์ (ประถม-มัธยมต้น)",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22040,
@@ -540,7 +595,8 @@
    "name": "อุปกรณ์ห้องปฏิบัติการวิทยาศาสตร์ (มัธยมศึกษา)",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 22041,
@@ -548,7 +604,8 @@
    "name": "คอมพิวเตอร์พกพา(Tablet)",
    "working": 300,
    "to_be_repaired": 1,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 301
   },
   {
    "code": 22042,
@@ -556,7 +613,8 @@
    "name": "เครื่องคอมพิวเตอร์พกพา(Notebook)(ใช้ในการเรียนการสอน)",
    "working": 7,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 7
   },
   {
    "code": 22043,
@@ -564,7 +622,8 @@
    "name": "โทรทัศน์สีชนิด จอแบน (LCD)",
    "working": 5,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 5
   },
   {
    "code": 23001,
@@ -572,7 +631,8 @@
    "name": "เครื่องกำเนิดไฟฟ้าพลังแสงอาทิตย์ เบนซิน",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 23002,
@@ -580,7 +640,8 @@
    "name": "เครื่องตัดกระแสไฟฟ้า",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 23003,
@@ -588,7 +649,8 @@
    "name": "เครื่องขยายเสียง",
    "working": 22,
    "to_be_repaired": 5,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 27
   },
   {
    "code": 23004,
@@ -596,7 +658,8 @@
    "name": "เครื่องกำเนิดไฟฟ้า 5, 10 กิโลวัตต์",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 23005,
@@ -604,7 +667,8 @@
    "name": "เครื่องปรับอากาศ",
    "working": 90,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 90
   },
   {
    "code": 24001,
@@ -612,7 +676,8 @@
    "name": "เครื่องกรองน้ำ",
    "working": 13,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 13
   },
   {
    "code": 24002,
@@ -620,7 +685,8 @@
    "name": "เครื่องทำน้ำเย็น",
    "working": 10,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 10
   },
   {
    "code": 24003,
@@ -628,7 +694,8 @@
    "name": "ถังน้ำขนาด 2000 ลิตร แบบไฟเบอร์กลาส",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 24004,
@@ -636,7 +703,8 @@
    "name": "เครื่องตัดหญ้า",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 24005,
@@ -644,7 +712,8 @@
    "name": "โต๊ะอาหารพร้อมเก้าอี้",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 24006,
@@ -652,7 +721,8 @@
    "name": "ตู้เย็น",
    "working": 6,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 6
   },
   {
    "code": 24007,
@@ -660,7 +730,8 @@
    "name": "ถังน้ำขนาด 2000 ลิดร แบบพลาสติก",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 24008,
@@ -668,7 +739,8 @@
    "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบไฟเบอร์กลาส",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 24009,
@@ -676,7 +748,8 @@
    "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบพลาสติก",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 24010,
@@ -684,7 +757,8 @@
    "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบสแตนเลส",
    "working": 3,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 3
   },
   {
    "code": 25001,
@@ -692,7 +766,8 @@
    "name": "รถโดยสาร 12 ที่นั่ง",
    "working": 0,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 0
   },
   {
    "code": 25002,
@@ -700,9 +775,22 @@
    "name": "รถกระบะ",
    "working": 1,
    "to_be_repaired": 0,
-   "to_be_removed": 0
+   "to_be_removed": 0,
+   "total": 1
   }
  ],
+ "tables": {
+  "working": 1600,
+  "to_be_repaired": 0,
+  "to_be_removed": 0,
+  "total": 1600
+ },
+ "durable_goods_stats": {
+  "working": 2920,
+  "to_be_repaired": 23,
+  "to_be_removed": 10,
+  "total": 2953
+ },
  "internet": {
   "provider": "-",
   "type": "-",
@@ -807,6 +895,9 @@
    }
   },
   "พนักงาน": {
+   "men": 12,
+   "women": 6,
+   "total": 18,
    "ลูกจ้างประจำ": {
     "men": 3,
     "women": 0,

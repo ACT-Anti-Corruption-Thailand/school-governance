@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { currentSchool } from 'stores/school';
+	import { currentSchool, currentSchoolId } from 'stores/school';
 	import SchoolHeader from 'components/SchoolHeader.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
 	import CircularProgress from 'components/CircularProgress.svelte';
@@ -14,15 +14,17 @@
 	];
 
 	let dropdown_choice = DROPDOWN_DATA[0];
+
+	$: d = $currentSchool;
 </script>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
-{#if $currentSchool}
+{#if d}
 	<h2 class="f">
 		<span>นักเรียน <small>(คน)</small></span>
-		<span>1000</span>
+		<span>{d.student.total.all.toLocaleString()}</span>
 	</h2>
 	<section>
 		<div class="f">
@@ -74,35 +76,71 @@
 	<section>
 		<div class="mb8">สัดส่วนจากนักเรียนทั้งหมด</div>
 		<div class="student-chart">
-			<div class="student-color-1 student-section mitr tc" style="--std-chart-ratio:10">10%</div>
-			<div class="student-color-2 student-section mitr tc" style="--std-chart-ratio:50">50%</div>
-			<div class="student-color-3 student-section mitr tc" style="--std-chart-ratio:20">20%</div>
-			<div class="student-color-4 student-section mitr tc" style="--std-chart-ratio:20">20%</div>
+			{#if d.student.total.อ}
+				<div
+					class="student-color-1 student-section mitr tc"
+					style:--std-chart-ratio={d.student.total.อ}
+				>
+					{~~((d.student.total.อ / d.student.total.all) * 100)}%
+				</div>
+			{/if}
+			{#if d.student.total.ป}
+				<div
+					class="student-color-2 student-section mitr tc"
+					style:--std-chart-ratio={d.student.total.ป}
+				>
+					{~~((d.student.total.ป / d.student.total.all) * 100)}%
+				</div>
+			{/if}
+			{#if d.student.total.มต}
+				<div
+					class="student-color-3 student-section mitr tc"
+					style:--std-chart-ratio={d.student.total.มต}
+				>
+					{~~((d.student.total.มต / d.student.total.all) * 100)}%
+				</div>
+			{/if}
+			{#if d.student.total.มป}
+				<div
+					class="student-color-4 student-section mitr tc"
+					style:--std-chart-ratio={d.student.total.มป}
+				>
+					{~~((d.student.total.มป / d.student.total.all) * 100)}%
+				</div>
+			{/if}
 		</div>
-		<button type="button" class="mitr f student-size-btn">
-			<span class="student-color-1 std-size-color" />
-			<span>อนุบาล</span>
-			<span class="std-size-count">100</span>
-			<img src="/chevron/right.svg" alt="" width="24" height="24" />
-		</button>
-		<button type="button" class="mitr f student-size-btn">
-			<span class="student-color-2 std-size-color" />
-			<span>ประถม</span>
-			<span class="std-size-count">100</span>
-			<img src="/chevron/right.svg" alt="" width="24" height="24" />
-		</button>
-		<button type="button" class="mitr f student-size-btn">
-			<span class="student-color-3 std-size-color" />
-			<span>มัธยมต้น</span>
-			<span class="std-size-count">100</span>
-			<img src="/chevron/right.svg" alt="" width="24" height="24" />
-		</button>
-		<button type="button" class="mitr f student-size-btn">
-			<span class="student-color-4 std-size-color" />
-			<span>มัธยมปลาย</span>
-			<span class="std-size-count">100</span>
-			<img src="/chevron/right.svg" alt="" width="24" height="24" />
-		</button>
+		{#if d.student.total.อ}
+			<button type="button" class="mitr f student-size-btn">
+				<span class="student-color-1 std-size-color" />
+				<span>อนุบาล</span>
+				<span class="std-size-count">{d.student.total.อ.toLocaleString()}</span>
+				<img src="/chevron/right.svg" alt="" width="24" height="24" />
+			</button>
+		{/if}
+		{#if d.student.total.ป}
+			<button type="button" class="mitr f student-size-btn">
+				<span class="student-color-2 std-size-color" />
+				<span>ประถม</span>
+				<span class="std-size-count">{d.student.total.ป.toLocaleString()}</span>
+				<img src="/chevron/right.svg" alt="" width="24" height="24" />
+			</button>
+		{/if}
+		{#if d.student.total.มต}
+			<button type="button" class="mitr f student-size-btn">
+				<span class="student-color-3 std-size-color" />
+				<span>มัธยมต้น</span>
+				<span class="std-size-count">{d.student.total.มต.toLocaleString()}</span>
+				<img src="/chevron/right.svg" alt="" width="24" height="24" />
+			</button>
+		{/if}
+		{#if d.student.total.มป}
+			<button type="button" class="mitr f student-size-btn">
+				<span class="student-color-4 std-size-color" />
+				<span>มัธยมปลาย</span>
+				<span class="std-size-count">{d.student.total.มป.toLocaleString()}</span>
+				<img src="/chevron/right.svg" alt="" width="24" height="24" />
+			</button>
+		{/if}
 	</section>
 	<section>
 		<h3 class="mb16">เปรียบเทียบจำนวนนักเรียน 6 ปีที่ผ่านมา</h3>
@@ -143,20 +181,20 @@
 
 	<h2 class="f">
 		<span>ครู/บุคลากร <small>(คน)</small></span>
-		<span>60</span>
+		<span>{d.staff.total}</span>
 	</h2>
 	<section>
 		<button type="button" class="teacher-size-btn mb8">
 			<h3 class="mitr f">
 				<span>ครู</span>
-				<span class="tch-size-count">37</span>
+				<span class="tch-size-count">{d.staff.ครู.total}</span>
 				<img src="/chevron/right.svg" alt="" width="24" height="24" />
 			</h3>
 			<p>ครูทั่วไป, ครูผู้ช่วย, ชำนาญการ, ชำนาญการพิเศษ...</p>
 		</button>
 		<div class="f">
 			<span>สัดส่วนครู ต่อ นักเรียน</span>
-			<span class="mitr fs20">1:20</span>
+			<span class="mitr fs20">1:{~~(d.student.total.all / d.staff.ครู.total)}</span>
 		</div>
 		<hr />
 		<div class="f">
@@ -168,9 +206,9 @@
 				<img src="/person-b.svg" alt="" width="24" height="24" />
 			</div>
 			<div class="f">
-				<img src="/person-y.svg" alt="" width="24" height="24" />
-				<img src="/person-y.svg" alt="" width="24" height="24" />
-				<img src="/person-y.svg" alt="" width="24" height="24" />
+				{#each Array(~~(d.student.total.all / d.staff.ครู.total)) as _}
+					<img src="/person-y.svg" alt="" width="24" height="24" />
+				{/each}
 			</div>
 		</div>
 	</section>
@@ -205,7 +243,7 @@
 	<button type="button" class="teacher-size-btn emp-btn mb8">
 		<h3 class="mitr f">
 			<span>บุคลากร</span>
-			<span class="tch-size-count">23</span>
+			<span class="tch-size-count">{d.staff.พนักงาน.total}</span>
 			<img src="/chevron/right.svg" alt="" width="24" height="24" />
 		</h3>
 		<p>พนักงานธุรการ การเงิน บัญชี นักโภชนาการ นักการ-ภารโรง</p>
@@ -226,8 +264,10 @@
 	<h2 class="f">
 		<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
 		<span class="f g8">
-			<CircularProgress />
-			80%
+			<CircularProgress
+				percent={(d.durable_goods_stats.working / d.durable_goods_stats.total) * 100}
+			/>
+			{~~((d.durable_goods_stats.working / d.durable_goods_stats.total) * 100)}%
 		</span>
 	</h2>
 	<section>
@@ -255,20 +295,30 @@
 				โต๊ะเก้าอี้นักเรียน
 				<small>(ตัว)</small>
 			</span>
-			<span>999</span>
+			<span>{d.tables.total}</span>
 		</h3>
 		<div class="student-chart mb8">
-			<div class="usable-color student-section mitr" style="--std-chart-ratio:80">80%</div>
-			<div class="await-color student-section mitr" style="--std-chart-ratio:10" />
-			<div class="unusable-color student-section mitr" style="--std-chart-ratio:10" />
+			<div class="usable-color student-section mitr" style:--std-chart-ratio={d.tables.working}>
+				{~~((d.tables.working / d.tables.total) * 100)}%
+			</div>
+			<div
+				class="await-color student-section mitr"
+				style:--std-chart-ratio={d.tables.to_be_repaired}
+			/>
+			<div
+				class="unusable-color student-section mitr"
+				style:--std-chart-ratio={d.tables.to_be_removed}
+			/>
 		</div>
 		<p class="mb8">
-			<span class="cv usable-color">979</span> | <span class="cv await-color">20</span> |
-			<span class="cv unusable-color">20</span> ตัว
+			<span class="cv usable-color">{d.tables.working}</span> |
+			<span class="cv await-color">{d.tables.to_be_repaired}</span>
+			|
+			<span class="cv unusable-color">{d.tables.to_be_removed}</span> ตัว
 		</p>
 		<div class="f">
 			<span>สัดส่วนโต๊ะเก้าอี้ ต่อ นักเรียน</span>
-			<span class="mitr fs20">1:1</span>
+			<span class="mitr fs20">1:{~~(d.student.total.all / d.tables.working) || 1}</span>
 		</div>
 		<hr />
 		<div class="f ratio-chart">
@@ -276,7 +326,9 @@
 				<img src="/chair.svg" alt="" width="24" height="24" />
 			</div>
 			<div class="f">
-				<img src="/person-y.svg" alt="" width="24" height="24" />
+				{#each Array(~~(d.student.total.all / d.tables.working) || 1) as _}
+					<img src="/person-y.svg" alt="" width="24" height="24" />
+				{/each}
 			</div>
 		</div>
 	</section>
@@ -286,7 +338,7 @@
 				คอมพิวเตอร์
 				<small>(เครื่อง)</small>
 			</span>
-			<span>151</span>
+			<span>{d.computer.total}</span>
 		</h3>
 		<p class="fs10 mb8">
 			ใช้วิธีการวัดคนละแบบกับอุปกรณ์อื่น <span class="cv usable-color"
@@ -294,16 +346,21 @@
 			>
 		</p>
 		<div class="student-chart mb8">
-			<div class="usable-color student-section mitr" style="--std-chart-ratio:90">90%</div>
-			<div class="unusable-color student-section mitr" style="--std-chart-ratio:10" />
+			<div class="usable-color student-section mitr" style:--std-chart-ratio={d.computer.working}>
+				{~~((d.computer.working / d.computer.total) * 100)}%
+			</div>
+			<div
+				class="unusable-color student-section mitr"
+				style:--std-chart-ratio={d.computer.broken}
+			/>
 		</div>
 		<p class="mb8">
-			<span class="cv usable-color">140</span> |
-			<span class="cv unusable-color">11</span> เครื่อง
+			<span class="cv usable-color">{d.computer.working}</span> |
+			<span class="cv unusable-color">{d.computer.broken}</span> เครื่อง
 		</p>
 		<div class="f">
 			<span>สัดส่วนคอมพิวเตอร์ ต่อ นักเรียน</span>
-			<span class="mitr fs20">1:5</span>
+			<span class="mitr fs20">1:{~~(d.student.total.all / d.computer.working)}</span>
 		</div>
 		<hr />
 		<div class="f ratio-chart">
@@ -311,11 +368,11 @@
 				<img src="/tv.svg" alt="" width="24" height="24" />
 			</div>
 			<div class="f">
-				<img src="/person-y.svg" alt="" width="24" height="24" />
-				<img src="/person-y.svg" alt="" width="24" height="24" />
-				<img src="/person-y.svg" alt="" width="24" height="24" />
-				<img src="/person-y.svg" alt="" width="24" height="24" />
-				<img src="/person-y.svg" alt="" width="24" height="24" />
+				<div class="f">
+					{#each Array(~~(d.student.total.all / d.computer.working)) as _}
+						<img src="/person-y.svg" alt="" width="24" height="24" />
+					{/each}
+				</div>
 			</div>
 		</div>
 		<details class="computer-details">
@@ -510,29 +567,37 @@
 	</h2>
 	<section>
 		<h3>ติดต่อ</h3>
-		<dl>
-			<dt>ICON</dt>
-			<dd>123 ถนนพญาไท แขวงปทุมวันเขตปทุมวัน กรุงเทพมหานคร 10330</dd>
-			<dt>ICON</dt>
-			<dd>022311234-5, 0</dd>
-			<dt>ICON</dt>
-			<dd>www.prongsaischool.ac.th</dd>
-			<dt>ICON</dt>
-			<dd>info@prongsaischool.ac.th</dd>
+		<dl class="list-grid">
+			<dt>
+				<img src="/location.svg" alt="ที่อยู่" width="16" height="16" />
+			</dt>
+			<dd>{d.address} {d.subdistrict} {d.district} {d.province} {d.postcode}</dd>
+			<dt>
+				<img src="/phone.svg" alt="เบอร์โทรศัพท์" width="16" height="16" />
+			</dt>
+			<dd>{d.telephone}</dd>
+			<dt>
+				<img src="/globe.svg" alt="เว็บไซต์" width="16" height="16" />
+			</dt>
+			<dd>{d.website}</dd>
+			<dt>
+				<img src="/mail.svg" alt="อีเมล์" width="16" height="16" />
+			</dt>
+			<dd>{d.email}</dd>
 		</dl>
 	</section>
 	<section>
 		<h3>ข้อมูลอื่น</h3>
-		<img src="/anon.svg" alt="" />
-		<dl>
+		<img src={d.logo_image_path} alt="" />
+		<dl class="list-grid">
 			<dt>รหัสโรงเรียน</dt>
-			<dd>1020080005</dd>
+			<dd>{$currentSchoolId}</dd>
 			<dt>สังกัด</dt>
 			<dd>สพม.กรุงเทพมหานคร เขต 1</dd>
 			<dt>ก่อตั้งเมื่อ</dt>
-			<dd>01 มกราคม พ.ศ.2500</dd>
+			<dd>{d.established}</dd>
 			<dt>ระดับที่เปิดสอน</dt>
-			<dd>มัธยมปลาย</dd>
+			<dd>{d.grades}</dd>
 			<dt>ประเภทโรงเรียน</dt>
 			<dd>รัฐบาล</dd>
 			<dt>ลักษณะโรงเรียน</dt>
