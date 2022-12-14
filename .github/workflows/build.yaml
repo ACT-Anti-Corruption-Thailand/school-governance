@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - dev
+  workflow_dispatch:
 
 jobs:
   main:
@@ -14,6 +15,8 @@ jobs:
         with:
           persist-credentials: false
       - name: Build
+        env:
+          PUBLIC_NOCO_TOKEN_KEY: ${{ secrets.PUBLIC_NOCO_TOKEN_KEY }}
         run: |
           yarn
           yarn build
