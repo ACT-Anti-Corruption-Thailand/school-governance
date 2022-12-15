@@ -444,18 +444,37 @@
 	<section>
 		<h3 class="f jcs g8 mb8">
 			<img src="/wifi.svg" alt="" width="24" height="24" />
-			<span>อินเทอร์เน็ต 100/30 <small>Mbps</small></span>
+			<span
+				>อินเทอร์เน็ต {d.internet.speed ?? ''}
+				{#if d.internet.speed}<small>Mbps</small>{/if}</span
+			>
 		</h3>
 		<dl class="list-grid">
 			<dt>สถานะการใช้งาน:</dt>
 			<dd class="f jcs g8">
-				<img src="/check-y.svg" alt="" width="16" height="16" />
-				ปกติ
+				{#if d.internet.status}
+					<img src="/check-y.svg" alt="" width="16" height="16" />
+					{d.internet.status}
+				{:else}
+					<span class="no-data">ไม่มีข้อมูล</span>
+				{/if}
 			</dd>
 			<dt>ผู้ให้บริการ:</dt>
-			<dd>3BB</dd>
+			<dd>
+				{#if d.internet.provider}
+					{d.internet.provider}
+				{:else}
+					<span class="no-data">ไม่มีข้อมูล</span>
+				{/if}
+			</dd>
 			<dt>งบประมาณ:</dt>
-			<dd>10,000 บาท/เดือน</dd>
+			<dd>
+				{#if d.internet.monthly_price}
+					{+d.internet.monthly_price.toLocaleString()} บาท/เดือน
+				{:else}
+					<span class="no-data">ไม่มีข้อมูล</span>
+				{/if}
+			</dd>
 		</dl>
 	</section>
 	<section>
@@ -1056,5 +1075,9 @@
 			margin: 16px 0 0;
 			color: #9daad5;
 		}
+	}
+
+	.no-data {
+		color: #9daad5;
 	}
 </style>
