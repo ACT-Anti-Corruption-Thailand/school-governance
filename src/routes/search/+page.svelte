@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
 
@@ -116,6 +116,10 @@
 
 	onMount(() => {
 		$show_search = true;
+	});
+
+	onDestroy(() => {
+		$show_search = false;
 	});
 
 	let school_by_province: { schoolId: string; nameTh: string; province: string }[] = [];
