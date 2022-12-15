@@ -19,6 +19,7 @@
 		text-decoration: none;
 		gap: 16px;
 		text-align: left;
+		justify-content: space-between;
 
 		&.margin {
 			margin: 16px;
