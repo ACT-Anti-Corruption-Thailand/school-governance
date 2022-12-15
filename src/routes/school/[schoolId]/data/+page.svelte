@@ -191,20 +191,22 @@
 
 	<h2 class="f">
 		<span>ครู/บุคลากร <small>(คน)</small></span>
-		<span>{d.staff.total}</span>
+		<span>{d.staff.total.toLocaleString()}</span>
 	</h2>
 	<section>
 		<button type="button" class="teacher-size-btn mb8">
 			<h3 class="mitr f">
 				<span>ครู</span>
-				<span class="tch-size-count">{d.staff.ครู.total}</span>
+				<span class="tch-size-count">{d.staff.ครู.total.toLocaleString()}</span>
 				<img src="/chevron/right.svg" alt="" width="24" height="24" />
 			</h3>
 			<p>ครูทั่วไป, ครูผู้ช่วย, ชำนาญการ, ชำนาญการพิเศษ...</p>
 		</button>
 		<div class="f">
 			<span>สัดส่วนครู ต่อ นักเรียน</span>
-			<span class="mitr fs20">1:{~~(d.student.total.all / d.staff.ครู.total)}</span>
+			<span class="mitr fs20"
+				>1:{Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString()}</span
+			>
 		</div>
 		<hr />
 		<div class="f">
@@ -216,7 +218,7 @@
 				<img src="/person-b.svg" alt="" width="24" height="24" />
 			</div>
 			<div class="f">
-				{#each Array(~~(d.student.total.all / d.staff.ครู.total)) as _}
+				{#each Array(Math.ceil(d.student.total.all / d.staff.ครู.total)) as _}
 					<img src="/person-y.svg" alt="" width="24" height="24" />
 				{/each}
 			</div>
@@ -253,7 +255,7 @@
 	<button type="button" class="teacher-size-btn emp-btn mb8">
 		<h3 class="mitr f">
 			<span>บุคลากร</span>
-			<span class="tch-size-count">{d.staff.พนักงาน.total}</span>
+			<span class="tch-size-count">{d.staff.พนักงาน.total.toLocaleString()}</span>
 			<img src="/chevron/right.svg" alt="" width="24" height="24" />
 		</h3>
 		<p>พนักงานธุรการ การเงิน บัญชี นักโภชนาการ นักการ-ภารโรง</p>
@@ -305,30 +307,42 @@
 				โต๊ะเก้าอี้นักเรียน
 				<small>(ตัว)</small>
 			</span>
-			<span>{d.tables.total}</span>
+			<span>{d.tables.total.toLocaleString()}</span>
 		</h3>
 		<div class="student-chart mb8">
-			<div class="usable-color student-section mitr" style:--std-chart-ratio={d.tables.working}>
-				{~~((d.tables.working / d.tables.total) * 100)}%
-			</div>
-			<div
-				class="await-color student-section mitr"
-				style:--std-chart-ratio={d.tables.to_be_repaired}
-			/>
-			<div
-				class="unusable-color student-section mitr"
-				style:--std-chart-ratio={d.tables.to_be_removed}
-			/>
+			{#if d.tables.working}
+				<div class="usable-color student-section mitr" style:--std-chart-ratio={d.tables.working}>
+					{~~((d.tables.working / d.tables.total) * 100)}%
+				</div>
+			{/if}
+			{#if d.tables.to_be_repaired}
+				<div
+					class="await-color student-section mitr"
+					style:--std-chart-ratio={d.tables.to_be_repaired}
+				>
+					{~~((d.tables.to_be_repaired / d.tables.total) * 100)}%
+				</div>
+			{/if}
+			{#if d.tables.to_be_removed}
+				<div
+					class="unusable-color student-section mitr"
+					style:--std-chart-ratio={d.tables.to_be_removed}
+				>
+					{~~((d.tables.to_be_removed / d.tables.total) * 100)}%
+				</div>
+			{/if}
 		</div>
 		<p class="mb8">
-			<span class="cv usable-color">{d.tables.working}</span> |
-			<span class="cv await-color">{d.tables.to_be_repaired}</span>
+			<span class="cv usable-color">{d.tables.working.toLocaleString()}</span> |
+			<span class="cv await-color">{d.tables.to_be_repaired.toLocaleString()}</span>
 			|
-			<span class="cv unusable-color">{d.tables.to_be_removed}</span> ตัว
+			<span class="cv unusable-color">{d.tables.to_be_removed.toLocaleString()}</span> ตัว
 		</p>
 		<div class="f">
 			<span>สัดส่วนโต๊ะเก้าอี้ ต่อ นักเรียน</span>
-			<span class="mitr fs20">1:{~~(d.student.total.all / d.tables.working) || 1}</span>
+			<span class="mitr fs20"
+				>1:{Math.ceil(d.student.total.all / d.tables.working).toLocaleString()}</span
+			>
 		</div>
 		<hr />
 		<div class="f ratio-chart">
@@ -336,7 +350,7 @@
 				<img src="/chair.svg" alt="" width="24" height="24" />
 			</div>
 			<div class="f">
-				{#each Array(~~(d.student.total.all / d.tables.working) || 1) as _}
+				{#each Array(Math.ceil(d.student.total.all / d.tables.working)) as _}
 					<img src="/person-y.svg" alt="" width="24" height="24" />
 				{/each}
 			</div>
@@ -348,7 +362,7 @@
 				คอมพิวเตอร์
 				<small>(เครื่อง)</small>
 			</span>
-			<span>{d.computer.total}</span>
+			<span>{d.computer.total.toLocaleString()}</span>
 		</h3>
 		<p class="fs10 mb8">
 			ใช้วิธีการวัดคนละแบบกับอุปกรณ์อื่น <span class="cv usable-color"
@@ -365,12 +379,14 @@
 			/>
 		</div>
 		<p class="mb8">
-			<span class="cv usable-color">{d.computer.working}</span> |
-			<span class="cv unusable-color">{d.computer.broken}</span> เครื่อง
+			<span class="cv usable-color">{d.computer.working.toLocaleString()}</span> |
+			<span class="cv unusable-color">{d.computer.broken.toLocaleString()}</span> เครื่อง
 		</p>
 		<div class="f">
 			<span>สัดส่วนคอมพิวเตอร์ ต่อ นักเรียน</span>
-			<span class="mitr fs20">1:{~~(d.student.total.all / d.computer.working)}</span>
+			<span class="mitr fs20"
+				>1:{Math.ceil(d.student.total.all / d.computer.working).toLocaleString()}</span
+			>
 		</div>
 		<hr />
 		<div class="f ratio-chart">
@@ -378,11 +394,9 @@
 				<img src="/tv.svg" alt="" width="24" height="24" />
 			</div>
 			<div class="f">
-				<div class="f">
-					{#each Array(~~(d.student.total.all / d.computer.working)) as _}
-						<img src="/person-y.svg" alt="" width="24" height="24" />
-					{/each}
-				</div>
+				{#each Array(Math.ceil(d.student.total.all / d.computer.working)) as _}
+					<img src="/person-y.svg" alt="" width="24" height="24" />
+				{/each}
 			</div>
 		</div>
 		<details class="computer-details">
@@ -477,7 +491,7 @@
 	<h2 class="f">
 		<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 		<span class="f g8">
-			<CircularProgress percent={~~((d.buildings_stats?.ดี / d.buildings_stats?.total) * 100)} />
+			<CircularProgress percent={(d.buildings_stats?.ดี / d.buildings_stats?.total) * 100} />
 			{~~((d.buildings_stats?.ดี / d.buildings_stats?.total) * 100)}%
 		</span>
 	</h2>
@@ -516,13 +530,13 @@
 	<section>
 		<h3 class="f">
 			<span>อาคารการศึกษา <small>(อาคาร)</small></span>
-			<span>{d.school_buildings?.length}</span>
+			<span>{d.school_buildings?.length?.toLocaleString()}</span>
 		</h3>
 	</section>
 	<section>
 		<p class="f">
 			<span>ห้องทั้งหมด <small>(ห้อง)</small></span>
-			<span class="mitr">{d.buildings_stats?.school_buildings_rooms}</span>
+			<span class="mitr">{d.buildings_stats?.school_buildings_rooms?.toLocaleString()}</span>
 		</p>
 		<hr />
 		{#each d.school_buildings as b}
@@ -541,7 +555,7 @@
 					</p>
 					<Waffle number={parseInt(b.room_number)} />
 					<div>
-						<span class="mitr">{parseInt(b.room_number)}</span>
+						<span class="mitr">{parseInt(b.room_number).toLocaleString()}</span>
 						<span class="fs10">ห้อง</span>
 					</div>
 				</div>
@@ -802,7 +816,7 @@
 		.student-section {
 			border-radius: 2px;
 			flex: var(--std-chart-ratio) var(--std-chart-ratio) 0;
-			padding: 8px;
+			padding: 8px 0;
 			text-align: right;
 			color: #fff;
 			background: var(--std-color);
