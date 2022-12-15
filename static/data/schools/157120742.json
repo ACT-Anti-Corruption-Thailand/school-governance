@@ -23,7 +23,14 @@
  "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/157120742.jpg",
  "principal_image_path": "https://data.bopp-obec.info/emis/pic/1057120721-20170815-134537.jpg",
  "latlng": "20.0234874,100.4837335",
- "buildings": null,
+ "school_id": "157120742",
+ "school_buildings": [],
+ "other_buildings": [],
+ "buildings_stats": {
+  "ดี": 0,
+  "พอใช้": 0,
+  "ทรุดโทรม": 0
+ },
  "computer": {
   "working": 17,
   "broken": 0,

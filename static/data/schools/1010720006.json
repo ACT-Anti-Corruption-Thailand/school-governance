@@ -23,7 +23,8 @@
  "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/1010720006.jpg",
  "principal_image_path": "https://data.bopp-obec.info/emis/pic/1010720019-20150403-160553.jpg",
  "latlng": "13.758642,100.483778",
- "buildings": [
+ "school_id": "1010720006",
+ "school_buildings": [
   {
    "name": "อาคารเรียน ลำดับที่ 1 ",
    "model": "สามัญ",
@@ -50,7 +51,9 @@
    "current_condition": "ดี",
    "image_url_0": "https://bobec.bopp-obec.info/b01/100300076011172562200120211027142843585425067.jpg",
    "image_url_1": "https://bobec.bopp-obec.info/b01/10030007601117256220012021102714290940301744.jpg"
-  },
+  }
+ ],
+ "other_buildings": [
   {
    "name": "ถังเก็บน้ำ ลำดับที่ 1 ",
    "model": "ฝ.33",
@@ -70,6 +73,13 @@
    "image_url_1": "https://bobec.bopp-obec.info/b27/7200061270225432720211027140240275808122.jpg"
   }
  ],
+ "buildings_stats": {
+  "ดี": 4,
+  "พอใช้": 1,
+  "ทรุดโทรม": 0,
+  "total": 5,
+  "school_buildings_rooms": 70
+ },
  "computer": {
   "working": 120,
   "broken": 0,

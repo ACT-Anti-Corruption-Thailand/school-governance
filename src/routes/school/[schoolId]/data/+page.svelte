@@ -467,18 +467,18 @@
 	<h2 class="f">
 		<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 		<span class="f g8">
-			<CircularProgress />
-			80%
+			<CircularProgress percent={~~((d.buildings_stats?.ดี / d.buildings_stats?.total) * 100)} />
+			{~~((d.buildings_stats?.ดี / d.buildings_stats?.total) * 100)}%
 		</span>
 	</h2>
 	<section>
 		<dl class="f status-color">
 			<dt class="usable-color">เหลือง</dt>
-			<dd>ดี 80%</dd>
+			<dd>ดี {~~((d.buildings_stats?.ดี / d.buildings_stats?.total) * 100)}%</dd>
 			<dt class="await-color">เหลืองเข้ม</dt>
-			<dd>พอใช้ 13%</dd>
+			<dd>พอใช้ {~~((d.buildings_stats?.พอใช้ / d.buildings_stats?.total) * 100)}%</dd>
 			<dt class="unusable-color">แดง</dt>
-			<dd>ทรุดโทรม 7%</dd>
+			<dd>ทรุดโทรม {~~((d.buildings_stats?.ทรุดโทรม / d.buildings_stats?.total) * 100)}%</dd>
 		</dl>
 	</section>
 	<section>
@@ -487,47 +487,55 @@
 			<small>จากการประเมินของโรงเรียน</small>
 		</p>
 		<div class="student-chart">
-			<div class="usable-color student-section mitr" style="--std-chart-ratio:80">80%</div>
-			<div class="await-color student-section mitr" style="--std-chart-ratio:10" />
-			<div class="unusable-color student-section mitr" style="--std-chart-ratio:10" />
+			<div
+				class="usable-color student-section mitr"
+				style:--std-chart-ratio={d.buildings_stats?.ดี}
+			>
+				{~~((d.buildings_stats?.ดี / d.buildings_stats?.total) * 100)}%
+			</div>
+			<div
+				class="await-color student-section mitr"
+				style:--std-chart-ratio={d.buildings_stats?.พอใช้}
+			/>
+			<div
+				class="unusable-color student-section mitr"
+				style:--std-chart-ratio={d.buildings_stats?.ทรุดโทรม}
+			/>
 		</div>
 	</section>
 	<section>
 		<h3 class="f">
 			<span>อาคารการศึกษา <small>(อาคาร)</small></span>
-			<span>4</span>
+			<span>{d.school_buildings?.length}</span>
 		</h3>
 	</section>
 	<section>
 		<p class="f">
 			<span>ห้องทั้งหมด <small>(ห้อง)</small></span>
-			<span class="mitr">999</span>
+			<span class="mitr">{d.buildings_stats?.school_buildings_rooms}</span>
 		</p>
 		<hr />
-		<article>
-			<img src="/anon.svg" alt="" />
-			<h4>อาคารเรียน 1</h4>
-			<p>
-				สร้างปี พ.ศ.2545<br />
-				สภาพการใช้งาน <span>สี</span> ดี
-			</p>
-			<div>
-				<div>icon</div>
-			</div>
-			<span>16 ห้อง</span>
-		</article>
-		<article>
-			<img src="/anon.svg" alt="" />
-			<h4>อาคารเรียน 1</h4>
-			<p>
-				สร้างปี พ.ศ.2545<br />
-				สภาพการใช้งาน <span>สี</span> ดี
-			</p>
-			<div>
-				<div>icon</div>
-			</div>
-			<span>16 ห้อง</span>
-		</article>
+		{#each d.school_buildings as b}
+			<article>
+				<img
+					src={b.image_url_0}
+					alt=""
+					width="200"
+					height="200"
+					onerror="if(this.src!=='{b.image_url_1}')this.src='{b.image_url_1}'"
+				/>
+				<h4>{b.name}</h4>
+				<p>
+					สร้างเมื่อ {b.build_at}<br />
+					สภาพการใช้งาน <span>สี</span>
+					{b.current_condition}
+				</p>
+				<div>
+					<div>waffle</div>
+				</div>
+				<span>{parseInt(b.room_number)} ห้อง</span>
+			</article>
+		{/each}
 	</section>
 	<button type="button" class="teacher-size-btn emp-btn mb8">
 		<h3 class="f">

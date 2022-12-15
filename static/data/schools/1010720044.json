@@ -23,7 +23,8 @@
  "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/1010720044.jpg",
  "principal_image_path": "https://data.bopp-obec.info/emis/pic/1010720116-20130813-130421.jpg",
  "latlng": "13.7650426667,100.507472927",
- "buildings": [
+ "school_id": "1010720044",
+ "school_buildings": [
   {
    "name": "อาคารเรียน ลำดับที่ 1 ",
    "model": "พิเศษ 6 ชั้น",
@@ -70,6 +71,14 @@
    "image_url_1": "https://bobec.bopp-obec.info/b01/100120145014325572010120211018163302930405448.jpg"
   }
  ],
+ "other_buildings": [],
+ "buildings_stats": {
+  "ดี": 2,
+  "พอใช้": 1,
+  "ทรุดโทรม": 2,
+  "total": 5,
+  "school_buildings_rooms": 120
+ },
  "computer": {
   "working": 241,
   "broken": 0,
@@ -792,11 +801,11 @@
   "total": 2953
  },
  "internet": {
-  "provider": "-",
-  "type": "-",
-  "speed": "-",
-  "status": "-",
-  "monthly_price": "-",
+  "provider": null,
+  "type": null,
+  "speed": null,
+  "status": null,
+  "monthly_price": null,
   "lan_network": "มีระบบเครือข่าย LAN",
   "wireless_lan_network": "มีระบบเครือข่ายไร้สาย (Wireless LAN)"
  },

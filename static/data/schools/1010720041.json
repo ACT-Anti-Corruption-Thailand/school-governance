@@ -23,7 +23,8 @@
  "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/1010720041.jpg",
  "principal_image_path": "https://data.bopp-obec.info/emis/pic/1010720110-20130730-200451.jpg",
  "latlng": "13.758972119522639,100.50195336341858",
- "buildings": [
+ "school_id": "1010720041",
+ "school_buildings": [
   {
    "name": "อาคารเรียน ลำดับที่ 1 ",
    "model": "อื่นๆ 004,008,030,107,206,210,214,315,415,308",
@@ -50,7 +51,9 @@
    "current_condition": "ทรุดโทรม",
    "image_url_0": "https://bobec.bopp-obec.info/b01/7200413012125150120191028191003351683015.jpg",
    "image_url_1": "https://bobec.bopp-obec.info/b01/7200413012125150120191028104255579071465.jpg"
-  },
+  }
+ ],
+ "other_buildings": [
   {
    "name": "อาคารอเนกประสงค์/โรงอาหาร/โรงฝึกงาน/หอประชุม ลำดับที่ 1 ",
    "model": "อื่น อื่น(สร้างเอง)",
@@ -88,6 +91,13 @@
    "image_url_1": "https://bobec.bopp-obec.info/b15/7200411150725461520191029121700821439014.jpg"
   }
  ],
+ "buildings_stats": {
+  "ดี": 1,
+  "พอใช้": 4,
+  "ทรุดโทรม": 2,
+  "total": 7,
+  "school_buildings_rooms": 118
+ },
  "computer": {
   "working": 110,
   "broken": 44,

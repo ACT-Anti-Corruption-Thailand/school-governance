@@ -23,7 +23,8 @@
  "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/1010720039.jpg",
  "principal_image_path": "https://data.bopp-obec.info/emis/pic/1010720039-20181115-091352.jpg",
  "latlng": "13.7436091903,100.497206263",
- "buildings": [
+ "school_id": "1010720039",
+ "school_buildings": [
   {
    "name": "อาคารเรียน ลำดับที่ 1 ",
    "model": "เบ็ดเสร็จ ก.",
@@ -77,7 +78,9 @@
    "current_condition": "ดี",
    "image_url_0": "https://bobec.bopp-obec.info/b01/100120046013125352010120191025113315442599734.jpg",
    "image_url_1": "https://bobec.bopp-obec.info/b01/100120046013125352010120191025113330315552560.jpg"
-  },
+  }
+ ],
+ "other_buildings": [
   {
    "name": "อาคารอเนกประสงค์/โรงอาหาร/โรงฝึกงาน/หอประชุม ลำดับที่ 1 ",
    "model": "อาคารหอประชุม 100/27",
@@ -124,6 +127,13 @@
    "image_url_1": "https://bobec.bopp-obec.info/b29/100120041290625342012920191025124220134320158.jpg"
   }
  ],
+ "buildings_stats": {
+  "ดี": 11,
+  "พอใช้": 0,
+  "ทรุดโทรม": 0,
+  "total": 11,
+  "school_buildings_rooms": 213
+ },
  "computer": {
   "working": 295,
   "broken": 0,
@@ -846,11 +856,11 @@
   "total": 9331
  },
  "internet": {
-  "provider": "-",
-  "type": "-",
-  "speed": "-",
-  "status": "-",
-  "monthly_price": "-",
+  "provider": null,
+  "type": null,
+  "speed": null,
+  "status": null,
+  "monthly_price": null,
   "lan_network": "ไม่มีระบบเครือข่าย LAN",
   "wireless_lan_network": "ไม่มีระบบเครือข่ายไร้สาย (Wireless LAN)"
  },

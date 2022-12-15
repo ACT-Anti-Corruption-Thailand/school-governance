@@ -23,7 +23,8 @@
  "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/1010720002.jpg",
  "principal_image_path": "https://data.bopp-obec.info/emis/pic/1010720014-20130830-171116.jpg",
  "latlng": "13.753161475460244,100.48543566063108",
- "buildings": [
+ "school_id": "1010720002",
+ "school_buildings": [
   {
    "name": "อาคารเรียน ลำดับที่ 1 ",
    "model": "พิเศษ 4 ชั้น",
@@ -41,7 +42,9 @@
    "current_condition": "ดี",
    "image_url_0": "https://bobec.bopp-obec.info/b01/7200022011925310120191031102424522835301.jpg",
    "image_url_1": "https://bobec.bopp-obec.info/b01/7200022011925310120191031102435313997321.jpg"
-  },
+  }
+ ],
+ "other_buildings": [
   {
    "name": "บ้านพักภารโรง ลำดับที่ 1 ",
    "model": "บ้านพักภารโรง/32",
@@ -106,6 +109,13 @@
    "image_url_1": "https://bobec.bopp-obec.info/b27/7200021270225442720191031103010352620941.jpg"
   }
  ],
+ "buildings_stats": {
+  "ดี": 8,
+  "พอใช้": 1,
+  "ทรุดโทรม": 0,
+  "total": 9,
+  "school_buildings_rooms": 41
+ },
  "computer": {
   "working": 48,
   "broken": 0,

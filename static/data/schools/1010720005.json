@@ -23,7 +23,8 @@
  "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/1010720005.jpg",
  "principal_image_path": "https://data.bopp-obec.info/emis/pic/1072630049-20151105-095143.jpg",
  "latlng": "13.760592,100.510484",
- "buildings": [
+ "school_id": "1010720005",
+ "school_buildings": [
   {
    "name": "อาคารเรียน ลำดับที่ 1 ",
    "model": "อื่นๆ 004,008,030,107,206,210,214,315,415,308",
@@ -43,6 +44,14 @@
    "image_url_1": "https://bobec.bopp-obec.info/b01/7200052012125270120191031131208662935034.jpg"
   }
  ],
+ "other_buildings": [],
+ "buildings_stats": {
+  "ดี": 2,
+  "พอใช้": 0,
+  "ทรุดโทรม": 0,
+  "total": 2,
+  "school_buildings_rooms": 35
+ },
  "computer": {
   "working": 85,
   "broken": 6,

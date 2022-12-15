@@ -23,7 +23,8 @@
  "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/1010720001.jpg",
  "principal_image_path": "https://data.bopp-obec.info/emis/pic/1034710003-20150714-135152.jpg",
  "latlng": "13.759963632142204,100.52937724490948",
- "buildings": [
+ "school_id": "1010720001",
+ "school_buildings": [
   {
    "name": "อาคารเรียน ลำดับที่ 1 ",
    "model": "อื่นๆ 004,008,030,107,206,210,214,315,415,308",
@@ -59,7 +60,9 @@
    "current_condition": "ดี",
    "image_url_0": "https://bobec.bopp-obec.info/b01/7200014012125260120191031134721691129955.jpg",
    "image_url_1": "https://bobec.bopp-obec.info/b01/7200014012125260120211027110652353544374.jpg"
-  },
+  }
+ ],
+ "other_buildings": [
   {
    "name": "บ้านพักครู ลำดับที่ 1 ",
    "model": "สปช.303/28",
@@ -151,6 +154,13 @@
    "image_url_1": "https://bobec.bopp-obec.info/b27/7200011270225392720191031140838799193683.jpg"
   }
  ],
+ "buildings_stats": {
+  "ดี": 7,
+  "พอใช้": 6,
+  "ทรุดโทรม": 1,
+  "total": 14,
+  "school_buildings_rooms": 112
+ },
  "computer": {
   "working": 157,
   "broken": 21,
