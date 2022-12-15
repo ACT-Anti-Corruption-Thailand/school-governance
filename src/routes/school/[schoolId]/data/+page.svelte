@@ -4,6 +4,7 @@
 	import Dropdown from 'components/Dropdown.svelte';
 	import CircularProgress from 'components/CircularProgress.svelte';
 	import ActAiBanner from 'components/ActAiBanner.svelte';
+	import Waffle from 'components/Waffle.svelte';
 
 	const DROPDOWN_DATA = [
 		{ value: '2565' },
@@ -16,6 +17,15 @@
 	let dropdown_choice = DROPDOWN_DATA[0];
 
 	$: d = $currentSchool;
+
+	const getConditionClass = (condition: string) => {
+		const CONDITIONS_CLASS: Record<string, string> = {
+			ดี: 'usable-color',
+			พอใช้: 'await-color',
+			ทรุดโทรม: 'unusable-color'
+		};
+		return CONDITIONS_CLASS[condition] ?? '';
+	};
 </script>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
@@ -516,24 +526,25 @@
 		</p>
 		<hr />
 		{#each d.school_buildings as b}
-			<article>
-				<img
-					src={b.image_url_0}
-					alt=""
-					width="200"
-					height="200"
-					onerror="if(this.src!=='{b.image_url_1}')this.src='{b.image_url_1}'"
+			<article class="building-card {getConditionClass(b.current_condition)}">
+				<div
+					class="building-image"
+					style:--bg0="url({b.image_url_0})"
+					style:--bg1="url({b.image_url_1})"
 				/>
-				<h4>{b.name}</h4>
-				<p>
-					สร้างเมื่อ {b.build_at}<br />
-					สภาพการใช้งาน <span>สี</span>
-					{b.current_condition}
-				</p>
 				<div>
-					<div>waffle</div>
+					<h4>{b.name}</h4>
+					<p>
+						สร้างเมื่อ {b.build_at}<br />
+						สภาพการใช้งาน
+						<span class="building-status cv">{b.current_condition}</span>
+					</p>
+					<Waffle number={parseInt(b.room_number)} />
+					<div>
+						<span class="mitr">{parseInt(b.room_number)}</span>
+						<span class="fs10">ห้อง</span>
+					</div>
 				</div>
-				<span>{parseInt(b.room_number)} ห้อง</span>
 			</article>
 		{/each}
 	</section>
@@ -544,28 +555,20 @@
 			<img src="/chevron/right.svg" alt="" width="24" height="24" />
 		</h3>
 	</button>
-	<section>
+	<section class="other-buildings">
 		<div>
-			<article>
-				<img src="/anon.svg" alt="" />
-				<h4>อาคารเรียน 1</h4>
-				<p>สร้างปี พ.ศ.2545</p>
-			</article>
-			<article>
-				<img src="/anon.svg" alt="" />
-				<h4>อาคารเรียน 1</h4>
-				<p>สร้างปี พ.ศ.2545</p>
-			</article>
+			{#each d.other_buildings as b}
+				<article class={getConditionClass(b.current_condition)}>
+					<div
+						class="building-image"
+						style:--bg0="url({b.image_url_0})"
+						style:--bg1="url({b.image_url_1})"
+					/>
+					<h4>{b.name}</h4>
+					<p>สร้างเมื่อ {b.build_at}</p>
+				</article>
+			{/each}
 		</div>
-		<dl>
-			<dt>ห้องน้ำ</dt>
-			<dt>บ้านพัก</dt>
-			<dd>ครู, ภารโรง, นักเรียน</dd>
-			<dt>การเกษตร</dt>
-			<dd>เรือนเพาะชำ, บ่อเลี้ยงปลา</dd>
-			<dt>สิ่งก่อสร้างอื่น</dt>
-			<dd>ถังเก็บน้ำ, ถนน, รางระบายน้ำ</dd>
-		</dl>
 	</section>
 
 	<ActAiBanner margin />
@@ -573,8 +576,8 @@
 	<h2 class="f">
 		<span>ข้อมูลทั่วไป</span>
 	</h2>
-	<section>
-		<h3>ติดต่อ</h3>
+	<section class="contact">
+		<h3 class="mb8">ติดต่อ</h3>
 		<dl class="list-grid">
 			<dt>
 				<img src="/location.svg" alt="ที่อยู่" width="16" height="16" />
@@ -594,9 +597,9 @@
 			<dd>{d.email}</dd>
 		</dl>
 	</section>
-	<section>
-		<h3>ข้อมูลอื่น</h3>
-		<img src={d.logo_image_path} alt="" />
+	<section class="other-data">
+		<img class="school-logo" src={d.logo_image_path} alt="" width="40" height="40" />
+		<h3 class="mb8">ข้อมูลอื่น</h3>
 		<dl class="list-grid">
 			<dt>รหัสโรงเรียน</dt>
 			<dd>{$currentSchoolId}</dd>
@@ -618,7 +621,7 @@
 			สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่ระบบสารสนเทศเพื่อการบริหารการศึกษา
 			(Education Management Information System : EMIS) https://data.bopp-obec.info/emis
 		</p>
-		<p>อัปเดตข้อมูลล่าสุดเมื่อ 30/11/2565</p>
+		<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ 30/11/2565</p>
 	</footer>
 {/if}
 
@@ -943,6 +946,101 @@
 
 		> li {
 			margin-top: 16px;
+		}
+	}
+
+	.building-card {
+		display: flex;
+		padding: 8px;
+		gap: 8px;
+
+		> .building-image {
+			width: 50%;
+			height: auto;
+			aspect-ratio: 1;
+			object-fit: cover;
+			border-top: 2px var(--std-color) solid;
+			background: var(--bg0), var(--bg1), url(/school-placeholder.png);
+			background-size: cover;
+		}
+
+		.building-status {
+			&::before {
+				content: '';
+				display: inline-block;
+				width: 8px;
+				height: 8px;
+				border-radius: 1px;
+				background: var(--std-color);
+				margin-right: 0.5ch;
+			}
+		}
+
+		h4 {
+			font-weight: 400;
+			margin-bottom: 0;
+		}
+
+		p {
+			color: #9daad5;
+			font-size: 0.625rem;
+		}
+	}
+
+	.other-buildings {
+		> div {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 16px;
+			padding: 8px;
+
+			> article {
+				> .building-image {
+					aspect-ratio: 1;
+					object-fit: cover;
+					border-top: 2px var(--std-color) solid;
+					background: var(--bg0), var(--bg1), url(/school-placeholder.png);
+					background-size: cover;
+				}
+
+				> h4 {
+					font-weight: 400;
+					margin: 8px 0 0;
+				}
+
+				> p {
+					color: #9daad5;
+					font-size: 0.625rem;
+				}
+			}
+		}
+	}
+
+	.contact {
+		> dl {
+			gap: 8px;
+		}
+	}
+
+	.other-data {
+		> .school-logo {
+			float: right;
+		}
+
+		dd {
+			font-weight: 500;
+		}
+	}
+
+	footer {
+		padding: 16px;
+
+		text-align: center;
+		color: #0c166b;
+
+		.update {
+			margin: 16px 0 0;
+			color: #9daad5;
 		}
 	}
 </style>
