@@ -337,7 +337,7 @@
 				gap: 10px;
 
 				border: 1px solid #3c55ab;
-				box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+				box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 				border-radius: 20px;
 			}
 		}

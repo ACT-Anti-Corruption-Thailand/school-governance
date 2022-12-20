@@ -345,7 +345,7 @@
 
 	.header {
 		background: #3c55ab;
-		border-radius: 0px 0px 24px 24px;
+		border-radius: 0 0 24px 24px;
 		min-height: 70vh;
 
 		flex-direction: column;
@@ -387,7 +387,7 @@
 		height: 40px;
 
 		background: #fff;
-		box-shadow: 0px 0px 4px rgb(12 22 107 / 20%);
+		box-shadow: 0 0 4px rgb(12 22 107 / 20%);
 		border-radius: 30px;
 
 		margin-bottom: -20px;
@@ -501,7 +501,7 @@
 
 	.origin {
 		background: #3c55ab;
-		border-radius: 24px 24px 0px 0px;
+		border-radius: 24px 24px 0 0;
 		padding: 24px 16px;
 		color: #fff;
 		text-align: center;
@@ -551,7 +551,7 @@
 				}
 
 				background: #fff5dd;
-				box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+				box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 				border-radius: 5px;
 				padding: 12px 16px;
 				color: #3c55ab;
@@ -561,8 +561,7 @@
 		}
 
 		.act-banner {
-			margin: 16px auto 24px;
-			max-width: 320px;
+			margin: 16px 0 24px;
 		}
 	}
 
@@ -588,7 +587,7 @@
 		margin-bottom: 20px;
 		text-align: center;
 		background: #3c55ab;
-		border-radius: 0px 0px 24px 24px;
+		border-radius: 0 0 24px 24px;
 		color: #fff;
 		flex-direction: column;
 		gap: 24px;
@@ -657,7 +656,7 @@
 		padding: 24px 16px 40px;
 
 		background: #0c166b;
-		border-radius: 24px 24px 0px 0px;
+		border-radius: 24px 24px 0 0;
 		color: #fff;
 		text-align: center;
 		line-height: 136%;
