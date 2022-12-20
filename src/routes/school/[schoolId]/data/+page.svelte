@@ -294,7 +294,7 @@
 					{ number: d.tables.to_be_removed, color: '#fc5858' }
 				]}
 			/>
-			<p class="mb8">
+			<p class="mb8 fs10 ratio-stat-text">
 				<span class="cv usable-color">{d.tables.working.toLocaleString()}</span> |
 				<span class="cv await-color">{d.tables.to_be_repaired.toLocaleString()}</span>
 				|
@@ -337,7 +337,7 @@
 					{ number: d.computer.learning.broken, color: '#fc5858' }
 				]}
 			/>
-			<p class="mb8">
+			<p class="mb8 fs10 ratio-stat-text">
 				<span class="cv usable-color">{d.computer.learning.working.toLocaleString()}</span> |
 				<span class="cv unusable-color">{d.computer.learning.broken.toLocaleString()}</span> เครื่อง
 			</p>
@@ -361,26 +361,35 @@
 			<details class="computer-details" open>
 				<summary>
 					<span class="f">
-						<span>ดูแหล่งที่มาของคอมพิวเตอร์</span>
+						<span class="mitr">ดูแหล่งที่มาของคอมพิวเตอร์ <small>(เครื่อง)</small></span>
 						<img class="chevron" src="/chevron/bottom.svg" alt="" width="24" height="24" />
 					</span>
 				</summary>
-				<div class="f mt8">
-					<span>งบประมาณ สพฐ <small>(เครื่อง)</small></span>
-					<span class="mitr fs20">{d.computer.learning.source.obec}</span>
-				</div>
-				<div class="f">
-					<span>จัดหาเอง/บริจาค <small>(เครื่อง)</small></span>
-					<span class="mitr fs20">{d.computer.learning.source.self}</span>
+				<div class="f mt8 mb8">
+					{#if d.computer.learning.source.obec}
+						<span>งบประมาณ สพฐ</span>
+					{/if}
+					{#if d.computer.learning.source.self}
+						<span>จัดหาเอง/บริจาค</span>
+					{/if}
 				</div>
 				<RatioChart
 					data={[
-						{ number: d.computer.learning.source.obec, color: '#3c55ab', label: 'งบประมาณ สพฐ' },
-						{ number: d.computer.learning.source.self, color: '#3c55ab', label: 'จัดหาเอง/บริจาค' }
+						{ number: d.computer.learning.source.obec, color: '#3c55ab' },
+						{ number: d.computer.learning.source.self, color: '#3c55ab' }
 					]}
 				/>
-				<p class="mb8">
-					{d.computer.learning.source.obec} | {d.computer.learning.source.self} เครื่อง
+				<p class="f mb8 fs10 ratio-stat-text">
+					{#if d.computer.learning.source.obec}
+						<span
+							><span class="cv primary-color">{d.computer.learning.source.obec}</span> เครื่อง</span
+						>
+					{/if}
+					{#if d.computer.learning.source.self}
+						<span
+							><span class="cv primary-color">{d.computer.learning.source.self}</span> เครื่อง</span
+						>
+					{/if}
 				</p>
 				<div class="f g8 ais">
 					<img src="/info.svg" alt="" width="16" height="16" />
@@ -469,7 +478,7 @@
 				<dt class="usable-color">เหลือง</dt>
 				<dd>ดี {~~((d.buildings_stats?.ดี / d.buildings_stats?.total) * 100)}%</dd>
 				<dt class="await-color">เหลืองเข้ม</dt>
-				<dd>พอใช้ {~~((d.buildings_stats?.พอใช้ / d.buildings_stats?.total) * 100)}%</dd>
+				<dd>พอใช้ {~~((d.buildings_stats?.['พอใช้'] / d.buildings_stats?.total) * 100)}%</dd>
 				<dt class="unusable-color">แดง</dt>
 				<dd>ทรุดโทรม {~~((d.buildings_stats?.ทรุดโทรม / d.buildings_stats?.total) * 100)}%</dd>
 			</dl>
@@ -578,15 +587,15 @@
 				<dt>รหัสโรงเรียน</dt>
 				<dd>{$currentSchoolId}</dd>
 				<dt>สังกัด</dt>
-				<dd>สพม.กรุงเทพมหานคร เขต 1</dd>
+				<dd>!!! ยังไม่มี !!!</dd>
 				<dt>ก่อตั้งเมื่อ</dt>
 				<dd>{d.established}</dd>
 				<dt>ระดับที่เปิดสอน</dt>
 				<dd>{d.grades}</dd>
 				<dt>ประเภทโรงเรียน</dt>
-				<dd>รัฐบาล</dd>
+				<dd>!!! ยังไม่มี !!!</dd>
 				<dt>ลักษณะโรงเรียน</dt>
-				<dd>สหศึกษา</dd>
+				<dd>!!! ยังไม่มี !!!</dd>
 			</dl>
 		</section>
 
@@ -1029,5 +1038,10 @@
 
 	.no-data {
 		color: #9daad5;
+	}
+
+	.ratio-stat-text {
+		margin-top: 4px;
+		color: #b1b2b3;
 	}
 </style>
