@@ -163,7 +163,7 @@
 		}
 	}
 
-	@media screen and (min-width: 992px) {
+	@media screen and (min-width: 768px) {
 		.nav-compensate {
 			display: none;
 		}

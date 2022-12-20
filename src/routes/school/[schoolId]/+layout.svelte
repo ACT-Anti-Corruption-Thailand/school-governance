@@ -26,7 +26,7 @@
 		font-size: 0.8125rem;
 	}
 
-	@media screen and (min-width: 992px) {
+	@media screen and (min-width: 768px) {
 		.school-container {
 			margin-left: 64px;
 			font-size: 1rem;
