@@ -56,28 +56,37 @@
 <SchoolHeader pageData={{ name: 'ประกาศ', color: '#FC5858' }}>
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
-<section class="f">
-	{#if Array.isArray(filtered_data) && filtered_data.length}
-		{#each filtered_data as news}
-			<article>
-				<header>
-					<h2>{news.announceTitle}</h2>
-					<p>โพสต์โดย: <span class="author">{news.announcePerson}</span></p>
-				</header>
-				<p>{news.announceContent}</p>
-			</article>
-		{/each}
-	{:else}
-		<div class="contact f">
-			<h2>ยังไม่มีประกาศ</h2>
-			<p>หากโรงเรียนต้องการเพิ่มประกาศ</p>
-			<a href="#a">ติดต่อเจ้าหน้าที่</a>
-		</div>
-	{/if}
-</section>
+<div class="desktop-margin">
+	<section class="f">
+		{#if Array.isArray(filtered_data) && filtered_data.length}
+			{#each filtered_data as news}
+				<article>
+					<header>
+						<h2>{news.announceTitle}</h2>
+						<p>โพสต์โดย: <span class="author">{news.announcePerson}</span></p>
+					</header>
+					<p>{news.announceContent}</p>
+				</article>
+			{/each}
+		{:else}
+			<div class="contact f">
+				<h2>ยังไม่มีประกาศ</h2>
+				<p>หากโรงเรียนต้องการเพิ่มประกาศ</p>
+				<a href="#a">ติดต่อเจ้าหน้าที่</a>
+			</div>
+		{/if}
+	</section>
+</div>
 
-<!-- <pre><code>{data ? JSON.stringify(filtered_data, null, 2) : ''}</code></pre> -->
 <style lang="scss">
+	@media screen and (min-width: 768px) {
+		.desktop-margin {
+			width: 100%;
+			max-width: 640px;
+			margin: auto;
+		}
+	}
+
 	section {
 		min-height: 70vh;
 		flex-direction: column;
@@ -107,7 +116,7 @@
 	article {
 		padding: 16px;
 		background: #ffffff;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 5px;
 		width: 100%;
 

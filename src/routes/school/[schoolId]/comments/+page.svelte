@@ -18,18 +18,20 @@
 		<span class="comment-header-val">50</span>
 	</div>
 </SchoolHeader>
-{#if $currentUser}
-	<p>Current user is: {$currentUser.uid}</p>
-	<p>You can comment</p>
-{:else}
-	<p>You are not logged in D:</p>
-	<p>No comment</p>
-{/if}
-<p>
-	Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic neque ea beatae quibusdam
-	praesentium quo fuga, asperiores laudantium tenetur autem! Et incidunt asperiores unde ex. Dolore
-	facilis iure alias vitae.
-</p>
+<div class="desktop-margin">
+	{#if $currentUser}
+		<p>Current user is: {$currentUser.uid}</p>
+		<p>You can comment</p>
+	{:else}
+		<p>You are not logged in D:</p>
+		<p>No comment</p>
+	{/if}
+	<p>
+		Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic neque ea beatae quibusdam
+		praesentium quo fuga, asperiores laudantium tenetur autem! Et incidunt asperiores unde ex.
+		Dolore facilis iure alias vitae.
+	</p>
+</div>
 
 <style lang="scss">
 	.comment-header {
