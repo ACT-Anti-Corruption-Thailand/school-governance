@@ -23,7 +23,7 @@
 
 	let dropdown_choice = DROPDOWN_DATA[0];
 
-	$: pageData = $page.params.schoolId;
+	$: schoolId = $page.params.schoolId;
 
 	let data: {
 		Id: number;
@@ -35,7 +35,7 @@
 	}[];
 	onMount(() => {
 		fetch(
-			`https://sheets.wevis.info/api/v1/db/data/noco/p_l3i1x0puw6u28y/Announcements/views/Announcements?limit=999&where=(schoolId,eq,${pageData})`,
+			`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/Announcements?limit=999&where=(schoolId,eq,${schoolId})`,
 			{
 				method: 'GET',
 				headers: {
