@@ -1,6 +1,113 @@
 <script lang="ts">
-	import { currentUser } from 'stores/firebaseapp';
+	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 	import SchoolHeader from 'components/SchoolHeader.svelte';
+	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import { currentUser } from 'stores/firebaseapp';
+
+	$: schoolId = $page.params.schoolId;
+
+	let txt_comment = '';
+	let chk_locations: string[] = [];
+
+	const fetchComments = async () => {
+		try {
+			const resp = await fetch(
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?sort=-createDate&limit=999&where=(schoolId,eq,${schoolId})`,
+				{
+					method: 'GET',
+					headers: {
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY
+					}
+				}
+			);
+			const json = await resp.json();
+			posts = json?.list.map((e: any) => ({
+				...e,
+				likedByYourself: e.likedUserIds.find((e: any) => e.userId === $currentUser?.uid)
+			}));
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	const likeComment = async (commentId: number) => {
+		try {
+			await fetch(
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolCommentLike`,
+				{
+					method: 'POST',
+					headers: {
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY,
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						userId: $currentUser?.uid,
+						commentId: commentId
+					})
+				}
+			);
+		} catch (err) {
+			console.error(err);
+		} finally {
+			fetchComments();
+		}
+	};
+
+	const unlikeComment = async (likeId: number) => {
+		try {
+			await fetch(
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolCommentLike/${likeId}`,
+				{
+					method: 'DELETE',
+					headers: {
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY,
+						'Content-Type': 'application/json'
+					}
+				}
+			);
+		} catch (err) {
+			console.error(err);
+		} finally {
+			fetchComments();
+		}
+	};
+
+	const debugPost = async () => {
+		try {
+			await fetch(
+				'https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?limit=999',
+				{
+					method: 'POST',
+					headers: {
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY,
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						schoolId: schoolId,
+						comments: txt_comment.trim(),
+						location: chk_locations.join(),
+						schoolYear: 2022,
+						userId: $currentUser?.uid
+					})
+				}
+			);
+		} catch (err) {
+			console.error(err);
+		} finally {
+			fetchComments();
+		}
+	};
+
+	let posts: any[] = [];
+	let mounted = false;
+	onMount(() => {
+		mounted = true;
+	});
+
+	$: if (mounted && $currentUser) {
+		fetchComments();
+	}
 </script>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
@@ -21,16 +128,57 @@
 <div class="desktop-margin">
 	{#if $currentUser}
 		<p>Current user is: {$currentUser.uid}</p>
-		<p>You can comment</p>
+		<div>
+			<textarea placeholder="คิดเห็นหรืออยากฝากอะไรถึงโรงเรียนบ้าง?" bind:value={txt_comment} />
+			<div>
+				<label
+					><input type="checkbox" bind:group={chk_locations} value="classroom" /> ห้องเรียน</label
+				>
+				<label><input type="checkbox" bind:group={chk_locations} value="toilet" /> ห้องน้ำ</label>
+				<label><input type="checkbox" bind:group={chk_locations} value="canteen" /> โรงอาหาร</label>
+				<label><input type="checkbox" bind:group={chk_locations} value="gym" /> สนามกีฬา</label>
+			</div>
+			<input
+				type="button"
+				value="POST"
+				disabled={txt_comment.trim() === '' || chk_locations.length === 0}
+				on:click={debugPost}
+			/>
+		</div>
 	{:else}
 		<p>You are not logged in D:</p>
-		<p>No comment</p>
 	{/if}
-	<p>
-		Lorem ipsum dolor, sit amet consectetur adipisicing elit. Hic neque ea beatae quibusdam
-		praesentium quo fuga, asperiores laudantium tenetur autem! Et incidunt asperiores unde ex.
-		Dolore facilis iure alias vitae.
-	</p>
+	<section>
+		{#each posts as post}
+			<article>
+				<p>{post.comments}</p>
+				<div class="f">
+					{#each post.location as loc}
+						<span>{loc}</span>
+					{/each}
+				</div>
+				<p>ปีการศึกษา {post.schoolYear}</p>
+				<p>createDate {post.createDate}</p>
+				<p>by {post.userId}</p>
+				<p>
+					{#if $currentUser}
+						<input
+							type="button"
+							value={post.likedByYourself ? 'Liked' : 'Like'}
+							on:click={() => {
+								post.likedByYourself
+									? unlikeComment(post.likedByYourself.Id)
+									: likeComment(post.Id);
+							}}
+						/>
+					{/if}
+					Liked by {post.likedByYourself ? `You and ${post.likeCount}` : post.likeCount} people.
+				</p>
+				<!-- <pre><code>{JSON.stringify(post)}</code></pre> -->
+				<hr />
+			</article>
+		{/each}
+	</section>
 </div>
 
 <style lang="scss">
