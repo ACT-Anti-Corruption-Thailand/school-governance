@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import SchoolHeader from 'components/SchoolHeader.svelte';
 	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import SchoolHeader from 'components/SchoolHeader.svelte';
 	import { currentUser } from 'stores/firebaseapp';
+	import { onMount } from 'svelte';
 
 	$: schoolId = $page.params.schoolId;
 
@@ -11,9 +11,23 @@
 	let chk_locations: string[] = [];
 
 	const fetchComments = async () => {
+		let schoolid_query = `schoolId,eq,${schoolId}`;
+		let location_query = filter_locations.length
+			? filter_locations.map((loc) => `(location,like,${loc})`).join('~or')
+			: null;
+		let year_query = filter_years.length
+			? filter_years.map((year) => `(schoolYear,eq,${year})`).join('~or')
+			: null;
+		let where_query = [schoolid_query, location_query, year_query]
+			.filter((e) => e)
+			.map((e) => `(${e})`)
+			.join('~and');
+
+		let sort_query = filter_sort_by === 'latest' ? '-createDate' : '-likeCount';
+
 		try {
 			const resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?sort=-createDate&limit=999&where=(schoolId,eq,${schoolId})`,
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?limit=999&where=${where_query}&sort=${sort_query}`,
 				{
 					method: 'GET',
 					headers: {
@@ -32,6 +46,8 @@
 	};
 
 	const likeComment = async (commentId: number) => {
+		if (!$currentUser) return;
+
 		try {
 			await fetch(
 				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolCommentLike`,
@@ -42,7 +58,7 @@
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						userId: $currentUser?.uid,
+						userId: $currentUser.uid,
 						commentId: commentId
 					})
 				}
@@ -61,8 +77,25 @@
 				{
 					method: 'DELETE',
 					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY,
-						'Content-Type': 'application/json'
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY
+					}
+				}
+			);
+		} catch (err) {
+			console.error(err);
+		} finally {
+			fetchComments();
+		}
+	};
+
+	const deleteComment = async (commentId: number) => {
+		try {
+			await fetch(
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments/${commentId}`,
+				{
+					method: 'DELETE',
+					headers: {
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY
 					}
 				}
 			);
@@ -74,6 +107,9 @@
 	};
 
 	const debugPost = async () => {
+		if (!$currentUser) return;
+		if (txt_comment.trim() === '' || chk_locations.length === 0) return;
+
 		try {
 			await fetch(
 				'https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?limit=999',
@@ -88,7 +124,7 @@
 						comments: txt_comment.trim(),
 						location: chk_locations.join(),
 						schoolYear: 2022,
-						userId: $currentUser?.uid
+						userId: $currentUser.uid
 					})
 				}
 			);
@@ -106,8 +142,37 @@
 	});
 
 	$: if (mounted && $currentUser) {
+		void (filter_sort_by, filter_locations, filter_years);
 		fetchComments();
 	}
+
+	let filter_sort_by: 'latest' | 'most-liked' = 'latest';
+	let filter_locations: ('classroom' | 'toilet' | 'canteen' | 'gym')[] = [
+		'classroom',
+		'toilet',
+		'canteen',
+		'gym'
+	];
+	let filter_years: number[] = [2022];
+
+	$: filter_sort_by_lbl = {
+		latest: 'ล่าสุด',
+		'most-liked': 'เห็นด้วยมากสุด'
+	}[filter_sort_by];
+	$: filter_locations_lbl =
+		filter_locations.length === 4
+			? 'ทุกสถานที่'
+			: filter_locations
+					.map(
+						(loc) =>
+							({
+								classroom: 'ห้องเรียน',
+								toilet: 'ห้องน้ำ',
+								canteen: 'โรงอาหาร',
+								gym: 'สนามกีฬา'
+							}[loc])
+					)
+					.join(', ');
 </script>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
@@ -148,18 +213,84 @@
 	{:else}
 		<p>You are not logged in D:</p>
 	{/if}
+	<details>
+		<summary>
+			<span>
+				ICON
+				<span>{filter_sort_by_lbl}</span>
+				<span>{filter_locations_lbl}</span>
+				<span>{filter_years.join(', ')}</span>
+			</span>
+		</summary>
+		<div class="filter-box">
+			<fieldset>
+				<legend>เรียงตาม</legend>
+				<label
+					><input
+						type="radio"
+						name="filter-sort-by"
+						bind:group={filter_sort_by}
+						value="latest"
+					/><span>ล่าสุด</span></label
+				>
+				<label
+					><input
+						type="radio"
+						name="filter-sort-by"
+						bind:group={filter_sort_by}
+						value="most-liked"
+					/><span>เห็นด้วยมากสุด</span></label
+				>
+			</fieldset>
+			<fieldset>
+				<legend>สถานที่</legend>
+				<label
+					><input type="checkbox" bind:group={filter_locations} value="classroom" /><span
+						>ห้องเรียน</span
+					></label
+				>
+				<label
+					><input type="checkbox" bind:group={filter_locations} value="toilet" /><span>ห้องน้ำ</span
+					></label
+				>
+				<label
+					><input type="checkbox" bind:group={filter_locations} value="canteen" /><span
+						>โรงอาหาร</span
+					></label
+				>
+				<label
+					><input type="checkbox" bind:group={filter_locations} value="gym" /><span>สนามกีฬา</span
+					></label
+				>
+			</fieldset>
+			<fieldset>
+				<legend>ปีการศึกษา</legend>
+				<label
+					><input type="checkbox" bind:group={filter_years} value={2022} /><span>2565</span></label
+				>
+				<label
+					><input type="checkbox" bind:group={filter_years} value={2023} /><span>2566</span></label
+				>
+			</fieldset>
+		</div>
+	</details>
 	<section>
-		{#each posts as post}
+		{#each posts as post (post.Id)}
 			<article>
+				<div class="f">
+					<p>{new Date(post.createDate).toLocaleDateString('th')}</p>
+					{#if $currentUser?.uid === post.userId}
+						<input type="button" value="ลบ" on:click={() => deleteComment(post.Id)} />
+					{/if}
+				</div>
 				<p>{post.comments}</p>
 				<div class="f">
 					{#each post.location as loc}
 						<span>{loc}</span>
 					{/each}
 				</div>
-				<p>ปีการศึกษา {post.schoolYear}</p>
-				<p>createDate {post.createDate}</p>
-				<p>by {post.userId}</p>
+				<!-- <p>ปีการศึกษา {post.schoolYear}</p> -->
+				<!-- <p>by {post.userId}</p> -->
 				<p>
 					{#if $currentUser}
 						<input
@@ -182,6 +313,14 @@
 </div>
 
 <style lang="scss">
+	@media screen and (min-width: 768px) {
+		.desktop-margin {
+			width: 100%;
+			max-width: 640px;
+			margin: auto;
+		}
+	}
+
 	.comment-header {
 		gap: 4px;
 	}
