@@ -150,12 +150,6 @@
 </script>
 
 <div class="search-container">
-	<ProvinceDropdown
-		options={PROVINCES_CHOICE}
-		selected_option={selected_province}
-		on:change={getSchoolByProvince}
-	/>
-
 	<a class="f" href="/school/1010720001">โรงเรียนพญาไท (Debug) </a>
 	<a class="f" href="/school/1010720002">โรงเรียนโฆสิตสโมสร (Debug) </a>
 	<a class="f" href="/school/1010720003">โรงเรียนราชวินิต (Debug) </a>
@@ -163,6 +157,12 @@
 		>โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ (Debug)
 	</a>
 	<a class="f" href="/school/1010720005">โรงเรียนวัดโสมนัส (Debug) </a>
+
+	<ProvinceDropdown
+		options={PROVINCES_CHOICE}
+		selected_option={selected_province}
+		on:change={getSchoolByProvince}
+	/>
 
 	{#if school_by_province.length}
 		<section class="search-result inline">

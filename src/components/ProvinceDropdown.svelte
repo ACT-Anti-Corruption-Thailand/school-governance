@@ -18,8 +18,12 @@
 	};
 </script>
 
-<Listbox class="dropdown-root" value={selected_option} on:change={(e) => setOption(e.detail)}>
-	<ListboxButton class="f dropdown-button">
+<Listbox
+	class="province-dropdown-root"
+	value={selected_option}
+	on:change={(e) => setOption(e.detail)}
+>
+	<ListboxButton class="f province-dropdown-button">
 		<span>{selected_option}</span>
 		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24"
 			><path
@@ -31,7 +35,7 @@
 			/></svg
 		>
 	</ListboxButton>
-	<ListboxOptions class="dropdown-list">
+	<ListboxOptions class="province-dropdown-list">
 		{#each options as option (option)}
 			<ListboxOption value={option} class={({ active }) => (active ? 'active' : '')}>
 				{option}
