@@ -19,7 +19,7 @@
 </main>
 <GoTop />
 
-<Modal bind:isOpen={isModalOpen} title="Test Title">
+<Modal bind:isOpen={isModalOpen} title="Test Title" hideTitle>
 	<p>
 		Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius, doloremque, nihil esse nisi earum
 		exercitationem modi blanditiis minus harum aliquam quo cupiditate! Dolore consequuntur qui

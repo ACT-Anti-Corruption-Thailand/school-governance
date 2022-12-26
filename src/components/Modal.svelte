@@ -7,6 +7,7 @@
 	} from '@rgossiaux/svelte-headlessui';
 
 	export let title: string;
+	export let hideTitle = false;
 	export let description = '';
 	export let isOpen = true;
 </script>
@@ -16,12 +17,12 @@
 	<DialogDescription>{description}</DialogDescription>
 
 	<div class="modal-box">
-		<header class="f modal-header">
+		<header class="f modal-header" class:header-background={!hideTitle}>
 			<button type="button" class="f" on:click={() => (isOpen = false)}>
 				<img src="/close.svg" alt="ปิด" width="32" height="32" />
 			</button>
 			<slot name="title">
-				<DialogTitle class="modal-title">{title}</DialogTitle>
+				<DialogTitle class="modal-title {hideTitle ? 'sr-only' : ''}">{title}</DialogTitle>
 			</slot>
 		</header>
 		<div class="modal-content">
@@ -64,13 +65,20 @@
 	}
 
 	.modal-header {
-		background: #fff;
-
 		gap: 8px;
 		padding: 16px;
 
 		position: sticky;
 		top: 0;
+
+		> button {
+			background: #fff;
+			border-radius: 8px;
+		}
+
+		&.header-background {
+			background: #fff;
+		}
 	}
 
 	:global(.modal-title) {
