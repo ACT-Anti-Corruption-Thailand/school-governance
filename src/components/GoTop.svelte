@@ -58,5 +58,10 @@
 			pointer-events: auto;
 			transform: scale(1);
 		}
+
+		@media screen and (min-width: 768px) {
+			bottom: 40px;
+			right: 40px;
+		}
 	}
 </style>
