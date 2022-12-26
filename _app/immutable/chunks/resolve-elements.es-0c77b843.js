@@ -1,0 +1,1 @@
+const f=o=>typeof o=="function";function u(o,i){var r;return typeof o=="string"?i?((r=i[o])!==null&&r!==void 0||(i[o]=document.querySelectorAll(o)),o=i[o]):o=document.querySelectorAll(o):o instanceof Element&&(o=[o]),Array.from(o||[])}export{f as i,u as r};
