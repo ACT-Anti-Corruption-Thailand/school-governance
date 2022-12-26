@@ -1,6 +1,7 @@
 <script lang="ts">
 	import SchoolList from 'components/SchoolList.svelte';
 	import ActAiBanner from 'components/ActAiBanner.svelte';
+	import InViewLottie from 'components/InViewLottie.svelte';
 </script>
 
 <header class="f header">
@@ -90,7 +91,7 @@
 		เพื่อหวังจะเห็นความเปลี่ยนแปลง
 	</p>
 	<figure>
-		<img class="balloon-img" src="/index/balloon.svg" alt="" />
+		<InViewLottie class="balloon-img" src="/lottie/wordbubble.json" />
 		<figcaption>
 			ที่มา: <a href="https://www.thaipbs.or.th/news/content/315668"
 				>https://www.thaipbs.or.th/news/content/315668</a
@@ -106,7 +107,7 @@
 		ซึ่งไม่ได้มาจากแค่นักเรียนอย่างพวกเราเพียงฝ่ายเดียว แต่ผู้อำนวยการ คุณครู บุคลากร ฯลฯ ก็เป็นกำลังสำคัญในการร่วมรับรู้ข้อมูลของโรงเรียน
 		ก่อนนำไปสู่การแลกเปลี่ยน แสดงความคิดเห็นและแก้ปัญหาเพื่อพัฒนาโรงเรียนไปพร้อมกับพวกเราด้วย
 	</p>
-	<img class="contribute-img" src="/index/contribute.svg" alt="" />
+	<InViewLottie class="contribute-img" src="/lottie/key.json" />
 </section>
 
 <section class="origin">
@@ -168,7 +169,7 @@
 			ยังต้องมีพื้นที่ สำหรับตรวจสอบ รายงาน ไปจนถึงสามารถ แลกเปลี่ยนความคิดเห็นร่วมกันได้
 		</strong>
 	</p>
-	<img class="openjoinlearn-img" src="/index/openjoinlearn.svg" alt="" />
+	<InViewLottie class="openjoinlearn-img" src="/lottie/openjoinlearn.json" />
 	<p>
 		การสร้างพื้นที่ปลอดภัยให้ทุกคนมีส่วนร่วมจึงสำคัญมาก ไม่เพียงเพื่อให้โรงเรียนก้าวไปข้างหน้าได้
 		<strong>แต่เพื่อส่งเสริมให้เกิดบรรยากาศของการบริหารจัดการที่โปร่งใส</strong> และเราในฐานะนักเรียนก็จะได้
@@ -310,18 +311,19 @@
 <footer class="f footer">
 	<div class="f credit">
 		<span>Powered by</span>
-		<img src="/index/act.svg" alt="" width="32" height="24" />
+		<img class="footer-img" src="/index/act.svg" alt="" width="32" height="24" />
 	</div>
 	<div class="f credit">
 		<span>Co-Developed by</span>
-		<img src="/index/pu.svg" alt="" width="50" height="16" />
-		<img src="/index/hand.png" alt="" width="42" height="16" />
+		<img class="footer-img footer2" src="/index/pu.svg" alt="" width="50" height="16" />
+		<img class="footer-img footer2" src="/index/hand.png" alt="" width="42" height="16" />
 	</div>
 	<div class="f credit">
 		<span>Sponsors by </span>
-		<img src="/index/hand.png" alt="" width="42" height="16" />
-		<img src="/index/hand.png" alt="" width="42" height="16" />
-		<img src="/index/hand.png" alt="" width="42" height="16" />
+		<img class="footer-img footer3" src="/index/act_full.svg" alt="" width="66" height="34" />
+		<img class="footer-img footer3" src="/index/tsri.png" alt="" width="26" height="32" />
+		<img class="footer-img footer3" src="/index/econ.png" alt="" width="40" height="32" />
+		<img class="footer-img footer3" src="/index/nrct.png" alt="" width="23" height="32" />
 	</div>
 	<p>
 		School Governance ต่อยอดจากแพลตฟอร์ม We The Students
@@ -331,7 +333,7 @@
 	</p>
 </footer>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	.header,
 	.school-list-container,
 	.information,
@@ -672,6 +674,46 @@
 		}
 	}
 
+	:global(.balloon-img),
+	:global(.contribute-img),
+	:global(.openjoinlearn-img) {
+		margin: auto;
+	}
+
+	:global(.balloon-img) {
+		width: calc(100% + 32px);
+		overflow: hidden;
+		position: relative;
+		left: -16px;
+	}
+
+	:global(.balloon-img > div) {
+		width: 120%;
+		position: relative;
+		left: -10%;
+		height: auto;
+	}
+
+	.footer-img {
+		width: auto;
+		height: 24px;
+
+		&.footer2 {
+			height: 16px;
+		}
+
+		&.footer3 {
+			height: 32px;
+		}
+	}
+
+	// ██████╗ ███████╗███████╗██╗  ██╗████████╗ ██████╗ ██████╗
+	// ██╔══██╗██╔════╝██╔════╝██║ ██╔╝╚══██╔══╝██╔═══██╗██╔══██╗
+	// ██║  ██║█████╗  ███████╗█████╔╝    ██║   ██║   ██║██████╔╝
+	// ██║  ██║██╔══╝  ╚════██║██╔═██╗    ██║   ██║   ██║██╔═══╝
+	// ██████╔╝███████╗███████║██║  ██╗   ██║   ╚██████╔╝██║
+	// ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝   ╚═╝    ╚═════╝ ╚═╝
+
 	@media screen and (min-width: 768px) {
 		.header,
 		.school-list-container,
@@ -786,15 +828,40 @@
 			font-size: 1.25rem;
 		}
 
-		.balloon-img,
-		.contribute-img {
-			width: 480px;
+		:global(.balloon-img),
+		:global(.contribute-img),
+		:global(.openjoinlearn-img) {
+			max-width: 480px;
+			width: 100%;
 			height: auto;
 		}
 
-		.openjoinlearn-img {
-			width: 350px;
+		:global(.balloon-img) {
+			left: 0;
+		}
+
+		:global(.balloon-img > div) {
+			width: auto;
+			position: relative;
+			left: 0;
 			height: auto;
+		}
+
+		:global(.openjoinlearn-img) {
+			max-width: 350px;
+		}
+
+		.footer-img {
+			width: auto;
+			height: 40px;
+
+			&.footer2 {
+				height: 32px;
+			}
+
+			&.footer3 {
+				height: 56px;
+			}
 		}
 	}
 </style>
