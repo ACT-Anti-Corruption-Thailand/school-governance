@@ -35,7 +35,9 @@
 	}[];
 	onMount(() => {
 		fetch(
-			`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/Announcements?limit=999&where=(schoolId,eq,${schoolId})`,
+			`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/Announcements?limit=999&where=${encodeURIComponent(
+				`(schoolId,eq,${schoolId})`
+			)}`,
 			{
 				method: 'GET',
 				headers: {

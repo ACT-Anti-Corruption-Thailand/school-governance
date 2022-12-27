@@ -9,6 +9,7 @@
 	import SchoolList from 'components/SchoolList.svelte';
 
 	import { show_search, search_string } from 'stores/search';
+	import { currentSchool, currentSchoolId } from 'stores/school';
 
 	const SCHOOL_PER_REQUEST = 10;
 
@@ -114,8 +115,33 @@
 
 	$: search($search_string);
 
+	const fetchRelatedSchool = async (school_id: number, district: string, province: string) => {
+		try {
+			const school_resp = await fetch(
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex?where=${encodeURIComponent(
+					`(district,eq,${district})~and(province,eq,${province})~and(schoolId,neq,${school_id})`
+				)}&limit=5`,
+				{
+					method: 'GET',
+					headers: {
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY
+					}
+				}
+			);
+			const school_json = await school_resp.json();
+			related_school_list = school_json?.list ?? [];
+		} catch (e) {
+			console.error(e);
+		}
+	};
+
+	let related_school_list: any[] = [];
 	onMount(() => {
 		$show_search = true;
+		if ($currentSchool && $currentSchoolId) {
+			const { district, province } = $currentSchool;
+			fetchRelatedSchool($currentSchoolId, district, province);
+		}
 	});
 
 	onDestroy(() => {
@@ -164,8 +190,6 @@
 			console.error(e);
 		}
 	};
-
-	// TODO: Implement แบ่งเขต
 </script>
 
 <div class="search-container">
@@ -205,6 +229,11 @@
 				</ul>
 			{/each}
 		</section>
+	{/if}
+	{#if related_school_list.length}
+		<h2>โรงเรียนในเขต/อำเภอเดียวกัน</h2>
+		<SchoolList />
+		<!-- <pre><code>{JSON.stringify(related_school_list, null, 2)}</code></pre> -->
 	{/if}
 	<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
 	<SchoolList />

@@ -27,7 +27,9 @@
 
 		try {
 			const resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?limit=999&where=${where_query}&sort=${sort_query}`,
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?limit=999&where=${encodeURIComponent(
+					where_query
+				)}&sort=${encodeURIComponent(sort_query)}`,
 				{
 					method: 'GET',
 					headers: {
