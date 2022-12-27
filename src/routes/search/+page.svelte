@@ -193,20 +193,21 @@
 </script>
 
 <div class="search-container">
-	<a class="f" href="/school/1010720001">โรงเรียนพญาไท (Debug) </a>
-	<a class="f" href="/school/1010720002">โรงเรียนโฆสิตสโมสร (Debug) </a>
-	<a class="f" href="/school/1010720003">โรงเรียนราชวินิต (Debug) </a>
-	<a class="f" href="/school/1010720004"
-		>โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ (Debug)
-	</a>
-	<a class="f" href="/school/1010720005">โรงเรียนวัดโสมนัส (Debug) </a>
-
 	<ProvinceDropdown
 		options={PROVINCES_CHOICE}
 		selected_option={selected_province}
 		on:change={getSchoolByProvince}
 	/>
 
+	<div>
+		<a class="f" href="/school/1010720001">โรงเรียนพญาไท (Debug) </a>
+		<a class="f" href="/school/1010720002">โรงเรียนโฆสิตสโมสร (Debug) </a>
+		<a class="f" href="/school/1010720003">โรงเรียนราชวินิต (Debug) </a>
+		<a class="f" href="/school/1010720004"
+			>โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ (Debug)
+		</a>
+		<a class="f" href="/school/1010720005">โรงเรียนวัดโสมนัส (Debug) </a>
+	</div>
 	{#if school_by_province.length}
 		<section class="search-result inline">
 			{#each school_by_province as [district, school_data] (district)}
@@ -230,17 +231,28 @@
 			{/each}
 		</section>
 	{/if}
-	{#if related_school_list.length}
-		<h2>โรงเรียนในเขต/อำเภอเดียวกัน</h2>
-		<SchoolList />
-		<!-- <pre><code>{JSON.stringify(related_school_list, null, 2)}</code></pre> -->
-	{/if}
-	<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
-	<SchoolList />
-	<h2>โรงเรียนที่มีคะแนนเฉลี่ยสูงสุด</h2>
-	<SchoolList />
-	<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
-	<SchoolList />
+
+	<div class="desktop-grid" class:four={related_school_list.length}>
+		{#if related_school_list.length}
+			<section>
+				<h2>โรงเรียนในเขต/อำเภอเดียวกัน</h2>
+				<SchoolList />
+				<!-- <pre><code>{JSON.stringify(related_school_list, null, 2)}</code></pre> -->
+			</section>
+		{/if}
+		<section>
+			<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
+			<SchoolList />
+		</section>
+		<section>
+			<h2>โรงเรียนที่มีคะแนนเฉลี่ยสูงสุด</h2>
+			<SchoolList />
+		</section>
+		<section>
+			<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
+			<SchoolList />
+		</section>
+	</div>
 
 	{#if school_result.length || province_query.length}
 		<section class="search-result">
@@ -389,6 +401,19 @@
 				border: 1px solid #3c55ab;
 				box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 				border-radius: 20px;
+			}
+		}
+	}
+
+	@media screen and (min-width: 768px) {
+		.desktop-grid {
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+			gap: 40px;
+
+			&.four {
+				grid-template-columns: 1fr 1fr;
+				grid-template-rows: 1fr 1fr;
 			}
 		}
 	}

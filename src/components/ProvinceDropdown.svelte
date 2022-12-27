@@ -64,6 +64,20 @@
 		color: #3c55ab;
 	}
 
+	@media screen and (min-width: 768px) {
+		:global(.province-dropdown-button) {
+			width: 50%;
+			margin: auto;
+		}
+	}
+
+	@media screen and (min-width: 992px) {
+		:global(.province-dropdown-button) {
+			width: 40%;
+			margin: auto;
+		}
+	}
+
 	:global(.province-dropdown-button[aria-expanded='true'] > svg) {
 		transform: rotate(180deg);
 	}
