@@ -122,7 +122,19 @@
 		$show_search = false;
 	});
 
-	let school_by_province: { schoolId: string; nameTh: string; province: string }[] = [];
+	const groupBy = <T, K extends keyof any>(arr: T[], groupFn: (element: T) => K): Record<K, T[]> =>
+		arr.reduce(
+			(r, v, _i, _a, k = groupFn(v)) => ((r[k] || (r[k] = [])).push(v), r),
+			{} as Record<K, T[]>
+		);
+
+	type SchoolMetadataType = {
+		schoolId: string;
+		nameTh: string;
+		province: string;
+		district: string;
+	};
+	let school_by_province: [string, SchoolMetadataType[]][] = [];
 	const getSchoolByProvince = async (event: any) => {
 		const province = event.detail;
 		if (province === 'เลือกจังหวัด') return (school_by_province = []);
@@ -140,7 +152,14 @@
 				}
 			);
 			const school_json = await school_resp.json();
-			school_by_province = school_json?.list ?? [];
+			if (school_json.list?.length) {
+				const school_by_district_obj = groupBy(school_json.list, (s: any) => s?.district);
+				const school_entries = Object.entries(school_by_district_obj);
+				school_by_province = school_entries.sort((a, z) => a[0].localeCompare(z[0]));
+				school_by_province.forEach((e) => e[1].sort((a, z) => a.nameTh.localeCompare(z.nameTh)));
+			} else {
+				school_by_province = [];
+			}
 		} catch (e) {
 			console.error(e);
 		}
@@ -166,23 +185,25 @@
 
 	{#if school_by_province.length}
 		<section class="search-result inline">
-			<!-- <h2 class="f">
-				<span>จังหวัด</span>
-				<small>พบ {province_query.length} จังหวัด</small>
-			</h2> -->
-			<ul>
-				{#each school_by_province as { schoolId, nameTh } (schoolId)}
-					<li>
-						<a
-							class="f"
-							href="/school/{schoolId}"
-							on:click={() => (($show_search = false), ($search_string = ''))}
-						>
-							{nameTh}
-						</a>
-					</li>
-				{/each}
-			</ul>
+			{#each school_by_province as [district, school_data] (district)}
+				<h2 class="f">
+					<span>{district}</span>
+					<small>พบ {school_data.length} โรงเรียน</small>
+				</h2>
+				<ul>
+					{#each school_data as { schoolId, nameTh } (schoolId)}
+						<li>
+							<a
+								class="f"
+								href="/school/{schoolId}"
+								on:click={() => (($show_search = false), ($search_string = ''))}
+							>
+								{nameTh}
+							</a>
+						</li>
+					{/each}
+				</ul>
+			{/each}
 		</section>
 	{/if}
 	<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
