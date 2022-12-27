@@ -52,8 +52,6 @@
 	$: if (is_mounted) {
 		document.documentElement.classList.toggle('navbar-shown', show);
 	}
-
-	// TODO: Implement Tablet Nav
 </script>
 
 <nav class="f main-nav" class:show class:show_search={$show_search}>
@@ -127,15 +125,26 @@
 		</button>
 		<menu class="nav-menu" class:show={show_menu}>
 			<li>
+				{#if PAGE_BASE === 'search'}
+					<button
+						class="f jcc nav-btn search-btn"
+						type="button"
+						on:click={() => ($show_search = true)}
+					>
+						<img src="/icons/search.svg" alt="ค้นหา" width="20" height="20" />
+						<span>ค้นหาโรงเรียน</span>
+					</button>
+				{:else}
+					<a href="/search" on:click={() => (show_menu = false)}>
+						<img src="/icons/search.svg" alt="" width="20" height="20" />
+						<span>ค้นหาโรงเรียน</span>
+					</a>
+				{/if}
+			</li>
+			<li>
 				<a href="/#information" on:click={() => (show_menu = false)}>
 					<img src="/icons/question.svg" alt="" width="20" height="20" />
 					<span>School Governance คืออะไร?</span>
-				</a>
-			</li>
-			<li>
-				<a href="/search" on:click={() => (show_menu = false)}>
-					<img src="/icons/search.svg" alt="" width="20" height="20" />
-					<span>ค้นหาโรงเรียน</span>
 				</a>
 			</li>
 			<li>
@@ -325,10 +334,51 @@
 		}
 	}
 
+	@media screen and (min-width: 768px) {
+		.main-nav {
+			> .nav-left.nav-left.nav-left {
+				display: none;
+			}
+
+			.nav-menu > li {
+				> .nav-btn {
+					justify-content: flex-start;
+				}
+			}
+
+			&.show_search {
+				> :not(.nav-search) {
+					display: initial;
+				}
+
+				> .nav-right {
+					display: flex;
+				}
+
+				> .nav-search {
+					width: 50%;
+				}
+			}
+		}
+	}
+
 	@media screen and (min-width: 992px) {
 		.main-nav {
 			height: 72px;
 			padding: 16px 32px;
+
+			&.show_search {
+				> .nav-search {
+					width: 40%;
+				}
+
+				.nav-menu > li {
+					> a > span,
+					> .nav-btn {
+						display: none;
+					}
+				}
+			}
 		}
 
 		.nav-compensate {
