@@ -110,7 +110,7 @@
 				}
 
 				&:hover {
-					background: #ecf7f7;
+					background: #c7eaff;
 				}
 
 				.school-list-title {
