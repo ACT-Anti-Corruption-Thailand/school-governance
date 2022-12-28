@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { currentSchool, currentSchoolId } from 'stores/school';
-	import SchoolHeader from 'components/SchoolHeader.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
-	import CircularProgress from 'components/CircularProgress.svelte';
+	import CircularProgress from 'components/school/CircularProgress.svelte';
 	import ActAiBanner from 'components/ActAiBanner.svelte';
-	import Waffle from 'components/Waffle.svelte';
-	import RatioChart from 'components/RatioChart.svelte';
+	import Waffle from 'components/school/Waffle.svelte';
+	import RatioChart from 'components/school/RatioChart.svelte';
 
 	const DROPDOWN_DATA = [
 		{ value: '2565' },
@@ -52,7 +52,7 @@
 			<details class="school-size-detail">
 				<summary>
 					<span class="f">
-						<img src="/info.svg" alt="" width="16" height="16" />
+						<img src="/icons/info.svg" alt="" width="16" height="16" />
 						<span>ดูเกณฑ์การแบ่งขนาดโรงเรียน</span>
 						<img class="chevron" src="/chevron/bottom.svg" alt="" width="24" height="24" />
 					</span>
@@ -193,11 +193,11 @@
 			</div>
 			<div class="f ratio-chart">
 				<div class="f">
-					<img src="/person-b.svg" alt="" width="24" height="24" />
+					<img src="/icons/person-b.svg" alt="" width="24" height="24" />
 				</div>
 				<div class="f">
 					{#each Array(Math.ceil(d.student.total.all / d.staff.ครู.total)) as _}
-						<img src="/person-y.svg" alt="" width="24" height="24" />
+						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
 					{/each}
 				</div>
 			</div>
@@ -309,11 +309,11 @@
 			<hr />
 			<div class="f ratio-chart">
 				<div class="f">
-					<img src="/chair.svg" alt="" width="24" height="24" />
+					<img src="/icons/chair.svg" alt="" width="24" height="24" />
 				</div>
 				<div class="f">
 					{#each Array(Math.ceil(d.student.total.all / d.tables.working)) as _}
-						<img src="/person-y.svg" alt="" width="24" height="24" />
+						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
 					{/each}
 				</div>
 			</div>
@@ -350,11 +350,11 @@
 			<hr />
 			<div class="f ratio-chart">
 				<div class="f">
-					<img src="/tv.svg" alt="" width="24" height="24" />
+					<img src="/icons/tv.svg" alt="" width="24" height="24" />
 				</div>
 				<div class="f">
 					{#each Array(Math.ceil(d.student.total.all / d.computer.learning.working)) as _}
-						<img src="/person-y.svg" alt="" width="24" height="24" />
+						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
 					{/each}
 				</div>
 			</div>
@@ -392,7 +392,7 @@
 					{/if}
 				</p>
 				<div class="f g8 ais">
-					<img src="/info.svg" alt="" width="16" height="16" />
+					<img src="/icons/info.svg" alt="" width="16" height="16" />
 					<p class="fs10">
 						แหล่งที่มาของคอมพิวเตอร์สามารถช่วยประกอบการประเมินได้ว่า สพฐ. หรือ
 						ตัวโรงเรียนเองได้จัดสรรงบประมาณที่เพียงพอสำหรับจัดหาคอมพิวเตอร์หรือไม่
@@ -402,7 +402,7 @@
 		</section>
 		<section>
 			<h3 class="f jcs g8 mb8">
-				<img src="/wifi.svg" alt="" width="24" height="24" />
+				<img src="/icons/wifi.svg" alt="" width="24" height="24" />
 				<span
 					>อินเทอร์เน็ต {d.internet.speed ?? ''}
 					{#if d.internet.speed}<small>Mbps</small>{/if}</span
@@ -412,7 +412,7 @@
 				<dt>สถานะการใช้งาน:</dt>
 				<dd class="f jcs g8">
 					{#if d.internet.status}
-						<img src="/check-y.svg" alt="" width="16" height="16" />
+						<img src="/icons/check-y.svg" alt="" width="16" height="16" />
 						{d.internet.status}
 					{:else}
 						<span class="no-data">ไม่มีข้อมูล</span>
@@ -563,19 +563,19 @@
 			<h3 class="mb8">ติดต่อ</h3>
 			<dl class="list-grid">
 				<dt>
-					<img src="/location.svg" alt="ที่อยู่" width="16" height="16" />
+					<img src="/icons/location.svg" alt="ที่อยู่" width="16" height="16" />
 				</dt>
 				<dd>{d.address} {d.subdistrict} {d.district} {d.province} {d.postcode}</dd>
 				<dt>
-					<img src="/phone.svg" alt="เบอร์โทรศัพท์" width="16" height="16" />
+					<img src="/icons/phone.svg" alt="เบอร์โทรศัพท์" width="16" height="16" />
 				</dt>
 				<dd>{d.telephone}</dd>
 				<dt>
-					<img src="/globe.svg" alt="เว็บไซต์" width="16" height="16" />
+					<img src="/icons/globe.svg" alt="เว็บไซต์" width="16" height="16" />
 				</dt>
 				<dd>{d.website}</dd>
 				<dt>
-					<img src="/mail.svg" alt="อีเมล์" width="16" height="16" />
+					<img src="/icons/mail.svg" alt="อีเมล์" width="16" height="16" />
 				</dt>
 				<dd>{d.email}</dd>
 			</dl>
@@ -952,7 +952,7 @@
 			aspect-ratio: 1;
 			object-fit: cover;
 			border-top: 2px var(--std-color) solid;
-			background: var(--bg0), var(--bg1), url(/school-placeholder.png);
+			background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
 			background-size: cover;
 		}
 
@@ -991,7 +991,7 @@
 					aspect-ratio: 1;
 					object-fit: cover;
 					border-top: 2px var(--std-color) solid;
-					background: var(--bg0), var(--bg1), url(/school-placeholder.png);
+					background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
 					background-size: cover;
 				}
 

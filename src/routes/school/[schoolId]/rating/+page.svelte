@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SchoolHeader from 'components/SchoolHeader.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
 
 	const DROPDOWN_DATA = [

@@ -19,7 +19,7 @@
 	<div class="modal-box">
 		<header class="f modal-header" class:header-background={!hideTitle}>
 			<button type="button" class="f" on:click={() => (isOpen = false)}>
-				<img src="/close.svg" alt="ปิด" width="32" height="32" />
+				<img src="/icons/close.svg" alt="ปิด" width="32" height="32" />
 			</button>
 			<slot name="title">
 				<DialogTitle class="modal-title {hideTitle ? 'sr-only' : ''}">{title}</DialogTitle>

@@ -10,7 +10,7 @@
 		อยากเห็นโรงเรียนของพวกเรา<br class="hide-desktop" />
 		เปลี่ยนไปในทางที่ดีขึ้นไหม?
 	</p>
-	<img class="header-logo" src="/logo.svg" alt="" width="224" height="83" />
+	<img class="header-logo" src="/logo/school_gov.svg" alt="" width="224" height="83" />
 	<p>
 		ชวนทุกคนมาแลกเปลี่ยน<br class="hide-desktop" />
 		เพื่อพัฒนาโรงเรียนไปด้วยกัน
@@ -112,7 +112,7 @@
 
 <section class="origin">
 	<p class="origin-title">นี่คือที่มาของ</p>
-	<img class="origin-logo" src="/logo.svg" alt="" width="224" height="83" />
+	<img class="origin-logo" src="/logo/school_gov.svg" alt="" width="224" height="83" />
 	<p>
 		เครื่องมือที่จะแสดง <a href="https://data.bopp-obec.info/emis/index.php">ฐานข้อมูลโรงเรียน</a>
 		ซึ่งรวบรวมโดยสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน (สพฐ.) เพื่อช่วยให้ทุกคนสามารถตรวจสอบข้อมูลสำคัญต่าง
@@ -311,19 +311,19 @@
 <footer class="f footer">
 	<div class="f credit">
 		<span>Powered by</span>
-		<img class="footer-img" src="/index/act.svg" alt="" width="32" height="24" />
+		<img class="footer-img" src="/logo/act.svg" alt="" width="32" height="24" />
 	</div>
 	<div class="f credit">
 		<span>Co-Developed by</span>
-		<img class="footer-img footer2" src="/index/pu.svg" alt="" width="50" height="16" />
-		<img class="footer-img footer2" src="/index/hand.png" alt="" width="42" height="16" />
+		<img class="footer-img footer2" src="/logo/pu.svg" alt="" width="50" height="16" />
+		<img class="footer-img footer2" src="/logo/hand.png" alt="" width="42" height="16" />
 	</div>
 	<div class="f credit">
 		<span>Sponsors by </span>
-		<img class="footer-img footer3" src="/index/act_full.svg" alt="" width="66" height="34" />
-		<img class="footer-img footer3" src="/index/tsri.png" alt="" width="26" height="32" />
-		<img class="footer-img footer3" src="/index/econ.png" alt="" width="40" height="32" />
-		<img class="footer-img footer3" src="/index/nrct.png" alt="" width="23" height="32" />
+		<img class="footer-img footer3" src="/logo/act_full.svg" alt="" width="66" height="34" />
+		<img class="footer-img footer3" src="/logo/tsri.png" alt="" width="26" height="32" />
+		<img class="footer-img footer3" src="/logo/econ.png" alt="" width="40" height="32" />
+		<img class="footer-img footer3" src="/logo/nrct.png" alt="" width="23" height="32" />
 	</div>
 	<p>
 		School Governance ต่อยอดจากแพลตฟอร์ม We The Students

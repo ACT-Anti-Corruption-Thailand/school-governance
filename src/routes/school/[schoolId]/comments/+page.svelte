@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
-	import SchoolHeader from 'components/SchoolHeader.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import { currentUser } from 'stores/firebaseapp';
 	import { onMount } from 'svelte';
 

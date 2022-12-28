@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 
-	import SchoolNav from 'components/SchoolNav.svelte';
+	import SchoolNav from 'components/school/SchoolNav.svelte';
 
 	import { currentSchool, currentSchoolId } from 'stores/school';
 

@@ -5,8 +5,9 @@
 
 	import { PROVINCES } from 'data/provinces';
 
-	import ProvinceDropdown from 'components/ProvinceDropdown.svelte';
+	import ProvinceDropdown from 'components/search/ProvinceDropdown.svelte';
 	import SchoolList from 'components/SchoolList.svelte';
+	import type { SchoolData } from 'components/SchoolList.svelte';
 
 	import { show_search, search_string } from 'stores/search';
 	import { currentSchool, currentSchoolId } from 'stores/school';
@@ -117,7 +118,9 @@
 
 	const fetchRelatedSchool = async (school_id: number, district: string, province: string) => {
 		try {
-			const school_resp = await fetch(
+			let related_school_list_tmp = [];
+
+			let school_resp = await fetch(
 				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex?where=${encodeURIComponent(
 					`(district,eq,${district})~and(province,eq,${province})~and(schoolId,neq,${school_id})`
 				)}&limit=5`,
@@ -128,14 +131,41 @@
 					}
 				}
 			);
-			const school_json = await school_resp.json();
-			related_school_list = school_json?.list ?? [];
+			let school_json = await school_resp.json();
+			related_school_list_tmp = school_json.list ?? [];
+
+			if (related_school_list.length < 5) {
+				school_resp = await fetch(
+					`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex?where=${encodeURIComponent(
+						`(district,neq,${district})~and(province,eq,${province})~and(schoolId,neq,${school_id})`
+					)}&limit=${5 - related_school_list.length}`,
+					{
+						method: 'GET',
+						headers: {
+							'xc-token': PUBLIC_NOCO_TOKEN_KEY
+						}
+					}
+				);
+				school_json = await school_resp.json();
+				related_school_list_tmp = related_school_list.concat(school_json.list ?? []);
+				related_school_list = related_school_list_tmp;
+			} else {
+				related_school_list = related_school_list_tmp;
+			}
 		} catch (e) {
 			console.error(e);
 		}
 	};
 
 	let related_school_list: any[] = [];
+	$: related_school_listdata = related_school_list.map((e) => ({
+		id: e.schoolId,
+		name: e.nameTh,
+		date: 0,
+		rating: 0,
+		comment: 0
+	})) as SchoolData[];
+
 	onMount(() => {
 		$show_search = true;
 		if ($currentSchool && $currentSchoolId) {
@@ -199,16 +229,6 @@
 		on:change={getSchoolByProvince}
 	/>
 
-	<!-- <div>
-		<a class="f" href="/school/1010720001">โรงเรียนพญาไท (Debug) </a>
-		<a class="f" href="/school/1010720002">โรงเรียนโฆสิตสโมสร (Debug) </a>
-		<a class="f" href="/school/1010720003">โรงเรียนราชวินิต (Debug) </a>
-		<a class="f" href="/school/1010720004"
-			>โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ (Debug)
-		</a>
-		<a class="f" href="/school/1010720005">โรงเรียนวัดโสมนัส (Debug) </a>
-	</div> -->
-
 	{#if school_by_province.length}
 		<section class="search-result inline">
 			{#each school_by_province as [district, school_data] (district)}
@@ -237,13 +257,26 @@
 		{#if related_school_list.length}
 			<section>
 				<h2>โรงเรียนในเขต/อำเภอเดียวกัน</h2>
-				<SchoolList />
-				<!-- <pre><code>{JSON.stringify(related_school_list, null, 2)}</code></pre> -->
+				<SchoolList school_list={related_school_listdata} />
 			</section>
 		{/if}
 		<section>
 			<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
-			<SchoolList />
+			<SchoolList
+				school_list={[
+					{ id: 1010720001, name: 'โรงเรียนพญาไท', rating: 0, comment: 0, date: 0 },
+					{ id: 1010720002, name: 'โรงเรียนโฆสิตสโมสร', rating: 0, comment: 0, date: 0 },
+					{ id: 1010720003, name: 'โรงเรียนราชวินิต', rating: 0, comment: 0, date: 0 },
+					{
+						id: 1010720004,
+						name: 'โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ',
+						rating: 0,
+						comment: 0,
+						date: 0
+					},
+					{ id: 1010720005, name: 'โรงเรียนวัดโสมนัส', rating: 0, comment: 0, date: 0 }
+				]}
+			/>
 		</section>
 		<section>
 			<h2>โรงเรียนที่มีคะแนนเฉลี่ยสูงสุด</h2>

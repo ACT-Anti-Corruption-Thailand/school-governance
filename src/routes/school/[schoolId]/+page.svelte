@@ -1,5 +1,5 @@
 <script lang="ts">
-	import SchoolHeader from 'components/SchoolHeader.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 </script>
 
 <SchoolHeader />

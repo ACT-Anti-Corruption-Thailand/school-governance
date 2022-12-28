@@ -65,7 +65,7 @@
 	{/if}
 	<div class="nav-logo">
 		<a href="/" on:click={() => (show_menu = false)}>
-			<img src="/logo.svg" alt="" width="108" height="40" />
+			<img src="/logo/school_gov.svg" alt="" width="108" height="40" />
 		</a>
 	</div>
 	<div class="nav-right nav-search">
@@ -114,7 +114,7 @@
 		{#if $currentUser}
 			<img
 				class="nav-profile"
-				src={$currentUser.photoURL ?? '/anon.svg'}
+				src={$currentUser.photoURL ?? '/icons/anon.svg'}
 				alt=""
 				width="32"
 				height="32"
@@ -156,7 +156,7 @@
 			<li class="nav-menu-last">
 				{#if $currentUser}
 					<button class="logged-in" type="button" on:click={logout}>
-						<img src={$currentUser.photoURL ?? '/anon.svg'} alt="" width="24" height="24" />
+						<img src={$currentUser.photoURL ?? '/icons/anon.svg'} alt="" width="24" height="24" />
 						<span>Log out</span>
 					</button>
 				{:else}

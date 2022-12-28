@@ -6,7 +6,7 @@
 
 <a href="https://actai.co/" class="f act-banner" class:margin>
 	<span>{text}</span>
-	<img src="/act_logo.png" alt="" width="69" height="48" />
+	<img src="/logo/act_upright.png" alt="" width="69" height="48" />
 </a>
 
 <style lang="scss">
