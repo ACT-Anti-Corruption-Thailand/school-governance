@@ -56,26 +56,13 @@
 		gap: 8px;
 		width: 100%;
 		height: 40px;
+		margin: 0 auto;
 
 		background: #fff;
 		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 24px;
 
 		color: #3c55ab;
-	}
-
-	@media screen and (min-width: 768px) {
-		:global(.province-dropdown-button) {
-			width: 50%;
-			margin: auto;
-		}
-	}
-
-	@media screen and (min-width: 992px) {
-		:global(.province-dropdown-button) {
-			width: 40%;
-			margin: auto;
-		}
 	}
 
 	:global(.province-dropdown-button[aria-expanded='true'] > svg) {
@@ -85,9 +72,12 @@
 	:global(.province-dropdown-list) {
 		position: absolute;
 		top: 44px;
-		margin: 0;
+		left: 50%;
+		margin: 0 auto;
 		width: 100%;
 		height: 80vh;
+
+		transform: translateX(-50%);
 
 		display: flex;
 		align-items: flex-start;
@@ -119,5 +109,19 @@
 
 	:global(.province-dropdown-list > li.active) {
 		background: #ecf7f7;
+	}
+
+	@media screen and (min-width: 768px) {
+		:global(.province-dropdown-button),
+		:global(.province-dropdown-list) {
+			width: 50%;
+		}
+	}
+
+	@media screen and (min-width: 992px) {
+		:global(.province-dropdown-button),
+		:global(.province-dropdown-list) {
+			width: 40%;
+		}
 	}
 </style>

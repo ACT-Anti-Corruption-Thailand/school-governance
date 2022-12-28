@@ -199,7 +199,7 @@
 		on:change={getSchoolByProvince}
 	/>
 
-	<div>
+	<!-- <div>
 		<a class="f" href="/school/1010720001">โรงเรียนพญาไท (Debug) </a>
 		<a class="f" href="/school/1010720002">โรงเรียนโฆสิตสโมสร (Debug) </a>
 		<a class="f" href="/school/1010720003">โรงเรียนราชวินิต (Debug) </a>
@@ -207,7 +207,8 @@
 			>โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ (Debug)
 		</a>
 		<a class="f" href="/school/1010720005">โรงเรียนวัดโสมนัส (Debug) </a>
-	</div>
+	</div> -->
+
 	{#if school_by_province.length}
 		<section class="search-result inline">
 			{#each school_by_province as [district, school_data] (district)}
@@ -328,8 +329,9 @@
 			margin: 24px 0 16px;
 		}
 
-		@media screen and (min-width: 992px) {
+		@media screen and (min-width: 768px) {
 			font-size: 1rem;
+			padding: 16px 10%;
 		}
 	}
 
