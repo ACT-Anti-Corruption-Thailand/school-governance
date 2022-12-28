@@ -22,15 +22,7 @@
 </script>
 
 <button class="gotop" type="button" class:show aria-label="กลับด้านบน" on:click={goTop}>
-	<svg width="14" height="8" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 8"
-		><path
-			stroke="#fff"
-			stroke-linecap="round"
-			stroke-linejoin="round"
-			stroke-width="2"
-			d="M13 7L7 1 1 7"
-		/></svg
-	>
+	<img src="/chevrons/gotop.svg" alt="" width="14" height="8" />
 </button>
 
 <style lang="scss">

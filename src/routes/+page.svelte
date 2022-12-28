@@ -10,7 +10,7 @@
 		อยากเห็นโรงเรียนของพวกเรา<br class="hide-desktop" />
 		เปลี่ยนไปในทางที่ดีขึ้นไหม?
 	</p>
-	<img class="header-logo" src="/logo/school_gov.svg" alt="" width="224" height="83" />
+	<img class="header-logo" src="/logos/school_gov.svg" alt="" width="224" height="83" />
 	<p>
 		ชวนทุกคนมาแลกเปลี่ยน<br class="hide-desktop" />
 		เพื่อพัฒนาโรงเรียนไปด้วยกัน
@@ -30,15 +30,7 @@
 		</div>
 	</div>
 	<a class="f search-box" href="/search">
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" width="20" height="20"
-			><path
-				stroke="#9DAAD5"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2"
-				d="M9.167 15.833a6.667 6.667 0 100-13.333 6.667 6.667 0 000 13.333zM17.5 17.5l-3.625-3.625"
-			/></svg
-		>
+		<img src="/icons/search-box.svg" alt="" width="24" height="24" />
 		<span>ลองค้นหาโรงเรียนคุณ</span>
 	</a>
 </header>
@@ -67,15 +59,7 @@
 		<img src="/index/q1.svg" alt="" width="38" height="39" />
 		<span>
 			School Governance <br class="hide-desktop" />คืออะไร?<br />
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 15 8" width="15" height="8"
-				><path
-					stroke="#16338F"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M1.537 1l6 6 6-6"
-				/></svg
-			>
+			<img src="/chevrons/bottom.svg" alt="" width="24" height="24" />
 		</span>
 		<img src="/index/q2.svg" alt="" width="33" height="40" />
 	</h2>
@@ -91,7 +75,7 @@
 		เพื่อหวังจะเห็นความเปลี่ยนแปลง
 	</p>
 	<figure>
-		<InViewLottie class="balloon-img" src="/lottie/wordbubble.json" />
+		<InViewLottie class="balloon-img" src="/lotties/wordbubble.json" />
 		<figcaption>
 			ที่มา: <a href="https://www.thaipbs.or.th/news/content/315668"
 				>https://www.thaipbs.or.th/news/content/315668</a
@@ -107,12 +91,12 @@
 		ซึ่งไม่ได้มาจากแค่นักเรียนอย่างพวกเราเพียงฝ่ายเดียว แต่ผู้อำนวยการ คุณครู บุคลากร ฯลฯ ก็เป็นกำลังสำคัญในการร่วมรับรู้ข้อมูลของโรงเรียน
 		ก่อนนำไปสู่การแลกเปลี่ยน แสดงความคิดเห็นและแก้ปัญหาเพื่อพัฒนาโรงเรียนไปพร้อมกับพวกเราด้วย
 	</p>
-	<InViewLottie class="contribute-img" src="/lottie/key.json" />
+	<InViewLottie class="contribute-img" src="/lotties/key.json" />
 </section>
 
 <section class="origin">
 	<p class="origin-title">นี่คือที่มาของ</p>
-	<img class="origin-logo" src="/logo/school_gov.svg" alt="" width="224" height="83" />
+	<img class="origin-logo" src="/logos/school_gov.svg" alt="" width="224" height="83" />
 	<p>
 		เครื่องมือที่จะแสดง <a href="https://data.bopp-obec.info/emis/index.php">ฐานข้อมูลโรงเรียน</a>
 		ซึ่งรวบรวมโดยสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน (สพฐ.) เพื่อช่วยให้ทุกคนสามารถตรวจสอบข้อมูลสำคัญต่าง
@@ -169,7 +153,7 @@
 			ยังต้องมีพื้นที่ สำหรับตรวจสอบ รายงาน ไปจนถึงสามารถ แลกเปลี่ยนความคิดเห็นร่วมกันได้
 		</strong>
 	</p>
-	<InViewLottie class="openjoinlearn-img" src="/lottie/openjoinlearn.json" />
+	<InViewLottie class="openjoinlearn-img" src="/lotties/openjoinlearn.json" />
 	<p>
 		การสร้างพื้นที่ปลอดภัยให้ทุกคนมีส่วนร่วมจึงสำคัญมาก ไม่เพียงเพื่อให้โรงเรียนก้าวไปข้างหน้าได้
 		<strong>แต่เพื่อส่งเสริมให้เกิดบรรยากาศของการบริหารจัดการที่โปร่งใส</strong> และเราในฐานะนักเรียนก็จะได้
@@ -234,15 +218,7 @@
 		</div>
 	</div>
 	<a class="f search-box" href="/search">
-		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" width="20" height="20"
-			><path
-				stroke="#9DAAD5"
-				stroke-linecap="round"
-				stroke-linejoin="round"
-				stroke-width="2"
-				d="M9.167 15.833a6.667 6.667 0 100-13.333 6.667 6.667 0 000 13.333zM17.5 17.5l-3.625-3.625"
-			/></svg
-		>
+		<img src="/icons/search-box.svg" alt="" width="24" height="24" />
 		<span>ลองค้นหาโรงเรียนคุณ</span>
 	</a>
 </section>
@@ -254,51 +230,13 @@
 	</p>
 	<div class="f social-links">
 		<a href="http://www.facebook.com/sharer/sharer.php?u=https://wevis.info">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 40 41"
-				width="40"
-				height="40"
-				aria-label="Facebook"
-				><path
-					fill="#3C55AB"
-					d="M20.079.104C8.924.104 0 9.064 0 20.264c0 10.08 7.33 18.4 16.892 19.84v-14.08h-5.1v-5.76h5.1v-4.48c0-5.12 3.027-7.84 7.649-7.84 2.23 0 4.461.32 4.461.32v4.96h-2.55c-2.549 0-3.346 1.6-3.346 3.2v3.84h5.578l-.956 5.76h-4.622v14.08c9.562-1.44 16.892-9.92 16.892-19.84.16-11.2-8.765-20.16-19.92-20.16z"
-				/></svg
-			>
+			<img src="/icons/facebook.svg" alt="Facebook" width="40" height="40" />
 		</a>
 		<a href="https://twitter.com/intent/tweet?url=https://wevis.info">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 40 41"
-				width="40"
-				height="40"
-				aria-label="Twitter"
-				><path
-					fill="#6BC9FF"
-					d="M34.127 5.978C30.477 2.327 25.555.104 20 .104c-5.556 0-10.476 2.223-14.127 5.874C2.223 9.628 0 14.548 0 20.105c0 10.317 7.936 18.888 18.095 19.84.635 0 1.27.16 1.905.16 1.429 0 2.698-.16 3.968-.477 3.968-.793 7.46-2.698 10.159-5.397C37.777 30.581 40 25.66 40 20.104c0-5.555-2.222-10.476-5.873-14.126zm0 6.031c-.318.476-.794.953-1.111 1.429-.476.476-.953.793-1.429 1.27l-.158.158v2.223c0 .476-.16.793-.16 1.27-.158.793-.317 1.587-.634 2.222-.159.476-.318.952-.635 1.428s-.476 1.111-.794 1.587c-.317.636-.793 1.112-1.11 1.747-.318.476-.636.793-1.112 1.27-.476.476-.952.952-1.429 1.27-.317.158-.476.476-.793.634-.635.476-1.27.794-1.905 1.111-.476.159-.952.477-1.428.635-.635.318-1.429.476-2.223.635-.476.159-.952.159-1.428.159H15.397c-.318 0-.635 0-.953-.159-.476 0-1.11-.159-1.587-.317-.635-.159-1.111-.318-1.746-.476-.635-.16-1.111-.477-1.587-.635-.476-.318-.953-.477-1.429-.794h2.064c.317 0 .635 0 .793-.159.953-.159 1.746-.317 2.54-.793.635-.318 1.27-.635 1.905-1.112.159-.158.317-.158.476-.317-.635 0-1.111-.159-1.587-.318-.476-.158-.953-.476-1.429-.793-.476-.318-.793-.794-1.111-1.111-.317-.477-.794-1.27-.794-1.429.477 0 .794.159 1.27.159s1.111-.159 1.27-.159c-.476-.159-.794-.317-1.27-.476l-1.428-.952c-.476-.477-.794-.953-.953-1.429-.158-.476-.317-.794-.476-1.27-.159-.317-.159-.793-.159-1.11v-.16c.477.318 1.111.477 1.746.635h.635a2.19 2.19 0 00-.635-.476c-.476-.476-.952-.952-1.27-1.587-.317-.635-.476-1.429-.634-2.223v-.634c0-.477.158-.794.317-1.27l.476-.953c.318.318.477.635.794.794l.952.952c.476.477.953.794 1.429 1.112a10.12 10.12 0 002.222 1.27c.476.158.953.476 1.429.634.793.318 1.587.476 2.38.635.477 0 .794.159 1.27.159h.635c.16 0 .16 0 .16-.159 0-.317-.16-.635-.16-.952v-.794c.16-.635.318-1.27.635-1.905.318-.476.635-.952 1.111-1.428a3.457 3.457 0 011.27-.794c.635-.317 1.429-.476 2.223-.476h1.111c.793.159 1.428.476 2.063.794.318.158.635.476.794.635h.158c.16 0 .318-.16.635-.16.477-.158.794-.317 1.27-.475.476-.16.953-.476 1.429-.794-.159.317-.318.794-.476 1.111-.16.318-.477.635-.635.953-.16.158-.477.476-.635.634-.159.16-.318.16-.476.318h.317c.635-.159 1.111-.159 1.746-.476 0-.159.318-.159.635-.318z"
-				/></svg
-			>
+			<img src="/icons/twitter.svg" alt="Twitter" width="40" height="40" />
 		</a>
 		<a href="https://social-plugins.line.me/lineit/share?url=https://wevis.info">
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 40 41"
-				width="40"
-				height="40"
-				aria-label="Line"
-				><path
-					fill="#00B900"
-					fill-rule="evenodd"
-					d="M40 20.105c0 11.045-8.954 20-20 20s-20-8.955-20-20c0-11.046 8.954-20 20-20s20 8.954 20 20zm-20.012-12c7.362 0 13.35 4.862 13.35 10.837 0 2.387-.925 4.538-2.863 6.675-2.8 3.225-9.062 7.15-10.487 7.75-1.408.593-1.23-.363-1.165-.712l.002-.013c.025-.2.188-1.138.188-1.138.05-.35.1-.875-.038-1.212-.15-.375-.737-.563-1.175-.663-6.412-.85-11.162-5.337-11.162-10.687 0-5.975 5.987-10.838 13.35-10.838z"
-					clip-rule="evenodd"
-				/><path
-					fill="#00B900"
-					d="M28.9 22.394a.25.25 0 00.25-.25v-.95a.25.25 0 00-.25-.25h-2.55v-.987h2.55a.25.25 0 00.25-.25v-.95a.25.25 0 00-.25-.25h-2.55v-.988h2.55a.25.25 0 00.25-.25v-.95a.25.25 0 00-.25-.25h-3.75a.25.25 0 00-.25.25v5.813c0 .137.112.25.25.25h3.75v.012zM15.024 22.394a.25.25 0 00.25-.25v-.95a.25.25 0 00-.25-.25h-2.55V16.32a.25.25 0 00-.25-.25h-.95a.25.25 0 00-.25.25v5.825c0 .138.113.25.25.25h3.75zM17.274 16.056h-.95a.25.25 0 00-.25.25v5.825c0 .137.113.25.25.25h.95a.25.25 0 00.25-.25v-5.825c.013-.138-.1-.25-.25-.25zM23.724 16.056h-.95a.25.25 0 00-.25.25v3.462l-2.662-3.6c0-.012-.013-.012-.025-.025l-.013-.012-.012-.013h-.013l-.012-.012h-.013s-.012 0-.012-.013h-.013s-.012 0-.012-.012h-1.038a.25.25 0 00-.25.25v5.825c0 .137.113.25.25.25h.95a.25.25 0 00.25-.25v-3.463l2.675 3.6a.15.15 0 00.063.063l.012.012h.063c.025 0 .037.013.062.013h.938a.25.25 0 00.25-.25v-5.825a.233.233 0 00-.238-.25z"
-				/></svg
-			>
+			<img src="/icons/line.svg" alt="Line" width="40" height="40" />
 		</a>
 	</div>
 	<div class="f more-links">
@@ -311,19 +249,19 @@
 <footer class="f footer">
 	<div class="f credit">
 		<span>Powered by</span>
-		<img class="footer-img" src="/logo/act.svg" alt="" width="32" height="24" />
+		<img class="footer-img" src="/logos/act.svg" alt="" width="32" height="24" />
 	</div>
 	<div class="f credit">
 		<span>Co-Developed by</span>
-		<img class="footer-img footer2" src="/logo/pu.svg" alt="" width="50" height="16" />
-		<img class="footer-img footer2" src="/logo/hand.png" alt="" width="42" height="16" />
+		<img class="footer-img footer2" src="/logos/pu.svg" alt="" width="50" height="16" />
+		<img class="footer-img footer2" src="/logos/hand.png" alt="" width="42" height="16" />
 	</div>
 	<div class="f credit">
 		<span>Sponsors by </span>
-		<img class="footer-img footer3" src="/logo/act_full.svg" alt="" width="66" height="34" />
-		<img class="footer-img footer3" src="/logo/tsri.png" alt="" width="26" height="32" />
-		<img class="footer-img footer3" src="/logo/econ.png" alt="" width="40" height="32" />
-		<img class="footer-img footer3" src="/logo/nrct.png" alt="" width="23" height="32" />
+		<img class="footer-img footer3" src="/logos/act_full.svg" alt="" width="66" height="34" />
+		<img class="footer-img footer3" src="/logos/tsri.png" alt="" width="26" height="32" />
+		<img class="footer-img footer3" src="/logos/econ.png" alt="" width="40" height="32" />
+		<img class="footer-img footer3" src="/logos/nrct.png" alt="" width="23" height="32" />
 	</div>
 	<p>
 		School Governance ต่อยอดจากแพลตฟอร์ม We The Students

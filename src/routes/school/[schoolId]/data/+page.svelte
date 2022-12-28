@@ -54,7 +54,7 @@
 					<span class="f">
 						<img src="/icons/info.svg" alt="" width="16" height="16" />
 						<span>ดูเกณฑ์การแบ่งขนาดโรงเรียน</span>
-						<img class="chevron" src="/chevron/bottom.svg" alt="" width="24" height="24" />
+						<img class="chevron" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
 					</span>
 				</summary>
 				<div class="school-size-flex">
@@ -102,7 +102,7 @@
 					<span class="student-color-1 std-size-color" />
 					<span>อนุบาล</span>
 					<span class="std-size-count">{d.student.total.อ.toLocaleString()}</span>
-					<img src="/chevron/right.svg" alt="" width="24" height="24" />
+					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 				</button>
 			{/if}
 			{#if d.student.total.ป}
@@ -110,7 +110,7 @@
 					<span class="student-color-2 std-size-color" />
 					<span>ประถม</span>
 					<span class="std-size-count">{d.student.total.ป.toLocaleString()}</span>
-					<img src="/chevron/right.svg" alt="" width="24" height="24" />
+					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 				</button>
 			{/if}
 			{#if d.student.total.มต}
@@ -118,7 +118,7 @@
 					<span class="student-color-3 std-size-color" />
 					<span>มัธยมต้น</span>
 					<span class="std-size-count">{d.student.total.มต.toLocaleString()}</span>
-					<img src="/chevron/right.svg" alt="" width="24" height="24" />
+					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 				</button>
 			{/if}
 			{#if d.student.total.มป}
@@ -126,7 +126,7 @@
 					<span class="student-color-4 std-size-color" />
 					<span>มัธยมปลาย</span>
 					<span class="std-size-count">{d.student.total.มป.toLocaleString()}</span>
-					<img src="/chevron/right.svg" alt="" width="24" height="24" />
+					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 				</button>
 			{/if}
 		</section>
@@ -176,7 +176,7 @@
 				<h3 class="mitr f">
 					<span>ครู</span>
 					<span class="tch-size-count">{d.staff.ครู.total.toLocaleString()}</span>
-					<img src="/chevron/right.svg" alt="" width="24" height="24" />
+					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 				</h3>
 				<p>ครูทั่วไป, ครูผู้ช่วย, ชำนาญการ, ชำนาญการพิเศษ...</p>
 			</button>
@@ -234,7 +234,7 @@
 			<h3 class="mitr f">
 				<span>บุคลากร</span>
 				<span class="tch-size-count">{d.staff.พนักงาน.total.toLocaleString()}</span>
-				<img src="/chevron/right.svg" alt="" width="24" height="24" />
+				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 			</h3>
 			<p>พนักงานธุรการ การเงิน บัญชี นักโภชนาการ นักการ-ภารโรง</p>
 		</button>
@@ -275,7 +275,7 @@
 			<h3 class="f">
 				<span>อุปกรณ์การเรียน</span>
 				<span class="tch-size-count ibm">ดูทั้งหมด</span>
-				<img src="/chevron/right.svg" alt="" width="24" height="24" />
+				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 			</h3>
 		</button>
 
@@ -362,7 +362,7 @@
 				<summary>
 					<span class="f">
 						<span class="mitr">ดูแหล่งที่มาของคอมพิวเตอร์ <small>(เครื่อง)</small></span>
-						<img class="chevron" src="/chevron/bottom.svg" alt="" width="24" height="24" />
+						<img class="chevron" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
 					</span>
 				</summary>
 				<div class="f mt8 mb8">
@@ -441,7 +441,7 @@
 				<h3 class="f">
 					<span>อุปกรณ์อื่น</span>
 					<span class="mla ibm">ดูทั้งหมด</span>
-					<img src="/chevron/right.svg" alt="" width="24" height="24" />
+					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 				</h3>
 			</button>
 			<ul class="other-appliance-list">
@@ -535,7 +535,7 @@
 			<h3 class="f">
 				<span>อาคารและสิ่งก่อสร้างอื่น</span>
 				<span class="tch-size-count ibm">ดูทั้งหมด</span>
-				<img src="/chevron/right.svg" alt="" width="24" height="24" />
+				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 			</h3>
 		</button>
 		<section class="other-buildings">

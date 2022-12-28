@@ -65,20 +65,12 @@
 	{/if}
 	<div class="nav-logo">
 		<a href="/" on:click={() => (show_menu = false)}>
-			<img src="/logo/school_gov.svg" alt="" width="108" height="40" />
+			<img src="/logos/school_gov.svg" alt="" width="108" height="40" />
 		</a>
 	</div>
 	<div class="nav-right nav-search">
 		<label class="f">
-			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="24" height="24"
-				><path
-					stroke="#9DAAD5"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35"
-				/></svg
-			>
+			<img src="/icons/search-box.svg" alt="" width="24" height="24" />
 			<input
 				type="text"
 				placeholder="พิมพ์ชื่อโรงเรียนหรือจังหวัดที่คุณอยากค้นหา"
@@ -93,21 +85,7 @@
 				$search_string = '';
 			}}
 		>
-			<svg
-				xmlns="http://www.w3.org/2000/svg"
-				fill="none"
-				viewBox="0 0 20 20"
-				width="20"
-				height="20"
-				aria-label="ปิด"
-				><path
-					stroke="#3C55AB"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-					stroke-width="2"
-					d="M14.667 5.333l-9.334 9.334M5.333 5.333l9.334 9.334"
-				/></svg
-			>
+			<img src="/icons/close-bold.svg" alt="" width="20" height="20" />
 		</button>
 	</div>
 	<div class="f nav-right">
