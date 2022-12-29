@@ -45,9 +45,11 @@
 		background: #fff;
 		color: #3c55ab;
 
-		position: absolute;
+		position: fixed;
 		inset: 0;
 		z-index: 20;
+
+		overflow: hidden auto;
 
 		@media screen and (min-width: 992px) {
 			box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -59,8 +61,6 @@
 			transform: translate(-50%, -50%);
 			width: 480px;
 			max-height: 600px;
-
-			overflow: hidden auto;
 		}
 	}
 
