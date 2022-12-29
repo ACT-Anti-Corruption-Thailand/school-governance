@@ -31,6 +31,8 @@
 	let ป_modal_open = false;
 	let มต_modal_open = false;
 	let มป_modal_open = false;
+	let ครู_modal_open = false;
+	let บุคลากร_modal_open = false;
 </script>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
@@ -524,7 +526,13 @@
 			<span>{d.staff.total.toLocaleString()}</span>
 		</h2>
 		<section>
-			<button type="button" class="teacher-size-btn mb8">
+			<button
+				type="button"
+				class="teacher-size-btn mb8"
+				on:click={() => {
+					ครู_modal_open = true;
+				}}
+			>
 				<h3 class="mitr f">
 					<span>ครู</span>
 					<span class="tch-size-count">{d.staff.ครู.total.toLocaleString()}</span>
@@ -532,6 +540,74 @@
 				</h3>
 				<p>ครูทั่วไป, ครูผู้ช่วย, ชำนาญการ, ชำนาญการพิเศษ...</p>
 			</button>
+			<Modal title={`ครู ${d.staff.ครู.total.toLocaleString()} คน`} bind:isOpen={ครู_modal_open}>
+				<div class="modal-section-header p16">
+					<div class="f ais fs10 g8">
+						<img src="/icons/info.svg" alt="" width="16" height="16" />
+						<p>
+							เอกสารจาก UNESCO ระบุว่า
+							คุณภาพของครูผู้สอนเป็นหนึ่งในปัจจัยที่สามารถบ่งชี้สภาพการให้บริการของโรงเรียนได้
+							สำหรับบริบทโรงเรียนในไทย วิทยฐานะและระดับตำแหน่ง
+							จัดเป็นปัจจัยที่สามารถสะท้อนคุณภาพของครูและบุคลากรได้
+						</p>
+					</div>
+					<details class="school-size-detail">
+						<summary>
+							<span class="f">
+								<img src="/icons/info.svg" alt="" width="16" height="16" />
+								<span>ดูลำดับวิทยาฐานะและระดับตำแหน่งทั้งหมด</span>
+								<img class="chevron" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+							</span>
+						</summary>
+						<div class="school-size-flex">
+							<ul class="teacher-list">
+								<li>ครูระดับตำแหน่ง ครูผู้ช่วย</li>
+								<li>ครูระดับตำแหน่ง คศ. 1</li>
+								<li>ครูระดับตำแหน่ง คศ. 2 เป็นวิทยฐานะ "ชำนาญการ"</li>
+								<li>ครูระดับตำแหน่ง คศ. 3 เป็นวิทยฐานะ "ชำนาญการพิเศษ"</li>
+								<li>ครูระดับตำแหน่ง คศ. 4 เป็นวิทยฐานะ "เชี่ยวชาญ"</li>
+								<li>ครูระดับตำแหน่ง คศ. 5 เป็นวิทยฐานะ "เชี่ยวชาญพิเศษ"</li>
+							</ul>
+						</div>
+					</details>
+				</div>
+				{#if d.staff.ครู.คศ5.total}
+					<div class="f modal-section">
+						<span>ครูเชี่ยวชาญพิเศษ</span>
+						<span class="mitr">{d.staff.ครู.คศ5.total.toLocaleString()}</span>
+					</div>
+				{/if}
+				{#if d.staff.ครู.คศ4.total}
+					<div class="f modal-section">
+						<span>ครูเชี่ยวชาญ</span>
+						<span class="mitr">{d.staff.ครู.คศ4.total.toLocaleString()}</span>
+					</div>
+				{/if}
+				{#if d.staff.ครู.คศ3.total}
+					<div class="f modal-section">
+						<span>ครูชำนาญการพิเศษ</span>
+						<span class="mitr">{d.staff.ครู.คศ3.total.toLocaleString()}</span>
+					</div>
+				{/if}
+				{#if d.staff.ครู.คศ2.total}
+					<div class="f modal-section">
+						<span>ครูชำนาญการ</span>
+						<span class="mitr">{d.staff.ครู.คศ2.total.toLocaleString()}</span>
+					</div>
+				{/if}
+				{#if d.staff.ครู.คศ1.total}
+					<div class="f modal-section">
+						<span>ครู คศ. 1</span>
+						<span class="mitr">{d.staff.ครู.คศ1.total.toLocaleString()}</span>
+					</div>
+				{/if}
+				{#if d.staff.ครู.ครูผู้ช่วย.total}
+					<div class="f modal-section">
+						<span>ครูผู้ช่วย</span>
+						<span class="mitr">{d.staff.ครู.ครูผู้ช่วย.total.toLocaleString()}</span>
+					</div>
+				{/if}
+			</Modal>
 			<div class="f">
 				<span>สัดส่วนครู ต่อ นักเรียน</span>
 				<span class="mitr fs20"
@@ -582,7 +658,13 @@
 			</div>
 		</section>
 
-		<button type="button" class="teacher-size-btn emp-btn mb8">
+		<button
+			type="button"
+			class="teacher-size-btn emp-btn mb8"
+			on:click={() => {
+				บุคลากร_modal_open = true;
+			}}
+		>
 			<h3 class="mitr f">
 				<span>บุคลากร</span>
 				<span class="tch-size-count">{d.staff.พนักงาน.total.toLocaleString()}</span>
@@ -590,17 +672,50 @@
 			</h3>
 			<p>พนักงานธุรการ การเงิน บัญชี นักโภชนาการ นักการ-ภารโรง</p>
 		</button>
+		<Modal
+			title={`บุคลากร ${d.staff.พนักงาน.total.toLocaleString()} คน`}
+			bind:isOpen={บุคลากร_modal_open}
+		>
+			<div class="modal-section-header p16">
+				<div class="f ais fs10 g8">
+					<img src="/icons/info.svg" alt="" width="16" height="16" />
+					<p>
+						“บุคลากรภายในโรงเรียน” สามารถเป็นได้ทั้ง พนักงานธุรการ นักโภชนาการ นักการภารโรง ฯลฯ
+						ที่ถึงแม้นักเรียนส่วนใหญ่อาจจะไม่ค่อยได้คลุกคลีหรือมีปฏิสัมพันธ์โดยตรง
+						แต่ก็ถือเป็นคณะทำงานสำคัญของโรงเรียน
+					</p>
+				</div>
+			</div>
+			{#if d.staff.พนักงาน.ลูกจ้างประจำ.total}
+				<div class="f modal-section">
+					<span>ลูกจ้างประจำ</span>
+					<span class="mitr">{d.staff.พนักงาน.ลูกจ้างประจำ.total.toLocaleString()}</span>
+				</div>
+			{/if}
+			{#if d.staff.พนักงาน.ลูกจ้างชั่วคราว.total}
+				<div class="f modal-section">
+					<span>ลูกจ้างชั่วคราว</span>
+					<span class="mitr">{d.staff.พนักงาน.ลูกจ้างชั่วคราว.total.toLocaleString()}</span>
+				</div>
+			{/if}
+			{#if d.staff.พนักงาน.พนักงานราชการ.total}
+				<div class="f modal-section">
+					<span>พนักงานราชการ</span>
+					<span class="mitr">{d.staff.พนักงาน.พนักงานราชการ.total.toLocaleString()}</span>
+				</div>
+			{/if}
+		</Modal>
 
 		<section class="f directors">
-			<h3>ผู้อำนวยการ 1</h3>
+			<h3>ผู้อำนวยการ</h3>
 			<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม</p>
 			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
-			<h3>ผู้อำนวยการ 2</h3>
+			<!-- <h3>ผู้อำนวยการ 2</h3>
 			<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม</p>
 			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
 			<h3>รองผู้อำนวยการ</h3>
 			<p class="fw500">ผศ. วินัย ภาคเพียรดี</p>
-			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
+			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small> -->
 		</section>
 
 		<h2 class="f">
@@ -1410,5 +1525,15 @@
 		margin: 0 -16px;
 		padding: 0 16px;
 		min-height: 42px;
+
+		&.p16 {
+			padding: 16px;
+		}
+	}
+
+	.teacher-list {
+		margin: 0;
+		padding-left: 24px;
+		list-style-position: inside;
 	}
 </style>
