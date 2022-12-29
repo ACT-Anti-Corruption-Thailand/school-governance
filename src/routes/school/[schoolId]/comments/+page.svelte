@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import { years } from 'data/years.js';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import { currentUser } from 'stores/firebaseapp';
 	import { onMount } from 'svelte';
+
+	const LATEST_YEAR = years[years.length - 1];
 
 	$: schoolId = $page.params.schoolId;
 
@@ -125,7 +128,7 @@
 						schoolId: schoolId,
 						comments: txt_comment.trim(),
 						location: chk_locations.join(),
-						schoolYear: 2022,
+						schoolYear: LATEST_YEAR,
 						userId: $currentUser.uid
 					})
 				}
@@ -155,7 +158,7 @@
 		'canteen',
 		'gym'
 	];
-	let filter_years: number[] = [2022];
+	let filter_years: number[] = [LATEST_YEAR];
 
 	$: filter_sort_by_lbl = {
 		latest: 'ล่าสุด',
@@ -258,12 +261,12 @@
 			</fieldset>
 			<fieldset>
 				<legend>ปีการศึกษา</legend>
-				<label
-					><input type="checkbox" bind:group={filter_years} value={2022} /><span>2565</span></label
-				>
-				<label
-					><input type="checkbox" bind:group={filter_years} value={2023} /><span>2566</span></label
-				>
+				{#each years as year (year)}
+					<label>
+						<input type="checkbox" bind:group={filter_years} value={year} />
+						<span>{year + 543}</span>
+					</label>
+				{/each}
 			</fieldset>
 		</div>
 	</details>

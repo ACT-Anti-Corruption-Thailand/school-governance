@@ -1,14 +1,9 @@
 <script lang="ts">
+	import { years } from 'data/years.js';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
 
-	const DROPDOWN_DATA = [
-		{ value: '2565' },
-		{ value: '2564' },
-		{ value: '2563' },
-		{ value: '2562' },
-		{ value: '2561' }
-	];
+	const DROPDOWN_DATA = years.map((y) => ({ label: y + 543, value: y }));
 
 	let dropdown_choice = DROPDOWN_DATA[0];
 </script>

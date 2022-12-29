@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { currentSchool, currentSchoolId } from 'stores/school';
+	import { update_date } from 'data/update_date.js';
+	import { years } from 'data/years.js';
+
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
 	import CircularProgress from 'components/school/CircularProgress.svelte';
@@ -7,13 +9,9 @@
 	import Waffle from 'components/school/Waffle.svelte';
 	import RatioChart from 'components/school/RatioChart.svelte';
 
-	const DROPDOWN_DATA = [
-		{ value: '2565' },
-		{ value: '2564' },
-		{ value: '2563' },
-		{ value: '2562' },
-		{ value: '2561' }
-	];
+	import { currentSchool, currentSchoolId } from 'stores/school';
+
+	const DROPDOWN_DATA = years.map((y) => ({ label: y + 543, value: y }));
 
 	let dropdown_choice = DROPDOWN_DATA[0];
 
@@ -604,7 +602,7 @@
 				สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่ระบบสารสนเทศเพื่อการบริหารการศึกษา
 				(Education Management Information System : EMIS) https://data.bopp-obec.info/emis
 			</p>
-			<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ 30/11/2565</p>
+			<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
 		</footer>
 	{/if}
 </div>

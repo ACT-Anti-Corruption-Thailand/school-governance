@@ -8,6 +8,8 @@ import INTERNET from './json/internet.json' assert { type: 'json' };
 import STAFF from './json/staff.json' assert { type: 'json' };
 import STUDENT from './json/student.json' assert { type: 'json' };
 
+import { years } from './years.js';
+
 function getSchoolYear() {
 	const now = new Date();
 	// If the current month is January to April,
@@ -20,8 +22,10 @@ function getSchoolYear() {
 	// return year;
 }
 
+const CURRENT_SCHOOL_YEAR = getSchoolYear();
+
 // This path is ignored. In production, the path will directly point to the public api
-const getOutputPath = (filename) => `static/data/${getSchoolYear()}/${filename}.json`;
+const getOutputPath = (filename) => `static/data/${CURRENT_SCHOOL_YEAR}/${filename}.json`;
 // Used for debugging purpose, so we don't have to recompile all 29xxx schools
 const SCHOOL_LIMIT = 50;
 
@@ -34,6 +38,17 @@ const formatSchoolName = (name) => {
 		.replace(/\w\S*/g, (txt) => txt[0].toLocaleUpperCase() + txt.substring(1).toLocaleLowerCase())
 		.trim();
 };
+
+if (!years.includes(CURRENT_SCHOOL_YEAR)) {
+	let new_years = [...years, CURRENT_SCHOOL_YEAR].sort((a, z) => a - z);
+	for (const path of ['data/years.js', 'src/data/years.js'])
+		fs.writeFileSync(path, 'export const years = ' + JSON.stringify(new_years));
+}
+
+fs.writeFileSync(
+	'src/data/update_date.js',
+	`export const update_date = "${new Date().toLocaleDateString('th-TH')}"`
+);
 
 let loopcount = 0;
 for (let school_id in GENERAL) {

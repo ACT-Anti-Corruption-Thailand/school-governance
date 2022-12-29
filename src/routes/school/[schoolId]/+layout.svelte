@@ -1,13 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-
+	import { years } from 'data/years.js';
 	import SchoolNav from 'components/school/SchoolNav.svelte';
-
 	import { currentSchool, currentSchoolId } from 'stores/school';
+
+	const LATEST_YEAR = years[years.length - 1];
 
 	const updateData = (schoolId: number) => {
 		$currentSchoolId = schoolId;
-		fetch(`/data/schools/${$page.params.schoolId}.json`)
+		fetch(`/data/${LATEST_YEAR}/${$page.params.schoolId}.json`)
 			.then((resp) => resp.json())
 			.then((data) => ($currentSchool = data));
 	};

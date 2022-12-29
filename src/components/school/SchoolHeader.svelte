@@ -1,7 +1,10 @@
 <script lang="ts">
 	import { page } from '$app/stores';
+	import { years } from 'data/years.js';
 	import SchoolRating from 'components/SchoolRating.svelte';
 	import { currentSchool, currentSchoolId } from 'stores/school';
+
+	const LATEST_YEAR = years[years.length - 1];
 
 	export let pageData: {
 		name: string;
@@ -10,7 +13,7 @@
 
 	const updateData = (schoolId: number) => {
 		$currentSchoolId = schoolId;
-		fetch(`/data/schools/${$page.params.schoolId}.json`)
+		fetch(`/data/${LATEST_YEAR}/${$page.params.schoolId}.json`)
 			.then((resp) => resp.json())
 			.then((data) => ($currentSchool = data));
 	};

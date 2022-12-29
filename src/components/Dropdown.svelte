@@ -7,8 +7,8 @@
 	} from '@rgossiaux/svelte-headlessui';
 
 	export let options: {
-		value: string;
-		label?: string;
+		value: string | number;
+		label?: string | number;
 	}[];
 	export let selected_option = options[0];
 </script>
@@ -24,7 +24,7 @@
 	</ListboxButton>
 	<ListboxOptions class="dropdown-list">
 		{#each options as option (option.value)}
-			<ListboxOption value={option.value} class={({ active }) => (active ? 'active' : '')}>
+			<ListboxOption value={option} class={({ active }) => (active ? 'active' : '')}>
 				{option.label ?? option.value}
 			</ListboxOption>
 		{/each}
