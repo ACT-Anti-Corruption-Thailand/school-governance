@@ -27,12 +27,16 @@
 		return CONDITIONS_CLASS[condition] ?? '';
 	};
 
+	const mergeGoodsName = (goods_list: any[]) => goods_list.map((e) => e.name).join(', ');
+
 	let อ_modal_open = false;
 	let ป_modal_open = false;
 	let มต_modal_open = false;
 	let มป_modal_open = false;
 	let ครู_modal_open = false;
 	let บุคลากร_modal_open = false;
+	let อุปกรณ์การเรียน_modal_open = false;
+	let อุปกรณ์อื่น_modal_open = false;
 </script>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
@@ -738,13 +742,53 @@
 			</dl>
 		</section>
 
-		<button type="button" class="teacher-size-btn emp-btn mb8">
+		<button
+			type="button"
+			class="teacher-size-btn emp-btn mb8"
+			on:click={() => {
+				อุปกรณ์การเรียน_modal_open = true;
+			}}
+		>
 			<h3 class="f">
 				<span>อุปกรณ์การเรียน</span>
 				<span class="tch-size-count ibm">ดูทั้งหมด</span>
 				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 			</h3>
 		</button>
+		<Modal title="อุปกรณ์การเรียน" bind:isOpen={อุปกรณ์การเรียน_modal_open}>
+			<dl class="f status-color fs10 mb16">
+				<dt class="usable-color">เหลือง</dt>
+				<dd>ใช้งานได้</dd>
+				<dt class="await-color">เหลืองเข้ม</dt>
+				<dd>รอซ่อม/จำหน่าย</dd>
+				<dt class="unusable-color">แดง</dt>
+				<dd>ใช้งานไม่ได้</dd>
+			</dl>
+			{#each d.durable_goods.ครุภัณฑ์การศึกษา.data as eduitem (eduitem.code)}
+				<div class="f mb8 mitr">
+					<span>
+						{eduitem.name}
+						<!-- <small>(ชิ้น)</small> -->
+					</span>
+					<span>{eduitem.total.toLocaleString()}</span>
+				</div>
+				<RatioChart
+					data={[
+						{ number: eduitem.working, color: '#ffce4f' },
+						{ number: eduitem.to_be_repaired, color: '#ddab29' },
+						{ number: eduitem.to_be_removed, color: '#fc5858' }
+					]}
+				/>
+				<p class="mb8 fs10 ratio-stat-text">
+					<span class="cv usable-color">{eduitem.working.toLocaleString()}</span>
+					|
+					<span class="cv await-color">{eduitem.to_be_repaired.toLocaleString()}</span>
+					|
+					<span class="cv unusable-color">{eduitem.to_be_removed.toLocaleString()}</span>
+					<!-- ชิ้น -->
+				</p>
+			{/each}
+		</Modal>
 
 		<section>
 			<h3 class="f mb8">
@@ -752,25 +796,34 @@
 					โต๊ะเก้าอี้นักเรียน
 					<small>(ตัว)</small>
 				</span>
-				<span>{d.tables.total.toLocaleString()}</span>
+				<span>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.total.toLocaleString()}</span>
 			</h3>
 			<RatioChart
 				data={[
-					{ number: d.tables.working, color: '#ffce4f' },
-					{ number: d.tables.to_be_repaired, color: '#ddab29' },
-					{ number: d.tables.to_be_removed, color: '#fc5858' }
+					{ number: d.durable_goods.โต๊ะเก้าอี้นักเรียน.working, color: '#ffce4f' },
+					{ number: d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_repaired, color: '#ddab29' },
+					{ number: d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_removed, color: '#fc5858' }
 				]}
 			/>
 			<p class="mb8 fs10 ratio-stat-text">
-				<span class="cv usable-color">{d.tables.working.toLocaleString()}</span> |
-				<span class="cv await-color">{d.tables.to_be_repaired.toLocaleString()}</span>
+				<span class="cv usable-color"
+					>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.working.toLocaleString()}</span
+				>
 				|
-				<span class="cv unusable-color">{d.tables.to_be_removed.toLocaleString()}</span> ตัว
+				<span class="cv await-color"
+					>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_repaired.toLocaleString()}</span
+				>
+				|
+				<span class="cv unusable-color"
+					>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_removed.toLocaleString()}</span
+				> ตัว
 			</p>
 			<div class="f">
 				<span>สัดส่วนโต๊ะเก้าอี้ ต่อ นักเรียน</span>
 				<span class="mitr fs20"
-					>1:{Math.ceil(d.student.total.all / d.tables.working).toLocaleString()}</span
+					>1:{Math.ceil(
+						d.student.total.all / d.durable_goods.โต๊ะเก้าอี้นักเรียน.working
+					).toLocaleString()}</span
 				>
 			</div>
 			<hr />
@@ -779,7 +832,7 @@
 					<img src="/icons/chair.svg" alt="" width="24" height="24" />
 				</div>
 				<div class="f">
-					{#each Array(Math.ceil(d.student.total.all / d.tables.working)) as _}
+					{#each Array(Math.ceil(d.student.total.all / d.durable_goods.โต๊ะเก้าอี้นักเรียน.working)) as _}
 						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
 					{/each}
 				</div>
@@ -904,7 +957,13 @@
 			</dl>
 		</section>
 		<section>
-			<button class="teacher-size-btn" type="button">
+			<button
+				class="teacher-size-btn"
+				type="button"
+				on:click={() => {
+					อุปกรณ์อื่น_modal_open = true;
+				}}
+			>
 				<h3 class="f">
 					<span>อุปกรณ์อื่น</span>
 					<span class="mla ibm">ดูทั้งหมด</span>
@@ -912,24 +971,78 @@
 				</h3>
 			</button>
 			<ul class="other-appliance-list">
-				<li>
-					<span class="mitr">เครื่องใช้ไฟฟ้า</span>
-					<span class="fs10">เครื่องปรับอากาศ, โทรทัศน์, เครื่องขยายเสียง</span>
-				</li>
-				<li>
-					<span class="mitr">ยานพาหนะ</span>
-					<span class="fs10">รถโดยสาร 12 ที่นั่ง, รถกระบะ</span>
-				</li>
-				<li>
-					<span class="mitr">สำนักงาน</span>
-					<span class="fs10">คอมพิวเตอร์, โต๊ะเก้าอี้, เครื่องถ่ายเอกสาร</span>
-				</li>
-				<li>
-					<span class="mitr">งานบ้าน</span>
-					<span class="fs10">เครื่องทำน้ำเย็น, ตู้เย็น, โต๊ะอาหาร...</span>
-				</li>
+				{#if d.durable_goods['ครุภัณฑ์สำนักงาน/โรงเรียน'].total}
+					<li>
+						<span class="mitr">สำนักงาน/โรงเรียน</span>
+						<span class="fs10">
+							{mergeGoodsName(d.durable_goods['ครุภัณฑ์สำนักงาน/โรงเรียน'].data)}
+						</span>
+					</li>
+				{/if}
+				{#if d.durable_goods.ครุภัณฑ์ไฟฟ้าและวิทยุ.total}
+					<li>
+						<span class="mitr">ไฟฟ้าและวิทยุ</span>
+						<span class="fs10">
+							{mergeGoodsName(d.durable_goods.ครุภัณฑ์ไฟฟ้าและวิทยุ.data)}
+						</span>
+					</li>
+				{/if}
+				{#if d.durable_goods.ครุภัณฑ์งานบ้านและงานครัว.total}
+					<li>
+						<span class="mitr">งานบ้านและงานครัว</span>
+						<span class="fs10">
+							{mergeGoodsName(d.durable_goods.ครุภัณฑ์งานบ้านและงานครัว.data)}
+						</span>
+					</li>
+				{/if}
+				{#if d.durable_goods.ครุภัณฑ์ยานพาหนะ.total}
+					<li>
+						<span class="mitr">ยานพาหนะ</span>
+						<span class="fs10">
+							{mergeGoodsName(d.durable_goods.ครุภัณฑ์ยานพาหนะ.data)}
+						</span>
+					</li>
+				{/if}
 			</ul>
 		</section>
+		<Modal title="อุปกรณ์อื่นๆ" bind:isOpen={อุปกรณ์อื่น_modal_open}>
+			{#if d.durable_goods['ครุภัณฑ์สำนักงาน/โรงเรียน'].total}
+				<div class="f modal-section-header mitr">ครุภัณฑ์สำนักงาน/โรงเรียน</div>
+				{#each d.durable_goods['ครุภัณฑ์สำนักงาน/โรงเรียน'].data as good (good.code)}
+					<div class="f modal-section">
+						<span>{good.name}</span>
+						<span class="mitr">{good.total.toLocaleString()}</span>
+					</div>
+				{/each}
+			{/if}
+			{#if d.durable_goods.ครุภัณฑ์ไฟฟ้าและวิทยุ.total}
+				<div class="f modal-section-header mitr">ครุภัณฑ์ไฟฟ้าและวิทยุ</div>
+				{#each d.durable_goods.ครุภัณฑ์ไฟฟ้าและวิทยุ.data as good (good.code)}
+					<div class="f modal-section">
+						<span>{good.name}</span>
+						<span class="mitr">{good.total.toLocaleString()}</span>
+					</div>
+				{/each}
+			{/if}
+			{#if d.durable_goods.ครุภัณฑ์งานบ้านและงานครัว.total}
+				<div class="f modal-section-header mitr">ครุภัณฑ์งานบ้านและงานครัว</div>
+				{#each d.durable_goods.ครุภัณฑ์งานบ้านและงานครัว.data as good (good.code)}
+					<div class="f modal-section">
+						<span>{good.name}</span>
+						<span class="mitr">{good.total.toLocaleString()}</span>
+					</div>
+				{/each}
+			{/if}
+			{#if d.durable_goods.ครุภัณฑ์ยานพาหนะ.total}
+				<div class="f modal-section-header mitr">ครุภัณฑ์ยานพาหนะ</div>
+				{#each d.durable_goods.ครุภัณฑ์ยานพาหนะ.data as good (good.code)}
+					<div class="f modal-section">
+						<span>{good.name}</span>
+						<span class="mitr">{good.total.toLocaleString()}</span>
+					</div>
+				{/each}
+			{/if}
+		</Modal>
 
 		<ActAiBanner margin />
 
@@ -1405,6 +1518,9 @@
 
 		> li {
 			margin-top: 16px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			overflow: hidden;
 		}
 	}
 
@@ -1514,6 +1630,7 @@
 
 	.modal-section {
 		height: 42px;
+		font-size: 0.875rem;
 
 		& + & {
 			border-top: 1px solid #ddd;

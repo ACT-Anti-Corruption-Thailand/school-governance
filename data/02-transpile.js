@@ -10,6 +10,9 @@ import STUDENT from './json/student.json' assert { type: 'json' };
 
 import { years } from './years.js';
 
+const groupBy = (arr, groupFn) =>
+	arr.reduce((r, v, _i, _a, k = groupFn(v)) => ((r[k] || (r[k] = [])).push(v), r), {});
+
 function getSchoolYear() {
 	const now = new Date();
 	// If the current month is January to April,
@@ -129,38 +132,63 @@ for (let school_id in GENERAL) {
 	} else {
 		d.computer = null;
 	}
+
 	d.durable_goods =
-		DURABLE_GOODS[school_id].map((goods) => ({
-			...goods,
-			total: goods.working + goods.to_be_repaired + goods.to_be_removed
+		DURABLE_GOODS[school_id].map((e) => ({
+			...e,
+			total: e.working + e.to_be_repaired + e.to_be_removed
 		})) ?? null;
-	d.tables = {
-		working: d.durable_goods[0].working + d.durable_goods[16].working + d.durable_goods[17].working,
-		to_be_repaired:
-			d.durable_goods[0].to_be_repaired +
-			d.durable_goods[16].to_be_repaired +
-			d.durable_goods[17].to_be_repaired,
-		to_be_removed:
-			d.durable_goods[0].to_be_removed +
-			d.durable_goods[16].to_be_removed +
-			d.durable_goods[17].to_be_removed,
-		total: d.durable_goods[0].total + d.durable_goods[16].total + d.durable_goods[17].total
+
+	d.durable_goods_stats = {
+		working: d.durable_goods.reduce((a, c) => (a += c.working), 0),
+		to_be_repaired: d.durable_goods.reduce((a, c) => (a += c.to_be_repaired), 0),
+		to_be_removed: d.durable_goods.reduce((a, c) => (a += c.to_be_removed), 0),
+		total: d.durable_goods.reduce((a, c) => (a += c.total), 0)
 	};
-	d.durable_goods_stats = d.durable_goods.reduce(
-		(a, c) => {
-			a.working += c.working;
-			a.to_be_repaired += c.to_be_repaired;
-			a.to_be_removed += c.to_be_removed;
-			a.total += c.total;
-			return a;
-		},
-		{
-			working: 0,
-			to_be_repaired: 0,
-			to_be_removed: 0,
-			total: 0
+
+	if (d.durable_goods) {
+		let cleaned_data = d.durable_goods.map((d) => {
+			const type = [11001, 22001, 22002].includes(d.code)
+				? 'โต๊ะเก้าอี้นักเรียน'
+				: d.type.replace('ครุภัณฑ์สำนักงาน โรงเรียน', 'ครุภัณฑ์สำนักงาน/โรงเรียน');
+
+			return {
+				...d,
+				name: d.name.replace(/\(ใช้บริหารจัดการ\)|\(ใช้ในการเรียนการสอน\)/g, ''),
+				type
+			};
+		});
+
+		let formatted_data = groupBy(cleaned_data, (d) => d.type);
+		for (const type in formatted_data) {
+			const data = formatted_data[type]
+				.filter((d) => d.total)
+				.map((d) => ({
+					code: d.code,
+					name: d.name,
+					working: d.working,
+					to_be_repaired: d.to_be_repaired,
+					to_be_removed: d.to_be_removed,
+					total: d.total
+				}));
+
+			if (data.length === 0) {
+				delete formatted_data[type];
+				continue;
+			}
+
+			formatted_data[type] = {
+				working: data.reduce((a, c) => (a += c.working), 0),
+				to_be_repaired: data.reduce((a, c) => (a += c.to_be_repaired), 0),
+				to_be_removed: data.reduce((a, c) => (a += c.to_be_removed), 0),
+				total: data.reduce((a, c) => (a += c.total), 0),
+				data
+			};
 		}
-	);
+
+		d.durable_goods = formatted_data;
+	}
+
 	d.internet = INTERNET[school_id][0] ?? null;
 	for (let key in d.internet) {
 		d.internet[key] = d.internet[key]?.trim() === '-' ? null : d.internet[key];
@@ -337,5 +365,5 @@ for (let school_id in GENERAL) {
 		d.student = null;
 	}
 
-	fs.writeFileSync(getOutputPath(school_id), JSON.stringify(d));
+	fs.writeFileSync(getOutputPath(school_id), JSON.stringify(d, null, 1));
 }
