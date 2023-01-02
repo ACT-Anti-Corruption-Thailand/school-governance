@@ -4,8 +4,8 @@
  "name_th": "สมถวิลจินตมัยบ้านห้วยแล้ง (ตชด.อนุสรณ์)",
  "name_en": "Somtawinjintamai Banhuaylang (Torchordor.anusorn)",
  "address": "หมู่ที่ 2 บ้านบ้านห้วยแล้ง",
- "subdistrict": "ท่าข้าม",
- "district": "เวียงแก่น",
+ "subdistrict": "ตำบลท่าข้าม",
+ "district": "อำเภอเวียงแก่น",
  "province": "เชียงราย",
  "postcode": "57310",
  "telephone": "931317070",
@@ -24,12 +24,22 @@
  "principal_image_path": "https://data.bopp-obec.info/emis/pic/1057120721-20170815-134537.jpg",
  "latlng": "20.0234874,100.4837335",
  "school_id": "157120742",
- "school_buildings": [],
- "other_buildings": [],
- "buildings_stats": {
-  "ดี": 0,
-  "พอใช้": 0,
-  "ทรุดโทรม": 0
+ "buildings": {
+  "data": {
+   "อาคารเรียน": [],
+   "อาคารทั่วไป": [],
+   "ห้องน้ำ": [],
+   "บ้านพัก": [],
+   "การเกษตร": [],
+   "อื่นๆ": []
+  },
+  "stats": {
+   "ดี": 0,
+   "พอใช้": 0,
+   "ทรุดโทรม": 0,
+   "จำนวนห้องในอาคารเรียน": 0,
+   "รวม": 0
+  }
  },
  "computer": {
   "working": 17,
@@ -55,172 +65,189 @@
   }
  },
  "durable_goods": {
-  "โต๊ะเก้าอี้นักเรียน": {
-   "working": 104,
-   "to_be_repaired": 0,
-   "to_be_removed": 0,
-   "total": 104,
-   "data": [
-    {
-     "code": 11001,
-     "name": "โต๊ะเก้าอี้นักเรียนก่อนประถมศึกษา",
-     "working": 27,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 27
-    },
-    {
-     "code": 22001,
-     "name": "โต๊ะเก้าอี้นักเรียน ประถมศึกษา",
-     "working": 77,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 77
-    }
-   ]
+  "data": {
+   "โต๊ะเก้าอี้นักเรียน": {
+    "working": 104,
+    "to_be_repaired": 0,
+    "to_be_removed": 0,
+    "total": 104,
+    "list": [
+     {
+      "code": 11001,
+      "type": "โต๊ะเก้าอี้นักเรียน",
+      "name": "โต๊ะเก้าอี้นักเรียนก่อนประถมศึกษา",
+      "working": 27,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 27
+     },
+     {
+      "code": 22001,
+      "type": "โต๊ะเก้าอี้นักเรียน",
+      "name": "โต๊ะเก้าอี้นักเรียน ประถมศึกษา",
+      "working": 77,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 77
+     }
+    ]
+   },
+   "ครุภัณฑ์การศึกษา": {
+    "working": 12,
+    "to_be_repaired": 2,
+    "to_be_removed": 0,
+    "total": 14,
+    "list": [
+     {
+      "code": 22026,
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "โทรทัศน์สี",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": 22029,
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "จานรับสัญญาณดาวเทียม",
+      "working": 5,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 5
+     },
+     {
+      "code": 22030,
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ครุภัณฑ์ห้องสมุด ชุดเล็ก ประถมศึกษา",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": 22032,
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "เครื่องมัลติมีเดียโปรเจคเตอร์ Lcd",
+      "working": 3,
+      "to_be_repaired": 2,
+      "to_be_removed": 0,
+      "total": 5
+     },
+     {
+      "code": 22043,
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "โทรทัศน์สีชนิด จอแบน (Lcd)",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     }
+    ]
+   },
+   "ครุภัณฑ์สำนักงาน/โรงเรียน": {
+    "working": 3,
+    "to_be_repaired": 0,
+    "to_be_removed": 0,
+    "total": 3,
+    "list": [
+     {
+      "code": 21001,
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องถ่ายเอกสาร",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": 21008,
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องพิมพ์ (Printer)",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     }
+    ]
+   },
+   "ครุภัณฑ์ไฟฟ้าและวิทยุ": {
+    "working": 2,
+    "to_be_repaired": 0,
+    "to_be_removed": 0,
+    "total": 2,
+    "list": [
+     {
+      "code": 23003,
+      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
+      "name": "เครื่องขยายเสียง",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": 23005,
+      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
+      "name": "เครื่องปรับอากาศ",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     }
+    ]
+   },
+   "ครุภัณฑ์งานบ้านและงานครัว": {
+    "working": 8,
+    "to_be_repaired": 0,
+    "to_be_removed": 0,
+    "total": 8,
+    "list": [
+     {
+      "code": 24001,
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "เครื่องกรองน้ำ",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": 24002,
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "เครื่องทำน้ำเย็น",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": 24008,
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบไฟเบอร์กลาส",
+      "working": 4,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 4
+     },
+     {
+      "code": 24009,
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบพลาสติก",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     }
+    ]
+   }
   },
-  "ครุภัณฑ์การศึกษา": {
-   "working": 12,
+  "stats": {
+   "working": 129,
    "to_be_repaired": 2,
    "to_be_removed": 0,
-   "total": 14,
-   "data": [
-    {
-     "code": 22026,
-     "name": "โทรทัศน์สี",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": 22029,
-     "name": "จานรับสัญญาณดาวเทียม",
-     "working": 5,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 5
-    },
-    {
-     "code": 22030,
-     "name": "ครุภัณฑ์ห้องสมุด ชุดเล็ก ประถมศึกษา",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": 22032,
-     "name": "เครื่องมัลติมีเดียโปรเจคเตอร์ LCD",
-     "working": 3,
-     "to_be_repaired": 2,
-     "to_be_removed": 0,
-     "total": 5
-    },
-    {
-     "code": 22043,
-     "name": "โทรทัศน์สีชนิด จอแบน (LCD)",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    }
-   ]
-  },
-  "ครุภัณฑ์สำนักงาน/โรงเรียน": {
-   "working": 3,
-   "to_be_repaired": 0,
-   "to_be_removed": 0,
-   "total": 3,
-   "data": [
-    {
-     "code": 21001,
-     "name": "เครื่องถ่ายเอกสาร",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": 21008,
-     "name": "เครื่องพิมพ์ (Printer)",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    }
-   ]
-  },
-  "ครุภัณฑ์ไฟฟ้าและวิทยุ": {
-   "working": 2,
-   "to_be_repaired": 0,
-   "to_be_removed": 0,
-   "total": 2,
-   "data": [
-    {
-     "code": 23003,
-     "name": "เครื่องขยายเสียง",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": 23005,
-     "name": "เครื่องปรับอากาศ",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    }
-   ]
-  },
-  "ครุภัณฑ์งานบ้านและงานครัว": {
-   "working": 8,
-   "to_be_repaired": 0,
-   "to_be_removed": 0,
-   "total": 8,
-   "data": [
-    {
-     "code": 24001,
-     "name": "เครื่องกรองน้ำ",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": 24002,
-     "name": "เครื่องทำน้ำเย็น",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": 24008,
-     "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบไฟเบอร์กลาส",
-     "working": 4,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 4
-    },
-    {
-     "code": 24009,
-     "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบพลาสติก",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    }
-   ]
+   "total": 131
   }
- },
- "durable_goods_stats": {
-  "working": 129,
-  "to_be_repaired": 2,
-  "to_be_removed": 0,
-  "total": 131
  },
  "internet": {
   "provider": null,
