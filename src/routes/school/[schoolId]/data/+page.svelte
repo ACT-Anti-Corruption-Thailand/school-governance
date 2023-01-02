@@ -27,7 +27,8 @@
 		return CONDITIONS_CLASS[condition] ?? '';
 	};
 
-	const mergeGoodsName = (goods_list: any[]) => goods_list.map((e) => e.name).join(', ');
+	const mergeGoodsName = (goods_list: any[]) =>
+		[...new Set(goods_list.map((e) => e.name))].join(', ');
 
 	let อ_modal_open = false;
 	let ป_modal_open = false;
@@ -726,9 +727,9 @@
 			<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
 			<span class="f g8">
 				<CircularProgress
-					percent={(d.durable_goods_stats.working / d.durable_goods_stats.total) * 100}
+					percent={(d.durable_goods.stats.working / d.durable_goods.stats.total) * 100}
 				/>
-				{~~((d.durable_goods_stats.working / d.durable_goods_stats.total) * 100)}%
+				{~~((d.durable_goods.stats.working / d.durable_goods.stats.total) * 100)}%
 			</span>
 		</h2>
 		<section>
@@ -764,7 +765,7 @@
 				<dt class="unusable-color">แดง</dt>
 				<dd>ใช้งานไม่ได้</dd>
 			</dl>
-			{#each d.durable_goods.ครุภัณฑ์การศึกษา.data as eduitem (eduitem.code)}
+			{#each d.durable_goods.data.ครุภัณฑ์การศึกษา.list as eduitem (eduitem.code)}
 				<div class="f mb8 mitr">
 					<span>
 						{eduitem.name}
@@ -796,33 +797,33 @@
 					โต๊ะเก้าอี้นักเรียน
 					<small>(ตัว)</small>
 				</span>
-				<span>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.total.toLocaleString()}</span>
+				<span>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.total.toLocaleString()}</span>
 			</h3>
 			<RatioChart
 				data={[
-					{ number: d.durable_goods.โต๊ะเก้าอี้นักเรียน.working, color: '#ffce4f' },
-					{ number: d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_repaired, color: '#ddab29' },
-					{ number: d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_removed, color: '#fc5858' }
+					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working, color: '#ffce4f' },
+					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired, color: '#ddab29' },
+					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed, color: '#fc5858' }
 				]}
 			/>
 			<p class="mb8 fs10 ratio-stat-text">
 				<span class="cv usable-color"
-					>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.working.toLocaleString()}</span
+					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working.toLocaleString()}</span
 				>
 				|
 				<span class="cv await-color"
-					>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_repaired.toLocaleString()}</span
+					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired.toLocaleString()}</span
 				>
 				|
 				<span class="cv unusable-color"
-					>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_removed.toLocaleString()}</span
+					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed.toLocaleString()}</span
 				> ตัว
 			</p>
 			<div class="f">
 				<span>สัดส่วนโต๊ะเก้าอี้ ต่อ นักเรียน</span>
 				<span class="mitr fs20"
 					>1:{Math.ceil(
-						d.student.total.all / d.durable_goods.โต๊ะเก้าอี้นักเรียน.working
+						d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working
 					).toLocaleString()}</span
 				>
 			</div>
@@ -832,7 +833,7 @@
 					<img src="/icons/chair.svg" alt="" width="24" height="24" />
 				</div>
 				<div class="f">
-					{#each Array(Math.ceil(d.student.total.all / d.durable_goods.โต๊ะเก้าอี้นักเรียน.working)) as _}
+					{#each Array(Math.ceil(d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working)) as _}
 						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
 					{/each}
 				</div>
@@ -971,77 +972,30 @@
 				</h3>
 			</button>
 			<ul class="other-appliance-list">
-				{#if d.durable_goods['ครุภัณฑ์สำนักงาน/โรงเรียน'].total}
-					<li>
-						<span class="mitr">สำนักงาน/โรงเรียน</span>
-						<span class="fs10">
-							{mergeGoodsName(d.durable_goods['ครุภัณฑ์สำนักงาน/โรงเรียน'].data)}
-						</span>
-					</li>
-				{/if}
-				{#if d.durable_goods.ครุภัณฑ์ไฟฟ้าและวิทยุ.total}
-					<li>
-						<span class="mitr">ไฟฟ้าและวิทยุ</span>
-						<span class="fs10">
-							{mergeGoodsName(d.durable_goods.ครุภัณฑ์ไฟฟ้าและวิทยุ.data)}
-						</span>
-					</li>
-				{/if}
-				{#if d.durable_goods.ครุภัณฑ์งานบ้านและงานครัว.total}
-					<li>
-						<span class="mitr">งานบ้านและงานครัว</span>
-						<span class="fs10">
-							{mergeGoodsName(d.durable_goods.ครุภัณฑ์งานบ้านและงานครัว.data)}
-						</span>
-					</li>
-				{/if}
-				{#if d.durable_goods.ครุภัณฑ์ยานพาหนะ.total}
-					<li>
-						<span class="mitr">ยานพาหนะ</span>
-						<span class="fs10">
-							{mergeGoodsName(d.durable_goods.ครุภัณฑ์ยานพาหนะ.data)}
-						</span>
-					</li>
-				{/if}
+				{#each Object.keys(d.durable_goods.data).filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/)) as appliance_key (appliance_key)}
+					{#if d.durable_goods.data[appliance_key].total}
+						<li>
+							<span class="mitr">{appliance_key.replace('ครุภัณฑ์', '')}</span>
+							<span class="fs10">
+								{mergeGoodsName(d.durable_goods.data[appliance_key].list)}
+							</span>
+						</li>
+					{/if}
+				{/each}
 			</ul>
 		</section>
 		<Modal title="อุปกรณ์อื่นๆ" bind:isOpen={อุปกรณ์อื่น_modal_open}>
-			{#if d.durable_goods['ครุภัณฑ์สำนักงาน/โรงเรียน'].total}
-				<div class="f modal-section-header mitr">ครุภัณฑ์สำนักงาน/โรงเรียน</div>
-				{#each d.durable_goods['ครุภัณฑ์สำนักงาน/โรงเรียน'].data as good (good.code)}
-					<div class="f modal-section">
-						<span>{good.name}</span>
-						<span class="mitr">{good.total.toLocaleString()}</span>
-					</div>
-				{/each}
-			{/if}
-			{#if d.durable_goods.ครุภัณฑ์ไฟฟ้าและวิทยุ.total}
-				<div class="f modal-section-header mitr">ครุภัณฑ์ไฟฟ้าและวิทยุ</div>
-				{#each d.durable_goods.ครุภัณฑ์ไฟฟ้าและวิทยุ.data as good (good.code)}
-					<div class="f modal-section">
-						<span>{good.name}</span>
-						<span class="mitr">{good.total.toLocaleString()}</span>
-					</div>
-				{/each}
-			{/if}
-			{#if d.durable_goods.ครุภัณฑ์งานบ้านและงานครัว.total}
-				<div class="f modal-section-header mitr">ครุภัณฑ์งานบ้านและงานครัว</div>
-				{#each d.durable_goods.ครุภัณฑ์งานบ้านและงานครัว.data as good (good.code)}
-					<div class="f modal-section">
-						<span>{good.name}</span>
-						<span class="mitr">{good.total.toLocaleString()}</span>
-					</div>
-				{/each}
-			{/if}
-			{#if d.durable_goods.ครุภัณฑ์ยานพาหนะ.total}
-				<div class="f modal-section-header mitr">ครุภัณฑ์ยานพาหนะ</div>
-				{#each d.durable_goods.ครุภัณฑ์ยานพาหนะ.data as good (good.code)}
-					<div class="f modal-section">
-						<span>{good.name}</span>
-						<span class="mitr">{good.total.toLocaleString()}</span>
-					</div>
-				{/each}
-			{/if}
+			{#each Object.keys(d.durable_goods.data).filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/)) as appliance_key (appliance_key)}
+				{#if d.durable_goods.data[appliance_key].total}
+					<div class="f modal-section-header mitr">{appliance_key}</div>
+					{#each d.durable_goods.data[appliance_key].list as good (good.code)}
+						<div class="f modal-section">
+							<span>{good.name}</span>
+							<span class="mitr">{good.total.toLocaleString()}</span>
+						</div>
+					{/each}
+				{/if}
+			{/each}
 		</Modal>
 
 		<ActAiBanner margin />
@@ -1049,18 +1003,18 @@
 		<h2 class="f">
 			<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 			<span class="f g8">
-				<CircularProgress percent={(d.buildings_stats?.ดี / d.buildings_stats?.total) * 100} />
-				{~~((d.buildings_stats?.ดี / d.buildings_stats?.total) * 100)}%
+				<CircularProgress percent={(d.buildings.stats.ดี / d.buildings.stats.รวม) * 100} />
+				{~~((d.buildings.stats.ดี / d.buildings.stats.รวม) * 100)}%
 			</span>
 		</h2>
 		<section>
 			<dl class="f status-color">
 				<dt class="usable-color">เหลือง</dt>
-				<dd>ดี {~~((d.buildings_stats?.ดี / d.buildings_stats?.total) * 100)}%</dd>
+				<dd>ดี {~~((d.buildings.stats.ดี / d.buildings.stats.รวม) * 100)}%</dd>
 				<dt class="await-color">เหลืองเข้ม</dt>
-				<dd>พอใช้ {~~((d.buildings_stats?.['พอใช้'] / d.buildings_stats?.total) * 100)}%</dd>
+				<dd>พอใช้ {~~((d.buildings.stats['พอใช้'] / d.buildings.stats.รวม) * 100)}%</dd>
 				<dt class="unusable-color">แดง</dt>
-				<dd>ทรุดโทรม {~~((d.buildings_stats?.ทรุดโทรม / d.buildings_stats?.total) * 100)}%</dd>
+				<dd>ทรุดโทรม {~~((d.buildings.stats.ทรุดโทรม / d.buildings.stats.รวม) * 100)}%</dd>
 			</dl>
 		</section>
 		<section>
@@ -1070,25 +1024,25 @@
 			</p>
 			<RatioChart
 				data={[
-					{ number: d.buildings_stats.ดี, color: '#ffce4f' },
-					{ number: d.buildings_stats.พอใช้, color: '#ddab29' },
-					{ number: d.buildings_stats.ทรุดโทรม, color: '#fc5858' }
+					{ number: d.buildings.stats.ดี, color: '#ffce4f' },
+					{ number: d.buildings.stats.พอใช้, color: '#ddab29' },
+					{ number: d.buildings.stats.ทรุดโทรม, color: '#fc5858' }
 				]}
 			/>
 		</section>
 		<section>
 			<h3 class="f">
 				<span>อาคารการศึกษา <small>(อาคาร)</small></span>
-				<span>{d.school_buildings?.length?.toLocaleString()}</span>
+				<span>{d.buildings.data.อาคารเรียน.length.toLocaleString()}</span>
 			</h3>
 		</section>
 		<section>
 			<p class="f">
 				<span>ห้องทั้งหมด <small>(ห้อง)</small></span>
-				<span class="mitr">{d.buildings_stats?.school_buildings_rooms?.toLocaleString()}</span>
+				<span class="mitr">{d.buildings.stats.จำนวนห้องในอาคารเรียน.toLocaleString()}</span>
 			</p>
 			<hr />
-			{#each d.school_buildings as b}
+			{#each d.buildings.data.อาคารเรียน as b}
 				<article class="building-card {getConditionClass(b.current_condition)}">
 					<div
 						class="building-image"
@@ -1120,7 +1074,7 @@
 		</button>
 		<section class="other-buildings">
 			<div>
-				{#each d.other_buildings as b}
+				{#each d.buildings.data.อาคารทั่วไป as b}
 					<article class={getConditionClass(b.current_condition)}>
 						<div
 							class="building-image"
@@ -1132,6 +1086,20 @@
 					</article>
 				{/each}
 			</div>
+			<ul class="other-appliance-list">
+				{#each Object.keys(d.buildings.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
+					{#if d.buildings.data[buildings_key].length}
+						<li>
+							<span class="mitr">{buildings_key}</span>
+							{#if buildings_key !== 'ห้องน้ำ'}
+								<span class="fs10">
+									{mergeGoodsName(d.buildings.data[buildings_key])}
+								</span>
+							{/if}
+						</li>
+					{/if}
+				{/each}
+			</ul>
 		</section>
 
 		<ActAiBanner margin />
