@@ -1,6 +1,7 @@
 import pandas
 import json
 import numpy
+import os
 
 FILES = [
     'general',
@@ -17,6 +18,8 @@ def getFilePath(filename: str, extension: str = 'csv') -> str:
     return f'data/{extension}/{filename}.{extension}'
 
 
+print('Making directories')
+os.makedirs('data/json/', exist_ok=True)
 for file in FILES:
     print(f"Reading file: {getFilePath(file)}")
     df = pandas.read_csv(getFilePath(file))
