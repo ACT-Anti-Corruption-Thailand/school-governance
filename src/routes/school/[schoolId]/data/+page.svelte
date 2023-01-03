@@ -1,7 +1,12 @@
 <script lang="ts">
 	import { update_date } from 'data/update_date.js';
 	import { years } from 'data/years.js';
-
+	import {
+		Dialog,
+		DialogOverlay,
+		DialogTitle,
+		DialogDescription
+	} from '@rgossiaux/svelte-headlessui';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
 	import CircularProgress from 'components/school/CircularProgress.svelte';
@@ -39,6 +44,18 @@
 	let อุปกรณ์การเรียน_modal_open = false;
 	let อุปกรณ์อื่น_modal_open = false;
 	let อาคาร_modal_open = false;
+
+	let lightbox_open = false;
+	let lightbox_building_name = '';
+	let lightbox_url0 = '';
+	let lightbox_url1 = '';
+
+	const openLightbox = (name: string, img0: string, img1: string) => {
+		lightbox_building_name = name;
+		lightbox_url0 = img0;
+		lightbox_url1 = img1;
+		lightbox_open = true;
+	};
 </script>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
@@ -1049,6 +1066,8 @@
 						class="building-image"
 						style:--bg0="url({b.image_url_0})"
 						style:--bg1="url({b.image_url_1})"
+						on:click={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
+						on:keypress={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
 					/>
 					<div>
 						<h4>{b.name}</h4>
@@ -1119,6 +1138,8 @@
 							class="building-image"
 							style:--bg0="url({b.image_url_0})"
 							style:--bg1="url({b.image_url_1})"
+							on:click={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
+							on:keypress={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
 						/>
 						<h4>{b.name}</h4>
 						<p>สร้างปี {b.build_at}</p>
@@ -1195,6 +1216,23 @@
 		</footer>
 	{/if}
 </div>
+
+<!-- Lightbox Dialog -->
+<Dialog open={lightbox_open} on:close={() => (lightbox_open = false)}>
+	<DialogOverlay class="lightbox-backdrop" />
+
+	<DialogTitle class="sr-only">{lightbox_building_name}</DialogTitle>
+	<DialogDescription>ภาพ{lightbox_building_name}</DialogDescription>
+
+	<button class="lightbox-close" type="button" on:click={() => (lightbox_open = false)}>
+		<img src="/icons/close-w.svg" alt="ปิด" width="32" height="32" />
+	</button>
+	<div
+		class="lightbox-image"
+		style:--bg0="url({lightbox_url0})"
+		style:--bg1="url({lightbox_url1})"
+	/>
+</Dialog>
 
 <style lang="scss">
 	@media screen and (min-width: 768px) {
@@ -1543,6 +1581,7 @@
 			border-top: 2px var(--std-color) solid;
 			background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
 			background-size: cover;
+			cursor: zoom-in;
 		}
 
 		h4 {
@@ -1581,6 +1620,7 @@
 					border-top: 2px var(--std-color) solid;
 					background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
 					background-size: cover;
+					cursor: zoom-in;
 				}
 
 				> h4 {
@@ -1676,6 +1716,39 @@
 		list-style-position: inside;
 	}
 
+	:global(.lightbox-backdrop) {
+		position: fixed;
+		inset: 0;
+		background: rgb(0, 0, 0);
+		cursor: zoom-out;
+
+		z-index: 20;
+	}
+
+	.lightbox-close {
+		position: fixed;
+		top: 8px;
+		left: 8px;
+		z-index: 20;
+	}
+
+	.lightbox-image {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 20;
+
+		background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
+		background-size: contain;
+		background-repeat: no-repeat;
+		background-position: 50%;
+
+		cursor: zoom-out;
+		pointer-events: none;
+	}
+
 	@media screen and (min-width: 768px) {
 		.fs10 {
 			font-size: 0.8125rem !important;
@@ -1683,6 +1756,18 @@
 
 		.fs20 {
 			font-size: 1.5rem !important;
+		}
+
+		.lightbox-close {
+			top: 32px;
+			left: 32px;
+		}
+
+		.lightbox-image {
+			top: 10vh;
+			left: 10vw;
+			width: 80vw;
+			height: 80vh;
 		}
 	}
 </style>
