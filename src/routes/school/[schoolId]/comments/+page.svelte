@@ -15,13 +15,14 @@
 
 	const fetchComments = async () => {
 		let schoolid_query = `schoolId,eq,${schoolId}`;
+		let approved_query = `approved,eq,true`;
 		let location_query = filter_locations.length
 			? filter_locations.map((loc) => `(location,like,${loc})`).join('~or')
 			: null;
 		let year_query = filter_years.length
 			? filter_years.map((year) => `(schoolYear,eq,${year})`).join('~or')
 			: null;
-		let where_query = [schoolid_query, location_query, year_query]
+		let where_query = [schoolid_query, approved_query, location_query, year_query]
 			.filter((e) => e)
 			.map((e) => `(${e})`)
 			.join('~and');
@@ -115,24 +116,46 @@
 		if (!$currentUser) return;
 		if (txt_comment.trim() === '' || chk_locations.length === 0) return;
 
-		try {
-			await fetch(
-				'https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?limit=999',
+		let uploaded_files;
+		if (selected_files.length) {
+			const formData = new FormData();
+			for (const f of selected_files) {
+				formData.append('files', f);
+			}
+			formData.append('json', JSON.stringify({}));
+
+			const resp = await fetch(
+				'https://sheets.wevis.info/api/v1/db/storage/upload?path=noco%2FOpen-School-Test%2FSchoolComments%2Fimages',
 				{
 					method: 'POST',
 					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY,
-						'Content-Type': 'application/json'
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY
 					},
-					body: JSON.stringify({
-						schoolId: schoolId,
-						comments: txt_comment.trim(),
-						location: chk_locations.join(),
-						schoolYear: LATEST_YEAR,
-						userId: $currentUser.uid
-					})
+					body: formData
 				}
 			);
+			uploaded_files = await resp.json();
+		}
+
+		console.log(uploaded_files);
+
+		try {
+			await fetch('https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments', {
+				method: 'POST',
+				headers: {
+					'xc-token': PUBLIC_NOCO_TOKEN_KEY,
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					schoolId: schoolId,
+					comments: txt_comment.trim(),
+					location: chk_locations.join(),
+					schoolYear: LATEST_YEAR,
+					userId: $currentUser.uid,
+					approved: !uploaded_files,
+					...(uploaded_files ? { images: JSON.stringify(uploaded_files) } : null)
+				})
+			});
 		} catch (err) {
 			console.error(err);
 		} finally {
@@ -178,6 +201,28 @@
 							}[loc])
 					)
 					.join(', ');
+
+	const MAX_IMG = 5;
+
+	let el_img_input: HTMLInputElement;
+	let selected_files: File[] = [];
+	let files_objurl: string[] = [];
+	const processImagesInput = () => {
+		if (!el_img_input || !el_img_input.files || !el_img_input.files.length) return;
+
+		const available = MAX_IMG - selected_files.length;
+		const files = [...el_img_input.files].slice(0, available);
+
+		for (const file of files) {
+			selected_files = selected_files.concat(file);
+			files_objurl = files_objurl.concat(URL.createObjectURL(file));
+		}
+	};
+
+	const removeImg = (index: number) => {
+		selected_files = selected_files.filter((_, i) => i !== index);
+		files_objurl = files_objurl.filter((_, i) => i !== index);
+	};
 </script>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
@@ -199,12 +244,29 @@
 				<label><input type="checkbox" bind:group={chk_locations} value="canteen" /> โรงอาหาร</label>
 				<label><input type="checkbox" bind:group={chk_locations} value="gym" /> สนามกีฬา</label>
 			</div>
-			<input
-				type="button"
-				value="POST"
-				disabled={txt_comment.trim() === '' || chk_locations.length === 0}
-				on:click={debugPost}
-			/>
+
+			<div>
+				<input
+					bind:this={el_img_input}
+					type="file"
+					multiple
+					accept="image/*"
+					on:change={processImagesInput}
+				/>
+				{#each files_objurl as src, i}
+					<img {src} alt="" width="64" height="64" />
+					<input type="button" value="ลบรูป" on:click={() => removeImg(i)} />
+				{/each}
+			</div>
+
+			<div>
+				<input
+					type="button"
+					value="POST"
+					disabled={txt_comment.trim() === '' || chk_locations.length === 0}
+					on:click={debugPost}
+				/>
+			</div>
 		</div>
 	{:else}
 		<p>You are not logged in D:</p>
@@ -281,6 +343,11 @@
 				</div>
 				<p>{post.comments}</p>
 				<div class="f">
+					{#each JSON.parse(post.images) ?? [] as img (img.title)}
+						<img src={img.url} alt={img.title} width="64" height="64" />
+					{/each}
+				</div>
+				<div class="f">
 					{#each post.location as loc}
 						<span>{loc}</span>
 					{/each}
@@ -301,7 +368,7 @@
 					{/if}
 					Liked by {post.likedByYourself ? `You and ${post.likeCount}` : post.likeCount} people.
 				</p>
-				<!-- <pre><code>{JSON.stringify(post)}</code></pre> -->
+				<!-- <p>{JSON.stringify(post)}</p> -->
 				<hr />
 			</article>
 		{/each}
