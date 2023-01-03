@@ -1,5 +1,0 @@
-import{S as l,i as c,s as p,w as d,a as f,k as _,q,x as h,c as $,l as g,m as v,r as x,h as m,y,b as r,G as P,B as S,f as b,t as w,z as A}from"../../../../chunks/index-9bf5a9be.js";import{S as L}from"../../../../chunks/SchoolHeader-10c687ce.js";function k(u){let a,s,t,o,n;return a=new L({}),{c(){d(a.$$.fragment),s=f(),t=_("p"),o=q(`Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, accusamus. Porro officia
-	aliquid, enim ipsum quod iusto quia saepe cumque, laboriosam harum magnam repudiandae ducimus
-	illum nostrum eveniet in velit.`)},l(e){h(a.$$.fragment,e),s=$(e),t=g(e,"P",{});var i=v(t);o=x(i,`Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam, accusamus. Porro officia
-	aliquid, enim ipsum quod iusto quia saepe cumque, laboriosam harum magnam repudiandae ducimus
-	illum nostrum eveniet in velit.`),i.forEach(m)},m(e,i){y(a,e,i),r(e,s,i),r(e,t,i),P(t,o),n=!0},p:S,i(e){n||(b(a.$$.fragment,e),n=!0)},o(e){w(a.$$.fragment,e),n=!1},d(e){A(a,e),e&&m(s),e&&m(t)}}}class C extends l{constructor(a){super(),c(this,a,null,k,p,{})}}export{C as default};
