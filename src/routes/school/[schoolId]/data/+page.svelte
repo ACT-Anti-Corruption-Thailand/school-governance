@@ -38,6 +38,7 @@
 	let บุคลากร_modal_open = false;
 	let อุปกรณ์การเรียน_modal_open = false;
 	let อุปกรณ์อื่น_modal_open = false;
+	let อาคาร_modal_open = false;
 </script>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
@@ -1065,13 +1066,51 @@
 				</article>
 			{/each}
 		</section>
-		<button type="button" class="teacher-size-btn emp-btn mb8">
+
+		<button
+			type="button"
+			class="teacher-size-btn emp-btn mb8"
+			on:click={() => {
+				อาคาร_modal_open = true;
+			}}
+		>
 			<h3 class="f">
 				<span>อาคารและสิ่งก่อสร้างอื่น</span>
 				<span class="tch-size-count ibm">ดูทั้งหมด</span>
 				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 			</h3>
 		</button>
+		<Modal title="สิ่งก่อสร้างอื่นๆ" bind:isOpen={อาคาร_modal_open}>
+			<dl class="f status-color fs10 mb16">
+				<dt class="usable-color">เหลือง</dt>
+				<dd>ดี</dd>
+				<dt class="await-color">เหลืองเข้ม</dt>
+				<dd>พอใช้</dd>
+				<dt class="unusable-color">แดง</dt>
+				<dd>ทรุดโทรม</dd>
+			</dl>
+			{#each Object.keys(d.buildings.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
+				{#if d.buildings.data[buildings_key].length}
+					<div class="f modal-section-header mitr">{buildings_key}</div>
+					{#each d.buildings.data[buildings_key] as b}
+						<div
+							class="modal-section building f jcs ais g8 {getConditionClass(b.current_condition)}"
+						>
+							<div
+								class="building-image"
+								style:--bg0="url({b.image_url_0})"
+								style:--bg1="url({b.image_url_1})"
+							/>
+							<span class="building-status cv" />
+							<div>
+								<span>{b.name}</span><br /><small>สร้างปี {b.build_at}</small>
+							</div>
+						</div>
+					{/each}
+				{/if}
+			{/each}
+		</Modal>
+
 		<section class="other-buildings">
 			<div>
 				{#each d.buildings.data.อาคารทั่วไป as b}
@@ -1501,22 +1540,9 @@
 			width: 50%;
 			height: auto;
 			aspect-ratio: 1;
-			object-fit: cover;
 			border-top: 2px var(--std-color) solid;
 			background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
 			background-size: cover;
-		}
-
-		.building-status {
-			&::before {
-				content: '';
-				display: inline-block;
-				width: 8px;
-				height: 8px;
-				border-radius: 1px;
-				background: var(--std-color);
-				margin-right: 0.5ch;
-			}
 		}
 
 		h4 {
@@ -1530,6 +1556,18 @@
 		}
 	}
 
+	.building-status {
+		&::before {
+			content: '';
+			display: inline-block;
+			width: 8px;
+			height: 8px;
+			border-radius: 1px;
+			background: var(--std-color);
+			margin-right: 0.5ch;
+		}
+	}
+
 	.other-buildings {
 		> div {
 			display: grid;
@@ -1540,7 +1578,6 @@
 			> article {
 				> .building-image {
 					aspect-ratio: 1;
-					object-fit: cover;
 					border-top: 2px var(--std-color) solid;
 					background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
 					background-size: cover;
@@ -1603,6 +1640,23 @@
 		& + & {
 			border-top: 1px solid #ddd;
 		}
+
+		&.building {
+			height: unset;
+			padding: 8px 0;
+
+			.building-status::before {
+				margin-right: 0;
+			}
+
+			.building-image {
+				width: 40px;
+				height: 40px;
+				border-top: 2px var(--std-color) solid;
+				background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
+				background-size: cover;
+			}
+		}
 	}
 
 	.modal-section-header {
@@ -1620,5 +1674,15 @@
 		margin: 0;
 		padding-left: 24px;
 		list-style-position: inside;
+	}
+
+	@media screen and (min-width: 768px) {
+		.fs10 {
+			font-size: 0.8125rem !important;
+		}
+
+		.fs20 {
+			font-size: 1.5rem !important;
+		}
 	}
 </style>
