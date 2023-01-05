@@ -5,6 +5,7 @@
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import { currentUser } from 'stores/firebaseapp';
 	import { onMount } from 'svelte';
+	import Modal from 'components/Modal.svelte';
 
 	const LATEST_YEAR = years[years.length - 1];
 
@@ -223,153 +224,200 @@
 		selected_files = selected_files.filter((_, i) => i !== index);
 		files_objurl = files_objurl.filter((_, i) => i !== index);
 	};
+
+	const formatLikeText = (count_incl_self = 0, self = false) => {
+		if (!+count_incl_self) return 'ยังไม่มีใครเห็นด้วยกับสิ่งนี้';
+		let who_arr: any[] = [];
+		if (self) {
+			who_arr = ['คุณ'];
+			count_incl_self -= 1;
+		}
+		if (count_incl_self) who_arr.push(` ${count_incl_self} คน`);
+		return `${who_arr.join('และ')}เห็นด้วยกับสิ่งนี้`;
+	};
+
+	const formatTag = (locations: string) => {
+		return locations.split(',').map(
+			(loc) =>
+				({
+					classroom: 'ห้องเรียน',
+					toilet: 'ห้องน้ำ',
+					canteen: 'โรงอาหาร',
+					gym: 'สนามกีฬา'
+				}[loc])
+		);
+	};
+
+	const parseImagesVal = (images: string) => {
+		const parsed = JSON.parse(images);
+		if (Array.isArray(parsed)) return parsed;
+		return [];
+	};
+
+	let comment_modal_isopen = false;
 </script>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
-	<div class="f comment-header">
+	<div class="f g4">
 		<img src="/icons/comment.svg" alt="ความคิดเห็น" width="20" height="20" />
 		<span class="comment-header-val">50</span>
 	</div>
 </SchoolHeader>
+
+<details class="filter-container">
+	<summary class="filter-bar">
+		<span>
+			ICON
+			<span>{filter_sort_by_lbl}</span>
+			<span>{filter_locations_lbl}</span>
+			<span>{filter_years.join(', ')}</span>
+		</span>
+	</summary>
+	<div class="filter-box">
+		<fieldset>
+			<legend>เรียงตาม</legend>
+			<label
+				><input
+					type="radio"
+					name="filter-sort-by"
+					bind:group={filter_sort_by}
+					value="latest"
+				/><span>ล่าสุด</span></label
+			>
+			<label
+				><input
+					type="radio"
+					name="filter-sort-by"
+					bind:group={filter_sort_by}
+					value="most-liked"
+				/><span>เห็นด้วยมากสุด</span></label
+			>
+		</fieldset>
+		<fieldset>
+			<legend>สถานที่</legend>
+			<label
+				><input type="checkbox" bind:group={filter_locations} value="classroom" /><span
+					>ห้องเรียน</span
+				></label
+			>
+			<label
+				><input type="checkbox" bind:group={filter_locations} value="toilet" /><span>ห้องน้ำ</span
+				></label
+			>
+			<label
+				><input type="checkbox" bind:group={filter_locations} value="canteen" /><span>โรงอาหาร</span
+				></label
+			>
+			<label
+				><input type="checkbox" bind:group={filter_locations} value="gym" /><span>สนามกีฬา</span
+				></label
+			>
+		</fieldset>
+		<fieldset>
+			<legend>ปีการศึกษา</legend>
+			{#each years as year (year)}
+				<label>
+					<input type="checkbox" bind:group={filter_years} value={year} />
+					<span>{year + 543}</span>
+				</label>
+			{/each}
+		</fieldset>
+	</div>
+</details>
+
 <div class="desktop-margin">
+	<button class="f comment-btn" type="button" on:click={() => (comment_modal_isopen = true)}>
+		<div class="comment-btn-txtbox">แล้วคุณละ คิดอย่างไร?</div>
+		<img src="/icons/image.svg" alt="" width="24" height="24" />
+	</button>
 	{#if $currentUser}
-		<p>Current user is: {$currentUser.uid}</p>
-		<div>
-			<textarea placeholder="คิดเห็นหรืออยากฝากอะไรถึงโรงเรียนบ้าง?" bind:value={txt_comment} />
+		<Modal title="เพิ่มความเห็นใหม่" hideTitle bind:isOpen={comment_modal_isopen}>
+			<p>Current user is: {$currentUser.uid}</p>
 			<div>
-				<label
-					><input type="checkbox" bind:group={chk_locations} value="classroom" /> ห้องเรียน</label
-				>
-				<label><input type="checkbox" bind:group={chk_locations} value="toilet" /> ห้องน้ำ</label>
-				<label><input type="checkbox" bind:group={chk_locations} value="canteen" /> โรงอาหาร</label>
-				<label><input type="checkbox" bind:group={chk_locations} value="gym" /> สนามกีฬา</label>
-			</div>
+				<textarea placeholder="คิดเห็นหรืออยากฝากอะไรถึงโรงเรียนบ้าง?" bind:value={txt_comment} />
+				<div>
+					<label
+						><input type="checkbox" bind:group={chk_locations} value="classroom" /> ห้องเรียน</label
+					>
+					<label><input type="checkbox" bind:group={chk_locations} value="toilet" /> ห้องน้ำ</label>
+					<label
+						><input type="checkbox" bind:group={chk_locations} value="canteen" /> โรงอาหาร</label
+					>
+					<label><input type="checkbox" bind:group={chk_locations} value="gym" /> สนามกีฬา</label>
+				</div>
 
-			<div>
-				<input
-					bind:this={el_img_input}
-					type="file"
-					multiple
-					accept="image/*"
-					on:change={processImagesInput}
-				/>
-				{#each files_objurl as src, i}
-					<img {src} alt="" width="64" height="64" />
-					<input type="button" value="ลบรูป" on:click={() => removeImg(i)} />
-				{/each}
-			</div>
+				<div>
+					<input
+						bind:this={el_img_input}
+						type="file"
+						multiple
+						accept="image/*"
+						on:change={processImagesInput}
+					/>
+					{#each files_objurl as src, i}
+						<img {src} alt="" width="64" height="64" />
+						<input type="button" value="ลบรูป" on:click={() => removeImg(i)} />
+					{/each}
+				</div>
 
-			<div>
-				<input
-					type="button"
-					value="POST"
-					disabled={txt_comment.trim() === '' || chk_locations.length === 0}
-					on:click={debugPost}
-				/>
+				<div>
+					<input
+						type="button"
+						value="POST"
+						disabled={txt_comment.trim() === '' || chk_locations.length === 0}
+						on:click={debugPost}
+					/>
+				</div>
 			</div>
-		</div>
-	{:else}
-		<p>You are not logged in D:</p>
+		</Modal>
 	{/if}
-	<details>
-		<summary>
-			<span>
-				ICON
-				<span>{filter_sort_by_lbl}</span>
-				<span>{filter_locations_lbl}</span>
-				<span>{filter_years.join(', ')}</span>
-			</span>
-		</summary>
-		<div class="filter-box">
-			<fieldset>
-				<legend>เรียงตาม</legend>
-				<label
-					><input
-						type="radio"
-						name="filter-sort-by"
-						bind:group={filter_sort_by}
-						value="latest"
-					/><span>ล่าสุด</span></label
-				>
-				<label
-					><input
-						type="radio"
-						name="filter-sort-by"
-						bind:group={filter_sort_by}
-						value="most-liked"
-					/><span>เห็นด้วยมากสุด</span></label
-				>
-			</fieldset>
-			<fieldset>
-				<legend>สถานที่</legend>
-				<label
-					><input type="checkbox" bind:group={filter_locations} value="classroom" /><span
-						>ห้องเรียน</span
-					></label
-				>
-				<label
-					><input type="checkbox" bind:group={filter_locations} value="toilet" /><span>ห้องน้ำ</span
-					></label
-				>
-				<label
-					><input type="checkbox" bind:group={filter_locations} value="canteen" /><span
-						>โรงอาหาร</span
-					></label
-				>
-				<label
-					><input type="checkbox" bind:group={filter_locations} value="gym" /><span>สนามกีฬา</span
-					></label
-				>
-			</fieldset>
-			<fieldset>
-				<legend>ปีการศึกษา</legend>
-				{#each years as year (year)}
-					<label>
-						<input type="checkbox" bind:group={filter_years} value={year} />
-						<span>{year + 543}</span>
-					</label>
-				{/each}
-			</fieldset>
-		</div>
-	</details>
-	<section>
+
+	<section class="comments">
 		{#each posts as post (post.Id)}
-			<article>
-				<div class="f">
-					<p>{new Date(post.createDate).toLocaleDateString('th')}</p>
+			<article class="comment-container">
+				<div class="f jcsb comment-header">
+					<p class="comment-small">{new Date(post.createDate).toLocaleDateString('th')}</p>
 					{#if $currentUser?.uid === post.userId}
-						<input type="button" value="ลบ" on:click={() => deleteComment(post.Id)} />
+						<button class="f" type="button" on:click={() => deleteComment(post.Id)}>
+							<img src="/icons/delete.svg" alt="ลบ" width="24" height="24" />
+						</button>
 					{/if}
 				</div>
-				<p>{post.comments}</p>
-				<div class="f">
-					{#each JSON.parse(post.images) ?? [] as img (img.title)}
+				<p class="comment-text">{post.comments}</p>
+				<div class="f g4 comment-images">
+					{#each parseImagesVal(post.images) as img (img.title)}
 						<img src={img.url} alt={img.title} width="64" height="64" />
 					{/each}
 				</div>
-				<div class="f">
-					{#each post.location as loc}
-						<span>{loc}</span>
-					{/each}
-				</div>
-				<!-- <p>ปีการศึกษา {post.schoolYear}</p> -->
-				<!-- <p>by {post.userId}</p> -->
-				<p>
+				<p class="f g4 comment-small comment-like">
 					{#if $currentUser}
-						<input
+						<button
+							class="comment-like-btn"
 							type="button"
-							value={post.likedByYourself ? 'Liked' : 'Like'}
 							on:click={() => {
 								post.likedByYourself
 									? unlikeComment(post.likedByYourself.Id)
 									: likeComment(post.Id);
 							}}
-						/>
+						>
+							{#if post.likedByYourself}
+								<img src="/icons/like-filled.svg" alt="" width="16" height="16" />
+							{:else}
+								<img src="/icons/like.svg" alt="" width="16" height="16" />
+							{/if}
+						</button>
 					{/if}
-					Liked by {post.likedByYourself ? `You and ${post.likeCount}` : post.likeCount} people.
+					{formatLikeText(post.likeCount, post.likedByYourself)}
 				</p>
+				<div class="f g4">
+					{#each formatTag(post.location) as loc}
+						<span class="tag">
+							<img src="/icons/tag.svg" alt="" width="8" height="8" />
+							{loc}
+						</span>
+					{/each}
+				</div>
 				<!-- <p>{JSON.stringify(post)}</p> -->
-				<hr />
 			</article>
 		{/each}
 	</section>
@@ -384,8 +432,16 @@
 		}
 	}
 
-	.comment-header {
+	.jcsb {
+		justify-content: space-between;
+	}
+
+	.g4 {
 		gap: 4px;
+	}
+
+	.comment-header {
+		min-height: 24px;
 	}
 
 	.comment-header-val {
@@ -395,5 +451,94 @@
 		line-height: 125%;
 		letter-spacing: 0.02em;
 		color: #3c55ab;
+	}
+
+	.comments {
+		padding: 0 16px 64px;
+		background: #fff;
+	}
+
+	.comment-container {
+		padding: 16px 0;
+
+		& + & {
+			border-top: 1px solid #6bc9ff;
+		}
+	}
+
+	.comment-small {
+		font-size: 0.625rem;
+		color: #9daad5;
+	}
+
+	.comment-like {
+		margin: 8px 0;
+	}
+
+	.comment-like-btn {
+		cursor: pointer;
+	}
+
+	.tag {
+		display: inline-flex;
+		align-items: center;
+
+		padding: 4px 8px;
+		gap: 4px;
+
+		background: #6bc9ff;
+		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 4px;
+
+		color: #fff;
+	}
+
+	.comment-images:not(:empty) {
+		margin: 4px 0;
+	}
+
+	.comment-images > img {
+		object-fit: cover;
+	}
+
+	.comment-btn {
+		display: flex;
+		align-items: center;
+		padding: 8px 16px;
+		gap: 8px;
+
+		background: #6bc9ff;
+		box-shadow: 0px -1px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 8px 8px 0px 0px;
+		cursor: pointer;
+
+		position: fixed;
+		bottom: 64px;
+		width: 100%;
+
+		> .comment-btn-txtbox {
+			background: white;
+			border-radius: 99px;
+			padding: 8px 12px;
+
+			color: #b1b2b3;
+			flex: 1 1 0;
+			text-align: left;
+		}
+	}
+
+	.filter-container {
+		position: sticky;
+		top: calc(var(--navbar-height) + 60px);
+		transition: top 0.3s;
+		will-change: top;
+		z-index: 10;
+	}
+
+	.filter-bar {
+		padding: 8px 16px;
+		background: #fff;
+
+		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
 	}
 </style>

@@ -11,7 +11,7 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write .",
 		"d-extract": "tar xzvf data/csv.tar.gz --directory data/",
-		"d-tojson": "python data/01-csvtojson.py",
+		"d-tojson": "python3 data/01-csvtojson.py",
 		"d-transpile": "node data/02-transpile.js",
 		"d-genschoolindex": "node data/generateSchoolIndex.js",
 		"convert": "yarn d-extract && yarn d-tojson && yarn d-transpile"
