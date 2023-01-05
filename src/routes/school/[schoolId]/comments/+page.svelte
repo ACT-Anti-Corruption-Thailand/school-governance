@@ -266,61 +266,72 @@
 
 <details class="filter-container">
 	<summary class="filter-bar">
-		<span>
-			ICON
-			<span>{filter_sort_by_lbl}</span>
-			<span>{filter_locations_lbl}</span>
-			<span>{filter_years.join(', ')}</span>
+		<span class="f">
+			<img src="/icons/filter.svg" alt="" width="24" height="24" />
+			<span class="filter-field">{filter_sort_by_lbl}</span>
+			{#if filter_locations_lbl}
+				<span class="filter-field">{filter_locations_lbl}</span>
+			{/if}
+			{#if filter_years.length}
+				<span class="filter-field">{filter_years.map((y) => y + 543).join(', ')}</span>
+			{/if}
 		</span>
 	</summary>
 	<div class="filter-box">
 		<fieldset>
 			<legend>เรียงตาม</legend>
-			<label
-				><input
-					type="radio"
-					name="filter-sort-by"
-					bind:group={filter_sort_by}
-					value="latest"
-				/><span>ล่าสุด</span></label
-			>
-			<label
-				><input
-					type="radio"
-					name="filter-sort-by"
-					bind:group={filter_sort_by}
-					value="most-liked"
-				/><span>เห็นด้วยมากสุด</span></label
-			>
+			<div>
+				<label
+					><input
+						type="radio"
+						name="filter-sort-by"
+						bind:group={filter_sort_by}
+						value="latest"
+					/><span>ล่าสุด</span></label
+				>
+				<label
+					><input
+						type="radio"
+						name="filter-sort-by"
+						bind:group={filter_sort_by}
+						value="most-liked"
+					/><span>เห็นด้วยมากสุด</span></label
+				>
+			</div>
 		</fieldset>
 		<fieldset>
 			<legend>สถานที่</legend>
-			<label
-				><input type="checkbox" bind:group={filter_locations} value="classroom" /><span
-					>ห้องเรียน</span
-				></label
-			>
-			<label
-				><input type="checkbox" bind:group={filter_locations} value="toilet" /><span>ห้องน้ำ</span
-				></label
-			>
-			<label
-				><input type="checkbox" bind:group={filter_locations} value="canteen" /><span>โรงอาหาร</span
-				></label
-			>
-			<label
-				><input type="checkbox" bind:group={filter_locations} value="gym" /><span>สนามกีฬา</span
-				></label
-			>
+			<div>
+				<label
+					><input type="checkbox" bind:group={filter_locations} value="classroom" /><span
+						>ห้องเรียน</span
+					></label
+				>
+				<label
+					><input type="checkbox" bind:group={filter_locations} value="toilet" /><span>ห้องน้ำ</span
+					></label
+				>
+				<label
+					><input type="checkbox" bind:group={filter_locations} value="canteen" /><span
+						>โรงอาหาร</span
+					></label
+				>
+				<label
+					><input type="checkbox" bind:group={filter_locations} value="gym" /><span>สนามกีฬา</span
+					></label
+				>
+			</div>
 		</fieldset>
 		<fieldset>
 			<legend>ปีการศึกษา</legend>
-			{#each years as year (year)}
-				<label>
-					<input type="checkbox" bind:group={filter_years} value={year} />
-					<span>{year + 543}</span>
-				</label>
-			{/each}
+			<div>
+				{#each years as year (year)}
+					<label>
+						<input type="checkbox" bind:group={filter_years} value={year} />
+						<span>{year + 543}</span>
+					</label>
+				{/each}
+			</div>
 		</fieldset>
 	</div>
 </details>
@@ -540,5 +551,79 @@
 		background: #fff;
 
 		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+
+		cursor: pointer;
+		list-style: none;
+		&::-webkit-details-marker {
+			display: none;
+		}
+
+		> span {
+			gap: 8px;
+			white-space: nowrap;
+			overflow: auto;
+		}
+
+		.filter-field {
+			padding: 4px 8px;
+
+			border: 1px solid #3c55ab;
+			border-radius: 4px;
+		}
+	}
+
+	.filter-box {
+		padding: 8px 16px 16px;
+		position: absolute;
+		background: #fff;
+		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		left: 0;
+		right: 0;
+
+		fieldset {
+			border: none;
+			margin: 0;
+
+			> div {
+				padding: 8px;
+				display: grid;
+				gap: 8px 0;
+				grid-template-columns: 1fr 1fr;
+			}
+		}
+	}
+
+	label > input[type='radio'],
+	label > input[type='checkbox'] {
+		position: absolute;
+		opacity: 0;
+		width: 0;
+		pointer-events: none;
+
+		+ span {
+			--input-unchecked-bg: url(/icons/radio-unchecked.svg);
+			--input-checked-bg: url(/icons/radio-checked.svg);
+
+			display: flex;
+			align-items: center;
+
+			&::before {
+				content: '';
+				width: 16px;
+				height: 16px;
+				background: var(--input-unchecked-bg);
+				display: inline-block;
+				margin-right: 8px;
+			}
+		}
+
+		&:checked + span::before {
+			background: var(--input-checked-bg);
+		}
+	}
+
+	label > input[type='checkbox'] + span {
+		--input-unchecked-bg: url(/icons/checkbox-unchecked.svg);
+		--input-checked-bg: url(/icons/checkbox-checked.svg);
 	}
 </style>
