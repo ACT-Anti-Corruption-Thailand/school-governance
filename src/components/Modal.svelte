@@ -21,9 +21,8 @@
 			<button type="button" class="f" on:click={() => (isOpen = false)}>
 				<img src="/icons/close.svg" alt="ปิด" width="32" height="32" />
 			</button>
-			<slot name="title">
-				<DialogTitle class="modal-title {hideTitle ? 'sr-only' : ''}">{title}</DialogTitle>
-			</slot>
+			<DialogTitle class="modal-title {hideTitle ? 'sr-only' : ''}">{title}</DialogTitle>
+			<slot name="title" />
 		</header>
 		<div class="modal-content">
 			<slot />

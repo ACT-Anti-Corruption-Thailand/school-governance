@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { years } from 'data/years.js';
-	import SchoolRating from 'components/SchoolRating.svelte';
+	import SchoolRating from 'components/SchoolMiniStats.svelte';
 	import { currentSchool, currentSchoolId } from 'stores/school';
 
 	const LATEST_YEAR = years[years.length - 1];

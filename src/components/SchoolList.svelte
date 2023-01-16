@@ -9,7 +9,7 @@
 </script>
 
 <script lang="ts">
-	import SchoolRating from './SchoolRating.svelte';
+	import SchoolRating from './SchoolMiniStats.svelte';
 
 	export let school_list: SchoolData[] = [
 		{
