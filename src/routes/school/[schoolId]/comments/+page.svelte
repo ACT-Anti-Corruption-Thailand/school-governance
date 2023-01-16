@@ -255,6 +255,15 @@
 	};
 
 	let comment_modal_isopen = false;
+
+	const clear_comment_form = () => {
+		txt_comment = '';
+		selected_files = [];
+		files_objurl = [];
+		chk_locations = [];
+	};
+
+	$: if (!comment_modal_isopen) clear_comment_form();
 </script>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
@@ -281,7 +290,7 @@
 		<fieldset>
 			<legend>เรียงตาม</legend>
 			<div>
-				<label
+				<label class="custom-control"
 					><input
 						type="radio"
 						name="filter-sort-by"
@@ -289,7 +298,7 @@
 						value="latest"
 					/><span>ล่าสุด</span></label
 				>
-				<label
+				<label class="custom-control"
 					><input
 						type="radio"
 						name="filter-sort-by"
@@ -302,21 +311,21 @@
 		<fieldset>
 			<legend>สถานที่</legend>
 			<div>
-				<label
+				<label class="custom-control"
 					><input type="checkbox" bind:group={filter_locations} value="classroom" /><span
 						>ห้องเรียน</span
 					></label
 				>
-				<label
+				<label class="custom-control"
 					><input type="checkbox" bind:group={filter_locations} value="toilet" /><span>ห้องน้ำ</span
 					></label
 				>
-				<label
+				<label class="custom-control"
 					><input type="checkbox" bind:group={filter_locations} value="canteen" /><span
 						>โรงอาหาร</span
 					></label
 				>
-				<label
+				<label class="custom-control"
 					><input type="checkbox" bind:group={filter_locations} value="gym" /><span>สนามกีฬา</span
 					></label
 				>
@@ -326,7 +335,7 @@
 			<legend>ปีการศึกษา</legend>
 			<div>
 				{#each years as year (year)}
-					<label>
+					<label class="custom-control">
 						<input type="checkbox" bind:group={filter_years} value={year} />
 						<span>{year + 543}</span>
 					</label>
@@ -343,42 +352,72 @@
 	</button>
 	{#if $currentUser}
 		<Modal title="เพิ่มความเห็นใหม่" hideTitle bind:isOpen={comment_modal_isopen}>
-			<p>Current user is: {$currentUser.uid}</p>
-			<div>
-				<textarea placeholder="คิดเห็นหรืออยากฝากอะไรถึงโรงเรียนบ้าง?" bind:value={txt_comment} />
-				<div>
-					<label
-						><input type="checkbox" bind:group={chk_locations} value="classroom" /> ห้องเรียน</label
-					>
-					<label><input type="checkbox" bind:group={chk_locations} value="toilet" /> ห้องน้ำ</label>
-					<label
-						><input type="checkbox" bind:group={chk_locations} value="canteen" /> โรงอาหาร</label
-					>
-					<label><input type="checkbox" bind:group={chk_locations} value="gym" /> สนามกีฬา</label>
-				</div>
+			<button
+				class="cf-submit"
+				type="button"
+				disabled={txt_comment.trim() === '' || chk_locations.length === 0}
+				on:click={debugPost}
+				slot="title"
+			>
+				ส่งความเห็น
+			</button>
 
-				<div>
-					<input
-						bind:this={el_img_input}
-						type="file"
-						multiple
-						accept="image/*"
-						on:change={processImagesInput}
-					/>
+			<!-- <p>Current user is: {$currentUser.uid}</p> -->
+			<textarea
+				class="cf-comment"
+				rows="5"
+				placeholder="คิดเห็นหรืออยากฝากอะไรถึงโรงเรียนบ้าง?"
+				bind:value={txt_comment}
+			/>
+
+			<div class="f cf-files">
+				{#if files_objurl.length < 5}
+					<label>
+						<input
+							class="cf-file"
+							bind:this={el_img_input}
+							type="file"
+							multiple
+							accept="image/*"
+							on:change={processImagesInput}
+						/>
+						<img src="/comments/add-img.svg" alt="เพิ่มรูปภาพ" width="50" height="50" />
+					</label>
+				{/if}
+				{#if files_objurl.length}
 					{#each files_objurl as src, i}
-						<img {src} alt="" width="64" height="64" />
-						<input type="button" value="ลบรูป" on:click={() => removeImg(i)} />
+						<div class="cf-filepreview">
+							<img {src} alt="" width="50" height="50" />
+							<button type="button" on:click={() => removeImg(i)}>
+								<img src="/comments/remove-img.svg" alt="" width="16" height="16" />
+							</button>
+						</div>
 					{/each}
-				</div>
+				{:else}
+					<div class="cf-addfile">
+						<span>เพิ่มรูปภาพ</span><br />
+						<small>สูงสุด 5 รูป และต้องรอการยืนยันจาก admin</small>
+					</div>
+				{/if}
+			</div>
 
-				<div>
-					<input
-						type="button"
-						value="POST"
-						disabled={txt_comment.trim() === '' || chk_locations.length === 0}
-						on:click={debugPost}
-					/>
-				</div>
+			<div class="f cf-tags">
+				<label class="cf-tag">
+					<input type="checkbox" bind:group={chk_locations} value="classroom" />
+					<span>ห้องเรียน</span>
+				</label>
+				<label class="cf-tag">
+					<input type="checkbox" bind:group={chk_locations} value="toilet" />
+					<span>ห้องน้ำ</span>
+				</label>
+				<label class="cf-tag">
+					<input type="checkbox" bind:group={chk_locations} value="canteen" />
+					<span>โรงอาหาร</span>
+				</label>
+				<label class="cf-tag">
+					<input type="checkbox" bind:group={chk_locations} value="gym" />
+					<span>สนามกีฬา</span>
+				</label>
 			</div>
 		</Modal>
 	{/if}
@@ -593,8 +632,8 @@
 		}
 	}
 
-	label > input[type='radio'],
-	label > input[type='checkbox'] {
+	label.custom-control > input[type='radio'],
+	label.custom-control > input[type='checkbox'] {
 		position: absolute;
 		opacity: 0;
 		width: 0;
@@ -622,8 +661,142 @@
 		}
 	}
 
-	label > input[type='checkbox'] + span {
+	label.custom-control > input[type='checkbox'] + span {
 		--input-unchecked-bg: url(/icons/checkbox-unchecked.svg);
 		--input-checked-bg: url(/icons/checkbox-checked.svg);
+	}
+
+	.cf-submit {
+		padding: 8px 16px;
+		margin-left: auto;
+
+		color: #0c166b;
+		background: #6bc9ff;
+		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		border: 1px solid transparent;
+		border-radius: 16px;
+
+		line-height: 1;
+
+		&[disabled] {
+			color: #6bc9ff;
+			border: 1px solid #6bc9ff;
+			background: none;
+			box-shadow: none;
+			cursor: not-allowed;
+		}
+	}
+
+	.cf-comment {
+		width: 100%;
+		min-height: 10vh;
+
+		color: #3c55ab;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: inherit;
+
+		border: none;
+		outline: 0;
+		resize: vertical;
+
+		&::placeholder {
+			color: #b1b2b3;
+		}
+	}
+
+	.cf-tag > input[type='checkbox'] {
+		position: absolute;
+		opacity: 0;
+		width: 0;
+		pointer-events: none;
+
+		+ span {
+			display: inline-flex;
+			gap: 4px;
+			padding: 4px 8px;
+			margin: 4px 0;
+
+			border: 1px solid #6bc9ff;
+			border-radius: 4px;
+			color: #6bc9ff;
+			line-height: 1;
+		}
+
+		&:checked + span {
+			padding-left: 4px;
+
+			border: 1px solid transparent;
+			background: #6bc9ff;
+			box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+			color: #fff;
+
+			&::before {
+				content: '';
+				background: url(/icons/close-w.svg);
+				background-size: 125%;
+				background-position: 50%;
+				width: 16px;
+				height: 16px;
+			}
+		}
+	}
+
+	.cf-tags {
+		gap: 8px;
+		overflow-x: auto;
+		white-space: nowrap;
+	}
+
+	.cf-files {
+		gap: 8px;
+		margin: 16px 0 12px;
+
+		.cf-file {
+			position: absolute;
+			opacity: 0;
+			width: 0;
+			pointer-events: none;
+
+			& + img {
+				display: block;
+			}
+		}
+
+		.cf-filepreview {
+			position: relative;
+			overflow: hidden;
+			background: #ddd;
+			border-radius: 5px;
+
+			> img {
+				display: block;
+				object-fit: cover;
+				object-position: center;
+				border-radius: 5px;
+			}
+
+			> button {
+				top: 4px;
+				left: 4px;
+				width: 16px;
+				height: 16px;
+				position: absolute;
+			}
+		}
+
+		.cf-addfile {
+			line-height: 1;
+
+			> span {
+				color: #6bc9ff;
+				font-size: 0.8125rem;
+			}
+
+			> small {
+				color: #b1b2b3;
+				font-size: 0.625rem;
+			}
+		}
 	}
 </style>
