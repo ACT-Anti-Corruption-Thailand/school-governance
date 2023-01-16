@@ -2,8 +2,14 @@
 	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
 
 	import { onMount } from 'svelte';
-	import { Lottie } from 'lottie-svelte';
 
+	import { Lottie } from 'lottie-svelte';
+	import {
+		Dialog,
+		DialogOverlay,
+		DialogTitle,
+		DialogDescription
+	} from '@rgossiaux/svelte-headlessui';
 	import Modal from 'components/Modal.svelte';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 
@@ -100,7 +106,8 @@
 		}
 	};
 
-	const deleteComment = async (commentId: number) => {
+	const deleteComment = async () => {
+		const commentId = going_to_delete_id;
 		try {
 			await fetch(
 				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments/${commentId}`,
@@ -114,6 +121,8 @@
 		} catch (err) {
 			console.error(err);
 		} finally {
+			going_to_delete_id = null;
+			confirm_delete_isopen = false;
 			fetchComments();
 		}
 	};
@@ -275,6 +284,9 @@
 
 	let last_post_has_image = false;
 	let sent_comment_modal_isopen = false;
+
+	let going_to_delete_id: number | null = null;
+	let confirm_delete_isopen = false;
 </script>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
@@ -357,11 +369,12 @@
 </details>
 
 <div class="desktop-margin">
-	<button class="f comment-btn" type="button" on:click={() => (comment_modal_isopen = true)}>
-		<div class="comment-btn-txtbox">แล้วคุณละ คิดอย่างไร?</div>
-		<img src="/icons/image.svg" alt="" width="24" height="24" />
-	</button>
 	{#if $currentUser}
+		<button class="f comment-btn" type="button" on:click={() => (comment_modal_isopen = true)}>
+			<div class="comment-btn-txtbox">แล้วคุณละ คิดอย่างไร?</div>
+			<img src="/icons/image.svg" alt="" width="24" height="24" />
+		</button>
+
 		<Modal title="เพิ่มความเห็นใหม่" hideTitle bind:isOpen={comment_modal_isopen}>
 			<button
 				class="cf-submit"
@@ -431,6 +444,7 @@
 				</label>
 			</div>
 		</Modal>
+
 		<Modal title="เพิ่มความเห็นสำเร็จ" hideTitle bind:isOpen={sent_comment_modal_isopen}>
 			<div class="f fcm">
 				<h3 class="fcm-header">ส่งความคิดเห็นเรียบร้อย</h3>
@@ -471,6 +485,33 @@
 				</div>
 			</div>
 		</Modal>
+
+		<Dialog open={confirm_delete_isopen} on:close={() => (confirm_delete_isopen = false)}>
+			<DialogOverlay class="delete-modal-backdrop" />
+
+			<div class="delete-modal-box">
+				<DialogTitle class="f jcc delete-modal-title">
+					<img src="/icons/delete.svg" alt="" width="20" height="20" />
+					<span>ลบความคิดเห็น</span>
+				</DialogTitle>
+				<DialogDescription class="delete-modal-desc"
+					>แน่ใจว่าจะลบความคิดเห็นของคุณ</DialogDescription
+				>
+				<div class="f jcc delete-modal-btns">
+					<button
+						class="f jcc delete-modal-btn1"
+						type="button"
+						on:click={() => (confirm_delete_isopen = false)}
+					>
+						<span>ยกเลิก</span>
+					</button>
+					<button class="f jcc delete-modal-btn2" type="button" on:click={deleteComment}>
+						<img src="/icons/delete-w.svg" alt="" width="20" height="20" />
+						<span>ลบ</span>
+					</button>
+				</div>
+			</div>
+		</Dialog>
 	{/if}
 
 	<section class="comments">
@@ -479,7 +520,10 @@
 				<div class="f jcsb comment-header">
 					<p class="comment-small">{new Date(post.createDate).toLocaleDateString('th')}</p>
 					{#if $currentUser?.uid === post.userId}
-						<button class="f" type="button" on:click={() => deleteComment(post.Id)}>
+						<button class="f" type="button" on:click={() => {
+							going_to_delete_id = post.Id
+							confirm_delete_isopen = true
+						}}>
 							<img src="/icons/delete.svg" alt="ลบ" width="24" height="24" />
 						</button>
 					{/if}
@@ -906,5 +950,68 @@
 				color: #fff;
 			}
 		}
+	}
+
+	:global(.delete-modal-backdrop) {
+		position: fixed;
+		inset: 0;
+
+		z-index: 32;
+
+		background: rgba(0, 0, 0, 0.4);
+		backdrop-filter: blur(2px);
+	}
+
+	.delete-modal-box {
+		position: fixed;
+		inset: 50% 16px auto;
+		transform: translateY(-50%);
+		z-index: 32;
+		background: #fff;
+		box-shadow: 0px 1px 4px rgb(12 22 107 / 20%);
+		border-radius: 8px;
+		padding: 16px;
+		text-align: center;
+	}
+
+	:global(.delete-modal-title) {
+		font-family: 'Mitr';
+		font-weight: 500;
+		font-size: 1.25rem;
+		line-height: 125%;
+		letter-spacing: 0.02em;
+		color: #3c55ab;
+		gap: 8px;
+	}
+
+	:global(.delete-modal-desc) {
+		color: #3c55ab;
+		margin: 8px 0 16px;
+	}
+
+	.delete-modal-btns {
+		gap: 8px;
+	}
+
+	.delete-modal-btn1,
+	.delete-modal-btn2 {
+		padding: 8px 16px;
+		width: 100%;
+
+		border: 1px solid #3c55ab;
+		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 40px;
+
+		font-family: 'Mitr';
+		line-height: 125%;
+		letter-spacing: 0.02em;
+		color: #3c55ab;
+	}
+
+	.delete-modal-btn2 {
+		gap: 8px;
+		background: #fc5858;
+		border: 1px solid #fc5858;
+		color: #fff;
 	}
 </style>
