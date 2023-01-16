@@ -1,11 +1,16 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
-	import { years } from 'data/years.js';
-	import SchoolHeader from 'components/school/SchoolHeader.svelte';
-	import { currentUser } from 'stores/firebaseapp';
+
 	import { onMount } from 'svelte';
+	import { Lottie } from 'lottie-svelte';
+
 	import Modal from 'components/Modal.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
+
+	import { years } from 'data/years.js';
+
+	import { page } from '$app/stores';
+	import { currentUser } from 'stores/firebaseapp';
 
 	const LATEST_YEAR = years[years.length - 1];
 
@@ -138,7 +143,7 @@
 			uploaded_files = await resp.json();
 		}
 
-		console.log(uploaded_files);
+		// console.log(uploaded_files);
 
 		try {
 			await fetch('https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments', {
@@ -160,6 +165,9 @@
 		} catch (err) {
 			console.error(err);
 		} finally {
+			last_post_has_image = !!uploaded_files;
+			comment_modal_isopen = false;
+			sent_comment_modal_isopen = true;
 			fetchComments();
 		}
 	};
@@ -264,6 +272,9 @@
 	};
 
 	$: if (!comment_modal_isopen) clear_comment_form();
+
+	let last_post_has_image = false;
+	let sent_comment_modal_isopen = false;
 </script>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
@@ -418,6 +429,46 @@
 					<input type="checkbox" bind:group={chk_locations} value="gym" />
 					<span>สนามกีฬา</span>
 				</label>
+			</div>
+		</Modal>
+		<Modal title="เพิ่มความเห็นสำเร็จ" hideTitle bind:isOpen={sent_comment_modal_isopen}>
+			<div class="f fcm">
+				<h3 class="fcm-header">ส่งความคิดเห็นเรียบร้อย</h3>
+				<div class="fcm-img">
+					<Lottie path="/lotties/feedback_completed.json" loop={true} autoplay={true} />
+				</div>
+				<div>
+					<p class="fcm-t1">
+						ขอบคุณที่เข้ามามีส่วนร่วม ความเห็นของคุณมีความหมายต่อการพัฒนาโรงเรียนของเรา
+					</p>
+					{#if last_post_has_image}
+						<p class="fcm-t2">
+							Admin ขออนุญาตใช้เวลาตรวจเช็ครูปภาพของคุณ
+							โดยจะแสดงผลให้ตามปกติหลังตรวจสอบและยืนยันแล้วว่าไม่มีเนื้อหาที่ขัดต่อนโยบายของเว็บไซต์ซึ่งสนับสนุนการใช้ภาพเพื่อแลกเปลี่ยนความคิดเห็นอย่างสร้างสรรค์
+						</p>
+					{/if}
+				</div>
+				<div class="f fcm-btns">
+					<button
+						class="fcm-btn"
+						type="button"
+						on:click={() => (sent_comment_modal_isopen = false)}
+					>
+						<img src="/icons/comment.svg" alt="" width="16" height="16" />
+						<span>กลับไปดูความเห็น</span>
+					</button>
+					<button
+						class="fcm-btn2"
+						type="button"
+						on:click={() => {
+							sent_comment_modal_isopen = false;
+							comment_modal_isopen = true;
+						}}
+					>
+						<img src="/icons/comment-add.svg" alt="" width="16" height="16" />
+						<span>เพิ่มความเห็นอื่น</span>
+					</button>
+				</div>
 			</div>
 		</Modal>
 	{/if}
@@ -796,6 +847,63 @@
 			> small {
 				color: #b1b2b3;
 				font-size: 0.625rem;
+			}
+		}
+	}
+
+	.fcm {
+		flex-direction: column;
+		text-align: center;
+		gap: 24px;
+
+		.fcm-header {
+			font-family: 'Mitr';
+			font-weight: 500;
+			font-size: 1.25rem;
+			line-height: 125%;
+			text-align: center;
+			letter-spacing: 0.02em;
+		}
+
+		.fcm-img {
+			width: 30%;
+			margin: auto;
+		}
+
+		.fcm-t1 {
+			color: #3c55ab;
+			font-size: 0.8125rem;
+		}
+
+		.fcm-t2 {
+			color: #6bc9ff;
+			font-size: 0.8125rem;
+		}
+
+		.fcm-btns {
+			flex-direction: column;
+			gap: 16px;
+
+			.fcm-btn,
+			.fcm-btn2 {
+				display: inline-flex;
+				padding: 8px 16px;
+				gap: 8px;
+
+				border: 1px solid #6bc9ff;
+				box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
+				border-radius: 40px;
+
+				font-family: 'Mitr';
+				font-size: 0.8125rem;
+				line-height: 125%;
+				letter-spacing: 0.02em;
+				color: #6bc9ff;
+			}
+
+			.fcm-btn2 {
+				background: #6bc9ff;
+				color: #fff;
 			}
 		}
 	}
