@@ -182,15 +182,9 @@
 	};
 
 	let posts: any[] = [];
-	let mounted = false;
 	onMount(() => {
-		mounted = true;
-	});
-
-	$: if (mounted && $currentUser) {
-		void (filter_sort_by, filter_locations, filter_years);
 		fetchComments();
-	}
+	});
 
 	let filter_sort_by: 'latest' | 'most-liked' = 'latest';
 	let filter_locations: ('classroom' | 'toilet' | 'canteen' | 'gym')[] = [
@@ -520,10 +514,14 @@
 				<div class="f jcsb comment-header">
 					<p class="comment-small">{new Date(post.createDate).toLocaleDateString('th')}</p>
 					{#if $currentUser?.uid === post.userId}
-						<button class="f" type="button" on:click={() => {
-							going_to_delete_id = post.Id
-							confirm_delete_isopen = true
-						}}>
+						<button
+							class="f"
+							type="button"
+							on:click={() => {
+								going_to_delete_id = post.Id;
+								confirm_delete_isopen = true;
+							}}
+						>
 							<img src="/icons/delete.svg" alt="ลบ" width="24" height="24" />
 						</button>
 					{/if}
