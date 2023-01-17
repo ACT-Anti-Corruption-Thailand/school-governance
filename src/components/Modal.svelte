@@ -17,7 +17,7 @@
 	<DialogDescription>{description}</DialogDescription>
 
 	<div class="modal-box">
-		<header class="f modal-header" class:header-background={!hideTitle}>
+		<header class="f modal-header" class:header-background={!hideTitle || $$slots.title}>
 			<button type="button" class="f" on:click={() => (isOpen = false)}>
 				<img src="/icons/close.svg" alt="ปิด" width="32" height="32" />
 			</button>
