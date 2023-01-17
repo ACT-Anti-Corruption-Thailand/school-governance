@@ -186,12 +186,14 @@
 		fetchComments();
 	});
 
+	const MAX_LOCATION_LEN = 5;
 	let filter_sort_by: 'latest' | 'most-liked' = 'latest';
-	let filter_locations: ('classroom' | 'toilet' | 'canteen' | 'gym')[] = [
+	let filter_locations: ('classroom' | 'toilet' | 'canteen' | 'gym' | 'other')[] = [
 		'classroom',
 		'toilet',
 		'canteen',
-		'gym'
+		'gym',
+		'other'
 	];
 	let filter_years: number[] = [LATEST_YEAR];
 
@@ -200,7 +202,7 @@
 		'most-liked': 'เห็นด้วยมากสุด'
 	}[filter_sort_by];
 	$: filter_locations_lbl =
-		filter_locations.length === 4
+		filter_locations.length === MAX_LOCATION_LEN
 			? 'ทุกสถานที่'
 			: filter_locations
 					.map(
@@ -209,7 +211,8 @@
 								classroom: 'ห้องเรียน',
 								toilet: 'ห้องน้ำ',
 								canteen: 'โรงอาหาร',
-								gym: 'สนามกีฬา'
+								gym: 'สนามกีฬา',
+								other: 'อื่นๆ'
 							}[loc])
 					)
 					.join(', ');
@@ -254,7 +257,8 @@
 					classroom: 'ห้องเรียน',
 					toilet: 'ห้องน้ำ',
 					canteen: 'โรงอาหาร',
-					gym: 'สนามกีฬา'
+					gym: 'สนามกีฬา',
+					other: 'อื่นๆ'
 				}[loc])
 		);
 	};
@@ -346,6 +350,10 @@
 					><input type="checkbox" bind:group={filter_locations} value="gym" /><span>สนามกีฬา</span
 					></label
 				>
+				<label class="custom-control"
+					><input type="checkbox" bind:group={filter_locations} value="other" /><span>อื่นๆ</span
+					></label
+				>
 			</div>
 		</fieldset>
 		<fieldset>
@@ -435,6 +443,10 @@
 				<label class="cf-tag">
 					<input type="checkbox" bind:group={chk_locations} value="gym" />
 					<span>สนามกีฬา</span>
+				</label>
+				<label class="cf-tag">
+					<input type="checkbox" bind:group={chk_locations} value="other" />
+					<span>อื่นๆ</span>
 				</label>
 			</div>
 		</Modal>
