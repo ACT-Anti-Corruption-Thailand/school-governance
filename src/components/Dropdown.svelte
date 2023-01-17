@@ -19,7 +19,7 @@
 	on:change={(e) => (selected_option = e.detail)}
 >
 	<ListboxButton class="dropdown-button">
-		<span>{selected_option.label ?? selected_option.value}</span>
+		<span class="nobr">{selected_option.label ?? selected_option.value}</span>
 		<img src="/chevrons/bottom.svg" alt="" width="24" height="24" />
 	</ListboxButton>
 	<ListboxOptions class="dropdown-list">
@@ -32,6 +32,10 @@
 </Listbox>
 
 <style lang="scss">
+	.nobr {
+		white-space: nowrap;
+	}
+
 	:global(.dropdown-root) {
 		position: relative;
 	}
