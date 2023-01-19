@@ -7,6 +7,7 @@
 	import Modal from 'components/Modal.svelte';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import ScoreDiagram from 'components/ScoreDiagram.svelte';
+	import { Lottie } from 'lottie-svelte';
 
 	const DROPDOWN_DATA = years.map((y) => ({ label: y + 543, value: y }));
 	let dropdown_choice = DROPDOWN_DATA[0];
@@ -35,7 +36,7 @@
 	let score_safe = 3.5;
 	let score_clean = 2.9;
 
-	let quiz_isopen = !false;
+	let quiz_isopen = false;
 	let quiz_onclose = () => {
 		detail_modal_callback = () => {};
 		quiz_location = null;
@@ -57,6 +58,8 @@
 			}[name] ?? name
 		);
 	};
+
+	let quizfinish_isopen = !false;
 </script>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
@@ -67,6 +70,13 @@
 	<span>แล้วคุณละ ให้กี่คะแนน?</span>
 	<img src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
 </button>
+
+<!--  ██████╗ ██╗   ██╗██╗███████╗ -->
+<!-- ██╔═══██╗██║   ██║██║╚══███╔╝ -->
+<!-- ██║   ██║██║   ██║██║  ███╔╝  -->
+<!-- ██║▄▄ ██║██║   ██║██║ ███╔╝   -->
+<!-- ╚██████╔╝╚██████╔╝██║███████╗ -->
+<!-- ╚══▀▀═╝  ╚═════╝ ╚═╝╚══════╝ -->
 
 <Modal
 	title="ให้คะแนน"
@@ -181,13 +191,26 @@
 				>
 			{:else}
 				<button
-					class="rating-form-btn"
+					class="rating-form-btn f"
 					type="button"
 					disabled={quiz_rating_values[quiz_current_step] === 0}
 					on:click={() => {
 						/* TODO: submit score */
-					}}>ส่งคะแนน</button
+					}}
 				>
+					<span>ส่งคะแนน</span>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						fill="none"
+						viewBox="0 0 16 16"
+						width="16"
+						height="16"
+						><path
+							fill="currentColor"
+							d="M13.286 5.705A1 1 0 0011.87 4.29l-5.88 5.88-1.876-1.868A1 1 0 002.702 9.72l2.581 2.575a1 1 0 001.413-.001l6.59-6.59z"
+						/></svg
+					>
+				</button>
 			{/if}
 		</div>
 	{:else}
@@ -268,6 +291,87 @@
 	>
 </Modal>
 
+<!-- ███████╗██╗   ██╗ ██████╗ ██████╗███████╗███████╗███████╗ -->
+<!-- ██╔════╝██║   ██║██╔════╝██╔════╝██╔════╝██╔════╝██╔════╝ -->
+<!-- ███████╗██║   ██║██║     ██║     █████╗  ███████╗███████╗ -->
+<!-- ╚════██║██║   ██║██║     ██║     ██╔══╝  ╚════██║╚════██║ -->
+<!-- ███████║╚██████╔╝╚██████╗╚██████╗███████╗███████║███████║ -->
+<!-- ╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝╚══════╝╚══════╝╚══════╝ -->
+
+<Modal title="ส่งคะแนนเรียบร้อย" hideTitle bind:isOpen={quizfinish_isopen} body_class="quiz-body f">
+	<div class="quiz-body-spacer" />
+
+	<h3 class="mitr qfm-title">ส่งคะแนนเรียบร้อย</h3>
+	<div class="qfm-img">
+		<Lottie path="/lotties/rating_completed.json" loop={true} autoplay={true} />
+	</div>
+	<p>ขอบคุณที่เข้ามามีส่วนร่วม คะแนนของคุณมีความหมายต่อการพัฒนาโรงเรียนของเรา</p>
+
+	<div class="quiz-body-spacer" />
+
+	<p>คะแนนที่คุณให้</p>
+	<div class="f qfm-score-list">
+		<span class="mitr">คะแนนตามเกณฑ์มาตรฐาน</span>
+		<span class="mitr f qfm-score">
+			2.9
+			<img src="/ratings/radio-star-checked.svg" alt="" width="20" height="20" />
+		</span>
+	</div>
+	<div class="f qfm-score-list">
+		<span class="mitr">คะแนนความพึงพอใจ</span>
+		<span class="mitr f qfm-score">
+			3
+			<img src="/ratings/rate-1a.svg" alt="" width="20" height="20" />
+		</span>
+	</div>
+
+	<div class="quiz-body-spacer" />
+
+	<p>เลือกให้คะแนนสถานที่อื่น</p>
+	<div class="quiz-location-selector">
+		<button
+			class="quiz-location-btn f qfm-done"
+			type="button"
+			on:click={() => {
+				quiz_location = 'classroom';
+			}}
+		>
+			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+			<span class="mitr">ห้องเรียน</span>
+		</button>
+		<button
+			class="quiz-location-btn f"
+			type="button"
+			on:click={() => {
+				quiz_location = 'toilet';
+			}}
+		>
+			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+			<span class="mitr">ห้องน้ำ</span>
+		</button>
+		<button
+			class="quiz-location-btn f"
+			type="button"
+			on:click={() => {
+				quiz_location = 'canteen';
+			}}
+		>
+			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+			<span class="mitr">โรงอาหาร</span>
+		</button>
+		<button
+			class="quiz-location-btn f"
+			type="button"
+			on:click={() => {
+				quiz_location = 'gym';
+			}}
+		>
+			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+			<span class="mitr">สนามกีฬา</span>
+		</button>
+	</div>
+</Modal>
+
 <div class="desktop-margin">
 	<div class="card">
 		<div class="f">
@@ -291,6 +395,13 @@
 			>อ่านเกณฑ์มาตรฐาน</button
 		>
 	</div>
+
+	<!--  ██████╗██████╗ ██╗████████╗███████╗██████╗ ██╗ █████╗  -->
+	<!-- ██╔════╝██╔══██╗██║╚══██╔══╝██╔════╝██╔══██╗██║██╔══██╗ -->
+	<!-- ██║     ██████╔╝██║   ██║   █████╗  ██████╔╝██║███████║ -->
+	<!-- ██║     ██╔══██╗██║   ██║   ██╔══╝  ██╔══██╗██║██╔══██║ -->
+	<!-- ╚██████╗██║  ██║██║   ██║   ███████╗██║  ██║██║██║  ██║ -->
+	<!--  ╚═════╝╚═╝  ╚═╝╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝╚═╝  ╚═╝ -->
 
 	<Modal
 		title="เกณฑ์มาตรฐาน"
@@ -734,10 +845,11 @@
 		grid-template-columns: 1fr 1fr;
 		gap: 8px;
 		margin-top: 16px;
+		width: 100%;
 	}
 
 	.quiz-location-btn {
-		padding: 12px 32px;
+		padding: 12px 0;
 		background: #fff;
 		border: 1px solid #fcbde3;
 		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
@@ -853,11 +965,47 @@
 		flex: 1 1 0;
 		padding: 8px 0;
 
+		justify-content: center;
+		gap: 8px;
+
 		&:is([disabled], .secondary) {
 			background: #fff;
 			border: 2px solid #fcbde3;
 			box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
 			color: #fcbde3;
+		}
+	}
+
+	.qfm-title {
+		font-size: 1.25rem;
+	}
+
+	.qfm-img {
+		width: 30%;
+		margin: 16px auto;
+	}
+
+	.qfm-score-list {
+		padding: 8px 16px;
+		border-bottom: 1px dashed #ced5ea;
+		line-height: 1;
+
+		.qfm-score {
+			gap: 8px;
+			width: auto;
+			line-height: 1;
+			font-size: 1.2em;
+		}
+	}
+
+	.qfm-done {
+		background: #fcbde3;
+
+		&::after {
+			content: '';
+			background: url(/icons/check-b.svg);
+			width: 16px;
+			height: 16px;
 		}
 	}
 

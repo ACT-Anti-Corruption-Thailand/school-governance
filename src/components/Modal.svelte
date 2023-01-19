@@ -9,7 +9,7 @@
 	export let title: string;
 	export let hideTitle = false;
 	export let description = '';
-	export let isOpen = true;
+	export let isOpen: boolean;
 	export let body_class = '';
 	export let onCloseCallback: Function = () => {};
 </script>
