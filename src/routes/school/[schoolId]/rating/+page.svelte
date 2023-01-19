@@ -26,16 +26,240 @@
 	];
 	let detail_choice = DETAIL_DROPDOWN[0];
 	let detail_modal_isopen = false;
+	let detail_modal_callback = () => {};
 
 	let score_enough = 3.3;
 	let score_beauty = 2.9;
 	let score_safe = 3.5;
 	let score_clean = 2.9;
+
+	let quiz_isopen = !false;
+	let quiz_onclose = () => {
+		detail_modal_callback = () => {};
+		quiz_location = null;
+		quiz_rating_values = [0, 0, 0, 0, 0];
+		quiz_current_step = 0;
+	};
+
+	let quiz_location: null | 'classroom' | 'toilet' | 'canteen' | 'gym' = null;
+	type Rating = 0 | 1 | 2 | 3 | 4 | 5;
+	let quiz_rating_values: [Rating, Rating, Rating, Rating, Rating] = [0, 0, 0, 0, 0];
+	let quiz_current_step = 0;
+	const location_thname = (name: string) => {
+		return (
+			{
+				classroom: 'ห้องเรียน',
+				toilet: 'ห้องน้ำ',
+				canteen: 'โรงอาหาร',
+				gym: 'สนามกีฬา'
+			}[name] ?? name
+		);
+	};
 </script>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
+
+<button type="button" class="f rate-btn" on:click={() => (quiz_isopen = true)}>
+	<span>แล้วคุณละ ให้กี่คะแนน?</span>
+	<img src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
+</button>
+
+<Modal
+	title="ให้คะแนน"
+	bind:isOpen={quiz_isopen}
+	body_class="quiz-body f {quiz_location ? 'quiz-body-gap' : ''}"
+	onCloseCallback={quiz_onclose}
+>
+	<div class="quiz-location" slot="title">
+		{#if quiz_location}
+			<img src="/ratings/{quiz_location}.svg" alt="" width="16" height="16" />
+			<span class="mitr">{location_thname(quiz_location)}</span>
+		{/if}
+	</div>
+
+	{#if quiz_location}
+		<div class="quiz-step-container">
+			{#each Array(5) as _, i}
+				<div class="quiz-step" class:quiz-step-current={quiz_current_step >= i} />
+			{/each}
+		</div>
+		<!-- <input type="number" min="0" max="4" bind:value={quiz_current_step} /> -->
+		<!-- <p>
+			{JSON.stringify(quiz_rating_values)}
+		</p> -->
+		<img src="/ratings/placeholder.png" alt="" width="228" height="125" />
+		<h3 class="mitr asfs">ความสะอาด</h3>
+		<p class="tal">
+			ห้องเรียนของฉันมีองค์ประกอบสำคัญ เช่น พื้น หน้าต่าง ระเบียง โต๊ะ ฯลฯ ไม่มีฝุ่น ขยะ หรือคราบ
+			เปรอะเปื้อน บรรยากาศห้องเรียนปลอดโปร่ง มีการ
+			จัดเวรทำความสะอาดพร้อมทั้งมีอุปกรณ์ทำความสะอาดพร้อมใช้จัดเก็บเป็นระเบียบ
+		</p>
+
+		<div class="quiz-body-spacer" />
+
+		<div class="rating-select">
+			<div class="f rating-select-label">
+				{#if quiz_current_step === 4}
+					<span>ไม่พึงพอใจเลย</span>
+					<span>พึงพอใจที่สุด</span>
+				{:else}
+					<span>ไม่ตรงเลย</span>
+					<span>ตรงที่สุด</span>
+				{/if}
+			</div>
+			<div class="f rating-select-controls" class:smile-theme={quiz_current_step === 4}>
+				<label>
+					<input
+						type="radio"
+						name="quiz-rating-radio"
+						bind:group={quiz_rating_values[quiz_current_step]}
+						class:checked={quiz_rating_values[quiz_current_step] > 1 && quiz_current_step !== 4}
+						value={1}
+					/>
+					<span>1</span>
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="quiz-rating-radio"
+						bind:group={quiz_rating_values[quiz_current_step]}
+						class:checked={quiz_rating_values[quiz_current_step] > 2 && quiz_current_step !== 4}
+						value={2}
+					/>
+					<span>2</span>
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="quiz-rating-radio"
+						bind:group={quiz_rating_values[quiz_current_step]}
+						class:checked={quiz_rating_values[quiz_current_step] > 3 && quiz_current_step !== 4}
+						value={3}
+					/>
+					<span>3</span>
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="quiz-rating-radio"
+						bind:group={quiz_rating_values[quiz_current_step]}
+						class:checked={quiz_rating_values[quiz_current_step] > 4 && quiz_current_step !== 4}
+						value={4}
+					/>
+					<span>4</span>
+				</label>
+				<label>
+					<input
+						type="radio"
+						name="quiz-rating-radio"
+						bind:group={quiz_rating_values[quiz_current_step]}
+						value={5}
+					/>
+					<span>5</span>
+				</label>
+			</div>
+		</div>
+
+		<div class="f rating-form-btns">
+			{#if quiz_current_step > 0}
+				<button
+					class="rating-form-btn secondary"
+					type="button"
+					on:click={() => {
+						quiz_current_step -= 1;
+					}}>กลับ</button
+				>
+			{/if}
+			{#if quiz_current_step < 4}
+				<button
+					class="rating-form-btn"
+					type="button"
+					disabled={quiz_rating_values[quiz_current_step] === 0}
+					on:click={() => {
+						quiz_current_step += 1;
+					}}>ไปต่อ</button
+				>
+			{:else}
+				<button
+					class="rating-form-btn"
+					type="button"
+					disabled={quiz_rating_values[quiz_current_step] === 0}
+					on:click={() => {
+						/* TODO: submit score */
+					}}>ส่งคะแนน</button
+				>
+			{/if}
+		</div>
+	{:else}
+		<div class="quiz-body-spacer" />
+
+		<p>
+			สิ่งอำนวยความสะดวกต่าง ๆ ของโรงเรียน ตอบโจทย์การใช้งานของพวกเราแล้ว... จริงหรือ?
+			มาให้คะแนนเพื่อสะท้อนสภาพการใช้งานจริงและความพอใจของพวกเรากันดีกว่า
+			ไว้เป็นแนวทางสำหรับช่วยกันปรับปรุงแก้ไขต่อไป
+		</p>
+		<p class="pink quiz-est-time">ใช้เวลาไม่เกิน XX นาที</p>
+		<p>เลือกให้คะแนนตามสถานที่</p>
+		<div class="quiz-location-selector">
+			<button
+				class="quiz-location-btn f"
+				type="button"
+				on:click={() => {
+					quiz_location = 'classroom';
+				}}
+			>
+				<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+				<span class="mitr">ห้องเรียน</span>
+			</button>
+			<button
+				class="quiz-location-btn f"
+				type="button"
+				on:click={() => {
+					quiz_location = 'toilet';
+				}}
+			>
+				<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+				<span class="mitr">ห้องน้ำ</span>
+			</button>
+			<button
+				class="quiz-location-btn f"
+				type="button"
+				on:click={() => {
+					quiz_location = 'canteen';
+				}}
+			>
+				<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+				<span class="mitr">โรงอาหาร</span>
+			</button>
+			<button
+				class="quiz-location-btn f"
+				type="button"
+				on:click={() => {
+					quiz_location = 'gym';
+				}}
+			>
+				<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+				<span class="mitr">สนามกีฬา</span>
+			</button>
+		</div>
+
+		<div class="quiz-body-spacer" />
+	{/if}
+	<button
+		class="metric-btn mlra"
+		type="button"
+		on:click={() => {
+			detail_modal_callback = () => {
+				quiz_isopen = true;
+			};
+			quiz_isopen = false;
+			detail_modal_isopen = true;
+		}}>อ่านเกณฑ์มาตรฐานเพิ่มเติม</button
+	>
+</Modal>
+
 <div class="desktop-margin">
 	<div class="card">
 		<div class="f">
@@ -60,7 +284,12 @@
 		>
 	</div>
 
-	<Modal title="เกณฑ์มาตรฐาน" hideTitle bind:isOpen={detail_modal_isopen}>
+	<Modal
+		title="เกณฑ์มาตรฐาน"
+		hideTitle
+		bind:isOpen={detail_modal_isopen}
+		onCloseCallback={detail_modal_callback}
+	>
 		<div class="f" slot="title">
 			<h3 class="mitr" role="presentation">เกณฑ์มาตรฐาน</h3>
 			<Dropdown options={DETAIL_DROPDOWN} bind:selected_option={detail_choice} />
@@ -442,7 +671,189 @@
 		margin: 4px 16px 16px;
 	}
 
-	// UTILS
+	.rate-btn {
+		position: fixed;
+		left: 16px;
+		bottom: 80px;
+		width: calc(100% - 32px);
+		z-index: 1;
+		padding: 8px 16px;
+		gap: 8px;
+
+		background: #fa7cc7;
+		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 24px;
+
+		color: #fff;
+		line-height: 1;
+		text-decoration: none;
+
+		justify-content: center;
+		cursor: pointer;
+	}
+
+	.quiz-location {
+		line-height: 1;
+		margin-left: auto;
+
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+	}
+
+	:global(.quiz-body) {
+		height: calc(100% - 64px);
+		flex-direction: column;
+		text-align: center;
+
+		font-size: 0.8125rem;
+	}
+
+	:global(.quiz-body-gap) {
+		gap: 8px;
+	}
+
+	.quiz-body-spacer {
+		flex: 1 1 0;
+	}
+
+	.quiz-est-time {
+		margin: 8px 0 32px;
+	}
+
+	.quiz-location-selector {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 8px;
+		margin-top: 16px;
+	}
+
+	.quiz-location-btn {
+		padding: 12px 32px;
+		background: #fff;
+		border: 1px solid #fcbde3;
+		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 4px;
+
+		gap: 8px;
+		white-space: nowrap;
+
+		justify-content: center;
+	}
+
+	.quiz-step-container {
+		height: 8px;
+		display: flex;
+		gap: 4px;
+		width: 100%;
+	}
+
+	.quiz-step {
+		background: #dddddd;
+		border-radius: 4px;
+		flex: 1 1 0;
+
+		&.quiz-step-current {
+			background: #fa7cc7;
+		}
+	}
+
+	.rating-select {
+		width: 100%;
+
+		.rating-select-label {
+			font-size: 0.625rem;
+		}
+
+		> .rating-select-controls {
+			--unchecked-style: url(/ratings/radio-star-unchecked.svg);
+			--checked-style: url(/ratings/radio-star-checked.svg);
+
+			> label {
+				line-height: 1;
+				font-size: 0;
+
+				> input {
+					position: absolute;
+					opacity: 0;
+					width: 0;
+					pointer-events: none;
+
+					+ span::before {
+						content: '';
+						background: var(--unchecked-style);
+						display: block;
+						width: 44px;
+						height: 44px;
+						background-size: contain;
+						background-position: 50%;
+					}
+
+					:is(&.checked, &:checked) + span::before {
+						background: var(--checked-style);
+					}
+				}
+			}
+
+			&.smile-theme {
+				> label:nth-child(1) {
+					--unchecked-style: url(/ratings/rate-1.svg);
+					--checked-style: url(/ratings/rate-1a.svg);
+				}
+
+				> label:nth-child(2) {
+					--unchecked-style: url(/ratings/rate-2.svg);
+					--checked-style: url(/ratings/rate-2a.svg);
+				}
+
+				> label:nth-child(3) {
+					--unchecked-style: url(/ratings/rate-3.svg);
+					--checked-style: url(/ratings/rate-3a.svg);
+				}
+
+				> label:nth-child(4) {
+					--unchecked-style: url(/ratings/rate-4.svg);
+					--checked-style: url(/ratings/rate-4a.svg);
+				}
+
+				> label:nth-child(5) {
+					--unchecked-style: url(/ratings/rate-5.svg);
+					--checked-style: url(/ratings/rate-5a.svg);
+				}
+			}
+		}
+	}
+
+	.rating-form-btns {
+		gap: 16px;
+		margin: 16px 0;
+	}
+
+	.rating-form-btn {
+		background: #fa7cc7;
+		border: 2px solid #fa7cc7;
+		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 24px;
+
+		font-family: 'Mitr';
+		font-weight: 500;
+		font-size: 1rem;
+		line-height: 125%;
+		letter-spacing: 0.02em;
+		color: #fff;
+
+		flex: 1 1 0;
+		padding: 8px 0;
+
+		&:is([disabled], .secondary) {
+			background: #fff;
+			border: 2px solid #fcbde3;
+			box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+			color: #fcbde3;
+		}
+	}
+
+	// #region UTILS
 	.g4 {
 		gap: 4px;
 	}
@@ -470,4 +881,18 @@
 	.f110 {
 		flex: 1 1 0;
 	}
+
+	.mlra {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.asfs {
+		align-self: flex-start;
+	}
+
+	.tal {
+		text-align: left;
+	}
+	// #endregion
 </style>

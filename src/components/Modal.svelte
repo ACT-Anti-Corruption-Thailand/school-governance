@@ -10,21 +10,36 @@
 	export let hideTitle = false;
 	export let description = '';
 	export let isOpen = true;
+	export let body_class = '';
+	export let onCloseCallback: Function = () => {};
 </script>
 
-<Dialog open={isOpen} on:close={() => (isOpen = false)}>
-	<DialogOverlay class="modal-backdrop" />
+<Dialog
+	open={isOpen}
+	on:close={() => {
+		isOpen = false;
+		onCloseCallback();
+	}}
+>
+	<!-- <DialogOverlay class="modal-backdrop" /> -->
 	<DialogDescription>{description}</DialogDescription>
 
 	<div class="modal-box">
 		<header class="f modal-header" class:header-background={!hideTitle || $$slots.title}>
-			<button type="button" class="f" on:click={() => (isOpen = false)}>
+			<button
+				type="button"
+				class="f"
+				on:click={() => {
+					isOpen = false;
+					onCloseCallback();
+				}}
+			>
 				<img src="/icons/close.svg" alt="ปิด" width="32" height="32" />
 			</button>
 			<DialogTitle class="modal-title {hideTitle ? 'sr-only' : ''}">{title}</DialogTitle>
 			<slot name="title" />
 		</header>
-		<div class="modal-content">
+		<div class="modal-content {body_class}">
 			<slot />
 		</div>
 	</div>
