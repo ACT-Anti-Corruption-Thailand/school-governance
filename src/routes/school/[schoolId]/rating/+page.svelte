@@ -1,4 +1,8 @@
 <script lang="ts">
+	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+
+	import { onMount } from 'svelte';
+
 	import { years } from 'data/years.js';
 
 	import { QUIZ_QUESTIONS_DESC, QUIZ_QUESTIONS_TITLE } from 'data/quiz-questions';
@@ -8,6 +12,11 @@
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import ScoreDiagram from 'components/ScoreDiagram.svelte';
 	import { Lottie } from 'lottie-svelte';
+
+	import { page } from '$app/stores';
+	import { school_rating_list } from 'stores/schoolRating';
+	import { currentUser } from 'stores/firebaseapp';
+	$: schoolId = $page.params.schoolId;
 
 	const DROPDOWN_DATA = years.map((y) => ({ label: y + 543, value: y }));
 	let dropdown_choice = DROPDOWN_DATA[0];
@@ -59,7 +68,61 @@
 		);
 	};
 
-	let quizfinish_isopen = !false;
+	let quizfinish_isopen = false;
+
+	/*
+		DOCUMENT POSSIBLY FIX HERE:
+		- คือตอนนี้ Noco มันสร้างคอลัมน์ยากมาก
+		- ตอนนี้ realize ว่า จริงๆ แล้วความสัมพันธ์ระหว่าง SchoolIndex มันเป็น 1-1 กับ SchoolRating
+			- ในอนาคต ตรงนี้จะต้องกำจัดเรื่อง segregation data ออกไปให้ได้ เอามารวมกันเป็น 1 ตารางแล้วรัน Aggregate Function เอา
+		- ตอนนี้ SchoolId ไม่ใช่ Primary Key ซึ่งจริงๆ ควรเป็น แต่ตอนนี้ Noco Alter ไม่ได้ ทำให้ Relationship กระจาย
+
+		อันนี้เป็นสิ่งที่ทำไปก่อน ซึ่งไม่ควรเกิดขึ้น แต่เพื่อให้ met deadline ต้องแก้ด้วยอันนี้ไปก่อน
+		- เมื่อ user เข้ามาหน้านี้ (onMount) จะเช็ค global store ก่อนว่า
+			1. มีรหัสโรงเรียนที่คู่กับ id ใน db หรือยัง แคชอันนี้ไม่ persist ระหว่างการเปิดปิดแต่ละครั้งเพื่อกันรหัสโรงเรียนผิด
+			2. fetch `rowId` ที่เป็น id โรงเรียนนี้คู่กับ `uid` ออกมา
+			- ถ้ายังไม่มี จะ touch ตอนให้คะแนนเสร็จครั้งแรก
+
+		Update 1800 NocoDB ตายไปแล้วเรียบร้อย
+	*/
+
+	// onMount(async () => {
+	// 	try {
+	// 		const resp = await fetch('')
+	// 	}catch(e){
+	// 		console.error(e)
+	// 	}
+	// })
+
+	// let user_record_id: null | number = null;
+	// const submitScore = async () => {
+	// 	if (!$currentUser) return;
+
+	// 	if (!user_record_id) {
+	// 		const resp = await fetch(
+	// 			`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolRating?fields=users&where=%28schoolId%2Ceq%2C${schoolId}%29&limit=1&nested%5Busers%5D%5Bwhere%5D=%28userId%2Ceq%2C${$currentUser.uid}%29&nested%5Busers%5D%5Blimit%5D=1`,
+	// 			{
+	// 				method: 'GET',
+	// 				headers: {
+	// 					'xc-token': PUBLIC_NOCO_TOKEN_KEY
+	// 				}
+	// 			}
+	// 		);
+	// 		const json = await resp.json();
+
+	// 		//if no users present, create a new record for him.
+	// 		if (json?.list?.[0]?.users.length === 0) {
+	// 			await fetch('', {
+	// 				method: 'POST',
+	// 				headers: {
+	// 					'xc-token': PUBLIC_NOCO_TOKEN_KEY,
+	// 					'Content-Type': 'application/json'
+	// 				},
+	// 				body: JSON.stringify({})
+	// 			});
+	// 		}
+	// 	}
+	// };
 </script>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
