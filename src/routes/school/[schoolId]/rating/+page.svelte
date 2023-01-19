@@ -253,6 +253,16 @@
 				quiz_isopen = true;
 			};
 			quiz_isopen = false;
+			if (quiz_location) {
+				detail_choice = {
+					value: {
+						classroom: 'ห้องเรียน',
+						toilet: 'ห้องน้ำ',
+						canteen: 'โรงอาหาร',
+						gym: 'สนามกีฬา'
+					}[quiz_location]
+				};
+			}
 			detail_modal_isopen = true;
 		}}>อ่านเกณฑ์มาตรฐานเพิ่มเติม</button
 	>
