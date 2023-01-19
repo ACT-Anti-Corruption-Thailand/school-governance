@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { years } from 'data/years.js';
 
+	import { QUIZ_QUESTIONS_DESC, QUIZ_QUESTIONS_TITLE } from 'data/quiz-questions';
+
 	import Dropdown from 'components/Dropdown.svelte';
 	import Modal from 'components/Modal.svelte';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
@@ -90,12 +92,8 @@
 			{JSON.stringify(quiz_rating_values)}
 		</p> -->
 		<img src="/ratings/placeholder.png" alt="" width="228" height="125" />
-		<h3 class="mitr asfs">ความสะอาด</h3>
-		<p class="tal">
-			ห้องเรียนของฉันมีองค์ประกอบสำคัญ เช่น พื้น หน้าต่าง ระเบียง โต๊ะ ฯลฯ ไม่มีฝุ่น ขยะ หรือคราบ
-			เปรอะเปื้อน บรรยากาศห้องเรียนปลอดโปร่ง มีการ
-			จัดเวรทำความสะอาดพร้อมทั้งมีอุปกรณ์ทำความสะอาดพร้อมใช้จัดเก็บเป็นระเบียบ
-		</p>
+		<h3 class="mitr asfs">{QUIZ_QUESTIONS_TITLE[quiz_current_step]}</h3>
+		<p class="tal asfs">{QUIZ_QUESTIONS_DESC[quiz_location][quiz_current_step]}</p>
 
 		<div class="quiz-body-spacer" />
 
