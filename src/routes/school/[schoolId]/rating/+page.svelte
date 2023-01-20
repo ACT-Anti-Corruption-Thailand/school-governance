@@ -10,7 +10,7 @@
 	import Dropdown from 'components/Dropdown.svelte';
 	import Modal from 'components/Modal.svelte';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
-	import ScoreDiagram from 'components/ScoreDiagram.svelte';
+	import ScoreDiagram from 'components/school/ScoreDiagram.svelte';
 	import { Lottie } from 'lottie-svelte';
 
 	import { page } from '$app/stores';

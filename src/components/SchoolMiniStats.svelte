@@ -3,7 +3,7 @@
 
 	import { onMount } from 'svelte';
 
-	import ScoreStat from './StarStat.svelte';
+	import RatingStat from './RatingStat.svelte';
 	import CommentStat from './CommentStat.svelte';
 
 	export let schoolId: string = '';
@@ -100,7 +100,7 @@
 </script>
 
 <div class="f header-score" data-schoolId={schoolId}>
-	<ScoreStat rating={_rating} />
+	<RatingStat rating={_rating} />
 	<div class="spacer" />
 	<CommentStat comment={_comment} />
 </div>
