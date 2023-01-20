@@ -68,61 +68,124 @@
 		);
 	};
 
+	let quiz_display_avg = 0;
+	let quiz_display_pleasure = 0;
+
+	let quiz_classroom_done = false;
+	let quiz_toilet_done = false;
+	let quiz_canteen_done = false;
+	let quiz_gym_done = false;
+
 	let quizfinish_isopen = false;
 
 	/*
-		DOCUMENT POSSIBLY FIX HERE:
-		- คือตอนนี้ Noco มันสร้างคอลัมน์ยากมาก
-		- ตอนนี้ realize ว่า จริงๆ แล้วความสัมพันธ์ระหว่าง SchoolIndex มันเป็น 1-1 กับ SchoolRating
-			- ในอนาคต ตรงนี้จะต้องกำจัดเรื่อง segregation data ออกไปให้ได้ เอามารวมกันเป็น 1 ตารางแล้วรัน Aggregate Function เอา
-		- ตอนนี้ SchoolId ไม่ใช่ Primary Key ซึ่งจริงๆ ควรเป็น แต่ตอนนี้ Noco Alter ไม่ได้ ทำให้ Relationship กระจาย
-
-		อันนี้เป็นสิ่งที่ทำไปก่อน ซึ่งไม่ควรเกิดขึ้น แต่เพื่อให้ met deadline ต้องแก้ด้วยอันนี้ไปก่อน
-		- เมื่อ user เข้ามาหน้านี้ (onMount) จะเช็ค global store ก่อนว่า
-			1. มีรหัสโรงเรียนที่คู่กับ id ใน db หรือยัง แคชอันนี้ไม่ persist ระหว่างการเปิดปิดแต่ละครั้งเพื่อกันรหัสโรงเรียนผิด
-			2. fetch `rowId` ที่เป็น id โรงเรียนนี้คู่กับ `uid` ออกมา
-			- ถ้ายังไม่มี จะ touch ตอนให้คะแนนเสร็จครั้งแรก
-
-		Update 1800 NocoDB ตายไปแล้วเรียบร้อย
+		[Update] Login เข้า Noco ไม่ได้ เพราะเปลี่ยนรหัสผ่านแล้ว... เข้าไม่ได้ owo)??????
+		- เดะต้องทำ function field ไว้เช็คว่าทำ c t f g ครบไหม ตอนนี้เดี๋ยวใช้วิธีการดึงมาเช็คหน้าบ้านไปก่อน
 	*/
 
-	// onMount(async () => {
-	// 	try {
-	// 		const resp = await fetch('')
-	// 	}catch(e){
-	// 		console.error(e)
-	// 	}
-	// })
+	onMount(async () => {
+		if (!$currentUser) return;
 
-	// let user_record_id: null | number = null;
-	// const submitScore = async () => {
-	// 	if (!$currentUser) return;
+		console.log($currentUser.uid, schoolId);
 
-	// 	if (!user_record_id) {
-	// 		const resp = await fetch(
-	// 			`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolRating?fields=users&where=%28schoolId%2Ceq%2C${schoolId}%29&limit=1&nested%5Busers%5D%5Bwhere%5D=%28userId%2Ceq%2C${$currentUser.uid}%29&nested%5Busers%5D%5Blimit%5D=1`,
-	// 			{
-	// 				method: 'GET',
-	// 				headers: {
-	// 					'xc-token': PUBLIC_NOCO_TOKEN_KEY
-	// 				}
-	// 			}
-	// 		);
-	// 		const json = await resp.json();
+		try {
+			const resp = await fetch(
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating?fields=Id,c1,t1,f1,g1&where=${encodeURIComponent(
+					`(userId,eq,${$currentUser.uid})~and(schoolId,eq,${schoolId})`
+				)}&limit=1`,
+				{
+					method: 'GET',
+					headers: {
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY
+					}
+				}
+			);
+			const json = await resp.json();
 
-	// 		//if no users present, create a new record for him.
-	// 		if (json?.list?.[0]?.users.length === 0) {
-	// 			await fetch('', {
-	// 				method: 'POST',
-	// 				headers: {
-	// 					'xc-token': PUBLIC_NOCO_TOKEN_KEY,
-	// 					'Content-Type': 'application/json'
-	// 				},
-	// 				body: JSON.stringify({})
-	// 			});
-	// 		}
-	// 	}
-	// };
+			user_record_id = json.list?.[0]?.Id ?? null;
+			quiz_classroom_done = !!json.list?.[0]?.c1;
+			quiz_toilet_done = !!json.list?.[0]?.t1;
+			quiz_canteen_done = !!json.list?.[0]?.f1;
+			quiz_gym_done = !!json.list?.[0]?.g1;
+		} catch (e) {
+			console.error(e);
+		}
+	});
+
+	let user_record_id: null | number = null;
+	const submitScore = async () => {
+		if (!$currentUser) return;
+		if (!quiz_location) return;
+
+		quiz_display_avg =
+			(quiz_rating_values[0] +
+				quiz_rating_values[1] +
+				quiz_rating_values[2] +
+				quiz_rating_values[3]) /
+			4;
+		quiz_display_pleasure = quiz_rating_values[4];
+
+		const quiz_body_key = {
+			classroom: 'c',
+			toilet: 't',
+			canteen: 'f',
+			gym: 'g'
+		}[quiz_location];
+		const quiz_body = {
+			[quiz_body_key + 1]: quiz_rating_values[0],
+			[quiz_body_key + 2]: quiz_rating_values[1],
+			[quiz_body_key + 3]: quiz_rating_values[2],
+			[quiz_body_key + 4]: quiz_rating_values[3],
+			[quiz_body_key + 5]: quiz_rating_values[4]
+		};
+		console.info(quiz_body);
+
+		try {
+			let sumbit_resp: Response;
+			if (!user_record_id) {
+				sumbit_resp = await fetch(
+					'https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating',
+					{
+						method: 'POST',
+						headers: {
+							'xc-token': PUBLIC_NOCO_TOKEN_KEY,
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify({
+							userId: $currentUser.uid,
+							schoolId: schoolId,
+							...quiz_body
+						})
+					}
+				);
+			} else {
+				sumbit_resp = await fetch(
+					`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating/${user_record_id}`,
+					{
+						method: 'PATCH',
+						headers: {
+							'xc-token': PUBLIC_NOCO_TOKEN_KEY,
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(quiz_body)
+					}
+				);
+			}
+
+			const sumbit_resp_json = await sumbit_resp.json();
+
+			user_record_id = sumbit_resp_json.Id ?? null;
+			quiz_classroom_done = !!sumbit_resp_json.c1;
+			quiz_toilet_done = !!sumbit_resp_json.t1;
+			quiz_canteen_done = !!sumbit_resp_json.f1;
+			quiz_gym_done = !!sumbit_resp_json.g1;
+
+			quiz_isopen = false;
+			quizfinish_isopen = true;
+		} catch (e) {
+			console.error(e);
+		}
+	};
 </script>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
@@ -257,9 +320,7 @@
 					class="rating-form-btn f"
 					type="button"
 					disabled={quiz_rating_values[quiz_current_step] === 0}
-					on:click={() => {
-						/* TODO: submit score */
-					}}
+					on:click={submitScore}
 				>
 					<span>ส่งคะแนน</span>
 					<svg
@@ -284,11 +345,12 @@
 			มาให้คะแนนเพื่อสะท้อนสภาพการใช้งานจริงและความพอใจของพวกเรากันดีกว่า
 			ไว้เป็นแนวทางสำหรับช่วยกันปรับปรุงแก้ไขต่อไป
 		</p>
-		<p class="pink quiz-est-time">ใช้เวลาไม่เกิน XX นาที</p>
+		<p class="pink quiz-est-time">ใช้เวลาไม่เกิน 5 นาที</p>
 		<p>เลือกให้คะแนนตามสถานที่</p>
 		<div class="quiz-location-selector">
 			<button
 				class="quiz-location-btn f"
+				class:qfm-done={quiz_classroom_done}
 				type="button"
 				on:click={() => {
 					quiz_location = 'classroom';
@@ -299,6 +361,7 @@
 			</button>
 			<button
 				class="quiz-location-btn f"
+				class:qfm-done={quiz_toilet_done}
 				type="button"
 				on:click={() => {
 					quiz_location = 'toilet';
@@ -309,6 +372,7 @@
 			</button>
 			<button
 				class="quiz-location-btn f"
+				class:qfm-done={quiz_canteen_done}
 				type="button"
 				on:click={() => {
 					quiz_location = 'canteen';
@@ -319,6 +383,7 @@
 			</button>
 			<button
 				class="quiz-location-btn f"
+				class:qfm-done={quiz_gym_done}
 				type="button"
 				on:click={() => {
 					quiz_location = 'gym';
@@ -376,14 +441,14 @@
 	<div class="f qfm-score-list">
 		<span class="mitr">คะแนนตามเกณฑ์มาตรฐาน</span>
 		<span class="mitr f qfm-score">
-			2.9
+			{quiz_display_avg}
 			<img src="/ratings/radio-star-checked.svg" alt="" width="20" height="20" />
 		</span>
 	</div>
 	<div class="f qfm-score-list">
 		<span class="mitr">คะแนนความพึงพอใจ</span>
 		<span class="mitr f qfm-score">
-			3
+			{quiz_display_pleasure}
 			<img src="/ratings/rate-1a.svg" alt="" width="20" height="20" />
 		</span>
 	</div>
@@ -393,10 +458,15 @@
 	<p>เลือกให้คะแนนสถานที่อื่น</p>
 	<div class="quiz-location-selector">
 		<button
-			class="quiz-location-btn f qfm-done"
+			class="quiz-location-btn f"
+			class:qfm-done={quiz_classroom_done}
 			type="button"
 			on:click={() => {
 				quiz_location = 'classroom';
+				quiz_rating_values = [0, 0, 0, 0, 0];
+				quiz_current_step = 0;
+				quizfinish_isopen = false;
+				quiz_isopen = true;
 			}}
 		>
 			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
@@ -404,9 +474,14 @@
 		</button>
 		<button
 			class="quiz-location-btn f"
+			class:qfm-done={quiz_toilet_done}
 			type="button"
 			on:click={() => {
 				quiz_location = 'toilet';
+				quiz_rating_values = [0, 0, 0, 0, 0];
+				quiz_current_step = 0;
+				quizfinish_isopen = false;
+				quiz_isopen = true;
 			}}
 		>
 			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
@@ -414,9 +489,14 @@
 		</button>
 		<button
 			class="quiz-location-btn f"
+			class:qfm-done={quiz_canteen_done}
 			type="button"
 			on:click={() => {
 				quiz_location = 'canteen';
+				quiz_rating_values = [0, 0, 0, 0, 0];
+				quiz_current_step = 0;
+				quizfinish_isopen = false;
+				quiz_isopen = true;
 			}}
 		>
 			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
@@ -424,9 +504,14 @@
 		</button>
 		<button
 			class="quiz-location-btn f"
+			class:qfm-done={quiz_gym_done}
 			type="button"
 			on:click={() => {
 				quiz_location = 'gym';
+				quiz_rating_values = [0, 0, 0, 0, 0];
+				quiz_current_step = 0;
+				quizfinish_isopen = false;
+				quiz_isopen = true;
 			}}
 		>
 			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
