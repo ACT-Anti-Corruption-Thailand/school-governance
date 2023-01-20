@@ -56,7 +56,7 @@
 		text-anchor="middle"
 		fill="#3C55AB"
 		class="s-rkerXTED7mIj"
-		style="font-weight:500;font-family:'Mitr'">{(score_enough || 0).toFixed(1)}</text
+		style="font-weight:500;font-family:'Mitr'">{score_enough ? score_enough.toFixed(1) : ''}</text
 	>
 	<text
 		x="244"
@@ -65,7 +65,7 @@
 		text-anchor="middle"
 		fill="#3C55AB"
 		class="s-rkerXTED7mIj"
-		style="font-weight:500;font-family:'Mitr'">{(score_beauty || 0).toFixed(1)}</text
+		style="font-weight:500;font-family:'Mitr'">{score_beauty ? score_beauty.toFixed(1) : ''}</text
 	>
 	<text
 		x="25"
@@ -74,7 +74,7 @@
 		text-anchor="middle"
 		fill="#3C55AB"
 		class="s-rkerXTED7mIj"
-		style="font-weight:500;font-family:'Mitr'">{(score_safe || 0).toFixed(1)}</text
+		style="font-weight:500;font-family:'Mitr'">{score_safe ? score_safe.toFixed(1) : ''}</text
 	>
 	<text
 		x="135"
@@ -83,6 +83,6 @@
 		text-anchor="middle"
 		fill="#3C55AB"
 		class="s-rkerXTED7mIj"
-		style="font-weight:500;font-family:'Mitr'">{(score_clean || 0).toFixed(1)}</text
+		style="font-weight:500;font-family:'Mitr'">{score_clean ? score_clean.toFixed(1) : ''}</text
 	>
 </svg>

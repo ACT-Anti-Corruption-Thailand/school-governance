@@ -314,7 +314,8 @@
 </script>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
-	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+	<div />
+	<!-- <Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} /> -->
 </SchoolHeader>
 
 <button type="button" class="f rate-btn" on:click={() => (quiz_isopen = true)}>
@@ -668,25 +669,41 @@
 	<div class="card">
 		<div class="f">
 			<h3 class="mitr">คะแนนตามเกณฑ์มาตรฐาน</h3>
-			<div class="total-rating-container">
-				<div class="f g4">
-					<img src="/icons/star.svg" alt="" width="20" height="20" />
-					<span class="mitr total-rating">{school_total_avg.toFixed(1)}</span>
+			{#if school_total_count}
+				<div class="total-rating-container">
+					<div class="f g4">
+						<img src="/icons/star.svg" alt="" width="20" height="20" />
+						<span class="mitr total-rating">{school_total_avg.toFixed(1)}</span>
+					</div>
+					<span>{school_total_count} รีวิว</span>
 				</div>
-				<span>{school_total_count} รีวิว</span>
-			</div>
+			{/if}
 		</div>
-		<div class="f pink">
-			<div>
-				<h3 class="mitr">ระดับคุณภาพโรงเรียน</h3>
-				<p>หลายส่วนพัฒนาให้ดีกว่านี้ได้</p>
+		{#if school_total_count}
+			<div class="f pink">
+				<div>
+					<h3 class="mitr">ระดับคุณภาพโรงเรียน</h3>
+					<p>หลายส่วนพัฒนาให้ดีกว่านี้ได้</p>
+				</div>
+				<img
+					src="/ratings/rating-text-{Math.ceil((school_total_avg / 5) * 4)}.svg"
+					alt=""
+					width="73"
+					height="49"
+				/>
 			</div>
-			<img src="/ratings/rating-avg.svg" alt="" width="73" height="49" />
-		</div>
+		{/if}
 		<button class="metric-btn" type="button" on:click={() => (detail_modal_isopen = true)}
 			>อ่านเกณฑ์มาตรฐาน</button
 		>
 	</div>
+
+	{#if !school_total_count}
+		<div class="card">
+			<div>ระดับคุณภาพโรงเรียน</div>
+			<strong>ขึ้นอยู่กับการให้คะแนนของคุณ</strong>
+		</div>
+	{/if}
 
 	<!--  ██████╗██████╗ ██╗████████╗███████╗██████╗ ██╗ █████╗  -->
 	<!-- ██╔════╝██╔══██╗██║╚══██╔══╝██╔════╝██╔══██╗██║██╔══██╗ -->
@@ -897,33 +914,49 @@
 			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
 			<span class="mitr">ห้องเรียน</span>
 			<span class="f110" />
-			<span class="mitr meter-num">{school_classroom_avg.toFixed(1)}</span>
-			<span class="meter" style:--value={school_classroom_avg} />
-			<span class="review-count">{school_data?.countC1 ?? 0} รีวิว</span>
+			{#if +school_data?.countC1}
+				<span class="mitr meter-num">{school_classroom_avg.toFixed(1)}</span>
+				<span class="meter" style:--value={school_classroom_avg} />
+				<span class="review-count">{school_data?.countC1} รีวิว</span>
+			{:else}
+				<div class="no-review">ยังไม่มีคะแนน</div>
+			{/if}
 		</div>
 		<div class="f g8">
 			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
 			<span class="mitr">ห้องน้ำ</span>
 			<span class="f110" />
-			<span class="mitr meter-num">{school_toilet_avg.toFixed(1)}</span>
-			<span class="meter" style:--value={school_toilet_avg} />
-			<span class="review-count">{school_data?.countT1 ?? 0} รีวิว</span>
+			{#if +school_data?.countT1}
+				<span class="mitr meter-num">{school_toilet_avg.toFixed(1)}</span>
+				<span class="meter" style:--value={school_toilet_avg} />
+				<span class="review-count">{school_data?.countT1} รีวิว</span>
+			{:else}
+				<div class="no-review">ยังไม่มีคะแนน</div>
+			{/if}
 		</div>
 		<div class="f g8">
 			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
 			<span class="mitr">โรงอาหาร</span>
 			<span class="f110" />
-			<span class="mitr meter-num">{school_canteen_avg.toFixed(1)}</span>
-			<span class="meter" style:--value={school_canteen_avg} />
-			<span class="review-count">{school_data?.countF1 ?? 0} รีวิว</span>
+			{#if +school_data?.countF1}
+				<span class="mitr meter-num">{school_canteen_avg.toFixed(1)}</span>
+				<span class="meter" style:--value={school_canteen_avg} />
+				<span class="review-count">{school_data?.countF1} รีวิว</span>
+			{:else}
+				<div class="no-review">ยังไม่มีคะแนน</div>
+			{/if}
 		</div>
 		<div class="f g8">
 			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
 			<span class="mitr">สนามกีฬา</span>
 			<span class="f110" />
-			<span class="mitr meter-num">{school_gym_avg.toFixed(1)}</span>
-			<span class="meter" style:--value={school_gym_avg} />
-			<span class="review-count">{school_data?.countG1 ?? 0} รีวิว</span>
+			{#if +school_data?.countG1}
+				<span class="mitr meter-num">{school_gym_avg.toFixed(1)}</span>
+				<span class="meter" style:--value={school_gym_avg} />
+				<span class="review-count">{school_data?.countG1} รีวิว</span>
+			{:else}
+				<div class="no-review">ยังไม่มีคะแนน</div>
+			{/if}
 		</div>
 	</div>
 
@@ -943,18 +976,20 @@
 	<div class="card">
 		<div class="f">
 			<h3 class="mitr">คะแนนความพึงพอใจ</h3>
-			<div class="total-rating-container">
-				<div class="f g4">
-					<img
-						src="/ratings/rate-{Math.round(school_total_pleasure_avg)}a.svg"
-						alt=""
-						width="32"
-						height="32"
-					/>
-					<span class="mitr total-rating">{school_total_pleasure_avg.toFixed(1)}</span>
+			{#if school_total_pleasure_count}
+				<div class="total-rating-container">
+					<div class="f g4">
+						<img
+							src="/ratings/rate-{Math.round(school_total_pleasure_avg)}a.svg"
+							alt=""
+							width="32"
+							height="32"
+						/>
+						<span class="mitr total-rating">{school_total_pleasure_avg.toFixed(1)}</span>
+					</div>
+					<span>{school_total_pleasure_count} รีวิว</span>
 				</div>
-				<span>{school_total_pleasure_count} รีวิว</span>
-			</div>
+			{/if}
 		</div>
 		<div class="f g8">
 			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
@@ -966,9 +1001,13 @@
 				width="28"
 				height="28"
 			/>
-			<span class="mitr meter-num">{school_pleasure_classroom_avg.toFixed(1)}</span>
-			<span class="meter short" style:--value={school_pleasure_classroom_avg} />
-			<span class="review-count">{school_data?.countC5 ?? 0} รีวิว</span>
+			{#if +school_data?.countC5}
+				<span class="mitr meter-num">{school_pleasure_classroom_avg.toFixed(1)}</span>
+				<span class="meter short" style:--value={school_pleasure_classroom_avg} />
+				<span class="review-count">{school_data?.countC5} รีวิว</span>
+			{:else}
+				<div class="no-review long">ยังไม่มีคะแนน</div>
+			{/if}
 		</div>
 		<div class="f g8">
 			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
@@ -980,9 +1019,13 @@
 				width="28"
 				height="28"
 			/>
-			<span class="mitr meter-num">{school_pleasure_toilet_avg.toFixed(1)}</span>
-			<span class="meter short" style:--value={school_pleasure_toilet_avg} />
-			<span class="review-count">{school_data?.countT5 ?? 0} รีวิว</span>
+			{#if +school_data?.countT5}
+				<span class="mitr meter-num">{school_pleasure_toilet_avg.toFixed(1)}</span>
+				<span class="meter short" style:--value={school_pleasure_toilet_avg} />
+				<span class="review-count">{school_data?.countT5} รีวิว</span>
+			{:else}
+				<div class="no-review long">ยังไม่มีคะแนน</div>
+			{/if}
 		</div>
 		<div class="f g8">
 			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
@@ -994,9 +1037,13 @@
 				width="28"
 				height="28"
 			/>
-			<span class="mitr meter-num">{school_pleasure_canteen_avg.toFixed(1)}</span>
-			<span class="meter short" style:--value={school_pleasure_canteen_avg} />
-			<span class="review-count">{school_data?.countF5 ?? 0} รีวิว</span>
+			{#if +school_data?.countF5}
+				<span class="mitr meter-num">{school_pleasure_canteen_avg.toFixed(1)}</span>
+				<span class="meter short" style:--value={school_pleasure_canteen_avg} />
+				<span class="review-count">{school_data?.countF5} รีวิว</span>
+			{:else}
+				<div class="no-review long">ยังไม่มีคะแนน</div>
+			{/if}
 		</div>
 		<div class="f g8">
 			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
@@ -1008,9 +1055,13 @@
 				width="28"
 				height="28"
 			/>
-			<span class="mitr meter-num">{school_pleasure_gym_avg.toFixed(1)}</span>
-			<span class="meter short" style:--value={school_pleasure_gym_avg} />
-			<span class="review-count">{school_data?.countG5 ?? 0} รีวิว</span>
+			{#if +school_data?.countG5}
+				<span class="mitr meter-num">{school_pleasure_gym_avg.toFixed(1)}</span>
+				<span class="meter short" style:--value={school_pleasure_gym_avg} />
+				<span class="review-count">{school_data?.countG5} รีวิว</span>
+			{:else}
+				<div class="no-review long">ยังไม่มีคะแนน</div>
+			{/if}
 		</div>
 	</div>
 
@@ -1334,6 +1385,16 @@
 			background: url(/icons/check-b.svg);
 			width: 16px;
 			height: 16px;
+		}
+	}
+
+	.no-review {
+		color: #9daad5;
+		line-height: 1;
+		min-width: 47%;
+
+		&.long {
+			min-width: 51%;
 		}
 	}
 
