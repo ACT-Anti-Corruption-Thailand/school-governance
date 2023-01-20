@@ -184,13 +184,11 @@
 		mounted = true;
 	});
 
-	$: if (mounted && $currentUser && schoolId) {
+	$: if (mounted && schoolId) {
 		fetchData();
 	}
 
 	const fetchData = async () => {
-		if (!$currentUser) return;
-
 		try {
 			// get school overall rating
 			const school_resp = await fetch(
@@ -206,7 +204,15 @@
 			);
 			const school_json = await school_resp.json();
 			school_data = school_json?.list?.[0] ?? {};
+		} catch (e) {
+			console.error(e);
+		}
+	};
 
+	const fetchUserRow = async () => {
+		if (!$currentUser) return;
+
+		try {
 			// get user rowId
 			const user_resp = await fetch(
 				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating?fields=Id,c1,t1,f1,g1&where=${encodeURIComponent(
@@ -258,6 +264,10 @@
 			[quiz_body_key + 5]: quiz_rating_values[4]
 		};
 		console.info(quiz_body);
+
+		if (!user_record_id) {
+			await fetchUserRow();
+		}
 
 		try {
 			let sumbit_resp: Response;
