@@ -4,9 +4,9 @@
 	export let score_safe = 0;
 	export let score_clean = 0;
 
-	$: score_svg_path = `M${((5 - score_safe) / 5) * 90} 90L90 ${((5 - score_enough) / 5) * 90}L${
-		(score_beauty / 5) * 90 + 90
-	} 90L90 ${(score_clean / 5) * 90 + 90}z`;
+	$: score_svg_path = `M${((5 - (score_safe || 0)) / 5) * 90} 90L90 ${
+		((5 - (score_enough || 0)) / 5) * 90
+	}L${((score_beauty || 0) / 5) * 90 + 90} 90L90 ${((score_clean || 0) / 5) * 90 + 90}z`;
 </script>
 
 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 281 255">
@@ -56,7 +56,7 @@
 		text-anchor="middle"
 		fill="#3C55AB"
 		class="s-rkerXTED7mIj"
-		style="font-weight:500;font-family:'Mitr'">{score_enough}</text
+		style="font-weight:500;font-family:'Mitr'">{(score_enough || 0).toFixed(1)}</text
 	>
 	<text
 		x="244"
@@ -65,7 +65,7 @@
 		text-anchor="middle"
 		fill="#3C55AB"
 		class="s-rkerXTED7mIj"
-		style="font-weight:500;font-family:'Mitr'">{score_beauty}</text
+		style="font-weight:500;font-family:'Mitr'">{(score_beauty || 0).toFixed(1)}</text
 	>
 	<text
 		x="25"
@@ -74,7 +74,7 @@
 		text-anchor="middle"
 		fill="#3C55AB"
 		class="s-rkerXTED7mIj"
-		style="font-weight:500;font-family:'Mitr'">{score_safe}</text
+		style="font-weight:500;font-family:'Mitr'">{(score_safe || 0).toFixed(1)}</text
 	>
 	<text
 		x="135"
@@ -83,6 +83,6 @@
 		text-anchor="middle"
 		fill="#3C55AB"
 		class="s-rkerXTED7mIj"
-		style="font-weight:500;font-family:'Mitr'">{score_clean}</text
+		style="font-weight:500;font-family:'Mitr'">{(score_clean || 0).toFixed(1)}</text
 	>
 </svg>

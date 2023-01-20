@@ -14,7 +14,6 @@
 	import { Lottie } from 'lottie-svelte';
 
 	import { page } from '$app/stores';
-	import { school_rating_list } from 'stores/schoolRating';
 	import { currentUser } from 'stores/firebaseapp';
 	$: schoolId = $page.params.schoolId;
 
@@ -39,11 +38,6 @@
 	let detail_choice = DETAIL_DROPDOWN[0];
 	let detail_modal_isopen = false;
 	let detail_modal_callback = () => {};
-
-	let score_enough = 3.3;
-	let score_beauty = 2.9;
-	let score_safe = 3.5;
-	let score_clean = 2.9;
 
 	let quiz_isopen = false;
 	let quiz_onclose = () => {
@@ -78,18 +72,143 @@
 
 	let quizfinish_isopen = false;
 
+	let school_data: any = {};
+
+	$: school_classroom_avg =
+		+school_data?.countC1 === 0
+			? 0
+			: (+school_data?.sumC1 + +school_data?.sumC2 + +school_data?.sumC3 + +school_data?.sumC4) /
+			  (4 * +school_data?.countC1);
+	$: school_toilet_avg =
+		+school_data?.countT1 === 0
+			? 0
+			: (+school_data?.sumT1 + +school_data?.sumT2 + +school_data?.sumT3 + +school_data?.sumT4) /
+			  (4 * +school_data?.countT1);
+	$: school_canteen_avg =
+		+school_data?.countF1 === 0
+			? 0
+			: (+school_data?.sumF1 + +school_data?.sumF2 + +school_data?.sumF3 + +school_data?.sumF4) /
+			  (4 * +school_data?.countF1);
+	$: school_gym_avg =
+		+school_data?.countG1 === 0
+			? 0
+			: (+school_data?.sumG1 + +school_data?.sumG2 + +school_data?.sumG3 + +school_data?.sumG4) /
+			  (4 * +school_data?.countG1);
+	$: school_total_count =
+		+school_data?.countC1 + +school_data?.countT1 + +school_data?.countF1 + +school_data?.countG1;
+	$: school_total_avg =
+		(school_classroom_avg + school_toilet_avg + school_canteen_avg + school_gym_avg) /
+		(+!!school_classroom_avg + +!!school_toilet_avg + +!!school_canteen_avg + +!!school_gym_avg);
+
+	// Avg จะเกิดจากอันที่ไม่ใช่ 0 ก็เลย conv เป็น bool แล้วทำให้เป็น num (0 1) จะได้นับได้ว่ามีกี่ตัวที่ไม่ใช่ 0
+	// วิธีการคิดแบบนี้ใช้กับตัวที่ cross-axis แบบ cleanliness, security, ... ด้วย
+
+	$: school_total_pleasure_count =
+		+school_data?.countC5 + +school_data?.countT5 + +school_data?.countF5 + +school_data?.countG5;
+	$: school_pleasure_classroom_avg =
+		+school_data?.countC5 === 0 ? 0 : +school_data?.sumC5 / +school_data?.countC5;
+	$: school_pleasure_toilet_avg =
+		+school_data?.countT5 === 0 ? 0 : +school_data?.sumT5 / +school_data?.countT5;
+	$: school_pleasure_canteen_avg =
+		+school_data?.countF5 === 0 ? 0 : +school_data?.sumF5 / +school_data?.countF5;
+	$: school_pleasure_gym_avg =
+		+school_data?.countG5 === 0 ? 0 : +school_data?.sumG5 / +school_data?.countG5;
+	$: school_total_pleasure_avg =
+		(school_pleasure_classroom_avg +
+			school_pleasure_toilet_avg +
+			school_pleasure_canteen_avg +
+			school_pleasure_gym_avg) /
+		(+!!school_pleasure_classroom_avg +
+			+!!school_pleasure_toilet_avg +
+			+!!school_pleasure_canteen_avg +
+			+!!school_pleasure_gym_avg);
+
+	let school_enough_avg = 0;
+	let school_beauty_avg = 0;
+	let school_clean_avg = 0;
+	let school_safe_avg = 0;
+	$: if (metric_choice.value === 'all') {
+		school_enough_avg =
+			(+school_data?.sumC2 + +school_data?.sumT2 + +school_data?.sumF2 + +school_data?.sumG2) /
+			(+school_data?.countC2 +
+				+school_data?.countT2 +
+				+school_data?.countF2 +
+				+school_data?.countG2);
+		school_beauty_avg =
+			(+school_data?.sumC4 + +school_data?.sumT4 + +school_data?.sumF4 + +school_data?.sumG4) /
+			(+school_data?.countC4 +
+				+school_data?.countT4 +
+				+school_data?.countF4 +
+				+school_data?.countG4);
+		school_clean_avg =
+			(+school_data?.sumC1 + +school_data?.sumT1 + +school_data?.sumF1 + +school_data?.sumG1) /
+			(+school_data?.countC1 +
+				+school_data?.countT1 +
+				+school_data?.countF1 +
+				+school_data?.countG1);
+		school_safe_avg =
+			(+school_data?.sumC3 + +school_data?.sumT3 + +school_data?.sumF3 + +school_data?.sumG3) /
+			(+school_data?.countC3 +
+				+school_data?.countT3 +
+				+school_data?.countF3 +
+				+school_data?.countG3);
+	} else if (metric_choice.value === 'classroom') {
+		school_enough_avg = +school_data?.sumC2 / +school_data?.countC2;
+		school_beauty_avg = +school_data?.sumC4 / +school_data?.countC4;
+		school_clean_avg = +school_data?.sumC1 / +school_data?.countC1;
+		school_safe_avg = +school_data?.sumC3 / +school_data?.countC3;
+	} else if (metric_choice.value === 'toilet') {
+		school_enough_avg = +school_data?.sumT2 / +school_data?.countT2;
+		school_beauty_avg = +school_data?.sumT4 / +school_data?.countT4;
+		school_clean_avg = +school_data?.sumT1 / +school_data?.countT1;
+		school_safe_avg = +school_data?.sumT3 / +school_data?.countT3;
+	} else if (metric_choice.value === 'canteen') {
+		school_enough_avg = +school_data?.sumF2 / +school_data?.countF2;
+		school_beauty_avg = +school_data?.sumF4 / +school_data?.countF4;
+		school_clean_avg = +school_data?.sumF1 / +school_data?.countF1;
+		school_safe_avg = +school_data?.sumF3 / +school_data?.countF3;
+	} else if (metric_choice.value === 'gym') {
+		school_enough_avg = +school_data?.sumG2 / +school_data?.countG2;
+		school_beauty_avg = +school_data?.sumG4 / +school_data?.countG4;
+		school_clean_avg = +school_data?.sumG1 / +school_data?.countG1;
+		school_safe_avg = +school_data?.sumG3 / +school_data?.countG3;
+	}
+
 	/*
 		[Update] Login เข้า Noco ไม่ได้ เพราะเปลี่ยนรหัสผ่านแล้ว... เข้าไม่ได้ owo)??????
 		- เดะต้องทำ function field ไว้เช็คว่าทำ c t f g ครบไหม ตอนนี้เดี๋ยวใช้วิธีการดึงมาเช็คหน้าบ้านไปก่อน
 	*/
 
+	let mounted = false;
 	onMount(async () => {
+		mounted = true;
+	});
+
+	$: if (mounted && $currentUser && schoolId) {
+		fetchData();
+	}
+
+	const fetchData = async () => {
 		if (!$currentUser) return;
 
-		console.log($currentUser.uid, schoolId);
-
 		try {
-			const resp = await fetch(
+			// get school overall rating
+			const school_resp = await fetch(
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex/views/SchoolRating?where=${encodeURIComponent(
+					`(schoolId,eq,${schoolId})`
+				)}&limit=1&nested%5BuserRating%5D%5Blimit%5D=1`,
+				{
+					method: 'GET',
+					headers: {
+						'xc-token': PUBLIC_NOCO_TOKEN_KEY
+					}
+				}
+			);
+			const school_json = await school_resp.json();
+			school_data = school_json?.list?.[0] ?? {};
+
+			// get user rowId
+			const user_resp = await fetch(
 				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating?fields=Id,c1,t1,f1,g1&where=${encodeURIComponent(
 					`(userId,eq,${$currentUser.uid})~and(schoolId,eq,${schoolId})`
 				)}&limit=1`,
@@ -100,17 +219,17 @@
 					}
 				}
 			);
-			const json = await resp.json();
+			const user_json = await user_resp.json();
 
-			user_record_id = json.list?.[0]?.Id ?? null;
-			quiz_classroom_done = !!json.list?.[0]?.c1;
-			quiz_toilet_done = !!json.list?.[0]?.t1;
-			quiz_canteen_done = !!json.list?.[0]?.f1;
-			quiz_gym_done = !!json.list?.[0]?.g1;
+			user_record_id = user_json.list?.[0]?.Id ?? null;
+			quiz_classroom_done = !!user_json.list?.[0]?.c1;
+			quiz_toilet_done = !!user_json.list?.[0]?.t1;
+			quiz_canteen_done = !!user_json.list?.[0]?.f1;
+			quiz_gym_done = !!user_json.list?.[0]?.g1;
 		} catch (e) {
 			console.error(e);
 		}
-	});
+	};
 
 	let user_record_id: null | number = null;
 	const submitScore = async () => {
@@ -180,12 +299,18 @@
 			quiz_canteen_done = !!sumbit_resp_json.f1;
 			quiz_gym_done = !!sumbit_resp_json.g1;
 
+			fetchData();
+
 			quiz_isopen = false;
-			quizfinish_isopen = true;
+			requestAnimationFrame(() => {
+				quizfinish_isopen = true;
+			});
 		} catch (e) {
 			console.error(e);
 		}
 	};
+
+	const smile_imgs = ['/ratings/rate-2a.svg'];
 </script>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
@@ -414,7 +539,9 @@
 					}[quiz_location]
 				};
 			}
-			detail_modal_isopen = true;
+			requestAnimationFrame(() => {
+				detail_modal_isopen = true;
+			});
 		}}>อ่านเกณฑ์มาตรฐานเพิ่มเติม</button
 	>
 </Modal>
@@ -441,15 +568,20 @@
 	<div class="f qfm-score-list">
 		<span class="mitr">คะแนนตามเกณฑ์มาตรฐาน</span>
 		<span class="mitr f qfm-score">
-			{quiz_display_avg}
+			{quiz_display_avg.toFixed(1)}
 			<img src="/ratings/radio-star-checked.svg" alt="" width="20" height="20" />
 		</span>
 	</div>
 	<div class="f qfm-score-list">
 		<span class="mitr">คะแนนความพึงพอใจ</span>
 		<span class="mitr f qfm-score">
-			{quiz_display_pleasure}
-			<img src="/ratings/rate-1a.svg" alt="" width="20" height="20" />
+			{quiz_display_pleasure.toFixed(1)}
+			<img
+				src="/ratings/rate-{Math.round(quiz_display_pleasure)}a.svg"
+				alt=""
+				width="20"
+				height="20"
+			/>
 		</span>
 	</div>
 
@@ -465,8 +597,11 @@
 				quiz_location = 'classroom';
 				quiz_rating_values = [0, 0, 0, 0, 0];
 				quiz_current_step = 0;
+
 				quizfinish_isopen = false;
-				quiz_isopen = true;
+				requestAnimationFrame(() => {
+					quiz_isopen = true;
+				});
 			}}
 		>
 			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
@@ -480,8 +615,11 @@
 				quiz_location = 'toilet';
 				quiz_rating_values = [0, 0, 0, 0, 0];
 				quiz_current_step = 0;
+
 				quizfinish_isopen = false;
-				quiz_isopen = true;
+				requestAnimationFrame(() => {
+					quiz_isopen = true;
+				});
 			}}
 		>
 			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
@@ -495,8 +633,11 @@
 				quiz_location = 'canteen';
 				quiz_rating_values = [0, 0, 0, 0, 0];
 				quiz_current_step = 0;
+
 				quizfinish_isopen = false;
-				quiz_isopen = true;
+				requestAnimationFrame(() => {
+					quiz_isopen = true;
+				});
 			}}
 		>
 			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
@@ -510,8 +651,11 @@
 				quiz_location = 'gym';
 				quiz_rating_values = [0, 0, 0, 0, 0];
 				quiz_current_step = 0;
+
 				quizfinish_isopen = false;
-				quiz_isopen = true;
+				requestAnimationFrame(() => {
+					quiz_isopen = true;
+				});
 			}}
 		>
 			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
@@ -527,9 +671,9 @@
 			<div class="total-rating-container">
 				<div class="f g4">
 					<img src="/icons/star.svg" alt="" width="20" height="20" />
-					<span class="mitr total-rating">2.9</span>
+					<span class="mitr total-rating">{school_total_avg.toFixed(1)}</span>
 				</div>
-				<span>66 รีวิว</span>
+				<span>{school_total_count} รีวิว</span>
 			</div>
 		</div>
 		<div class="f pink">
@@ -753,33 +897,33 @@
 			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
 			<span class="mitr">ห้องเรียน</span>
 			<span class="f110" />
-			<span class="mitr meter-num">2.9</span>
-			<span class="meter" style:--value="2.9" />
-			<span class="review-count">19 รีวิว</span>
+			<span class="mitr meter-num">{school_classroom_avg.toFixed(1)}</span>
+			<span class="meter" style:--value={school_classroom_avg} />
+			<span class="review-count">{school_data?.countC1 ?? 0} รีวิว</span>
 		</div>
 		<div class="f g8">
 			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
 			<span class="mitr">ห้องน้ำ</span>
 			<span class="f110" />
-			<span class="mitr meter-num">2.9</span>
-			<span class="meter" style:--value="2.9" />
-			<span class="review-count">19 รีวิว</span>
+			<span class="mitr meter-num">{school_toilet_avg.toFixed(1)}</span>
+			<span class="meter" style:--value={school_toilet_avg} />
+			<span class="review-count">{school_data?.countT1 ?? 0} รีวิว</span>
 		</div>
 		<div class="f g8">
 			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
 			<span class="mitr">โรงอาหาร</span>
 			<span class="f110" />
-			<span class="mitr meter-num">2.9</span>
-			<span class="meter" style:--value="2.9" />
-			<span class="review-count">19 รีวิว</span>
+			<span class="mitr meter-num">{school_canteen_avg.toFixed(1)}</span>
+			<span class="meter" style:--value={school_canteen_avg} />
+			<span class="review-count">{school_data?.countF1 ?? 0} รีวิว</span>
 		</div>
 		<div class="f g8">
 			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
 			<span class="mitr">สนามกีฬา</span>
 			<span class="f110" />
-			<span class="mitr meter-num">2.9</span>
-			<span class="meter" style:--value="2.9" />
-			<span class="review-count">19 รีวิว</span>
+			<span class="mitr meter-num">{school_gym_avg.toFixed(1)}</span>
+			<span class="meter" style:--value={school_gym_avg} />
+			<span class="review-count">{school_data?.countG1 ?? 0} รีวิว</span>
 		</div>
 	</div>
 
@@ -788,7 +932,12 @@
 			<h3 class="fw400">แบ่งตามด้าน</h3>
 			<Dropdown options={METRIC_DROPDOWN} bind:selected_option={metric_choice} />
 		</div>
-		<ScoreDiagram {score_enough} {score_beauty} {score_safe} {score_clean} />
+		<ScoreDiagram
+			score_enough={school_enough_avg}
+			score_beauty={school_beauty_avg}
+			score_clean={school_clean_avg}
+			score_safe={school_safe_avg}
+		/>
 	</div>
 
 	<div class="card">
@@ -796,49 +945,76 @@
 			<h3 class="mitr">คะแนนความพึงพอใจ</h3>
 			<div class="total-rating-container">
 				<div class="f g4">
-					<img src="/ratings/rate-2a.svg" alt="" width="32" height="32" />
-					<span class="mitr total-rating">2.9</span>
+					<img
+						src="/ratings/rate-{Math.round(school_total_pleasure_avg)}a.svg"
+						alt=""
+						width="32"
+						height="32"
+					/>
+					<span class="mitr total-rating">{school_total_pleasure_avg.toFixed(1)}</span>
 				</div>
-				<span>66 รีวิว</span>
+				<span>{school_total_pleasure_count} รีวิว</span>
 			</div>
 		</div>
 		<div class="f g8">
 			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
 			<span class="mitr">ห้องเรียน</span>
 			<span class="f110" />
-			<img src="/ratings/rate-2a.svg" alt="" width="28" height="28" />
-			<span class="mitr meter-num">2.9</span>
-			<span class="meter short" style:--value="2.9" />
-			<span class="review-count">19 รีวิว</span>
+			<img
+				src="/ratings/rate-{Math.round(school_pleasure_classroom_avg)}a.svg"
+				alt=""
+				width="28"
+				height="28"
+			/>
+			<span class="mitr meter-num">{school_pleasure_classroom_avg.toFixed(1)}</span>
+			<span class="meter short" style:--value={school_pleasure_classroom_avg} />
+			<span class="review-count">{school_data?.countC5 ?? 0} รีวิว</span>
 		</div>
 		<div class="f g8">
 			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
 			<span class="mitr">ห้องน้ำ</span>
 			<span class="f110" />
-			<img src="/ratings/rate-2a.svg" alt="" width="28" height="28" />
-			<span class="mitr meter-num">2.9</span>
-			<span class="meter short" style:--value="2.9" />
-			<span class="review-count">19 รีวิว</span>
+			<img
+				src="/ratings/rate-{Math.round(school_pleasure_toilet_avg)}a.svg"
+				alt=""
+				width="28"
+				height="28"
+			/>
+			<span class="mitr meter-num">{school_pleasure_toilet_avg.toFixed(1)}</span>
+			<span class="meter short" style:--value={school_pleasure_toilet_avg} />
+			<span class="review-count">{school_data?.countT5 ?? 0} รีวิว</span>
 		</div>
 		<div class="f g8">
 			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
 			<span class="mitr">โรงอาหาร</span>
 			<span class="f110" />
-			<img src="/ratings/rate-2a.svg" alt="" width="28" height="28" />
-			<span class="mitr meter-num">2.9</span>
-			<span class="meter short" style:--value="2.9" />
-			<span class="review-count">19 รีวิว</span>
+			<img
+				src="/ratings/rate-{Math.round(school_pleasure_canteen_avg)}a.svg"
+				alt=""
+				width="28"
+				height="28"
+			/>
+			<span class="mitr meter-num">{school_pleasure_canteen_avg.toFixed(1)}</span>
+			<span class="meter short" style:--value={school_pleasure_canteen_avg} />
+			<span class="review-count">{school_data?.countF5 ?? 0} รีวิว</span>
 		</div>
 		<div class="f g8">
 			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
 			<span class="mitr">สนามกีฬา</span>
 			<span class="f110" />
-			<img src="/ratings/rate-2a.svg" alt="" width="28" height="28" />
-			<span class="mitr meter-num">2.9</span>
-			<span class="meter short" style:--value="2.9" />
-			<span class="review-count">19 รีวิว</span>
+			<img
+				src="/ratings/rate-{Math.round(school_pleasure_gym_avg)}a.svg"
+				alt=""
+				width="28"
+				height="28"
+			/>
+			<span class="mitr meter-num">{school_pleasure_gym_avg.toFixed(1)}</span>
+			<span class="meter short" style:--value={school_pleasure_gym_avg} />
+			<span class="review-count">{school_data?.countG5 ?? 0} รีวิว</span>
 		</div>
 	</div>
+
+	<div class="mobile-spacer" />
 </div>
 
 <style lang="scss">
@@ -869,6 +1045,10 @@
 		display: flex;
 		flex-direction: column;
 		gap: 8px;
+	}
+
+	.mobile-spacer {
+		height: 64px;
 	}
 
 	.total-rating-container {
