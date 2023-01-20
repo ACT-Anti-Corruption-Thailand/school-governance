@@ -2,6 +2,9 @@
 	import { scroll } from 'motion';
 	import { onMount } from 'svelte';
 
+	import { page } from '$app/stores';
+	$: is_school_page = $page.route.id?.split('/')?.[1] === 'school';
+
 	let goTop = () => {};
 
 	let show = false;
@@ -21,7 +24,14 @@
 	});
 </script>
 
-<button class="gotop" type="button" class:show aria-label="กลับด้านบน" on:click={goTop}>
+<button
+	class="gotop"
+	type="button"
+	class:show
+	aria-label="กลับด้านบน"
+	on:click={goTop}
+	class:school={is_school_page}
+>
 	<img src="/chevrons/gotop.svg" alt="" width="14" height="8" />
 </button>
 
@@ -49,6 +59,10 @@
 		&.show {
 			pointer-events: auto;
 			transform: scale(1);
+		}
+
+		&.school {
+			bottom: 80px;
 		}
 
 		@media screen and (min-width: 768px) {
