@@ -127,7 +127,7 @@
 		}
 	};
 
-	const debugPost = async () => {
+	const post = async () => {
 		if (!$currentUser) return;
 		if (txt_comment.trim() === '' || chk_locations.length === 0) return;
 
@@ -167,7 +167,7 @@
 					location: chk_locations.join(),
 					schoolYear: LATEST_YEAR,
 					userId: $currentUser.uid,
-					approved: !uploaded_files,
+					approved: true || !uploaded_files,
 					...(uploaded_files ? { images: JSON.stringify(uploaded_files) } : null)
 				})
 			});
@@ -382,7 +382,7 @@
 				class="cf-submit"
 				type="button"
 				disabled={txt_comment.trim() === '' || chk_locations.length === 0}
-				on:click={debugPost}
+				on:click={post}
 				slot="title"
 			>
 				ส่งความเห็น
