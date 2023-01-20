@@ -1,17 +1,15 @@
 import fastify from 'fastify';
-import { nocodb, nocoConfig } from './libs/nocodb.js';
+import { registerRoutes } from './router.js';
 
 const app = fastify({ logger: true });
 
-app.get('/', async () => nocodb.dbTableRow.list(...nocoConfig, 'SchoolComments'));
+registerRoutes(app);
 
-const start = async () => {
+(async () => {
 	try {
 		await app.listen({ port: 3000 });
 	} catch (err) {
 		app.log.error(err);
 		process.exit(1);
 	}
-};
-
-start();
+})();
