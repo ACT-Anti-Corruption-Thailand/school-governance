@@ -3,7 +3,11 @@
 </script>
 
 <img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
-<span class="header-score-text">{rating.toFixed(1)}</span>
+{#if rating === null || rating === undefined || Number.isNaN(rating)}
+	<span class="header-score-text">—</span>
+{:else}
+	<span class="header-score-text">{(rating || 0).toFixed(1)}</span>
+{/if}
 
 <style lang="scss">
 	.header-score-text {

@@ -1,10 +1,7 @@
 <script lang="ts" context="module">
 	export type SchoolData = {
-		id: number;
+		id: string;
 		name: string;
-		date: string | number;
-		rating: number;
-		comment: number;
 	};
 </script>
 
@@ -13,39 +10,24 @@
 
 	export let school_list: SchoolData[] = [
 		{
-			id: 1,
-			name: 'โรงเรียนร่วมใจศึกษา',
-			date: 1666890000000,
-			rating: 3.2,
-			comment: 50
+			id: '1',
+			name: 'โรงเรียนร่วมใจศึกษา'
 		},
 		{
-			id: 2,
-			name: 'โรงเรียนศึกษาวิทยาการเรียนเจริญก้าวหน้า',
-			date: 1666890000000,
-			rating: 3.2,
-			comment: 50
+			id: '2',
+			name: 'โรงเรียนศึกษาวิทยาการเรียนเจริญก้าวหน้า'
 		},
 		{
-			id: 3,
-			name: 'โรงเรียนโปร่งใสวิทยา',
-			date: 1666890000000,
-			rating: 3.2,
-			comment: 50
+			id: '3',
+			name: 'โรงเรียนโปร่งใสวิทยา'
 		},
 		{
-			id: 4,
-			name: 'โรงเรียนบ้านร่วมสร้าง',
-			date: 1666890000000,
-			rating: 3.2,
-			comment: 50
+			id: '4',
+			name: 'โรงเรียนบ้านร่วมสร้าง'
 		},
 		{
-			id: 5,
-			name: 'โรงเรียนวัดป่าสามัคคี',
-			date: 1666890000000,
-			rating: 3.2,
-			comment: 50
+			id: '5',
+			name: 'โรงเรียนวัดป่าสามัคคี'
 		}
 	];
 </script>
@@ -56,11 +38,11 @@
 			<a class="f" href="/school/{school.id}/">
 				<div>
 					<div class="school-list-title">{school.name}</div>
-					<div class="school-list-date">
+					<!-- <div class="school-list-date">
 						โพสต์ล่าสุด {new Date(school.date).toLocaleDateString()}
-					</div>
+					</div> -->
 				</div>
-				<SchoolRating rating={school.rating} comment={school.comment} />
+				<SchoolRating schoolId={school.id} />
 			</a>
 		</li>
 	{/each}

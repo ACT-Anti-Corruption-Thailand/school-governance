@@ -31,7 +31,7 @@
 		{/if}
 	</hgroup>
 	<slot>
-		<SchoolRating />
+		<SchoolRating schoolId={$page.params.schoolId} />
 	</slot>
 </header>
 

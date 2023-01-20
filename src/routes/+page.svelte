@@ -51,7 +51,15 @@
 			<span>ความเห็นมากสุด</span>
 		</label>
 	</div>
-	<SchoolList />
+	<SchoolList
+		school_list={[
+			{ id: '1010720001', name: '(Test) โรงเรียนพญาไท' },
+			{ id: '1010720002', name: '(Test) โรงเรียนโฆสิตสโมสร' },
+			{ id: '1010720003', name: '(Test) โรงเรียนราชวินิต' },
+			{ id: '1010720004', name: '(Test) โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
+			{ id: '1010720005', name: '(Test) โรงเรียนวัดโสมนัส' }
+		]}
+	/>
 </section>
 
 <section class="information" id="information">
