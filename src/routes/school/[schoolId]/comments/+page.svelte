@@ -290,7 +290,7 @@
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
 	<div class="f g4">
 		<img src="/icons/comment.svg" alt="ความคิดเห็น" width="20" height="20" />
-		<span class="comment-header-val">50</span>
+		<span class="comment-header-val">{posts.length}</span>
 	</div>
 </SchoolHeader>
 
