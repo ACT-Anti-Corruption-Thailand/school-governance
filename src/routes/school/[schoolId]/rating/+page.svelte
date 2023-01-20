@@ -318,10 +318,18 @@
 	<!-- <Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} /> -->
 </SchoolHeader>
 
-<button type="button" class="f rate-btn" on:click={() => (quiz_isopen = true)}>
-	<span>แล้วคุณละ ให้กี่คะแนน?</span>
-	<img src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
-</button>
+{#if $currentUser}
+	<button
+		type="button"
+		class="f rate-btn"
+		on:click={() => {
+			quiz_isopen = true;
+		}}
+	>
+		<span>แล้วคุณละ ให้กี่คะแนน?</span>
+		<img src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
+	</button>
+{/if}
 
 <!--  ██████╗ ██╗   ██╗██╗███████╗ -->
 <!-- ██╔═══██╗██║   ██║██║╚══███╔╝ -->
