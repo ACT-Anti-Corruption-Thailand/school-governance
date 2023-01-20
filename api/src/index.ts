@@ -1,10 +1,9 @@
 import fastify from 'fastify';
+import { nocodb, nocoConfig } from './libs/nocodb.js';
 
 const app = fastify({ logger: true });
 
-app.get('/', async () => {
-	return { greeting: 'hello world' };
-});
+app.get('/', async () => nocodb.dbTableRow.list(...nocoConfig, 'SchoolComments'));
 
 const start = async () => {
 	try {
