@@ -1,4 +1,4 @@
-import { nocoConfig, nocodb } from '../../libs/nocodb.js';
+import { nocoConfig, nocodb } from '../../utils/nocodb.js';
 
 const MAX_SCORE = 4;
 

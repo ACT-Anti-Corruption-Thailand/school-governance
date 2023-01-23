@@ -1,4 +1,4 @@
-import { nocoConfig, nocodb } from '../../libs/nocodb.js';
+import { nocoConfig, nocodb } from '../../utils/nocodb.js';
 
 export async function getSchoolComments(
 	schoolId: string,
