@@ -27,19 +27,40 @@ authorization: Bearer <token>
 
 ## Endpoints
 
-### GET /
+### Health check
 
-Test endpoint
+```
+GET /
+```
+
+**Response**
 
 ```JSON
-// GET /
-
 School Governance API is doing OK :)
 ```
 
-### GET /schools/:schoolId/comments
+### Get school score
 
-Get comments from the given schoolId
+```
+GET /schools/:schoolId/score
+```
+
+**Response**
+
+```json
+// GET /schools/1010720003/score
+
+{
+	"count": 6,
+	"rating": 3.03125
+}
+```
+
+### Get school comments
+
+```
+GET /schools/:schoolId/comments
+```
 
 **Optional query**
 
@@ -47,7 +68,7 @@ Get comments from the given schoolId
 - years: comma-seperated years
 - sort: `latest`
 
-**Example**
+**Response**
 
 ```json
 // GET /schools/1010720003/comments?locations=classroom,toilet
@@ -87,17 +108,30 @@ Get comments from the given schoolId
 }
 ```
 
-### GET /schools/:schoolId/score
+### Like a comment
 
-Get score from the given schoolId
-
-**Example**
-
-```json
-// GET /schools/1010720003/score
-
-{
-	"count": 6,
-	"rating": 3.03125
-}
 ```
+POST /schools/:schoolId/comments/:commentId/like
+```
+
+**Optional query**
+
+The same with _get school comments_
+
+**Response**
+
+The same with _get school comments_
+
+### Unlike a comment
+
+```
+DELETE /schools/:schoolId/likes/:likeId
+```
+
+**Optional query**
+
+The same with _get school comments_
+
+**Response**
+
+The same with _get school comments_
