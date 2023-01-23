@@ -17,13 +17,23 @@ NOCODB_TOKEN=<token>
 yarn run dev
 ```
 
+## Authorization
+
+Protected endpoint required bearer token in authorization header
+
+```
+authorization: Bearer <token>
+```
+
 ## Endpoints
 
 ### GET /
 
 Test endpoint
 
-```
+```JSON
+// GET /
+
 School Governance API is doing OK :)
 ```
 
