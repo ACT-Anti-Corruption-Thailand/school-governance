@@ -114,9 +114,19 @@ GET /schools/:schoolId/comments
 POST /schools/:schoolId/comments/:commentId/like
 ```
 
-**Optional query**
+**Body**
 
-The same with _get school comments_
+```json
+{
+	// OPTIONAL: Mimicking query parameter from Get school comments
+	"schoolCommentsQuery": {
+		"locations": string?, // comma-seperated locations
+		"years": string?,			// comma-seperated years
+		"sort": string?				// `latest`
+	}
+
+}
+```
 
 **Response**
 
@@ -128,9 +138,71 @@ The same with _get school comments_
 DELETE /schools/:schoolId/likes/:likeId
 ```
 
-**Optional query**
+**Body**
+
+```json
+{
+	// OPTIONAL: Mimicking query parameter from Get school comments
+	"schoolCommentsQuery": {
+		"locations": string?, // comma-seperated locations
+		"years": string?,			// comma-seperated years
+		"sort": string?				// `latest`
+	}
+
+}
+```
+
+**Response**
 
 The same with _get school comments_
+
+### Create a comment
+
+```
+PUT /schools/:schoolId/comments
+```
+
+**Body**
+
+```json
+{
+	"comments": string,
+	"location": string,
+	"schoolYear": number,
+	"uploadedFiles": string[]?,
+	// OPTIONAL: Mimicking query parameter from Get school comments
+	"schoolCommentsQuery": {
+		"locations": string?, // comma-seperated locations
+		"years": string?,			// comma-seperated years
+		"sort": string?				// `latest`
+	}
+
+}
+```
+
+**Response**
+
+The same with _get school comments_
+
+### Delete a comment
+
+```
+DELETE /schools/:schoolId/comments/:commentId
+```
+
+**Body**
+
+```json
+{
+	// OPTIONAL: Mimicking query parameter from Get school comments
+	"schoolCommentsQuery": {
+		"locations": string?, // comma-seperated locations
+		"years": string?,			// comma-seperated years
+		"sort": string?				// `latest`
+	}
+
+}
+```
 
 **Response**
 

@@ -8,7 +8,7 @@ export interface SchoolCommentsQuery {
 
 export async function getSchoolComments(
 	schoolId: string,
-	{ locations, years, sort }: SchoolCommentsQuery
+	{ locations, years, sort }: SchoolCommentsQuery = {}
 ) {
 	const schoolIdQuery = `schoolId,eq,${schoolId}`;
 	const approvedQuery = `approved,eq,true`;
