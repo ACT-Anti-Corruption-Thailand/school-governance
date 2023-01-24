@@ -9,7 +9,8 @@
 	},
 	"dependencies": {
 		"fastify": "^4.11.0",
-		"nocodb-sdk": "^0.101.2"
+		"nocodb-sdk": "^0.101.2",
+		"zod": "^3.20.2"
 	},
 	"devDependencies": {
 		"dotenv": "^16.0.3",

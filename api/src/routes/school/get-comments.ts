@@ -1,10 +1,14 @@
 import { nocoConfig, nocodb } from '../../utils/nocodb.js';
 
+export interface SchoolCommentsQuery {
+	locations?: string;
+	years?: string;
+	sort?: string;
+}
+
 export async function getSchoolComments(
 	schoolId: string,
-	locations?: string,
-	years?: string,
-	sort?: string
+	{ locations, years, sort }: SchoolCommentsQuery
 ) {
 	const schoolIdQuery = `schoolId,eq,${schoolId}`;
 	const approvedQuery = `approved,eq,true`;
