@@ -319,8 +319,6 @@
 			console.error(e);
 		}
 	};
-
-	const smile_imgs = ['/ratings/rate-2a.svg'];
 </script>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
