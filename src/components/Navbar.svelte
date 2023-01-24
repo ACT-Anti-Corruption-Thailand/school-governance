@@ -70,7 +70,7 @@
 		document.documentElement.classList.toggle('navbar-shown', show);
 	}
 
-	let login_isopen = !false;
+	let login_isopen = false;
 	let term_isopen = false;
 
 	const term_modal_callback = () => {
@@ -78,10 +78,6 @@
 	};
 
 	let isread_checked = false;
-
-	$: if ($currentUser) {
-		console.log($currentUser);
-	}
 </script>
 
 <nav class="f main-nav" class:show class:show_search={$show_search}>
@@ -121,7 +117,7 @@
 	<div class="f nav-right">
 		{#if $currentUser}
 			<img
-				class="nav-profile"
+				class="nav-profile round-img"
 				src={$currentUser.photoURL ?? '/icons/anon.svg'}
 				alt=""
 				width="32"
@@ -164,7 +160,13 @@
 			<li class="nav-menu-last">
 				{#if $currentUser}
 					<button class="logged-in" type="button" on:click={logout}>
-						<img src={$currentUser.photoURL ?? '/icons/anon.svg'} alt="" width="24" height="24" />
+						<img
+							class="round-img"
+							src={$currentUser.photoURL ?? '/icons/anon.svg'}
+							alt=""
+							width="24"
+							height="24"
+						/>
 						<span>Log out</span>
 					</button>
 				{:else}
@@ -195,13 +197,13 @@
 				<div class="f login-img-wrapper">
 					<div class="login-img-container">
 						<img
-							class="login-user-img"
+							class="login-user-img round-img"
 							src={$currentUser.photoURL || '/icons/anon-b.svg'}
 							alt=""
 							width="80"
 							height="80"
 						/>
-						{#if $currentUser.providerId === 'facebook.com'}
+						{#if $currentUser?.providerData?.[0]?.providerId === 'facebook.com'}
 							<img
 								class="login-social-logo"
 								src="/icons/facebook.svg"
@@ -209,8 +211,6 @@
 								width="24"
 								height="24"
 							/>
-						{:else}
-							<span class="login-social-logo">{$currentUser.providerId}</span>
 						{/if}
 					</div>
 				</div>
@@ -907,5 +907,9 @@
 		&.blue {
 			background: #6bc9ff;
 		}
+	}
+
+	.round-img {
+		border-radius: 999px;
 	}
 </style>
