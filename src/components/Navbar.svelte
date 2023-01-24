@@ -844,6 +844,7 @@
 
 	.login-img-container {
 		position: relative;
+		margin: 16px 0;
 	}
 
 	.login-user-img {
@@ -851,6 +852,7 @@
 		height: 80px;
 		object-fit: cover;
 		object-position: center;
+		display: block;
 	}
 
 	.login-social-logo {
