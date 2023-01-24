@@ -398,7 +398,7 @@
 
 			<div class="f cf-files">
 				{#if files_objurl.length < 5}
-					<label>
+					<label class="cp">
 						<input
 							class="cf-file"
 							bind:this={el_img_input}
@@ -428,23 +428,23 @@
 			</div>
 
 			<div class="f cf-tags">
-				<label class="cf-tag">
+				<label class="cp cf-tag">
 					<input type="checkbox" bind:group={chk_locations} value="classroom" />
 					<span>ห้องเรียน</span>
 				</label>
-				<label class="cf-tag">
+				<label class="cp cf-tag">
 					<input type="checkbox" bind:group={chk_locations} value="toilet" />
 					<span>ห้องน้ำ</span>
 				</label>
-				<label class="cf-tag">
+				<label class="cp cf-tag">
 					<input type="checkbox" bind:group={chk_locations} value="canteen" />
 					<span>โรงอาหาร</span>
 				</label>
-				<label class="cf-tag">
+				<label class="cp cf-tag">
 					<input type="checkbox" bind:group={chk_locations} value="gym" />
 					<span>สนามกีฬา</span>
 				</label>
-				<label class="cf-tag">
+				<label class="cp cf-tag">
 					<input type="checkbox" bind:group={chk_locations} value="other" />
 					<span>อื่นๆ</span>
 				</label>
@@ -682,6 +682,15 @@
 		}
 	}
 
+	@media screen and (min-width: 768px) {
+		.comment-btn {
+			bottom: 0;
+			z-index: 11;
+			width: 100%;
+			max-width: 640px;
+		}
+	}
+
 	.filter-container {
 		position: sticky;
 		top: calc(var(--navbar-height) + 60px);
@@ -716,6 +725,15 @@
 		}
 	}
 
+	@media screen and (min-width: 768px) {
+		.filter-bar {
+			width: 100%;
+			max-width: 640px;
+			margin: auto;
+			box-sizing: border-box;
+		}
+	}
+
 	.filter-box {
 		padding: 8px 16px 16px;
 		position: absolute;
@@ -735,6 +753,19 @@
 				grid-template-columns: 1fr 1fr;
 			}
 		}
+	}
+
+	@media screen and (min-width: 768px) {
+		.filter-box {
+			width: 100%;
+			max-width: 640px;
+			margin: auto;
+			box-sizing: border-box;
+		}
+	}
+
+	label.custom-control {
+		cursor: pointer;
 	}
 
 	label.custom-control > input[type='radio'],
@@ -960,6 +991,12 @@
 				color: #fff;
 			}
 		}
+
+		@media screen and (min-width: 768px) {
+			.fcm-btns {
+				flex-direction: row;
+			}
+		}
 	}
 
 	:global(.delete-modal-backdrop) {
@@ -982,6 +1019,16 @@
 		border-radius: 8px;
 		padding: 16px;
 		text-align: center;
+	}
+
+	@media screen and (min-width: 768px) {
+		.delete-modal-box {
+			max-width: 640px;
+			inset: unset;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
 	}
 
 	:global(.delete-modal-title) {
@@ -1023,5 +1070,9 @@
 		background: #fc5858;
 		border: 1px solid #fc5858;
 		color: #fff;
+	}
+
+	.cp {
+		cursor: pointer;
 	}
 </style>
