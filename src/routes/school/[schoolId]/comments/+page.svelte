@@ -197,6 +197,10 @@
 	];
 	let filter_years: number[] = [LATEST_YEAR];
 
+	$: ((_) => {
+		fetchComments();
+	})([filter_sort_by, filter_locations, filter_years]);
+
 	$: filter_sort_by_lbl = {
 		latest: 'ล่าสุด',
 		'most-liked': 'เห็นด้วยมากสุด'
