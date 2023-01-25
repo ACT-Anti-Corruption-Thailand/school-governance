@@ -188,6 +188,10 @@
 		fetchData();
 	}
 
+	$: if (mounted && schoolId && $currentUser) {
+		fetchUserRow();
+	}
+
 	const fetchData = async () => {
 		try {
 			// get school overall rating
@@ -215,7 +219,7 @@
 		try {
 			// get user rowId
 			const user_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating?fields=Id,c1,t1,f1,g1&where=${encodeURIComponent(
+				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating?fields=Id,cDone,tDone,fDone,gDone&where=${encodeURIComponent(
 					`(userId,eq,${$currentUser.uid})~and(schoolId,eq,${schoolId})`
 				)}&limit=1`,
 				{
@@ -228,10 +232,10 @@
 			const user_json = await user_resp.json();
 
 			user_record_id = user_json.list?.[0]?.Id ?? null;
-			quiz_classroom_done = !!user_json.list?.[0]?.c1;
-			quiz_toilet_done = !!user_json.list?.[0]?.t1;
-			quiz_canteen_done = !!user_json.list?.[0]?.f1;
-			quiz_gym_done = !!user_json.list?.[0]?.g1;
+			quiz_classroom_done = user_json.list?.[0]?.cDone;
+			quiz_toilet_done = user_json.list?.[0]?.tDone;
+			quiz_canteen_done = user_json.list?.[0]?.fDone;
+			quiz_gym_done = user_json.list?.[0]?.gDone;
 		} catch (e) {
 			console.error(e);
 		}
@@ -304,10 +308,10 @@
 			const sumbit_resp_json = await sumbit_resp.json();
 
 			user_record_id = sumbit_resp_json.Id ?? null;
-			quiz_classroom_done = !!sumbit_resp_json.c1;
-			quiz_toilet_done = !!sumbit_resp_json.t1;
-			quiz_canteen_done = !!sumbit_resp_json.f1;
-			quiz_gym_done = !!sumbit_resp_json.g1;
+			quiz_classroom_done = sumbit_resp_json.cDone;
+			quiz_toilet_done = sumbit_resp_json.tDone;
+			quiz_canteen_done = sumbit_resp_json.fDone;
+			quiz_gym_done = sumbit_resp_json.gDone;
 
 			fetchData();
 
