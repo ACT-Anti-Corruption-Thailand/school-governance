@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { years } from 'data/years.js';
-	import SchoolRating from 'components/SchoolMiniStats.svelte';
 	import { currentSchool, currentSchoolId } from 'stores/school';
 
 	const LATEST_YEAR = years[years.length - 1];
@@ -30,9 +29,7 @@
 			<p>{$currentSchool?.name_en}</p>
 		{/if}
 	</hgroup>
-	<slot>
-		<SchoolRating schoolId={$page.params.schoolId} />
-	</slot>
+	<slot />
 </header>
 <div class="school-header-compensate" />
 

@@ -324,10 +324,7 @@
 	};
 </script>
 
-<SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
-	<div />
-	<!-- <Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} /> -->
-</SchoolHeader>
+<SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }} />
 
 {#if $currentUser}
 	<button
