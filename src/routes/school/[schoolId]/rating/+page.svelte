@@ -699,14 +699,25 @@
 			<div class="f pink">
 				<div>
 					<h3 class="mitr">ระดับคุณภาพโรงเรียน</h3>
-					<p>หลายส่วนพัฒนาให้ดีกว่านี้ได้</p>
+					{#if school_total_avg >= 4}
+						<p>ภาพรวมดีมาก ตรงตามเกณฑ์มาตรฐาน</p>
+					{:else if school_total_avg >= 3}
+						<p>ภาพรวมดี แต่มีบางส่วนที่พัฒนาให้ดีกว่านี้ได้</p>
+					{:else if school_total_avg >= 2}
+						<p>มีหลายส่วนที่พัฒนาให้ดีกว่านี้ได้</p>
+					{:else}
+						<p>ยังมีหลายส่วนที่ต้องพัฒนาให้ดึกว่านี้</p>
+					{/if}
 				</div>
-				<img
-					src="/ratings/rating-text-{Math.ceil((school_total_avg / 5) * 4)}.svg"
-					alt=""
-					width="73"
-					height="49"
-				/>
+				{#if school_total_avg >= 4}
+					<img src="/ratings/rating-text-4.svg" alt="" width="73" height="49" />
+				{:else if school_total_avg >= 3}
+					<img src="/ratings/rating-text-3.svg" alt="" width="73" height="49" />
+				{:else if school_total_avg >= 2}
+					<img src="/ratings/rating-text-2.svg" alt="" width="73" height="49" />
+				{:else}
+					<img src="/ratings/rating-text-1.svg" alt="" width="73" height="49" />
+				{/if}
 			</div>
 		{/if}
 		<button class="metric-btn" type="button" on:click={() => (detail_modal_isopen = true)}
