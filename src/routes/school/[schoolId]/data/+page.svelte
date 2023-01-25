@@ -1210,7 +1210,8 @@
 		<footer>
 			<p>
 				สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่ระบบสารสนเทศเพื่อการบริหารการศึกษา
-				(Education Management Information System : EMIS) https://data.bopp-obec.info/emis
+				(Education Management Information System : EMIS)<br />
+				<a href="https://data.bopp-obec.info/emis">https://data.bopp-obec.info/emis</a>
 			</p>
 			<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
 		</footer>
