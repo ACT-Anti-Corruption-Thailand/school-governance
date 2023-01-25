@@ -34,8 +34,14 @@
 		<SchoolRating schoolId={$page.params.schoolId} />
 	</slot>
 </header>
+<div class="school-header-compensate" />
 
 <style lang="scss">
+	.school-header-compensate,
+	.school-header {
+		height: 60px;
+	}
+
 	.school-header {
 		justify-content: space-between;
 
@@ -43,11 +49,13 @@
 		background: #fff;
 		padding: 12px 16px;
 
-		position: sticky;
+		position: fixed;
 		top: var(--navbar-height);
 		transition: top 0.3s;
 		will-change: top;
 		z-index: 10;
+
+		width: 100%;
 
 		> hgroup {
 			color: #3c55ab;

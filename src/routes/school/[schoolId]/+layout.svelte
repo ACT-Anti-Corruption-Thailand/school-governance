@@ -25,10 +25,8 @@
 	.school-container {
 		color: #3c55ab;
 		font-size: 0.8125rem;
-	}
 
-	@media screen and (min-width: 768px) {
-		.school-container {
+		@media screen and (min-width: 768px) {
 			margin-left: 64px;
 			font-size: 1rem;
 		}
