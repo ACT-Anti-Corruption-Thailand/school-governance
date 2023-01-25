@@ -373,6 +373,7 @@
 		</fieldset>
 	</div>
 </details>
+<div class="filter-compensate" />
 
 <div class="desktop-margin">
 	{#if $currentUser}
@@ -696,11 +697,17 @@
 	}
 
 	.filter-container {
-		position: sticky;
+		position: fixed;
 		top: calc(var(--navbar-height) + 60px);
 		transition: top 0.3s;
 		will-change: top;
 		z-index: 10;
+		height: 46px;
+		width: 100%;
+	}
+
+	.filter-compensate {
+		height: 46px;
 	}
 
 	.filter-bar {
