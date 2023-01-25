@@ -330,7 +330,7 @@
 		flex-direction: column;
 		gap: 8px;
 
-		margin-bottom: 8px;
+		margin-bottom: 16px;
 		flex: 1 1 0;
 	}
 
@@ -436,7 +436,7 @@
 
 	.overview-download {
 		text-align: center;
-		padding: 24px 16px 0;
+		padding: 16px 16px 0;
 
 		> p {
 			color: #0c166b;
@@ -456,7 +456,7 @@
 		}
 
 		.overview-download {
-			padding: 32px 40px 0;
+			padding: 24px 40px 0;
 		}
 	}
 
@@ -525,6 +525,7 @@
 		display: inline-flex;
 		padding: 10px 20px;
 		gap: 10px;
+		align-items: center;
 
 		background: #3c55ab;
 		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
