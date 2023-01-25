@@ -267,7 +267,6 @@
 			[quiz_body_key + 4]: quiz_rating_values[3],
 			[quiz_body_key + 5]: quiz_rating_values[4]
 		};
-		console.info(quiz_body);
 
 		if (!user_record_id) {
 			await fetchUserRow();
@@ -574,7 +573,13 @@
 <!-- ███████║╚██████╔╝╚██████╗╚██████╗███████╗███████║███████║ -->
 <!-- ╚══════╝ ╚═════╝  ╚═════╝ ╚═════╝╚══════╝╚══════╝╚══════╝ -->
 
-<Modal title="ส่งคะแนนเรียบร้อย" hideTitle bind:isOpen={quizfinish_isopen} body_class="quiz-body f">
+<Modal
+	title="ส่งคะแนนเรียบร้อย"
+	hideTitle
+	bind:isOpen={quizfinish_isopen}
+	body_class="quiz-body f"
+	onCloseCallback={quiz_onclose}
+>
 	<div class="quiz-body-spacer" />
 
 	<h3 class="mitr qfm-title">ส่งคะแนนเรียบร้อย</h3>
