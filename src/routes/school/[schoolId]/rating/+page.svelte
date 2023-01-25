@@ -1226,6 +1226,16 @@
 		cursor: pointer;
 	}
 
+	@media screen and (min-width: 768px) {
+		.rate-btn {
+			width: 100%;
+			max-width: 640px;
+			left: calc(50% + 32px);
+			bottom: 16px;
+			transform: translateX(-50%);
+		}
+	}
+
 	.quiz-location {
 		line-height: 1;
 		margin-left: auto;
