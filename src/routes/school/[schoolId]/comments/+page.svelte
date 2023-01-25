@@ -629,6 +629,10 @@
 	.comment-small {
 		font-size: 0.625rem;
 		color: #9daad5;
+
+		@media screen and (min-width: 768px) {
+			font-size: 0.8125rem;
+		}
 	}
 
 	.comment-like {
@@ -938,15 +942,19 @@
 
 		.cf-addfile {
 			line-height: 1;
+			font-size: 0.8125rem;
 
 			> span {
 				color: #6bc9ff;
-				font-size: 0.8125rem;
 			}
 
 			> small {
 				color: #b1b2b3;
-				font-size: 0.625rem;
+				font-size: 0.77em;
+			}
+
+			@media screen and (min-width: 768px) {
+				font-size: 1rem;
 			}
 		}
 	}
@@ -973,11 +981,19 @@
 		.fcm-t1 {
 			color: #3c55ab;
 			font-size: 0.8125rem;
+
+			@media screen and (min-width: 768px) {
+				font-size: 1rem;
+			}
 		}
 
 		.fcm-t2 {
 			color: #6bc9ff;
 			font-size: 0.8125rem;
+
+			@media screen and (min-width: 768px) {
+				font-size: 1rem;
+			}
 		}
 
 		.fcm-btns {
@@ -999,6 +1015,10 @@
 				line-height: 125%;
 				letter-spacing: 0.02em;
 				color: #6bc9ff;
+
+				@media screen and (min-width: 768px) {
+					font-size: 1rem;
+				}
 			}
 
 			.fcm-btn2 {
