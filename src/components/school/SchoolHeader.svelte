@@ -57,6 +57,10 @@
 
 		width: 100%;
 
+		@media screen and (min-width: 768px) {
+			width: calc(100% - 64px);
+		}
+
 		> hgroup {
 			color: #3c55ab;
 

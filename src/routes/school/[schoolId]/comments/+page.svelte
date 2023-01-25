@@ -704,6 +704,10 @@
 		z-index: 10;
 		height: 46px;
 		width: 100%;
+
+		@media screen and (min-width: 768px) {
+			width: calc(100% - 64px);
+		}
 	}
 
 	.filter-compensate {
