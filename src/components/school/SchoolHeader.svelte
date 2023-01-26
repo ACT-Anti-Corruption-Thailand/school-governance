@@ -1,20 +1,10 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { currentSchool, currentSchoolId, LATEST_YEAR } from 'stores/school';
+	import { currentSchool } from 'stores/school';
 
 	export let pageData: {
 		name: string;
 		color: string;
 	} | null = null;
-
-	const updateData = (schoolId: number) => {
-		$currentSchoolId = schoolId;
-		fetch(`/data/${$LATEST_YEAR}/${$page.params.schoolId}.json`)
-			.then((resp) => resp.json())
-			.then((data) => ($currentSchool = data));
-	};
-
-	$: if ($currentSchoolId !== +$page.params.schoolId) updateData(+$page.params.schoolId);
 </script>
 
 <header class="f school-header">

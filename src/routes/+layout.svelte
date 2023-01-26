@@ -10,25 +10,35 @@
 
 	import { years, update_date } from 'stores/school';
 
-	const fetchYears = () => {
-		fetch(`/data/years.json`)
-			.then((resp) => resp.json())
-			.then((data) => {
-				$years = data;
-			});
-	};
+	const LOCALSTORAGE_SCHOOL_DATA_YEARS = 'schoolDataYears';
+	const LOCALSTORAGE_SCHOOL_DATA_UPDATE_DATE = 'schoolDataUpdateDate';
 
-	const fetchUpdateDate = () => {
-		fetch(`/data/update_date.json`)
+	const fetchYearsData = () => {
+		fetch(`/data/years_data.json`)
 			.then((resp) => resp.json())
 			.then((data) => {
-				$update_date = data;
+				[{ year: 2022, update_date: '26/1/2566' }];
+				const y = data.map((e: any) => e.year);
+				const ud = Object.fromEntries(data.map((e: any) => [e.year, e.update_date]));
+				$years = y;
+				$update_date = ud;
+				localStorage.setItem(LOCALSTORAGE_SCHOOL_DATA_YEARS, JSON.stringify(y));
+				localStorage.setItem(LOCALSTORAGE_SCHOOL_DATA_UPDATE_DATE, JSON.stringify(ud));
 			});
 	};
 
 	onMount(() => {
-		if ($years === null) fetchYears();
-		if ($update_date === null) fetchUpdateDate();
+		const localStorageSchoolDataYears = localStorage.getItem(LOCALSTORAGE_SCHOOL_DATA_YEARS);
+		const localStorageSchoolDataUpdateDate = localStorage.getItem(
+			LOCALSTORAGE_SCHOOL_DATA_UPDATE_DATE
+		);
+
+		if (localStorageSchoolDataYears && localStorageSchoolDataUpdateDate) {
+			$years = JSON.parse(localStorageSchoolDataYears);
+			$update_date = JSON.parse(localStorageSchoolDataUpdateDate);
+		}
+
+		fetchYearsData();
 	});
 </script>
 

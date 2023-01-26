@@ -297,7 +297,7 @@
 		ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)<br />
 		<a href="https://data.bopp-obec.info/emis" download>https://data.bopp-obec.info/emis</a>
 	</p>
-	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date}</p>
+	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date[$LATEST_YEAR]}</p>
 </div>
 
 <style lang="scss">

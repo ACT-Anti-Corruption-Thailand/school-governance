@@ -10,7 +10,8 @@
 			.then((data) => ($currentSchool = data));
 	};
 
-	$: if ($currentSchoolId !== +$page.params.schoolId) updateData(+$page.params.schoolId);
+	$: if ($LATEST_YEAR && $currentSchoolId !== +$page.params.schoolId)
+		updateData(+$page.params.schoolId);
 </script>
 
 <section class="school-container">
