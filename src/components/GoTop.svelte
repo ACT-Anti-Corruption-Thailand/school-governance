@@ -63,6 +63,10 @@
 
 		&.school {
 			bottom: 80px;
+
+			@media screen and (min-width: 768px) {
+				bottom: 40px;
+			}
 		}
 
 		@media screen and (min-width: 768px) {
