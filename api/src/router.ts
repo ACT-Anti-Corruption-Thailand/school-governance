@@ -3,7 +3,7 @@ import { z } from 'zod';
 import { withAuth } from './utils/auth.js';
 import { likeComment, unlikeComment } from './routes/comment/like-unlike.js';
 import { getSchoolComments } from './routes/school/get-comments.js';
-import { getSchoolScore } from './routes/school/get-score.js';
+import { getSchoolRating } from './routes/school/get-rating.js';
 import { addComment, deleteComment } from './routes/comment/add-delete.js';
 import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
 
@@ -129,5 +129,13 @@ export function registerRoutes(app: FastifyInstance) {
 		})
 	);
 
-	app.get('/schools/:schoolId/score', ({ params }) => getSchoolScore(params['schoolId']));
+	app.get('/schools/:schoolId/rating', ({ params }) => {
+		const { schoolId } = z
+			.object({
+				schoolId: z.string()
+			})
+			.parse(params);
+
+		return getSchoolRating(schoolId);
+	});
 }

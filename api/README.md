@@ -39,16 +39,16 @@ GET /
 School Governance API is doing OK :)
 ```
 
-### Get school score
+### Get school rating
 
 ```
-GET /schools/:schoolId/score
+GET /schools/:schoolId/rating
 ```
 
 **Response**
 
 ```json
-// GET /schools/1010720003/score
+// GET /schools/1010720003/rating
 
 {
 	"count": 6,

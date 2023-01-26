@@ -1,12 +1,12 @@
 import { nocoConfig, nocodb } from '../../utils/nocodb.js';
 
-const MAX_SCORE = 4;
+const MAX_RATING = 4;
 
-const schoolScoreColumes = ['count', 'sum'].flatMap((col) =>
+const schoolRatingColumes = ['count', 'sum'].flatMap((col) =>
 	['C', 'T', 'F', 'G'].flatMap((char) => [1, 2, 3, 4, 5].map((num) => `${col}${char}${num}`))
 );
 
-export async function getSchoolScore(schoolId?: string) {
+export async function getSchoolRating(schoolId?: string) {
 	if (!schoolId) return;
 
 	const { count } = await nocodb.dbViewRow.count(
@@ -19,7 +19,7 @@ export async function getSchoolScore(schoolId?: string) {
 	);
 
 	let ratingData = await nocodb.dbViewRow.findOne(...nocoConfig, 'SchoolIndex', 'SchoolRating', {
-		fields: schoolScoreColumes,
+		fields: schoolRatingColumes,
 		where: `(schoolId,eq,${schoolId})`
 	});
 
@@ -28,19 +28,19 @@ export async function getSchoolScore(schoolId?: string) {
 		{}
 	);
 
-	const getAverageCategoryScore = (category: string) =>
+	const getAverageCategoryRating = (category: string) =>
 		ratingData[`count${category}1`] === 0
 			? 0
 			: (+ratingData[`sum${category}1`] +
 					+ratingData[`sum${category}2`] +
 					+ratingData[`sum${category}3`] +
 					+ratingData[`sum${category}4`]) /
-			  (MAX_SCORE * +ratingData[`count${category}1`]);
+			  (MAX_RATING * +ratingData[`count${category}1`]);
 
-	const schoolClassroomAvg = getAverageCategoryScore('C');
-	const schoolToiletAvg = getAverageCategoryScore('T');
-	const schoolCanteenAvg = getAverageCategoryScore('F');
-	const schoolGymAvg = getAverageCategoryScore('G');
+	const schoolClassroomAvg = getAverageCategoryRating('C');
+	const schoolToiletAvg = getAverageCategoryRating('T');
+	const schoolCanteenAvg = getAverageCategoryRating('F');
+	const schoolGymAvg = getAverageCategoryRating('G');
 
 	return {
 		count: +count,
