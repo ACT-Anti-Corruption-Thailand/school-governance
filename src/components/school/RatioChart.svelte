@@ -1,5 +1,5 @@
 <script lang="ts">
-	type ChartSeries = { number: number; color: string; label?: string };
+	type ChartSeries = { number: number; color: string; label?: string; font_color?: string };
 	type ChartSeriesPercentage = ChartSeries & { percentage: number };
 
 	export let data: ChartSeries[];
@@ -24,13 +24,20 @@
 	{#if data_as_percentage}
 		{#each data_as_percentage as d}
 			{#if d.percentage}
-				<div class="serie f" style:--serie-color={d.color} style:--serie-value={d.percentage}>
+				<div
+					class="serie f"
+					style:--serie-color={d.color}
+					style:--serie-value={d.percentage}
+					style:--serie-font-color={d.font_color ?? '#fff'}
+				>
 					{#if d.label}
 						<span class="serie-text">{d.label}</span>
+					{:else if d.label === ''}
+						<span class="serie-text" />
 					{:else if label_type === 'percentage' && d.percentage > percentage_threshold}
 						<span class="serie-text">{~~d.percentage}%</span>
 					{:else if label_type === 'value'}
-						<span class="serie-text">{d.number}%</span>
+						<span class="serie-text">{d.number}</span>
 					{/if}
 				</div>
 			{/if}
@@ -50,19 +57,18 @@
 			border-radius: 2px;
 
 			text-align: right;
-			color: #fff;
+			color: var(--serie-font-color);
 
 			min-height: 16px;
 
 			> .serie-text {
 				padding: 8px;
+				justify-content: flex-end;
 
 				font-family: 'Mitr';
 				font-weight: 500;
 				line-height: 125%;
 				letter-spacing: 0.02em;
-
-				justify-content: flex-end;
 			}
 		}
 	}

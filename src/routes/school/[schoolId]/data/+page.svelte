@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { update_date } from 'data/update_date.js';
-	import { years } from 'data/years.js';
+	import { onMount } from 'svelte';
+
 	import {
 		Dialog,
 		DialogOverlay,
@@ -15,10 +15,9 @@
 	import RatioChart from 'components/school/RatioChart.svelte';
 	import Modal from 'components/Modal.svelte';
 
-	import { currentSchool, currentSchoolId } from 'stores/school';
+	import { currentSchool, currentSchoolId, update_date, years } from 'stores/school';
 
-	const DROPDOWN_DATA = years.map((y) => ({ label: y + 543, value: y }));
-
+	const DROPDOWN_DATA = $years?.map((y) => ({ label: y + 543, value: y })) ?? [];
 	let dropdown_choice = DROPDOWN_DATA[0];
 
 	$: d = $currentSchool;
@@ -56,6 +55,29 @@
 		lightbox_url1 = img1;
 		lightbox_open = true;
 	};
+
+	let [current_year, ...other_years] = [...($years ?? [])];
+	let school_other_years_data: { year: number; data: any }[] = [];
+
+	const fetchOtherYearData = () => {
+		if (other_years.length > 1) {
+			other_years.forEach((year, index) => {
+				fetch(`/data/${year}/${currentSchoolId}.json`)
+					.then((resp) => resp.json())
+					.then(
+						(data) =>
+							(school_other_years_data[index] = {
+								year,
+								data
+							})
+					);
+			});
+		}
+	};
+
+	onMount(() => {
+		fetchOtherYearData();
+	});
 </script>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
@@ -77,7 +99,7 @@
 				>
 			</div>
 			<hr />
-			<span class="mitr">โรงเรียนขนาดใหญ่</span>
+			<span class="mitr">โรงเรียนขนาดใหญ่ <!-- TODO: รอข้อมูลจากฟีน --></span>
 			<details class="school-size-detail">
 				<summary>
 					<span class="f">
@@ -507,42 +529,40 @@
 				</Modal>
 			{/if}
 		</section>
-		<section>
-			<h3 class="mb16">เปรียบเทียบจำนวนนักเรียน 6 ปีที่ผ่านมา</h3>
-			<div class="f fw500">
-				<span>ปี</span>
-				<span>คน</span>
-			</div>
-			<div class="compare-chart">
-				<div>65</div>
-				<div class="cmp-chart-body student-chart">
-					<div class="student-color-1 student-section" style="--std-chart-ratio:25">250</div>
-					<div class="student-color-2 student-section" style="--std-chart-ratio:25">250</div>
-					<div class="student-color-3 student-section" style="--std-chart-ratio:25">250</div>
-					<div class="student-color-4 student-section" style="--std-chart-ratio:25">250</div>
-					<div class="student-section separator" style="--std-chart-ratio:0" />
+
+		{#if $years && $years.length > 1}
+			<section>
+				<h3 class="mb16">เปรียบเทียบจำนวนนักเรียน {$years.length} ปีที่ผ่านมา</h3>
+				<div class="f fw500">
+					<span>ปี</span>
+					<span>คน</span>
 				</div>
-				<div>1000</div>
-				<div>64</div>
-				<div class="cmp-chart-body student-chart">
-					<div class="student-color-1 student-section" style="--std-chart-ratio:20">200</div>
-					<div class="student-color-2 student-section" style="--std-chart-ratio:20">200</div>
-					<div class="student-color-3 student-section" style="--std-chart-ratio:20">200</div>
-					<div class="student-color-4 student-section" style="--std-chart-ratio:20">200</div>
-					<div class="student-section separator" style="--std-chart-ratio:20" />
+				<div class="compare-chart">
+					<div>{`${current_year + 543}`.substring(2, 4)}</div>
+					<RatioChart
+						data={[
+							{ number: d.student.total.อ, color: '#3f836e' },
+							{ number: d.student.total.ป, color: '#b1a215' },
+							{ number: d.student.total.มต, color: '#f09326' },
+							{ number: d.student.total.มป, color: '#ffc700' }
+						]}
+					/>
+					<div>{d.student.total.all.toLocaleString()}</div>
+					{#each school_other_years_data as yd}
+						<div>{`${yd.year + 543}`.substring(2, 4)}</div>
+						<RatioChart
+							data={[
+								{ number: yd.data?.student?.total?.อ, color: '#3f836e' },
+								{ number: yd.data?.student?.total?.ป, color: '#b1a215' },
+								{ number: yd.data?.student?.total?.มต, color: '#f09326' },
+								{ number: yd.data?.student?.total?.มป, color: '#ffc700' }
+							]}
+						/>
+						<div>{yd.data?.student?.total?.all?.toLocaleString()}</div>
+					{/each}
 				</div>
-				<div>800</div>
-				<div>63</div>
-				<div class="cmp-chart-body student-chart">
-					<div class="student-color-1 student-section" style="--std-chart-ratio:15">150</div>
-					<div class="student-color-2 student-section" style="--std-chart-ratio:15">150</div>
-					<div class="student-color-3 student-section" style="--std-chart-ratio:15">150</div>
-					<div class="student-color-4 student-section" style="--std-chart-ratio:15">150</div>
-					<div class="student-section separator" style="--std-chart-ratio:40" />
-				</div>
-				<div>600</div>
-			</div>
-		</section>
+			</section>
+		{/if}
 
 		<h2 class="f">
 			<span>ครู/บุคลากร <small>(คน)</small></span>
@@ -653,33 +673,50 @@
 				</div>
 			</div>
 		</section>
-		<section>
-			<h3 class="mb16">เปรียบเทียบจำนวนครู 6 ปีที่ผ่านมา</h3>
-			<div class="f fw500">
-				<span>ปี</span>
-				<span>คน</span>
-			</div>
-			<div class="compare-chart">
-				<div>65</div>
-				<div class="cmp-chart-body student-chart mitr">
-					<div class="primary-color student-section" style="--std-chart-ratio:100">1:1</div>
-					<div class="student-section separator" style="--std-chart-ratio:0" />
+
+		{#if $years && $years.length > 1}
+			<section>
+				<h3 class="mb16">เปรียบเทียบจำนวนครู {$years.length} ปีที่ผ่านมา</h3>
+				<div class="f fw500">
+					<span>ปี</span>
+					<span>คน</span>
 				</div>
-				<div>1000</div>
-				<div>64</div>
-				<div class="cmp-chart-body student-chart mitr">
-					<div class="primary-color student-section" style="--std-chart-ratio:80">1:2</div>
-					<div class="student-section separator" style="--std-chart-ratio:20" />
+				<div class="compare-chart">
+					<div>{`${current_year + 543}`.substring(2, 4)}</div>
+					<RatioChart
+						label_type="value"
+						data={[
+							{ number: d.staff.ครู.total, color: '#3c55ab', label: '' },
+							{
+								number: d.student.total.all,
+								color: '#ffce4f',
+								font_color: '#3c55ab',
+								label: `1:${Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString()}`
+							}
+						]}
+					/>
+					<div>{d.staff.ครู.total.toLocaleString()}</div>
+					{#each school_other_years_data as yd}
+						<div>{`${yd.year + 543}`.substring(2, 4)}</div>
+						<RatioChart
+							label_type="value"
+							data={[
+								{ number: yd.data?.staff?.ครู?.total, color: '#3c55ab', label: '' },
+								{
+									number: yd.data?.student?.total?.all,
+									color: '#ffce4f',
+									font_color: '#3c55ab',
+									label: `1:${Math.ceil(
+										yd.data?.student?.total?.all / yd.data?.staff?.ครู?.total
+									).toLocaleString()}`
+								}
+							]}
+						/>
+						<div>{yd.data?.staff?.ครู?.total?.toLocaleString()}</div>
+					{/each}
 				</div>
-				<div>800</div>
-				<div>63</div>
-				<div class="cmp-chart-body student-chart mitr">
-					<div class="primary-color student-section" style="--std-chart-ratio:60">1:3</div>
-					<div class="student-section separator" style="--std-chart-ratio:40" />
-				</div>
-				<div>600</div>
-			</div>
-		</section>
+			</section>
+		{/if}
 
 		<button
 			type="button"
@@ -1195,15 +1232,15 @@
 				<dt>รหัสโรงเรียน</dt>
 				<dd>{$currentSchoolId}</dd>
 				<dt>สังกัด</dt>
-				<dd><!-- TODO: ใส่ข้อมูลสังกัด --> ไม่มีข้อมูล</dd>
+				<dd><!-- TODO: รอข้อมูลจากฟีน --> ไม่มีข้อมูล</dd>
 				<dt>ก่อตั้งเมื่อ</dt>
 				<dd>{d.established}</dd>
 				<dt>ระดับที่เปิดสอน</dt>
 				<dd>{d.grades}</dd>
 				<dt>ประเภทโรงเรียน</dt>
-				<dd><!-- TODO: ใส่ข้อมูลประเภทโรงเรียน --> รัฐบาล</dd>
+				<dd>รัฐบาล</dd>
 				<dt>ลักษณะโรงเรียน</dt>
-				<dd><!-- TODO: ใส่ข้อมูลสังกัด --> ไม่มีข้อมูล</dd>
+				<dd><!-- TODO: ไม่มีในข้อมูล ดีลกับ Design --> ไม่มีข้อมูล</dd>
 			</dl>
 		</section>
 
@@ -1213,7 +1250,7 @@
 				(Education Management Information System : EMIS)<br />
 				<a href="https://data.bopp-obec.info/emis">https://data.bopp-obec.info/emis</a>
 			</p>
-			<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
+			<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date}</p>
 		</footer>
 	{/if}
 </div>
@@ -1416,16 +1453,6 @@
 	.student-chart {
 		display: flex;
 		gap: 2px;
-
-		.student-section {
-			border-radius: 2px;
-			flex: var(--std-chart-ratio) var(--std-chart-ratio) 0;
-			padding: 8px 0;
-			text-align: right;
-			color: #fff;
-			background: var(--std-color);
-			min-height: 16px;
-		}
 	}
 
 	.student-size-btn {
@@ -1460,18 +1487,6 @@
 		> div:nth-child(3n) {
 			text-align: right;
 			font-weight: 500;
-		}
-
-		> .cmp-chart-body {
-			> .student-section {
-				white-space: nowrap;
-				overflow: hidden;
-				padding: 4px;
-			}
-
-			> .separator {
-				padding: 0;
-			}
 		}
 	}
 
