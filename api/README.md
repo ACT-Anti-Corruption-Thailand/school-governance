@@ -98,6 +98,43 @@ GET /schools/:schoolId/rating
 }
 ```
 
+### Get school rating of the current user
+
+```
+GET /schools/:schoolId/rating/current-user
+```
+
+**Response**
+
+```json
+// GET /schools/1010720003/rating/current-user
+
+{
+	"Id": 6,
+	"cDone": true,
+	"tDone": true,
+	"fDone": true,
+	"gDone": true
+}
+```
+
+### Set school rating of the current user
+
+```
+POST /schools/:schoolId/rating/current-user
+```
+
+**Response**
+
+```json
+// GET /schools/1010720003/rating/current-user
+
+{
+	"school": {}, // Same as set school rating
+	"currentUser": {} // Get school rating of the current user
+}
+```
+
 ### Get school comments
 
 ```

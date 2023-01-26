@@ -6,6 +6,8 @@ import { getSchoolComments } from './routes/school/get-comments.js';
 import { getSchoolRating } from './routes/school/get-rating.js';
 import { addComment, deleteComment } from './routes/comment/add-delete.js';
 import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
+import { getUserRatingRecord } from './routes/rating/get.js';
+import { setUserRatingRecord } from './routes/rating/set.js';
 
 const schoolCommentsQuerySchema = z.object({
 	locations: z.string().optional(),
@@ -138,4 +140,32 @@ export function registerRoutes(app: FastifyInstance) {
 
 		return getSchoolRating(schoolId);
 	});
+
+	app.get(
+		'/schools/:schoolId/rating/current-user',
+		withAuth(({ params }, reply, userId) => {
+			const { schoolId } = z
+				.object({
+					schoolId: z.string()
+				})
+				.parse(params);
+
+			return getUserRatingRecord(userId, schoolId);
+		})
+	);
+
+	app.post(
+		'/schools/:schoolId/rating/current-user',
+		withAuth(({ params, body }, reply, userId) => {
+			const { schoolId } = z
+				.object({
+					schoolId: z.string()
+				})
+				.parse(params);
+
+			const quizBody = z.record(z.number()).parse(body);
+
+			return setUserRatingRecord(userId, schoolId, quizBody);
+		})
+	);
 }
