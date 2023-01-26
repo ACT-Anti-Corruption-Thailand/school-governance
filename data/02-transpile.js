@@ -43,14 +43,19 @@ const formatSchoolName = (name) => {
 };
 
 if (!years.includes(CURRENT_SCHOOL_YEAR)) {
-	let new_years = [...years, CURRENT_SCHOOL_YEAR].sort((a, z) => a - z);
-	for (const path of ['data/years.js', 'src/data/years.js'])
-		fs.writeFileSync(path, 'export const years = ' + JSON.stringify(new_years));
+	let new_years = [CURRENT_SCHOOL_YEAR, ...years].sort((a, z) => z - a);
+	// เอาไว้ Track เพื่อรันด้วยตัวมันเอง
+	fs.writeFileSync('data/years.js', 'export const years = ' + JSON.stringify(new_years));
+	// เอาไว้ให้ FE `fetch`
+	fs.writeFileSync('static/data/years.json', JSON.stringify(new_years));
 }
 
+// เอาไว้ให้ FE `fetch`
 fs.writeFileSync(
-	'src/data/update_date.js',
-	`export const update_date = "${new Date().toLocaleDateString('th-TH')}"`
+	`static/data/update_date.json`,
+	JSON.stringify({
+		update_date: new Date().toLocaleDateString('th-TH')
+	})
 );
 
 let loopcount = 0;

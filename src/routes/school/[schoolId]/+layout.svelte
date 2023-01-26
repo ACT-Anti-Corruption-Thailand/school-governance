@@ -4,7 +4,7 @@
 	import SchoolNav from 'components/school/SchoolNav.svelte';
 	import { currentSchool, currentSchoolId } from 'stores/school';
 
-	const LATEST_YEAR = years[years.length - 1];
+	const LATEST_YEAR = years[0];
 
 	const updateData = (schoolId: number) => {
 		$currentSchoolId = schoolId;

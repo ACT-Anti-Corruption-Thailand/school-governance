@@ -8,7 +8,7 @@
 
 	import { update_date } from 'data/update_date.js';
 	import { years } from 'data/years.js';
-	const LATEST_YEAR = years[years.length - 1];
+	const LATEST_YEAR = years[0];
 
 	import { currentSchool, currentSchoolId } from 'stores/school';
 	$: d = $currentSchool;

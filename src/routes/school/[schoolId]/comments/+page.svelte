@@ -18,7 +18,7 @@
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
 
-	const LATEST_YEAR = years[years.length - 1];
+	const LATEST_YEAR = years[0];
 
 	$: schoolId = $page.params.schoolId;
 

@@ -3,7 +3,7 @@
 	import { years } from 'data/years.js';
 	import { currentSchool, currentSchoolId } from 'stores/school';
 
-	const LATEST_YEAR = years[years.length - 1];
+	const LATEST_YEAR = years[0];
 
 	export let pageData: {
 		name: string;
