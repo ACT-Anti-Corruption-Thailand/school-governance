@@ -207,3 +207,35 @@ DELETE /schools/:schoolId/comments/:commentId
 **Response**
 
 The same with _get school comments_
+
+### Get school annoucements
+
+```
+GET /schools/:schoolId/annoucements
+```
+
+**Response**
+
+```json
+// GET /schools/1010720003/annoucements
+
+{
+	"list": [
+		{
+			"Id": 1,
+			"schoolId": "1010720003",
+			"announceTitle": "ปรับปรุงอาคาร",
+			"announcePerson": "ผู้อำนวยการโรงเรียน",
+			"announceContent": "ต่อยอดคอมเมนท์ดอกเตอร์เฟรชชี่ศึกษาศาสตร์ไวกิ้ง",
+			"announceDate": "2022-12-15T09:03:16.174Z"
+		}
+	],
+	"pageInfo": {
+		"totalRows": 1,
+		"page": 1,
+		"pageSize": 999,
+		"isFirstPage": true,
+		"isLastPage": true
+	}
+}
+```

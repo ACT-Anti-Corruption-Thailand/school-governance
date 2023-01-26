@@ -5,6 +5,7 @@ import { likeComment, unlikeComment } from './routes/comment/like-unlike.js';
 import { getSchoolComments } from './routes/school/get-comments.js';
 import { getSchoolScore } from './routes/school/get-score.js';
 import { addComment, deleteComment } from './routes/comment/add-delete.js';
+import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
 
 const schoolCommentsQuerySchema = z.object({
 	locations: z.string().optional(),
@@ -14,6 +15,16 @@ const schoolCommentsQuerySchema = z.object({
 
 export function registerRoutes(app: FastifyInstance) {
 	app.get('/', () => 'School Governance API is doing OK :)');
+
+	app.get('/schools/:schoolId/annoucements', (req) => {
+		const { schoolId } = z
+			.object({
+				schoolId: z.string()
+			})
+			.parse(req.params);
+
+		return getSchoolAnnoucement(schoolId);
+	});
 
 	app.get('/schools/:schoolId/comments', (req) => {
 		const { schoolId } = z
