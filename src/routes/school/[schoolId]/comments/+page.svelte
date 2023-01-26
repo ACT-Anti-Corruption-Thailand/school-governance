@@ -13,12 +13,9 @@
 	import Modal from 'components/Modal.svelte';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 
-	import { years } from 'data/years.js';
-
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
-
-	const LATEST_YEAR = years[0];
+	import { LATEST_YEAR, years } from 'stores/school';
 
 	$: schoolId = $page.params.schoolId;
 
@@ -165,7 +162,7 @@
 					schoolId: schoolId,
 					comments: txt_comment.trim(),
 					location: chk_locations.join(),
-					schoolYear: LATEST_YEAR,
+					schoolYear: $LATEST_YEAR,
 					userId: $currentUser.uid,
 					approved: true || !uploaded_files,
 					...(uploaded_files ? { images: JSON.stringify(uploaded_files) } : null)
@@ -195,7 +192,7 @@
 		'gym',
 		'other'
 	];
-	let filter_years: number[] = [LATEST_YEAR];
+	let filter_years: number[] = $LATEST_YEAR ? [$LATEST_YEAR] : [];
 
 	$: ((_) => {
 		fetchComments();
@@ -363,12 +360,14 @@
 		<fieldset>
 			<legend>ปีการศึกษา</legend>
 			<div>
-				{#each years as year (year)}
-					<label class="custom-control">
-						<input type="checkbox" bind:group={filter_years} value={year} />
-						<span>{year + 543}</span>
-					</label>
-				{/each}
+				{#if $years}
+					{#each $years as year (year)}
+						<label class="custom-control">
+							<input type="checkbox" bind:group={filter_years} value={year} />
+							<span>{year + 543}</span>
+						</label>
+					{/each}
+				{/if}
 			</div>
 		</fieldset>
 	</div>

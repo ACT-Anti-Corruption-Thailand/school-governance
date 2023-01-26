@@ -3,8 +3,6 @@
 
 	import { onMount } from 'svelte';
 
-	import { years } from 'data/years.js';
-
 	import { QUIZ_QUESTIONS_DESC, QUIZ_QUESTIONS_TITLE } from 'data/quiz-questions';
 
 	import Dropdown from 'components/Dropdown.svelte';
@@ -15,9 +13,10 @@
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
+	import { years } from 'stores/school';
 	$: schoolId = $page.params.schoolId;
 
-	const DROPDOWN_DATA = years.map((y) => ({ label: y + 543, value: y }));
+	const DROPDOWN_DATA = $years?.map((y) => ({ label: y + 543, value: y })) ?? [];
 	let dropdown_choice = DROPDOWN_DATA[0];
 
 	const METRIC_DROPDOWN = [

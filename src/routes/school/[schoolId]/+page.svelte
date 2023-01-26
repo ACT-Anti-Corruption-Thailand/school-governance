@@ -6,11 +6,7 @@
 	import RatingStat from 'components/RatingStat.svelte';
 	import CommentStat from 'components/CommentStat.svelte';
 
-	import { update_date } from 'data/update_date.js';
-	import { years } from 'data/years.js';
-	const LATEST_YEAR = years[0];
-
-	import { currentSchool, currentSchoolId } from 'stores/school';
+	import { currentSchool, currentSchoolId, update_date, LATEST_YEAR } from 'stores/school';
 	$: d = $currentSchool;
 
 	let total_rating = 0;
@@ -105,7 +101,7 @@
 		let location_query = ['classroom', 'toilet', 'canteen', 'gym', 'other']
 			.map((loc) => `(location,like,${loc})`)
 			.join('~or');
-		let year_query = `(schoolYear,eq,${LATEST_YEAR})`;
+		let year_query = `(schoolYear,eq,${$LATEST_YEAR})`;
 		let where_query = [schoolid_query, approved_query, location_query, year_query]
 			.filter((e) => e)
 			.map((e) => `(${e})`)
@@ -291,7 +287,7 @@
 </div>
 
 <div class="overview-download">
-	<a class="download-btn" href="/data/{LATEST_YEAR}/{$currentSchoolId}.json">
+	<a class="download-btn" href="/data/{$LATEST_YEAR}/{$currentSchoolId}.json">
 		<img src="/icons/download.svg" alt="" width="24" height="24" />
 		<span>ดาวน์โหลดข้อมูลโรงเรียน</span>
 	</a>
@@ -301,7 +297,7 @@
 		ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)<br />
 		<a href="https://data.bopp-obec.info/emis" download>https://data.bopp-obec.info/emis</a>
 	</p>
-	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
+	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date}</p>
 </div>
 
 <style lang="scss">
