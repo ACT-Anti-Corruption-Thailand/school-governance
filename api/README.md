@@ -98,7 +98,7 @@ GET /schools/:schoolId/rating
 }
 ```
 
-### Get school rating of the current user
+### Get school rating of the current user (AUTH)
 
 ```
 GET /schools/:schoolId/rating/current-user
@@ -118,7 +118,7 @@ GET /schools/:schoolId/rating/current-user
 }
 ```
 
-### Set school rating of the current user
+### Set school rating of the current user (AUTH)
 
 ```
 POST /schools/:schoolId/rating/current-user
@@ -187,7 +187,7 @@ GET /schools/:schoolId/comments
 }
 ```
 
-### Like a comment
+### Like a comment (AUTH)
 
 ```
 POST /schools/:schoolId/comments/:commentId/like
@@ -211,7 +211,7 @@ POST /schools/:schoolId/comments/:commentId/like
 
 The same with _get school comments_
 
-### Unlike a comment
+### Unlike a comment (AUTH)
 
 ```
 DELETE /schools/:schoolId/likes/:likeId
@@ -235,7 +235,7 @@ DELETE /schools/:schoolId/likes/:likeId
 
 The same with _get school comments_
 
-### Create a comment
+### Add a comment (AUTH)
 
 ```
 PUT /schools/:schoolId/comments
@@ -263,7 +263,7 @@ PUT /schools/:schoolId/comments
 
 The same with _get school comments_
 
-### Delete a comment
+### Delete a comment (AUTH)
 
 ```
 DELETE /schools/:schoolId/comments/:commentId
