@@ -8,6 +8,7 @@ import { addComment, deleteComment } from './routes/comment/add-delete.js';
 import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
 import { getUserRatingRecord } from './routes/rating/get.js';
 import { setUserRatingRecord } from './routes/rating/set.js';
+import { searchSchool } from './routes/school/search.js';
 
 const schoolCommentsQuerySchema = z.object({
 	locations: z.string().optional(),
@@ -18,12 +19,27 @@ const schoolCommentsQuerySchema = z.object({
 export function registerRoutes(app: FastifyInstance) {
 	app.get('/', () => 'School Governance API is doing OK :)');
 
-	app.get('/schools/:schoolId/annoucements', (req) => {
+	app.get('/schools', (req) => {
+		const query = z
+			.object({
+				name: z.string().optional(),
+				province: z.string().optional(),
+				exclude_district: z.string().optional(),
+				exclude_school_id: z.string().optional(),
+				limit: z.string().optional(),
+				offset: z.string().optional()
+			})
+			.parse(req.query);
+
+		return searchSchool(query);
+	});
+
+	app.get('/schools/:schoolId/annoucements', ({ params }) => {
 		const { schoolId } = z
 			.object({
 				schoolId: z.string()
 			})
-			.parse(req.params);
+			.parse(params);
 
 		return getSchoolAnnoucement(schoolId);
 	});

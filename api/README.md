@@ -318,3 +318,88 @@ GET /schools/:schoolId/annoucements
 	}
 }
 ```
+
+### Search school
+
+```
+GET /schools
+```
+
+**Optional Query**
+
+- name: match Thai name
+- province: match province
+- exclude_district: district to exclude
+- exclude_school_id: school id to exclude
+- limit: _optional_
+- offset: _optional_
+
+**Response**
+
+```json
+// GET /schools?name=ราชวินิต
+
+{
+	"list": [
+		{
+			"schoolId": "1010720003",
+			"nameTh": "ราชวินิต",
+			"province": "กรุงเทพมหานคร",
+			"district": "เขตดุสิต",
+			"countC1": "5",
+			"countC2": "5",
+			"countC3": "5",
+			"countC4": "5",
+			"countC5": "5",
+			"countT1": "4",
+			"countT2": "3",
+			"countT3": "3",
+			"countT4": "3",
+			"countT5": "3",
+			"countF1": "1",
+			"countF2": "1",
+			"countF3": "1",
+			"countF4": "1",
+			"countF5": "1",
+			"countG1": "2",
+			"countG2": "2",
+			"countG3": "2",
+			"countG4": "2",
+			"countG5": "2",
+			"sumF1": "4",
+			"sumC1": "18",
+			"sumF2": "3",
+			"sumC2": "18",
+			"sumC3": "19",
+			"sumC4": "19",
+			"sumF3": "4",
+			"sumC5": "20",
+			"sumF4": "3",
+			"sumT1": "13",
+			"sumF5": "3",
+			"sumT2": "8",
+			"sumT3": "5",
+			"sumG1": "7",
+			"sumT4": "11",
+			"sumT5": "9",
+			"sumG3": "4",
+			"sumG4": "5",
+			"sumG5": "6",
+			"sumG2": "7",
+			"userRating": [
+				{
+					"Id": 6,
+					"userId": "aaUrUlZw3DUq7LnxLsTHodoXb5C2"
+				}
+			]
+		}
+	],
+	"pageInfo": {
+		"totalRows": 1,
+		"page": 1,
+		"pageSize": 100,
+		"isFirstPage": true,
+		"isLastPage": true
+	}
+}
+```
