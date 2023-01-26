@@ -52,7 +52,49 @@ GET /schools/:schoolId/score
 
 {
 	"count": 6,
-	"rating": 3.03125
+	"rating": 3.234375,
+	"raw": {
+		"countC1": 4,
+		"countC2": 4,
+		"countC3": 4,
+		"countC4": 4,
+		"countC5": 4,
+		"countT1": 3,
+		"countT2": 3,
+		"countT3": 3,
+		"countT4": 3,
+		"countT5": 3,
+		"countF1": 1,
+		"countF2": 1,
+		"countF3": 1,
+		"countF4": 1,
+		"countF5": 1,
+		"countG1": 2,
+		"countG2": 2,
+		"countG3": 2,
+		"countG4": 2,
+		"countG5": 2,
+		"sumF1": 4,
+		"sumC1": 14,
+		"sumF2": 3,
+		"sumC2": 15,
+		"sumC3": 16,
+		"sumC4": 16,
+		"sumF3": 4,
+		"sumC5": 17,
+		"sumF4": 3,
+		"sumT1": 9,
+		"sumF5": 3,
+		"sumT2": 8,
+		"sumT3": 5,
+		"sumG1": 7,
+		"sumT4": 11,
+		"sumT5": 9,
+		"sumG3": 4,
+		"sumG4": 5,
+		"sumG5": 6,
+		"sumG2": 7
+	}
 }
 ```
 
