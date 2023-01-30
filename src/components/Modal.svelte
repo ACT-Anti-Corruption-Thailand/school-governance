@@ -12,6 +12,8 @@
 	export let isOpen: boolean;
 	export let body_class = '';
 	export let onCloseCallback: Function = () => {};
+	export let boxWidth = '480px';
+	export let boxLeftShift = '0px';
 </script>
 
 <Dialog
@@ -24,7 +26,11 @@
 	<!-- <DialogOverlay class="modal-backdrop" /> -->
 	<DialogDescription>{description}</DialogDescription>
 
-	<div class="modal-box">
+	<div
+		class="modal-box"
+		style:--modal-box-width={boxWidth}
+		style:--modal-box-left-shift={boxLeftShift}
+	>
 		<header class="f modal-header" class:header-background={!hideTitle || $$slots.title}>
 			<button
 				type="button"
@@ -70,10 +76,10 @@
 			border-radius: 8px;
 
 			inset: unset;
-			left: 50%;
+			left: calc(50% + var(--modal-box-left-shift, 0px));
 			top: 50%;
 			transform: translate(-50%, -50%);
-			width: 480px;
+			width: var(--modal-box-width, 480px);
 			max-height: 600px;
 		}
 	}

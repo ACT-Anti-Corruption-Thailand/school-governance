@@ -350,6 +350,8 @@
 	bind:isOpen={quiz_isopen}
 	body_class="quiz-body f {quiz_location ? 'quiz-body-gap' : ''}"
 	onCloseCallback={quiz_onclose}
+	boxWidth="640px"
+	boxLeftShift="24px"
 >
 	<div class="quiz-location" slot="title">
 		{#if quiz_location}
@@ -575,6 +577,8 @@
 	bind:isOpen={quizfinish_isopen}
 	body_class="quiz-body f"
 	onCloseCallback={quiz_onclose}
+	boxWidth="640px"
+	boxLeftShift="24px"
 >
 	<div class="quiz-body-spacer" />
 
@@ -586,7 +590,7 @@
 
 	<div class="quiz-body-spacer" />
 
-	<p>คะแนนที่คุณให้</p>
+	<p class="mt16">คะแนนที่คุณให้</p>
 	<div class="f qfm-score-list">
 		<span class="mitr">คะแนนตามเกณฑ์มาตรฐาน</span>
 		<span class="mitr f qfm-score">
@@ -609,7 +613,7 @@
 
 	<div class="quiz-body-spacer" />
 
-	<p>เลือกให้คะแนนสถานที่อื่น</p>
+	<p class="mt16">เลือกให้คะแนนสถานที่อื่น</p>
 	<div class="quiz-location-selector">
 		<button
 			class="quiz-location-btn f"
@@ -1106,6 +1110,7 @@
 			width: 100%;
 			max-width: 640px;
 			margin: auto;
+			margin-top: 73px;
 		}
 	}
 
@@ -1132,6 +1137,10 @@
 
 	.mobile-spacer {
 		height: 64px;
+
+		@media screen and (min-width: 768px) {
+			height: 32px;
+		}
 	}
 
 	.total-rating-container {
@@ -1151,6 +1160,10 @@
 		text-decoration: underline;
 		margin-right: auto;
 		width: max-content;
+
+		@media screen and (min-width: 768px) {
+			margin-top: 16px;
+		}
 	}
 
 	.meter {
@@ -1189,16 +1202,28 @@
 	.review-count {
 		font-size: 0.625rem;
 		line-height: 1;
+
+		@media screen and (min-width: 768px) {
+			font-size: 0.8125rem;
+		}
 	}
 
 	.detail-header {
 		font-size: 0.8125rem;
 		font-weight: 500;
+
+		@media screen and (min-width: 768px) {
+			font-size: 1rem;
+		}
 	}
 
 	.detail-list {
 		font-size: 0.8125rem;
 		margin: 4px 16px 16px;
+
+		@media screen and (min-width: 768px) {
+			font-size: 1rem;
+		}
 	}
 
 	.rate-btn {
@@ -1227,8 +1252,12 @@
 			width: 100%;
 			max-width: 640px;
 			left: calc(50% + 32px);
-			bottom: 16px;
+			top: calc(60px + 16px + var(--navbar-height));
+			bottom: unset;
 			transform: translateX(-50%);
+
+			transition: top 0.3s;
+			will-change: top;
 		}
 	}
 
@@ -1247,6 +1276,12 @@
 		text-align: center;
 
 		font-size: 0.8125rem;
+	}
+
+	@media screen and (min-width: 768px) {
+		:global(.quiz-body) {
+			font-size: 1rem;
+		}
 	}
 
 	:global(.quiz-body-gap) {
@@ -1304,6 +1339,10 @@
 
 		.rating-select-label {
 			font-size: 0.625rem;
+
+			@media screen and (min-width: 768px) {
+				font-size: 0.8125rem;
+			}
 		}
 
 		> .rating-select-controls {
@@ -1313,6 +1352,7 @@
 			> label {
 				line-height: 1;
 				font-size: 0;
+				cursor: pointer;
 
 				> input {
 					position: absolute;
@@ -1480,6 +1520,10 @@
 
 	.tal {
 		text-align: left;
+	}
+
+	.mt16 {
+		margin-top: 16px;
 	}
 	// #endregion
 </style>
