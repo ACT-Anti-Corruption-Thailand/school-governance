@@ -5,6 +5,7 @@
 
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
+	import ContactOfficer from 'components/ContactOfficer.svelte';
 
 	import { page } from '$app/stores';
 	import { years } from 'stores/school';
@@ -84,6 +85,8 @@
 	});
 
 	$: if (mounted && dropdown_choice) fetchAnnouncements();
+
+	let contact_modal_isopen = false;
 </script>
 
 <SchoolHeader pageData={{ name: 'ประกาศ', color: '#FC5858' }}>
@@ -115,11 +118,18 @@
 			<div class="contact f">
 				<h2>ยังไม่มีประกาศ</h2>
 				<p>หากโรงเรียนต้องการเพิ่มประกาศ</p>
-				<a href="#a">ติดต่อเจ้าหน้าที่</a>
+				<button
+					type="button"
+					on:click={() => {
+						contact_modal_isopen = true;
+					}}>ติดต่อเจ้าหน้าที่</button
+				>
 			</div>
 		</section>
 	{/if}
 </div>
+
+<ContactOfficer bind:contact_modal_isopen />
 
 <style lang="scss">
 	@media screen and (min-width: 768px) {
@@ -151,9 +161,10 @@
 		flex-direction: column;
 		gap: 4px;
 
-		> a {
+		> button {
 			font-weight: 500;
 			color: #fc5858;
+			text-decoration: underline;
 		}
 	}
 

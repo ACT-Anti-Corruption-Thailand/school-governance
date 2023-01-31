@@ -10,6 +10,7 @@
 	} from 'firebase/auth';
 
 	import Modal from './Modal.svelte';
+	import ContactOfficer from './ContactOfficer.svelte';
 
 	import { page } from '$app/stores';
 	import { auth, currentUser } from 'stores/firebaseapp';
@@ -78,6 +79,16 @@
 	};
 
 	let isread_checked = false;
+
+	let contact_modal_isopen = false;
+	const openContactModal = (e: MouseEvent) => {
+		e.preventDefault();
+		e.stopImmediatePropagation();
+
+		contact_modal_isopen = true;
+
+		return false;
+	};
 </script>
 
 <nav class="f main-nav" class:show class:show_search={$show_search}>
@@ -154,7 +165,7 @@
 				</a>
 			</li>
 			<li>
-				<a href="https://www.google.co.th/">
+				<a href=" " on:click={openContactModal}>
 					<img src="/icons/chat.svg" alt="" width="20" height="20" />
 					<span>ติดต่อเจ้าหน้าที่</span>
 				</a>
@@ -467,6 +478,8 @@
 		</p>
 	</div>
 </Modal>
+
+<ContactOfficer bind:contact_modal_isopen />
 
 <style lang="scss">
 	.main-nav {
