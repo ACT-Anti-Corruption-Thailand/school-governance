@@ -252,7 +252,7 @@
 				ซึ่งเป็นองค์กรส่วนกลางที่ไม่ขึ้นตรงต่อโรงเรียนใด
 				ขอยืนยันว่าข้อมูลของท่านจะถูกเก็บเป็นความลับและไม่มีการเปิดเผยระหว่างการใช้งาน
 			</p>
-			<label class="custom-control login-modal-text">
+			<label class="custom-control login-modal-text login-control">
 				<input type="checkbox" bind:checked={isread_checked} />
 				<span>
 					ฉันได้อ่านและยอมรับ&nbsp;
@@ -721,10 +721,11 @@
 	}
 
 	.login-modal-top-content {
-		padding: 0 24px;
+		padding: 0 24px 24px;
 		flex-direction: column;
 		flex: 1 1 0;
 		justify-content: center;
+		width: 100%;
 	}
 
 	.login-modal-title {
@@ -738,17 +739,34 @@
 		text-transform: uppercase;
 	}
 
+	.login-control.custom-control.login-modal-text {
+		margin-bottom: -8px;
+	}
+
 	.login-modal-subtitle {
 		font-size: 0.8125rem;
+
+		@media screen and (min-width: 768px) {
+			font-size: 1rem;
+		}
 	}
 
 	.login-modal-logo {
 		width: 50%;
+		margin: 16px 0;
+
+		&:first-child {
+			margin-top: 0;
+		}
 	}
 
 	.login-modal-text {
 		font-size: 0.625rem;
 		margin-bottom: 16px;
+
+		@media screen and (min-width: 768px) {
+			font-size: 0.8125rem;
+		}
 
 		&.coral {
 			color: #f5a2a2;
@@ -811,12 +829,16 @@
 	.policy-content {
 		font-size: 0.8125rem;
 
-		h3 {
+		@media screen and (min-width: 768px) {
 			font-size: 1rem;
 		}
 
+		h3 {
+			font-size: 1.23em;
+		}
+
 		h4 {
-			font-size: 0.875rem;
+			font-size: 1.07em;
 		}
 
 		h3,
