@@ -16,8 +16,6 @@
 	let _rating = 0;
 	let _comment = 0;
 
-	$: console.log($schoolStatsCache);
-
 	const fetchScore = async () => {
 		if (!schoolId) return;
 		if (schoolId in $schoolStatsCache) {
