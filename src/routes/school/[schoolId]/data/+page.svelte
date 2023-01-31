@@ -941,7 +941,9 @@
 				<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม <!-- TODO: รอข้อมูลจากฟีน --></p>
 				<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
 			</div>
-			<img class="director-img" src={d.principal_image_path} alt="" />
+			{#if d.principal_image_path}
+				<img class="director-img" src={d.principal_image_path} alt="" />
+			{/if}
 		</section>
 
 		<h2 bind:this={el_goods_section} id="goods-section" class="f">
@@ -1382,23 +1384,38 @@
 					<dt>
 						<img src="/icons/location.svg" alt="ที่อยู่" width="16" height="16" />
 					</dt>
-					<dd>{d.address} {d.subdistrict} {d.district} {d.province} {d.postcode}</dd>
+					<dd>
+						{d.address ?? ''}
+						{d.subdistrict ?? ''}
+						{d.district ?? ''}
+						{d.province ?? ''}
+						{d.postcode ?? ''}
+					</dd>
 					<dt>
 						<img src="/icons/phone.svg" alt="เบอร์โทรศัพท์" width="16" height="16" />
 					</dt>
-					<dd>{d.telephone}</dd>
+					<dd>{d.telephone ?? '—'}</dd>
 					<dt>
 						<img src="/icons/globe.svg" alt="เว็บไซต์" width="16" height="16" />
 					</dt>
 					<dd>
-						<a href={d.website.includes('http') ? d.website : `https://${d.website}`}>{d.website}</a
-						>
+						{#if d.website}
+							<a href={d.website.includes('http') ? d.website : `https://${d.website}`}
+								>{d.website}</a
+							>
+						{:else}
+							<span>—</span>
+						{/if}
 					</dd>
 					<dt>
 						<img src="/icons/mail.svg" alt="อีเมล์" width="16" height="16" />
 					</dt>
 					<dd>
-						<a href="mailto:{d.email}">{d.email}</a>
+						{#if d.email}
+							<a href="mailto:{d.email}">{d.email}</a>
+						{:else}
+							<span>—</span>
+						{/if}
 					</dd>
 				</dl>
 			</section>
@@ -1412,9 +1429,9 @@
 					<dt>สังกัด</dt>
 					<dd><!-- TODO: รอข้อมูลจากฟีน --> ไม่มีข้อมูล</dd>
 					<dt>ก่อตั้งเมื่อ</dt>
-					<dd>{d.established}</dd>
+					<dd>{d.established ?? '—'}</dd>
 					<dt>ระดับที่เปิดสอน</dt>
-					<dd>{d.grades}</dd>
+					<dd>{d.grades ?? '—'}</dd>
 					<dt>ประเภทโรงเรียน</dt>
 					<dd>รัฐบาล</dd>
 				</dl>
