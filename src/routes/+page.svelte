@@ -443,6 +443,7 @@
 			font-size: 0.8125rem;
 			line-height: 136%;
 			color: #3da4df;
+			white-space: nowrap;
 
 			cursor: pointer;
 		}
