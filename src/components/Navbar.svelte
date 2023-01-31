@@ -128,8 +128,8 @@
 			<img src="/icons/nav-ham.svg" alt="เปิดเมนู" width="32" height="32" />
 		</button>
 		<menu class="nav-menu" class:show={show_menu}>
-			<li>
-				{#if PAGE_BASE === 'search'}
+			{#if PAGE_BASE === 'search'}
+				<li class="search-desktop-nav-list">
 					<button
 						class="f jcc nav-btn search-btn"
 						type="button"
@@ -138,13 +138,15 @@
 						<img src="/icons/search.svg" alt="ค้นหา" width="20" height="20" />
 						<span>ค้นหาโรงเรียน</span>
 					</button>
-				{:else}
+				</li>
+			{:else}
+				<li>
 					<a href="/search" on:click={() => (show_menu = false)}>
 						<img src="/icons/search.svg" alt="" width="20" height="20" />
 						<span>ค้นหาโรงเรียน</span>
 					</a>
-				{/if}
-			</li>
+				</li>
+			{/if}
 			<li>
 				<a href="/#information" on:click={() => (show_menu = false)}>
 					<img src="/icons/question.svg" alt="" width="20" height="20" />
@@ -913,5 +915,13 @@
 
 	.round-img {
 		border-radius: 999px;
+	}
+
+	.search-desktop-nav-list {
+		display: none;
+
+		@media screen and (min-width: 768px) {
+			display: initial;
+		}
 	}
 </style>
