@@ -258,7 +258,11 @@
 		<section class="search-result inline">
 			{#each school_by_province as [district, school_data] (district)}
 				<h2 class="f">
-					<span>{district}</span>
+					<span
+						>{!district.includes('เขต') && !district.includes('อำเภอ')
+							? `อำเภอ${district}`
+							: district}</span
+					>
 					<small>พบ {school_data.length} โรงเรียน</small>
 				</h2>
 				<ul>
