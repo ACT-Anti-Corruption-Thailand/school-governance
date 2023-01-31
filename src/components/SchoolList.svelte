@@ -9,26 +9,11 @@
 	import SchoolRating from './SchoolMiniStats.svelte';
 
 	export let school_list: SchoolData[] = [
-		{
-			id: '1',
-			name: 'โรงเรียนร่วมใจศึกษา'
-		},
-		{
-			id: '2',
-			name: 'โรงเรียนศึกษาวิทยาการเรียนเจริญก้าวหน้า'
-		},
-		{
-			id: '3',
-			name: 'โรงเรียนโปร่งใสวิทยา'
-		},
-		{
-			id: '4',
-			name: 'โรงเรียนบ้านร่วมสร้าง'
-		},
-		{
-			id: '5',
-			name: 'โรงเรียนวัดป่าสามัคคี'
-		}
+		{ id: '1010720001', name: '(Test) โรงเรียนพญาไท' },
+		{ id: '1010720002', name: '(Test) โรงเรียนโฆสิตสโมสร' },
+		{ id: '1010720003', name: '(Test) โรงเรียนราชวินิต' },
+		{ id: '1010720004', name: '(Test) โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
+		{ id: '1010720005', name: '(Test) โรงเรียนวัดโสมนัส' }
 	];
 </script>
 
@@ -37,7 +22,7 @@
 		<li>
 			<a class="f" href="/school/{school.id}/">
 				<div>
-					<div class="school-list-title">{school.name}</div>
+					<div class="school-list-title">โรงเรียน{school.name}</div>
 					<!-- <div class="school-list-date">
 						โพสต์ล่าสุด {new Date(school.date).toLocaleDateString()}
 					</div> -->

@@ -12,6 +12,8 @@
 	import { show_search, search_string } from 'stores/search';
 	import { currentSchool, currentSchoolId } from 'stores/school';
 
+	import { getLatestActivityList, getStatsList } from 'utils/data_fetching';
+
 	const SCHOOL_PER_REQUEST = 10;
 
 	const PROVINCES_CHOICE = ['เลือกจังหวัด', ...PROVINCES];
@@ -166,18 +168,6 @@
 		comment: 0
 	})) as SchoolData[];
 
-	onMount(() => {
-		$show_search = true;
-		if ($currentSchool && $currentSchoolId) {
-			const { district, province } = $currentSchool;
-			fetchRelatedSchool($currentSchoolId, district, province);
-		}
-	});
-
-	onDestroy(() => {
-		$show_search = false;
-	});
-
 	const groupBy = <T, K extends keyof any>(arr: T[], groupFn: (element: T) => K): Record<K, T[]> =>
 		arr.reduce(
 			(r, v, _i, _a, k = groupFn(v)) => ((r[k] || (r[k] = [])).push(v), r),
@@ -220,6 +210,41 @@
 			console.error(e);
 		}
 	};
+
+	const DEBUG_SCHOOL_LIST = [
+		{ id: '1010720001', name: 'พญาไท' },
+		{ id: '1010720002', name: 'โฆสิตสโมสร' },
+		{ id: '1010720003', name: 'ราชวินิต' },
+		{ id: '1010720004', name: 'ทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
+		{ id: '1010720005', name: 'วัดโสมนัส' }
+	];
+	let latestActivityList: any[] = [];
+	let mostCommentList: any[] = [];
+	let mostRatingList: any[] = [];
+
+	const _getLatestActivityList = async () => {
+		latestActivityList = await getLatestActivityList();
+	};
+
+	const _getStatsList = async () => {
+		const a = await getStatsList();
+		mostCommentList = a.mostCommentList;
+		mostRatingList = a.mostRatingList;
+	};
+
+	onMount(() => {
+		$show_search = true;
+		if ($currentSchool && $currentSchoolId) {
+			const { district, province } = $currentSchool;
+			fetchRelatedSchool($currentSchoolId, district, province);
+		}
+		_getLatestActivityList();
+		_getStatsList();
+	});
+
+	onDestroy(() => {
+		$show_search = false;
+	});
 </script>
 
 <div class="search-container">
@@ -262,26 +287,19 @@
 		{/if}
 		<section>
 			<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
-			<SchoolList
-				school_list={[
-					{ id: '1010720001', name: '(Test) โรงเรียนพญาไท' },
-					{ id: '1010720002', name: '(Test) โรงเรียนโฆสิตสโมสร' },
-					{ id: '1010720003', name: '(Test) โรงเรียนราชวินิต' },
-					{
-						id: '1010720004',
-						name: '(Test) โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ'
-					},
-					{ id: '1010720005', name: '(Test) โรงเรียนวัดโสมนัส' }
-				]}
-			/>
+			<SchoolList school_list={latestActivityList} />
 		</section>
 		<section>
-			<h2>โรงเรียนที่มีคะแนนเฉลี่ยสูงสุด</h2>
-			<SchoolList />
+			<h2>โรงเรียนที่มีคะแนนเสียงมากที่สุด</h2>
+			<SchoolList school_list={mostRatingList} />
 		</section>
 		<section>
 			<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
-			<SchoolList />
+			<SchoolList school_list={mostCommentList} />
+		</section>
+		<section>
+			<h2>โรงเรียนที่เอาไว้ Debug</h2>
+			<SchoolList school_list={DEBUG_SCHOOL_LIST} />
 		</section>
 	</div>
 

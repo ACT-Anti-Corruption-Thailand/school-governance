@@ -1,7 +1,50 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+
 	import SchoolList from 'components/SchoolList.svelte';
 	import ActAiBanner from 'components/ActAiBanner.svelte';
 	import InViewLottie from 'components/InViewLottie.svelte';
+
+	import { getLatestActivityList, getStatsList } from 'utils/data_fetching';
+
+	const DEBUG_SCHOOL_LIST = [
+		{ id: '1010720001', name: 'พญาไท' },
+		{ id: '1010720002', name: 'โฆสิตสโมสร' },
+		{ id: '1010720003', name: 'ราชวินิต' },
+		{ id: '1010720004', name: 'ทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
+		{ id: '1010720005', name: 'วัดโสมนัส' }
+	];
+	let latestActivityList: any[] = [];
+	let mostCommentList: any[] = [];
+	let mostRatingList: any[] = [];
+
+	let schoolListType: 'latest' | 'score' | 'comment' | 'debug' = 'latest';
+	let schoolList: any[] = DEBUG_SCHOOL_LIST;
+
+	$: if (schoolListType === 'latest') {
+		schoolList = latestActivityList;
+	} else if (schoolListType === 'score') {
+		schoolList = mostRatingList;
+	} else if (schoolListType === 'comment') {
+		schoolList = mostCommentList;
+	} else {
+		schoolList = DEBUG_SCHOOL_LIST;
+	}
+
+	const _getLatestActivityList = async () => {
+		latestActivityList = await getLatestActivityList();
+	};
+
+	const _getStatsList = async () => {
+		const a = await getStatsList();
+		mostCommentList = a.mostCommentList;
+		mostRatingList = a.mostRatingList;
+	};
+
+	onMount(() => {
+		_getLatestActivityList();
+		_getStatsList();
+	});
 </script>
 
 <header class="f header">
@@ -38,28 +81,48 @@
 <section class="school-list-container">
 	<h2 class="school-list-header">หรือดูโรงเรียนอื่นที่สนใจ</h2>
 	<div class="f choice-con">
-		<input id="school-list-choice1" type="radio" name="school-type" checked />
+		<input
+			id="school-list-choice1"
+			class="school-list-radio"
+			type="radio"
+			bind:group={schoolListType}
+			value="latest"
+		/>
 		<label for="school-list-choice1" class="f radio-pill">
 			<span>ล่าสุด</span>
 		</label>
-		<input id="school-list-choice2" type="radio" name="school-type" />
+		<input
+			id="school-list-choice2"
+			class="school-list-radio"
+			type="radio"
+			bind:group={schoolListType}
+			value="score"
+		/>
 		<label for="school-list-choice2" class="f radio-pill">
-			<span>คะแนนสูงสุด</span>
+			<span>คะแนนเสียงมากที่สุด</span>
 		</label>
-		<input id="school-list-choice3" type="radio" name="school-type" />
+		<input
+			id="school-list-choice3"
+			class="school-list-radio"
+			type="radio"
+			bind:group={schoolListType}
+			value="comment"
+		/>
 		<label for="school-list-choice3" class="f radio-pill">
 			<span>ความเห็นมากสุด</span>
 		</label>
+		<input
+			id="school-list-choice4"
+			class="school-list-radio"
+			type="radio"
+			bind:group={schoolListType}
+			value="debug"
+		/>
+		<label for="school-list-choice4" class="f radio-pill">
+			<span>ทดสอบระบบ</span>
+		</label>
 	</div>
-	<SchoolList
-		school_list={[
-			{ id: '1010720001', name: '(Test) โรงเรียนพญาไท' },
-			{ id: '1010720002', name: '(Test) โรงเรียนโฆสิตสโมสร' },
-			{ id: '1010720003', name: '(Test) โรงเรียนราชวินิต' },
-			{ id: '1010720004', name: '(Test) โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
-			{ id: '1010720005', name: '(Test) โรงเรียนวัดโสมนัส' }
-		]}
-	/>
+	<SchoolList school_list={schoolList} />
 </section>
 
 <section class="information" id="information">
@@ -364,7 +427,7 @@
 		margin: 16px 0;
 	}
 
-	input[name='school-type'] {
+	input.school-list-radio {
 		position: absolute;
 		opacity: 0;
 		width: 0;
