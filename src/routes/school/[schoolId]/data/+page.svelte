@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { scroll } from 'motion';
 
 	import {
 		Dialog,
@@ -75,6 +76,75 @@
 		}
 	};
 
+	let el_student_section: HTMLElement;
+	let el_employee_section: HTMLElement;
+	let el_goods_section: HTMLElement;
+	let el_building_section: HTMLElement;
+	let el_general_section: HTMLElement;
+
+	let employee_section_intx = false;
+	let goods_section_intx = false;
+	let building_section_intx = false;
+	let general_section_intx = false;
+
+	let active_section: 'student' | 'employee' | 'goods' | 'building' | 'general' = 'student';
+	$: if (general_section_intx) active_section = 'general';
+	else if (building_section_intx) active_section = 'building';
+	else if (goods_section_intx) active_section = 'goods';
+	else if (employee_section_intx) active_section = 'employee';
+	else active_section = 'student';
+
+	let current_scrolly = 0;
+	let section_pos = [0, 0, 0, 0, 0];
+
+	const getOffsetY = (el: HTMLElement, scrollY: number) => {
+		const rect = el.getBoundingClientRect();
+		return rect.top + scrollY;
+	};
+
+	const calcHeaderPos = () => {
+		const winY = window.scrollY;
+
+		section_pos = [
+			getOffsetY(el_student_section, winY),
+			getOffsetY(el_employee_section, winY),
+			getOffsetY(el_goods_section, winY),
+			getOffsetY(el_building_section, winY),
+			getOffsetY(el_general_section, winY)
+		];
+	};
+
+	// because nav is shifting around
+	// we have to check if nav *will* be shown or not
+	// and scroll to accordingly
+	const scrollToSection = (section: 'student' | 'employee' | 'goods' | 'building' | 'general') => {
+		const SECTION_LOOKUP = {
+			student: 0,
+			employee: 1,
+			goods: 2,
+			building: 3,
+			general: 4
+		};
+		let section_offset = section_pos[SECTION_LOOKUP[section]];
+		let is_desktop = window.matchMedia('(min-width: 768px)').matches;
+		let jumpnav_size = is_desktop ? 48 : 32;
+
+		if (section_offset > current_scrolly) {
+			// if scroll down, nav will hide
+			return scrollTo({
+				behavior: 'smooth',
+				top: section_offset - 60 - jumpnav_size
+			});
+		} else {
+			// if scroll up, nav will be displayed
+			let nav_size = is_desktop ? 72 : 48;
+			return scrollTo({
+				behavior: 'smooth',
+				top: section_offset - 60 - jumpnav_size - nav_size
+			});
+		}
+	};
+
 	let mounted = false;
 	onMount(() => {
 		mounted = true;
@@ -83,14 +153,100 @@
 	$: if (mounted && $years) {
 		fetchOtherYearData();
 	}
+
+	$: if (
+		mounted &&
+		d &&
+		el_student_section &&
+		el_employee_section &&
+		el_goods_section &&
+		el_building_section &&
+		el_general_section
+	) {
+		calcHeaderPos();
+
+		scroll(({ y }) => (employee_section_intx = !!y.progress), {
+			target: el_employee_section,
+			offset: ['start 0.5', 'end start']
+		});
+
+		scroll(({ y }) => (goods_section_intx = !!y.progress), {
+			target: el_goods_section,
+			offset: ['start 0.5', 'end start']
+		});
+
+		scroll(({ y }) => (building_section_intx = !!y.progress), {
+			target: el_building_section,
+			offset: ['start 0.5', 'end start']
+		});
+
+		scroll(({ y }) => (general_section_intx = !!y.progress), {
+			target: el_general_section,
+			offset: ['start 0.5', 'end start']
+		});
+
+		scroll(({ y }) => (current_scrolly = y.current));
+	}
 </script>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
+
+<div class="jumpnav-wrapper">
+	<menu class="f jumpnav">
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'student'}
+				on:click={() => scrollToSection('student')}
+			>
+				นักเรียน
+			</button>
+		</li>
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'employee'}
+				on:click={() => scrollToSection('employee')}
+			>
+				ครู/บุคลากร
+			</button>
+		</li>
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'goods'}
+				on:click={() => scrollToSection('goods')}
+			>
+				อุปกรณ์
+			</button>
+		</li>
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'building'}
+				on:click={() => scrollToSection('building')}
+			>
+				สิ่งก่อสร้าง
+			</button>
+		</li>
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'general'}
+				on:click={() => scrollToSection('general')}
+			>
+				ทั่วไป
+			</button>
+		</li>
+	</menu>
+</div>
+<div class="jumpnav-compensate" />
+
 <div class="desktop-margin">
 	{#if d}
-		<h2 class="f">
+		<h2 bind:this={el_student_section} id="student-section" class="f">
 			<span>นักเรียน <small>(คน)</small></span>
 			<span>{d.student.total.all.toLocaleString()}</span>
 		</h2>
@@ -577,7 +733,7 @@
 			</section>
 		{/if}
 
-		<h2 class="f">
+		<h2 bind:this={el_employee_section} id="employee-section" class="f">
 			<span>ครู/บุคลากร <small>(คน)</small></span>
 			<span>{d.staff.total.toLocaleString()}</span>
 		</h2>
@@ -788,7 +944,7 @@
 			<img class="director-img" src={d.principal_image_path} alt="" />
 		</section>
 
-		<h2 class="f">
+		<h2 bind:this={el_goods_section} id="goods-section" class="f">
 			<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
 			<span class="f g8">
 				<CircularProgress
@@ -1065,7 +1221,7 @@
 
 		<ActAiBanner margin />
 
-		<h2 class="f">
+		<h2 bind:this={el_building_section} id="building-section" class="f">
 			<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 			<span class="f g8">
 				<CircularProgress percent={(d.buildings.stats.ดี / d.buildings.stats.รวม) * 100} />
@@ -1215,7 +1371,7 @@
 
 		<ActAiBanner margin />
 
-		<h2 class="f mb8">
+		<h2 bind:this={el_general_section} id="general-section" class="f mb8">
 			<span>ข้อมูลทั่วไป</span>
 		</h2>
 
@@ -1846,5 +2002,72 @@
 
 	a {
 		color: inherit;
+	}
+
+	.jumpnav {
+		justify-content: center;
+		gap: 8px;
+
+		background: #fff;
+		list-style: none;
+		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+
+		width: max-content;
+		min-width: 100%;
+
+		@media screen and (min-width: 768px) {
+			gap: 16px;
+		}
+
+		> li > button {
+			height: 32px;
+
+			font-family: 'Mitr';
+			font-weight: 500;
+			font-size: 0.8125rem;
+			line-height: 125%;
+			letter-spacing: 0.02em;
+			white-space: nowrap;
+
+			padding: 2px 8px 0;
+			border-bottom: 2px solid #fff;
+			color: #9daad5;
+
+			@media screen and (min-width: 768px) {
+				height: 48px;
+				padding: 2px 16px 0;
+				font-size: 1rem;
+			}
+
+			&.j-active {
+				border-bottom: 2px solid #ffc700;
+				color: #3c55ab;
+			}
+		}
+	}
+
+	.jumpnav-compensate {
+		height: 32px;
+
+		@media screen and (min-width: 768px) {
+			height: 48px;
+		}
+	}
+
+	.jumpnav-wrapper {
+		position: fixed;
+		top: calc(var(--navbar-height) + 60px);
+		width: 100%;
+		overflow-x: auto;
+
+		transition: top 0.3s;
+		will-change: top;
+		z-index: 10;
+
+		@media screen and (min-width: 768px) {
+			left: calc(50% + 32px);
+			transform: translateX(-50%);
+			max-width: 640px;
+		}
 	}
 </style>
