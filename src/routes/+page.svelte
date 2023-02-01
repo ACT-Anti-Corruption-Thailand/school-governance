@@ -58,18 +58,29 @@
 		ชวนทุกคนมาแลกเปลี่ยน<br class="hide-desktop" />
 		เพื่อพัฒนาโรงเรียนไปด้วยกัน
 	</p>
-	<div class="f header-detail">
+	<div class="header-detail">
 		<div class="f header-detail-col">
 			<img src="/mascots/data.svg" alt="" width="40" height="40" />
-			<span>ส่องฐาน<br class="hide-desktop" />ข้อมูล</span>
+			<span
+				><span class="nobr">ส่องฐาน</span><br class="hide-desktop" /><span class="nobr">ข้อมูล</span
+				></span
+			>
 		</div>
 		<div class="f header-detail-col">
 			<img src="/mascots/star.svg" alt="" width="40" height="40" />
-			<span>ให้คะแนน<br class="hide-desktop" />โรงเรียน</span>
+			<span
+				><span class="nobr">ให้คะแนน</span><br class="hide-desktop" /><span class="nobr"
+					>โรงเรียน</span
+				></span
+			>
 		</div>
 		<div class="f header-detail-col">
 			<img src="/mascots/speak.svg" alt="" width="40" height="40" />
-			<span>แลกเปลี่ยน<br class="hide-desktop" />ความคิดเห็น</span>
+			<span
+				><span class="nobr">แลกเปลี่ยน</span><br class="hide-desktop" /><span class="nobr"
+					>ความคิดเห็น</span
+				></span
+			>
 		</div>
 	</div>
 	<a class="f search-box" href="/search">
@@ -156,7 +167,7 @@
 	</p>
 	<p class="info-title3">การมีส่วนร่วม<br class="hide-desktop" />จึงเป็นกุญแจสำคัญ…</p>
 	<p>
-		การจะผลักดันให้โรงเรียนพัฒนาต่อไปได้ ต้องอาศัย <strong>การมีส่วนร่วม</strong>
+		การจะผลักดันให้โรงเรียนพัฒนาต่อไปได้ ต้องอาศัย <strong class="nobr">การมีส่วนร่วม</strong>
 		ซึ่งไม่ได้มาจากแค่นักเรียนอย่างพวกเราเพียงฝ่ายเดียว แต่ผู้อำนวยการ คุณครู บุคลากร ฯลฯ ก็เป็นกำลังสำคัญในการร่วมรับรู้ข้อมูลของโรงเรียน
 		ก่อนนำไปสู่การแลกเปลี่ยน แสดงความคิดเห็นและแก้ปัญหาเพื่อพัฒนาโรงเรียนไปพร้อมกับพวกเราด้วย
 	</p>
@@ -218,15 +229,27 @@
 	<p>
 		กระบวนการ Open Join Learn คือกลไกสำคัญ ที่จะช่วยส่งเสริมให้การพัฒนาขับเคลื่อนโรงเรียน
 		ของเราเกิดขึ้นได้จริง โดยนอกจากทุกคนจะต้องมี โอกาสรับรู้ข้อมูลของโรงเรียนแล้ว
-		<strong>
-			ยังต้องมีพื้นที่ สำหรับตรวจสอบ รายงาน ไปจนถึงสามารถ แลกเปลี่ยนความคิดเห็นร่วมกันได้
-		</strong>
+		<strong
+			><span class="nobr">ยังต้องมี</span><span class="nobr">พื้นที่สำหรับ</span><span class="nobr"
+				>ตรวจสอบ</span
+			>&nbsp;<span class="nobr">รายงาน</span>&nbsp;<span class="nobr">ไปจนถึง</span><span
+				class="nobr">สามารถ</span
+			><span class="nobr">แลกเปลี่ยน</span><span class="nobr">ความคิดเห็น</span><span class="nobr"
+				>ร่วมกันได้</span
+			></strong
+		>
 	</p>
 	<InViewLottie class="openjoinlearn-img" src="/lotties/openjoinlearn.json" />
 	<p>
 		การสร้างพื้นที่ปลอดภัยให้ทุกคนมีส่วนร่วมจึงสำคัญมาก ไม่เพียงเพื่อให้โรงเรียนก้าวไปข้างหน้าได้
-		<strong>แต่เพื่อส่งเสริมให้เกิดบรรยากาศของการบริหารจัดการที่โปร่งใส</strong> และเราในฐานะนักเรียนก็จะได้
-		ฝึกฝนบทบาทการตั้งคำถามตรวจสอบและ แลกเปลี่ยนความคิดเห็นไปด้วย…ก่อนก้าวไปเป็น พลเมืองในโลกแห่งความเป็นจริง
+		<strong
+			><span class="nobr">แต่เพื่อ</span><span class="nobr">ส่งเสริม</span><span class="nobr"
+				>ให้</span
+			><span class="nobr">เกิดบรรยากาศ</span><span class="nobr">ของการบริหาร</span><span
+				class="nobr">จัดการ</span
+			><span class="nobr">ที่โปร่งใส</span></strong
+		> และเราในฐานะนักเรียนก็จะได้ ฝึกฝนบทบาทการตั้งคำถามตรวจสอบและ แลกเปลี่ยนความคิดเห็นไปด้วย…ก่อนก้าวไปเป็น
+		พลเมืองในโลกแห่งความเป็นจริง
 	</p>
 </section>
 
@@ -234,9 +257,15 @@
 	<p>
 		School Governace จึงไม่ได้มีแค่ข้อมูลโรงเรียนให้ได้ส่องกันเท่านั้น แต่เพื่อน ๆ
 		ยังสามารถเข้ามาช่วยกัน
-		<strong
-			>เปรียบเทียบสิ่งอำนวยความสะดวกต่าง ๆ ในโรงเรียนว่าได้มาตรฐานหรือไม่ ไปจนถึงส่ง Feedback</strong
-		>
+		<strong>
+			<span class="nobr">เปรียบเทียบ</span><span class="nobr">สิ่ง</span><span class="nobr"
+				>อำนวยความสะดวก</span
+			><span class="nobr">ต่าง ๆ&nbsp;</span><span class="nobr">ในโรงเรียน</span><span class="nobr"
+				>ว่า</span
+			><span class="nobr">ได้มาตรฐาน</span><span class="nobr">หรือไม่</span>&nbsp;<span class="nobr"
+				>ไปจนถึง</span
+			><span class="nobr">ส่ง Feedback</span>
+		</strong>
 		กลับไปยังโรงเรียนและผู้บริหารที่มีส่วนเกี่ยวข้องกับโรงเรียนของเรา
 	</p>
 	<div class="f feature-card-container">
@@ -341,6 +370,10 @@
 </footer>
 
 <style lang="scss" scoped>
+	.nobr {
+		white-space: nowrap;
+	}
+
 	.header,
 	.school-list-container,
 	.information,
@@ -372,8 +405,9 @@
 	}
 
 	.header-detail {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
 		gap: 24px;
-		align-items: flex-start;
 	}
 
 	.header-detail-col {
