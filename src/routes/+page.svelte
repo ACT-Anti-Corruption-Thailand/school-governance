@@ -166,7 +166,7 @@
 <section class="origin">
 	<p class="origin-title">นี่คือที่มาของ</p>
 	<img class="origin-logo" src="/logos/school_gov.svg" alt="" width="224" height="83" />
-	<p>
+	<p style="line-height:1.7">
 		เครื่องมือที่จะแสดง <a href="https://data.bopp-obec.info/emis/index.php">ฐานข้อมูลโรงเรียน</a>
 		ซึ่งรวบรวมโดยสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน (สพฐ.) เพื่อช่วยให้ทุกคนสามารถตรวจสอบข้อมูลสำคัญต่าง
 		ๆ ที่เกี่ยวข้องกับโรงเรียนได้
@@ -439,7 +439,7 @@
 			border-radius: 20px;
 
 			font-size: 0.8125rem;
-			line-height: 136%;
+			line-height: 1;
 			color: #3da4df;
 			white-space: nowrap;
 
@@ -495,7 +495,6 @@
 		}
 
 		p {
-			line-height: 136%;
 			margin-bottom: 24px;
 		}
 
@@ -503,7 +502,6 @@
 		figcaption > a {
 			font-family: 'IBM Plex Sans Thai Looped';
 			font-size: 0.625rem;
-			line-height: 136%;
 			color: #9daad5;
 			margin-top: 8px;
 		}
@@ -518,10 +516,6 @@
 
 		.origin-logo {
 			margin: 16px 0;
-		}
-
-		p {
-			line-height: 136%;
 		}
 
 		a {
