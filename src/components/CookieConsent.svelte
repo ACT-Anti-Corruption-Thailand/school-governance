@@ -85,14 +85,14 @@
 
 {#if isShow}
 	<div class="cookie-consent" transition:fly={{ y: 100, duration: 500 }}>
-		<p>We care about your data, and we'd love to use cookies to make your experience better.</p>
+		<p>เว็บไซต์นี้ใช้คุกกี้เพื่อเพิ่มประสิทธิภาพและประสบการณ์ที่ดีในการใช้งานเว็บไซต์</p>
 		<div class="f cookie-action">
 			<button
 				class="readmore"
 				type="button"
 				on:click={() => {
 					term_isopen = true;
-				}}>อ่านเพิ่มเติม</button
+				}}>อ่านรายละเอียด</button
 			>
 			<button class="accept" type="button" on:click={() => save(true)}>ยอมรับ</button>
 		</div>
