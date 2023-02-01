@@ -53,21 +53,29 @@
 		อยากเห็นโรงเรียนของพวกเรา<br class="hide-desktop" />
 		เปลี่ยนไปในทางที่ดีขึ้นไหม?
 	</p>
-	<img class="header-logo" src="/logos/school_gov.svg" alt="" width="224" height="83" />
+	<img
+		loading="lazy"
+		decoding="async"
+		class="header-logo"
+		src="/logos/school_gov.svg"
+		alt=""
+		width="224"
+		height="83"
+	/>
 	<p>
 		ชวนทุกคนมาแลกเปลี่ยน<br class="hide-desktop" />
 		เพื่อพัฒนาโรงเรียนไปด้วยกัน
 	</p>
 	<div class="header-detail">
 		<div class="f header-detail-col">
-			<img src="/mascots/data.svg" alt="" width="40" height="40" />
+			<img loading="lazy" decoding="async" src="/mascots/data.svg" alt="" width="40" height="40" />
 			<span
 				><span class="nobr">ส่องฐาน</span><br class="hide-desktop" /><span class="nobr">ข้อมูล</span
 				></span
 			>
 		</div>
 		<div class="f header-detail-col">
-			<img src="/mascots/star.svg" alt="" width="40" height="40" />
+			<img loading="lazy" decoding="async" src="/mascots/star.svg" alt="" width="40" height="40" />
 			<span
 				><span class="nobr">ให้คะแนน</span><br class="hide-desktop" /><span class="nobr"
 					>โรงเรียน</span
@@ -75,7 +83,7 @@
 			>
 		</div>
 		<div class="f header-detail-col">
-			<img src="/mascots/speak.svg" alt="" width="40" height="40" />
+			<img loading="lazy" decoding="async" src="/mascots/speak.svg" alt="" width="40" height="40" />
 			<span
 				><span class="nobr">แลกเปลี่ยน</span><br class="hide-desktop" /><span class="nobr"
 					>ความคิดเห็น</span
@@ -84,7 +92,14 @@
 		</div>
 	</div>
 	<a class="f search-box" href="/search">
-		<img src="/icons/search-box.svg" alt="" width="24" height="24" />
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/icons/search-box.svg"
+			alt=""
+			width="24"
+			height="24"
+		/>
 		<span>ลองค้นหาโรงเรียนคุณ</span>
 	</a>
 </header>
@@ -140,12 +155,19 @@
 
 <section class="information" id="information">
 	<h2 class="f jcc">
-		<img src="/index/q1.svg" alt="" width="38" height="39" />
+		<img loading="lazy" decoding="async" src="/index/q1.svg" alt="" width="38" height="39" />
 		<span>
 			School Governance <br class="hide-desktop" />คืออะไร?<br />
-			<img src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/chevrons/bottom.svg"
+				alt=""
+				width="24"
+				height="24"
+			/>
 		</span>
-		<img src="/index/q2.svg" alt="" width="33" height="40" />
+		<img loading="lazy" decoding="async" src="/index/q2.svg" alt="" width="33" height="40" />
 	</h2>
 	<p class="info-title1">เมื่อการแก้ไขปัญหาโรงเรียนแบบเดิม ๆ ไม่ตอบโจทย์...</p>
 	<p>
@@ -182,7 +204,15 @@
 
 <section class="origin">
 	<p class="origin-title">นี่คือที่มาของ</p>
-	<img class="origin-logo" src="/logos/school_gov.svg" alt="" width="224" height="83" />
+	<img
+		loading="lazy"
+		decoding="async"
+		class="origin-logo"
+		src="/logos/school_gov.svg"
+		alt=""
+		width="224"
+		height="83"
+	/>
 	<p style="line-height:1.7">
 		เครื่องมือที่จะแสดง <a
 			href="https://data.bopp-obec.info/emis/index.php"
@@ -193,9 +223,17 @@
 		ๆ ที่เกี่ยวข้องกับโรงเรียนได้
 	</p>
 	<h3 class="f jcc">
-		<img src="/mascots/data.svg" alt="" width="40" height="40" />
+		<img loading="lazy" decoding="async" src="/mascots/data.svg" alt="" width="40" height="40" />
 		<span>ส่องข้อมูลโรงเรียนของเรา</span>
-		<img src="/mascots/data.svg" alt="" width="40" height="40" style="transform:scaleX(-100%)" />
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/mascots/data.svg"
+			alt=""
+			width="40"
+			height="40"
+			style="transform:scaleX(-100%)"
+		/>
 	</h3>
 	<div class="f data-cards">
 		<div class="card">
@@ -281,9 +319,18 @@
 	<div class="f feature-card-container">
 		<div class="feature-card">
 			<h3 class="f">
-				<img src="/mascots/star.svg" alt="" width="40" height="40" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/mascots/star.svg"
+					alt=""
+					width="40"
+					height="40"
+				/>
 				<span>ให้คะแนนโรงเรียน</span>
 				<img
+					loading="lazy"
+					decoding="async"
 					src="/mascots/star.svg"
 					alt=""
 					width="40"
@@ -295,9 +342,18 @@
 		</div>
 		<div class="feature-card">
 			<h3 class="f">
-				<img src="/mascots/speak.svg" alt="" width="40" height="40" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/mascots/speak.svg"
+					alt=""
+					width="40"
+					height="40"
+				/>
 				<span>โรงเรียนในมุมของเรา</span>
 				<img
+					loading="lazy"
+					decoding="async"
 					src="/mascots/speak.svg"
 					alt=""
 					width="40"
@@ -312,9 +368,18 @@
 		</div>
 		<div class="feature-card">
 			<h3 class="f">
-				<img src="/mascots/exclaim.svg" alt="" width="40" height="40" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/mascots/exclaim.svg"
+					alt=""
+					width="40"
+					height="40"
+				/>
 				<span>ติดตามประกาศ</span>
 				<img
+					loading="lazy"
+					decoding="async"
 					src="/mascots/exclaim.svg"
 					alt=""
 					width="40"
@@ -326,7 +391,14 @@
 		</div>
 	</div>
 	<a class="f search-box" href="/search">
-		<img src="/icons/search-box.svg" alt="" width="24" height="24" />
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/icons/search-box.svg"
+			alt=""
+			width="24"
+			height="24"
+		/>
 		<span>ลองค้นหาโรงเรียนคุณ</span>
 	</a>
 </section>
@@ -342,21 +414,42 @@
 			target="_blank"
 			rel="nofollow noopener noreferrer"
 		>
-			<img src="/icons/facebook.svg" alt="Facebook" width="40" height="40" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/icons/facebook.svg"
+				alt="Facebook"
+				width="40"
+				height="40"
+			/>
 		</a>
 		<a
 			href="https://twitter.com/intent/tweet?url=https://schoolgov.actai.co/"
 			target="_blank"
 			rel="nofollow noopener noreferrer"
 		>
-			<img src="/icons/twitter.svg" alt="Twitter" width="40" height="40" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/icons/twitter.svg"
+				alt="Twitter"
+				width="40"
+				height="40"
+			/>
 		</a>
 		<a
 			href="https://social-plugins.line.me/lineit/share?url=https://schoolgov.actai.co/"
 			target="_blank"
 			rel="nofollow noopener noreferrer"
 		>
-			<img src="/icons/line.svg" alt="Line" width="40" height="40" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/icons/line.svg"
+				alt="Line"
+				width="40"
+				height="40"
+			/>
 		</a>
 	</div>
 	<div class="f more-links">
@@ -375,19 +468,75 @@
 <footer class="f footer">
 	<div class="f credit">
 		<span>Powered by</span>
-		<img class="footer-img" src="/logos/act.svg" alt="" width="32" height="24" />
+		<img
+			loading="lazy"
+			decoding="async"
+			class="footer-img"
+			src="/logos/act.svg"
+			alt=""
+			width="32"
+			height="24"
+		/>
 	</div>
 	<div class="f credit">
 		<span>Co-Developed by</span>
-		<img class="footer-img footer2" src="/logos/pu.svg" alt="" width="50" height="16" />
-		<img class="footer-img footer2" src="/logos/hand.png" alt="" width="42" height="16" />
+		<img
+			loading="lazy"
+			decoding="async"
+			class="footer-img footer2"
+			src="/logos/pu.svg"
+			alt=""
+			width="50"
+			height="16"
+		/>
+		<img
+			loading="lazy"
+			decoding="async"
+			class="footer-img footer2"
+			src="/logos/hand.png"
+			alt=""
+			width="42"
+			height="16"
+		/>
 	</div>
 	<div class="f credit">
 		<span>Sponsors by </span>
-		<img class="footer-img footer3" src="/logos/act_full.svg" alt="" width="66" height="34" />
-		<img class="footer-img footer3" src="/logos/tsri.png" alt="" width="26" height="32" />
-		<img class="footer-img footer3" src="/logos/econ.png" alt="" width="40" height="32" />
-		<img class="footer-img footer3" src="/logos/nrct.png" alt="" width="23" height="32" />
+		<img
+			loading="lazy"
+			decoding="async"
+			class="footer-img footer3"
+			src="/logos/act_full.svg"
+			alt=""
+			width="66"
+			height="34"
+		/>
+		<img
+			loading="lazy"
+			decoding="async"
+			class="footer-img footer3"
+			src="/logos/tsri.png"
+			alt=""
+			width="26"
+			height="32"
+		/>
+		<img
+			loading="lazy"
+			decoding="async"
+			class="footer-img footer3"
+			src="/logos/econ.png"
+			alt=""
+			width="40"
+			height="32"
+		/>
+		<img
+			loading="lazy"
+			decoding="async"
+			class="footer-img footer3"
+			src="/logos/nrct.png"
+			alt=""
+			width="23"
+			height="32"
+		/>
 	</div>
 	<p>
 		School Governance ต่อยอดจากแพลตฟอร์ม We The Students

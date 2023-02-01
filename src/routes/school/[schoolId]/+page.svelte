@@ -150,9 +150,23 @@
 	<a href="/school/{$currentSchoolId}/data" class="section-link">
 		<div class="card">
 			<header class="f section-header mitr">
-				<img src="/mascots/data.svg" alt="" width="50" height="50" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/mascots/data.svg"
+					alt=""
+					width="50"
+					height="50"
+				/>
 				<span>ข้อมูลโรงเรียน</span>
-				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
 			</header>
 
 			<div class="school-data-grid">
@@ -199,7 +213,14 @@
 	<a href="/school/{$currentSchoolId}/rating" class="section-link">
 		<div class="card">
 			<header class="f section-header">
-				<img src="/mascots/star.svg" alt="" width="50" height="50" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/mascots/star.svg"
+					alt=""
+					width="50"
+					height="50"
+				/>
 				{#if fixNaN(total_rating.toFixed(1)) === '—'}
 					<span class="f header-text-adjust mitr">ยังไม่มีคะแนน</span>
 				{:else}
@@ -209,7 +230,14 @@
 						<small>| {fixNaN(total_rating_count.toLocaleString())} รีวิว</small>
 					</span>
 				{/if}
-				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
 			</header>
 			{#if !Number.isNaN(total_rating) && total_rating}
 				<div class="f score-summary">
@@ -228,13 +256,41 @@
 						</div>
 					</div>
 					{#if total_rating >= 4}
-						<img src="/ratings/rating-text-4.svg" alt="" width="73" height="49" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/ratings/rating-text-4.svg"
+							alt=""
+							width="73"
+							height="49"
+						/>
 					{:else if total_rating >= 3}
-						<img src="/ratings/rating-text-3.svg" alt="" width="73" height="49" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/ratings/rating-text-3.svg"
+							alt=""
+							width="73"
+							height="49"
+						/>
 					{:else if total_rating >= 2}
-						<img src="/ratings/rating-text-2.svg" alt="" width="73" height="49" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/ratings/rating-text-2.svg"
+							alt=""
+							width="73"
+							height="49"
+						/>
 					{:else}
-						<img src="/ratings/rating-text-1.svg" alt="" width="73" height="49" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/ratings/rating-text-1.svg"
+							alt=""
+							width="73"
+							height="49"
+						/>
 					{/if}
 				</div>
 			{/if}
@@ -242,28 +298,56 @@
 				<div class="f score-location">
 					<div>ห้องเรียน</div>
 					<div class="f mitr header-text-adjust">
-						<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt="คะแนนเฉลี่ย"
+							width="16"
+							height="16"
+						/>
 						<span class="location-star">{fixNaN(classroom_avg.toFixed(1))}</span>
 					</div>
 				</div>
 				<div class="f score-location">
 					<div>ห้องน้ำ</div>
 					<div class="f mitr header-text-adjust">
-						<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt="คะแนนเฉลี่ย"
+							width="16"
+							height="16"
+						/>
 						<span class="location-star">{fixNaN(toilet_avg.toFixed(1))}</span>
 					</div>
 				</div>
 				<div class="f score-location">
 					<div>โรงอาหาร</div>
 					<div class="f mitr header-text-adjust">
-						<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt="คะแนนเฉลี่ย"
+							width="16"
+							height="16"
+						/>
 						<span class="location-star">{fixNaN(canteen_avg.toFixed(1))}</span>
 					</div>
 				</div>
 				<div class="f score-location">
 					<div>สนามกีฬา</div>
 					<div class="f mitr header-text-adjust">
-						<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt="คะแนนเฉลี่ย"
+							width="16"
+							height="16"
+						/>
 						<span class="location-star">{fixNaN(gym_avg.toFixed(1))}</span>
 					</div>
 				</div>
@@ -274,12 +358,26 @@
 	<a href="/school/{$currentSchoolId}/comments" class="section-link">
 		<div class="card">
 			<header class="f section-header mitr">
-				<img src="/mascots/speak.svg" alt="" width="50" height="50" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/mascots/speak.svg"
+					alt=""
+					width="50"
+					height="50"
+				/>
 				<span class="f header-text-adjust">
 					<span class="header-bignum">{total_comment.toLocaleString()}</span>
 					ความคิดเห็น
 				</span>
-				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
 			</header>
 			<div class="comments-scrolling">
 				{#each posts as post (post.Id)}
@@ -290,7 +388,14 @@
 								โพสต์เมื่อ {new Date(post.createDate).toLocaleDateString('th')}
 							</div>
 							<div class="f comment-like">
-								<img src="/icons/like.svg" alt="" width="16" height="16" />
+								<img
+									loading="lazy"
+									decoding="async"
+									src="/icons/like.svg"
+									alt=""
+									width="16"
+									height="16"
+								/>
 								{#if +post.likeCount}
 									<span>{post.likeCount.toLocaleString()} คนเห็นด้วยกับสิ่งนี้</span>
 								{:else}
@@ -307,7 +412,7 @@
 
 <div class="overview-download">
 	<a class="download-btn" href="/data/{$LATEST_YEAR}/{$currentSchoolId}.json" download>
-		<img src="/icons/download.svg" alt="" width="24" height="24" />
+		<img loading="lazy" decoding="async" src="/icons/download.svg" alt="" width="24" height="24" />
 		<span>ดาวน์โหลดข้อมูลโรงเรียน</span>
 	</a>
 	<p>

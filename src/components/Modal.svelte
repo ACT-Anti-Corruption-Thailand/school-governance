@@ -40,7 +40,14 @@
 					onCloseCallback();
 				}}
 			>
-				<img src="/icons/close.svg" alt="ปิด" width="32" height="32" />
+				<img
+					src="/icons/close.svg"
+					alt="ปิด"
+					width="32"
+					height="32"
+					loading="lazy"
+					decoding="async"
+				/>
 			</button>
 			<DialogTitle class="modal-title {hideTitle ? 'sr-only' : ''}">{title}</DialogTitle>
 			<slot name="title" />

@@ -2,7 +2,14 @@
 	export let comment: number;
 </script>
 
-<img src="/icons/comment.svg" alt="จำนวนคอมเมนต์" width="16" height="16" />
+<img
+	src="/icons/comment.svg"
+	alt="จำนวนคอมเมนต์"
+	width="16"
+	height="16"
+	loading="lazy"
+	decoding="async"
+/>
 <span class="header-score-text">{comment}</span>
 
 <style lang="scss">

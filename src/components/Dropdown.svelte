@@ -20,7 +20,7 @@
 >
 	<ListboxButton class="dropdown-button">
 		<span class="nobr">{selected_option.label ?? selected_option.value}</span>
-		<img src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+		<img src="/chevrons/bottom.svg" alt="" width="24" height="24" loading="lazy" decoding="async" />
 	</ListboxButton>
 	<ListboxOptions class="dropdown-list">
 		{#each options as option (option.value)}

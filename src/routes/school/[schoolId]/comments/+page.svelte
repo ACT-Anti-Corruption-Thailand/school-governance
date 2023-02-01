@@ -311,14 +311,21 @@
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
 	<div class="f g4">
-		<img src="/icons/comment.svg" alt="ความคิดเห็น" width="20" height="20" />
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/icons/comment.svg"
+			alt="ความคิดเห็น"
+			width="20"
+			height="20"
+		/>
 		<span class="comment-header-val">{posts.length}</span>
 	</div>
 </SchoolHeader>
 
 <button class="f comment-btn" type="button" on:click={openCommentModal}>
 	<div class="comment-btn-txtbox">แล้วคุณละ คิดอย่างไร?</div>
-	<img src="/icons/image.svg" alt="" width="24" height="24" />
+	<img loading="lazy" decoding="async" src="/icons/image.svg" alt="" width="24" height="24" />
 </button>
 <div class="comment-btn-compensate" />
 
@@ -354,15 +361,29 @@
 						accept="image/*"
 						on:change={processImagesInput}
 					/>
-					<img src="/comments/add-img.svg" alt="เพิ่มรูปภาพ" width="50" height="50" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/comments/add-img.svg"
+						alt="เพิ่มรูปภาพ"
+						width="50"
+						height="50"
+					/>
 				</label>
 			{/if}
 			{#if files_objurl.length}
 				{#each files_objurl as src, i}
 					<div class="cf-filepreview">
-						<img {src} alt="" width="50" height="50" />
+						<img loading="lazy" decoding="async" {src} alt="" width="50" height="50" />
 						<button type="button" on:click={() => removeImg(i)}>
-							<img src="/comments/remove-img.svg" alt="" width="16" height="16" />
+							<img
+								loading="lazy"
+								decoding="async"
+								src="/comments/remove-img.svg"
+								alt=""
+								width="16"
+								height="16"
+							/>
 						</button>
 					</div>
 				{/each}
@@ -417,7 +438,14 @@
 			</div>
 			<div class="f fcm-btns">
 				<button class="fcm-btn" type="button" on:click={() => (sent_comment_modal_isopen = false)}>
-					<img src="/icons/comment.svg" alt="" width="16" height="16" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/comment.svg"
+						alt=""
+						width="16"
+						height="16"
+					/>
 					<span>กลับไปดูความเห็น</span>
 				</button>
 				<button
@@ -428,7 +456,14 @@
 						openCommentModal();
 					}}
 				>
-					<img src="/icons/comment-add.svg" alt="" width="16" height="16" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/comment-add.svg"
+						alt=""
+						width="16"
+						height="16"
+					/>
 					<span>เพิ่มความเห็นอื่น</span>
 				</button>
 			</div>
@@ -440,7 +475,14 @@
 
 		<div class="delete-modal-box">
 			<DialogTitle class="f jcc delete-modal-title">
-				<img src="/icons/delete.svg" alt="" width="20" height="20" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/icons/delete.svg"
+					alt=""
+					width="20"
+					height="20"
+				/>
 				<span>ลบความคิดเห็น</span>
 			</DialogTitle>
 			<DialogDescription class="delete-modal-desc">แน่ใจว่าจะลบความคิดเห็นของคุณ</DialogDescription>
@@ -453,7 +495,14 @@
 					<span>ยกเลิก</span>
 				</button>
 				<button class="f jcc delete-modal-btn2" type="button" on:click={deleteComment}>
-					<img src="/icons/delete-w.svg" alt="" width="20" height="20" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/delete-w.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>
 					<span>ลบ</span>
 				</button>
 			</div>
@@ -464,7 +513,7 @@
 <details class="filter-container">
 	<summary class="filter-bar">
 		<span class="f">
-			<img src="/icons/filter.svg" alt="" width="24" height="24" />
+			<img loading="lazy" decoding="async" src="/icons/filter.svg" alt="" width="24" height="24" />
 			<span class="filter-field">{filter_sort_by_lbl}</span>
 			{#if filter_locations_lbl}
 				<span class="filter-field">{filter_locations_lbl}</span>
@@ -555,7 +604,14 @@
 								confirm_delete_isopen = true;
 							}}
 						>
-							<img src="/icons/delete.svg" alt="ลบ" width="24" height="24" />
+							<img
+								loading="lazy"
+								decoding="async"
+								src="/icons/delete.svg"
+								alt="ลบ"
+								width="24"
+								height="24"
+							/>
 						</button>
 					{/if}
 				</div>
@@ -563,7 +619,14 @@
 				<div class="f g4 comment-images">
 					{#each parseImagesVal(post.images) as img (img.title)}
 						<button type="button" on:click={() => openLightbox(img.url)}>
-							<img src={img.url} alt={img.title} width="64" height="64" />
+							<img
+								loading="lazy"
+								decoding="async"
+								src={img.url}
+								alt={img.title}
+								width="64"
+								height="64"
+							/>
 						</button>
 					{/each}
 				</div>
@@ -579,9 +642,23 @@
 							}}
 						>
 							{#if post.likedByYourself}
-								<img src="/icons/like-filled.svg" alt="" width="16" height="16" />
+								<img
+									loading="lazy"
+									decoding="async"
+									src="/icons/like-filled.svg"
+									alt=""
+									width="16"
+									height="16"
+								/>
 							{:else}
-								<img src="/icons/like.svg" alt="" width="16" height="16" />
+								<img
+									loading="lazy"
+									decoding="async"
+									src="/icons/like.svg"
+									alt=""
+									width="16"
+									height="16"
+								/>
 							{/if}
 						</button>
 					{/if}
@@ -590,7 +667,14 @@
 				<div class="f g4">
 					{#each formatTag(post.location) as loc}
 						<span class="tag">
-							<img src="/icons/tag.svg" alt="" width="8" height="8" />
+							<img
+								loading="lazy"
+								decoding="async"
+								src="/icons/tag.svg"
+								alt=""
+								width="8"
+								height="8"
+							/>
 							{loc}
 						</span>
 					{/each}
@@ -608,9 +692,16 @@
 	<DialogDescription>URL: {lightbox_url}</DialogDescription>
 
 	<button class="lightbox-close" type="button" on:click={() => (lightbox_open = false)}>
-		<img src="/icons/close-w.svg" alt="ปิด" width="32" height="32" />
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/icons/close-w.svg"
+			alt="ปิด"
+			width="32"
+			height="32"
+		/>
 	</button>
-	<img src={lightbox_url} alt="" class="lightbox-image" />
+	<img loading="lazy" decoding="async" src={lightbox_url} alt="" class="lightbox-image" />
 </Dialog>
 
 <style lang="scss">

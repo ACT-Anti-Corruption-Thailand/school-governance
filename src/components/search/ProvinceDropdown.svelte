@@ -25,7 +25,7 @@
 >
 	<ListboxButton class="f province-dropdown-button">
 		<span>{selected_option}</span>
-		<img src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+		<img loading="lazy" decoding="async" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
 	</ListboxButton>
 	<ListboxOptions class="province-dropdown-list">
 		{#each options as option (option)}

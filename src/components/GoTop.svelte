@@ -32,7 +32,7 @@
 	on:click={goTop}
 	class:school={is_school_page}
 >
-	<img src="/chevrons/gotop.svg" alt="" width="14" height="8" />
+	<img src="/chevrons/gotop.svg" alt="" width="14" height="8" loading="lazy" decoding="async" />
 </button>
 
 <style lang="scss">

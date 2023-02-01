@@ -264,9 +264,24 @@
 			<details class="school-size-detail">
 				<summary>
 					<span class="f">
-						<img src="/icons/info.svg" alt="" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/info.svg"
+							alt=""
+							width="16"
+							height="16"
+						/>
 						<span>ดูเกณฑ์การแบ่งขนาดโรงเรียน</span>
-						<img class="chevron" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							class="chevron"
+							src="/chevrons/bottom.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					</span>
 				</summary>
 				<div class="school-size-flex">
@@ -321,7 +336,14 @@
 						<span class="student-color-1 std-size-color" />
 						<span>อนุบาล</span>
 						<span class="std-size-count">{d.student.total.อ.toLocaleString()}</span>
-						<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/chevrons/right.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					</button>
 					<Modal
 						title={`อนุบาล ${d.student.total.อ.toLocaleString()} คน`}
@@ -391,7 +413,14 @@
 						<span class="student-color-2 std-size-color" />
 						<span>ประถม</span>
 						<span class="std-size-count">{d.student.total.ป.toLocaleString()}</span>
-						<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/chevrons/right.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					</button>
 					<Modal
 						title={`ประถม ${d.student.total.ป.toLocaleString()} คน`}
@@ -512,7 +541,14 @@
 						<span class="student-color-3 std-size-color" />
 						<span>มัธยมต้น</span>
 						<span class="std-size-count">{d.student.total.มต.toLocaleString()}</span>
-						<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/chevrons/right.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					</button>
 					<Modal
 						title={`มัธยมต้น ${d.student.total.มต.toLocaleString()} คน`}
@@ -582,7 +618,14 @@
 						<span class="student-color-4 std-size-color" />
 						<span>มัธยมปลาย</span>
 						<span class="std-size-count">{d.student.total.มป.toLocaleString()}</span>
-						<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/chevrons/right.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					</button>
 					<Modal
 						title={`มัธยมปลาย ${d.student.total.มป.toLocaleString()} คน`}
@@ -748,14 +791,28 @@
 				<h3 class="mitr f">
 					<span>ครู</span>
 					<span class="mla">{d.staff.ครู.total.toLocaleString()}</span>
-					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/chevrons/right.svg"
+						alt=""
+						width="24"
+						height="24"
+					/>
 				</h3>
 				<p>ครูทั่วไป, ครูผู้ช่วย, ชำนาญการ, ชำนาญการพิเศษ...</p>
 			</button>
 			<Modal title={`ครู ${d.staff.ครู.total.toLocaleString()} คน`} bind:isOpen={ครู_modal_open}>
 				<div class="modal-section-header p16">
 					<div class="f ais fs10 g8">
-						<img src="/icons/info.svg" alt="" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/info.svg"
+							alt=""
+							width="16"
+							height="16"
+						/>
 						<p>
 							เอกสารจาก UNESCO ระบุว่า
 							คุณภาพของครูผู้สอนเป็นหนึ่งในปัจจัยที่สามารถบ่งชี้สภาพการให้บริการของโรงเรียนได้
@@ -766,9 +823,24 @@
 					<details class="school-size-detail">
 						<summary>
 							<span class="f">
-								<img src="/icons/info.svg" alt="" width="16" height="16" />
+								<img
+									loading="lazy"
+									decoding="async"
+									src="/icons/info.svg"
+									alt=""
+									width="16"
+									height="16"
+								/>
 								<span>ดูลำดับวิทยาฐานะและระดับตำแหน่งทั้งหมด</span>
-								<img class="chevron" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+								<img
+									loading="lazy"
+									decoding="async"
+									class="chevron"
+									src="/chevrons/bottom.svg"
+									alt=""
+									width="24"
+									height="24"
+								/>
 							</span>
 						</summary>
 						<div class="school-size-flex">
@@ -833,11 +905,25 @@
 			</div>
 			<div class="f ratio-chart">
 				<div class="f">
-					<img src="/icons/person-b.svg" alt="" width="24" height="24" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/person-b.svg"
+						alt=""
+						width="24"
+						height="24"
+					/>
 				</div>
 				<div class="f">
 					{#each Array(Math.ceil(d.student.total.all / d.staff.ครู.total)) as _}
-						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/person-y.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					{/each}
 				</div>
 			</div>
@@ -897,7 +983,14 @@
 			<h3 class="mitr f">
 				<span>บุคลากร</span>
 				<span class="mla">{d.staff.พนักงาน.total.toLocaleString()}</span>
-				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
 			</h3>
 			<p>พนักงานธุรการ การเงิน บัญชี นักโภชนาการ นักการ-ภารโรง</p>
 		</button>
@@ -907,7 +1000,14 @@
 		>
 			<div class="modal-section-header p16">
 				<div class="f ais fs10 g8">
-					<img src="/icons/info.svg" alt="" width="16" height="16" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/info.svg"
+						alt=""
+						width="16"
+						height="16"
+					/>
 					<p>
 						&ldquo;บุคลากรภายในโรงเรียน&rdquo; สามารถเป็นได้ทั้ง พนักงานธุรการ นักโภชนาการ
 						นักการภารโรง ฯลฯ ที่ถึงแม้นักเรียนส่วนใหญ่อาจจะไม่ค่อยได้คลุกคลีหรือมีปฏิสัมพันธ์โดยตรง
@@ -942,7 +1042,13 @@
 				<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
 			</div>
 			{#if d.principal_image_path}
-				<img class="director-img" src={d.principal_image_path} alt="" />
+				<img
+					loading="lazy"
+					decoding="async"
+					class="director-img"
+					src={d.principal_image_path}
+					alt=""
+				/>
 			{/if}
 		</section>
 
@@ -976,7 +1082,14 @@
 			<h3 class="f">
 				<span>อุปกรณ์การเรียน</span>
 				<span class="mla ibm fs10">ดูทั้งหมด</span>
-				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
 			</h3>
 		</button>
 		<Modal title="อุปกรณ์การเรียน" bind:isOpen={อุปกรณ์การเรียน_modal_open}>
@@ -1053,11 +1166,25 @@
 			<hr />
 			<div class="f ratio-chart">
 				<div class="f">
-					<img src="/icons/chair.svg" alt="" width="24" height="24" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/chair.svg"
+						alt=""
+						width="24"
+						height="24"
+					/>
 				</div>
 				<div class="f">
 					{#each Array(Math.ceil(d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working)) as _}
-						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/person-y.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					{/each}
 				</div>
 			</div>
@@ -1094,11 +1221,18 @@
 			<hr />
 			<div class="f ratio-chart">
 				<div class="f">
-					<img src="/icons/tv.svg" alt="" width="24" height="24" />
+					<img loading="lazy" decoding="async" src="/icons/tv.svg" alt="" width="24" height="24" />
 				</div>
 				<div class="f">
 					{#each Array(Math.ceil(d.student.total.all / d.computer.learning.working)) as _}
-						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/person-y.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					{/each}
 				</div>
 			</div>
@@ -1106,7 +1240,15 @@
 				<summary>
 					<span class="f">
 						<span class="mitr">ดูแหล่งที่มาของคอมพิวเตอร์ <small>(เครื่อง)</small></span>
-						<img class="chevron" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							class="chevron"
+							src="/chevrons/bottom.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					</span>
 				</summary>
 				<div class="f mt8 mb8">
@@ -1136,7 +1278,14 @@
 					{/if}
 				</p>
 				<div class="f g8 ais">
-					<img src="/icons/info.svg" alt="" width="16" height="16" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/info.svg"
+						alt=""
+						width="16"
+						height="16"
+					/>
 					<p class="fs10">
 						แหล่งที่มาของคอมพิวเตอร์สามารถช่วยประกอบการประเมินได้ว่า สพฐ. หรือ
 						ตัวโรงเรียนเองได้จัดสรรงบประมาณที่เพียงพอสำหรับจัดหาคอมพิวเตอร์หรือไม่
@@ -1146,7 +1295,7 @@
 		</section>
 		<section>
 			<h3 class="f jcs g8 mb8">
-				<img src="/icons/wifi.svg" alt="" width="24" height="24" />
+				<img loading="lazy" decoding="async" src="/icons/wifi.svg" alt="" width="24" height="24" />
 				<span
 					>อินเทอร์เน็ต {d.internet.speed ?? ''}
 					{#if d.internet.speed}<small>Mbps</small>{/if}</span
@@ -1156,7 +1305,14 @@
 				<dt>สถานะการใช้งาน:</dt>
 				<dd class="f jcs g8">
 					{#if d.internet.status}
-						<img src="/icons/check-y.svg" alt="" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/check-y.svg"
+							alt=""
+							width="16"
+							height="16"
+						/>
 						{d.internet.status}
 					{:else}
 						<span class="no-data">ไม่มีข้อมูล</span>
@@ -1191,7 +1347,14 @@
 				<h3 class="f">
 					<span>อุปกรณ์อื่น</span>
 					<span class="mla ibm fs10">ดูทั้งหมด</span>
-					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/chevrons/right.svg"
+						alt=""
+						width="24"
+						height="24"
+					/>
 				</h3>
 			</button>
 			<ul class="other-appliance-list">
@@ -1306,7 +1469,14 @@
 			<h3 class="f">
 				<span>อาคารและสิ่งก่อสร้างอื่น</span>
 				<span class="mla ibm fs10">ดูทั้งหมด</span>
-				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
 			</h3>
 		</button>
 		<Modal title="สิ่งก่อสร้างอื่นๆ" bind:isOpen={อาคาร_modal_open}>
@@ -1391,7 +1561,14 @@
 				<h3 class="mb8">ติดต่อ</h3>
 				<dl class="list-grid">
 					<dt>
-						<img src="/icons/location.svg" alt="ที่อยู่" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/location.svg"
+							alt="ที่อยู่"
+							width="16"
+							height="16"
+						/>
 					</dt>
 					<dd>
 						{d.address ?? ''}
@@ -1401,11 +1578,25 @@
 						{d.postcode ?? ''}
 					</dd>
 					<dt>
-						<img src="/icons/phone.svg" alt="เบอร์โทรศัพท์" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/phone.svg"
+							alt="เบอร์โทรศัพท์"
+							width="16"
+							height="16"
+						/>
 					</dt>
 					<dd>{d.telephone ?? '—'}</dd>
 					<dt>
-						<img src="/icons/globe.svg" alt="เว็บไซต์" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/globe.svg"
+							alt="เว็บไซต์"
+							width="16"
+							height="16"
+						/>
 					</dt>
 					<dd>
 						{#if d.website}
@@ -1419,7 +1610,14 @@
 						{/if}
 					</dd>
 					<dt>
-						<img src="/icons/mail.svg" alt="อีเมล์" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/mail.svg"
+							alt="อีเมล์"
+							width="16"
+							height="16"
+						/>
 					</dt>
 					<dd>
 						{#if d.email}
@@ -1434,7 +1632,15 @@
 			</section>
 
 			<section class="other-data">
-				<img class="school-logo" src={d.logo_image_path} alt="" width="40" height="40" />
+				<img
+					loading="lazy"
+					decoding="async"
+					class="school-logo"
+					src={d.logo_image_path}
+					alt=""
+					width="40"
+					height="40"
+				/>
 				<h3 class="mb8">ข้อมูลอื่น</h3>
 				<dl class="list-grid">
 					<dt>รหัสโรงเรียน</dt>
@@ -1476,7 +1682,14 @@
 	<DialogDescription>ภาพ{lightbox_building_name}</DialogDescription>
 
 	<button class="lightbox-close" type="button" on:click={() => (lightbox_open = false)}>
-		<img src="/icons/close-w.svg" alt="ปิด" width="32" height="32" />
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/icons/close-w.svg"
+			alt="ปิด"
+			width="32"
+			height="32"
+		/>
 	</button>
 	<div
 		class="lightbox-image"

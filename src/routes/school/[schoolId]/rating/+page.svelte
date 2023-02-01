@@ -337,7 +337,7 @@
 
 <button type="button" class="f rate-btn" on:click={openQuizModal}>
 	<span>แล้วคุณละ ให้กี่คะแนน?</span>
-	<img src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
+	<img loading="lazy" decoding="async" src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
 </button>
 
 <!--  ██████╗ ██╗   ██╗██╗███████╗ -->
@@ -357,7 +357,14 @@
 >
 	<div class="quiz-location" slot="title">
 		{#if quiz_location}
-			<img src="/ratings/{quiz_location}.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/{quiz_location}.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">{location_thname(quiz_location)}</span>
 		{/if}
 	</div>
@@ -372,7 +379,14 @@
 		<!-- <p>
 			{JSON.stringify(quiz_rating_values)}
 		</p> -->
-		<img src="/ratings/placeholder.png" alt="" width="228" height="125" />
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/ratings/placeholder.png"
+			alt=""
+			width="228"
+			height="125"
+		/>
 		<h3 class="mitr asfs">{QUIZ_QUESTIONS_TITLE[quiz_current_step]}</h3>
 		<p class="tal asfs">{QUIZ_QUESTIONS_DESC[quiz_location][quiz_current_step]}</p>
 
@@ -501,7 +515,14 @@
 					quiz_location = 'classroom';
 				}}
 			>
-				<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/ratings/classroom.svg"
+					alt=""
+					width="16"
+					height="16"
+				/>
 				<span class="mitr">ห้องเรียน</span>
 			</button>
 			<button
@@ -512,7 +533,14 @@
 					quiz_location = 'toilet';
 				}}
 			>
-				<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/ratings/toilet.svg"
+					alt=""
+					width="16"
+					height="16"
+				/>
 				<span class="mitr">ห้องน้ำ</span>
 			</button>
 			<button
@@ -523,7 +551,14 @@
 					quiz_location = 'canteen';
 				}}
 			>
-				<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/ratings/canteen.svg"
+					alt=""
+					width="16"
+					height="16"
+				/>
 				<span class="mitr">โรงอาหาร</span>
 			</button>
 			<button
@@ -534,7 +569,7 @@
 					quiz_location = 'gym';
 				}}
 			>
-				<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+				<img loading="lazy" decoding="async" src="/ratings/gym.svg" alt="" width="16" height="16" />
 				<span class="mitr">สนามกีฬา</span>
 			</button>
 		</div>
@@ -595,7 +630,14 @@
 		<span class="mitr">คะแนนตามเกณฑ์มาตรฐาน</span>
 		<span class="mitr f qfm-score">
 			{quiz_display_avg.toFixed(1)}
-			<img src="/ratings/radio-star-checked.svg" alt="" width="20" height="20" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/radio-star-checked.svg"
+				alt=""
+				width="20"
+				height="20"
+			/>
 		</span>
 	</div>
 	<div class="f qfm-score-list">
@@ -603,6 +645,8 @@
 		<span class="mitr f qfm-score">
 			{quiz_display_pleasure.toFixed(1)}
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(quiz_display_pleasure)}a.svg"
 				alt=""
 				width="20"
@@ -628,7 +672,14 @@
 				requestAnimationFrame(openQuizModal);
 			}}
 		>
-			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/classroom.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องเรียน</span>
 		</button>
 		<button
@@ -644,7 +695,14 @@
 				requestAnimationFrame(openQuizModal);
 			}}
 		>
-			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/toilet.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องน้ำ</span>
 		</button>
 		<button
@@ -660,7 +718,14 @@
 				requestAnimationFrame(openQuizModal);
 			}}
 		>
-			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/canteen.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">โรงอาหาร</span>
 		</button>
 		<button
@@ -676,7 +741,7 @@
 				requestAnimationFrame(openQuizModal);
 			}}
 		>
-			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+			<img loading="lazy" decoding="async" src="/ratings/gym.svg" alt="" width="16" height="16" />
 			<span class="mitr">สนามกีฬา</span>
 		</button>
 	</div>
@@ -689,7 +754,14 @@
 			{#if school_total_count}
 				<div class="total-rating-container">
 					<div class="f g4">
-						<img src="/icons/star.svg" alt="" width="20" height="20" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt=""
+							width="20"
+							height="20"
+						/>
 						<span class="mitr total-rating">{school_total_avg.toFixed(1)}</span>
 					</div>
 					<span>{school_total_count} รีวิว</span>
@@ -711,13 +783,41 @@
 					{/if}
 				</div>
 				{#if school_total_avg >= 4}
-					<img src="/ratings/rating-text-4.svg" alt="" width="73" height="49" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/ratings/rating-text-4.svg"
+						alt=""
+						width="73"
+						height="49"
+					/>
 				{:else if school_total_avg >= 3}
-					<img src="/ratings/rating-text-3.svg" alt="" width="73" height="49" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/ratings/rating-text-3.svg"
+						alt=""
+						width="73"
+						height="49"
+					/>
 				{:else if school_total_avg >= 2}
-					<img src="/ratings/rating-text-2.svg" alt="" width="73" height="49" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/ratings/rating-text-2.svg"
+						alt=""
+						width="73"
+						height="49"
+					/>
 				{:else}
-					<img src="/ratings/rating-text-1.svg" alt="" width="73" height="49" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/ratings/rating-text-1.svg"
+						alt=""
+						width="73"
+						height="49"
+					/>
 				{/if}
 			</div>
 		{/if}
@@ -939,7 +1039,14 @@
 	<div class="card">
 		<h3 class="fw400">แบ่งตามสถานที่</h3>
 		<div class="f g8">
-			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/classroom.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องเรียน</span>
 			<span class="f110" />
 			{#if +school_data?.countC1}
@@ -951,7 +1058,14 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/toilet.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องน้ำ</span>
 			<span class="f110" />
 			{#if +school_data?.countT1}
@@ -963,7 +1077,14 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/canteen.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">โรงอาหาร</span>
 			<span class="f110" />
 			{#if +school_data?.countF1}
@@ -975,7 +1096,7 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+			<img loading="lazy" decoding="async" src="/ratings/gym.svg" alt="" width="16" height="16" />
 			<span class="mitr">สนามกีฬา</span>
 			<span class="f110" />
 			{#if +school_data?.countG1}
@@ -1008,6 +1129,8 @@
 				<div class="total-rating-container">
 					<div class="f g4">
 						<img
+							loading="lazy"
+							decoding="async"
 							src="/ratings/rate-{Math.round(school_total_pleasure_avg)}a.svg"
 							alt=""
 							width="32"
@@ -1020,10 +1143,19 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/classroom.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องเรียน</span>
 			<span class="f110" />
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(school_pleasure_classroom_avg)}a.svg"
 				alt=""
 				width="28"
@@ -1038,10 +1170,19 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/toilet.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องน้ำ</span>
 			<span class="f110" />
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(school_pleasure_toilet_avg)}a.svg"
 				alt=""
 				width="28"
@@ -1056,10 +1197,19 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/canteen.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">โรงอาหาร</span>
 			<span class="f110" />
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(school_pleasure_canteen_avg)}a.svg"
 				alt=""
 				width="28"
@@ -1074,10 +1224,12 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+			<img loading="lazy" decoding="async" src="/ratings/gym.svg" alt="" width="16" height="16" />
 			<span class="mitr">สนามกีฬา</span>
 			<span class="f110" />
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(school_pleasure_gym_avg)}a.svg"
 				alt=""
 				width="28"

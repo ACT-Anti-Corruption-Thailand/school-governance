@@ -11,9 +11,17 @@
 	body_class="f login-modal-body"
 >
 	<div class="f cmodal">
-		<img class="login-modal-logo" src="/logos/school_gov-b.svg" alt="" width="224" height="83" />
+		<img
+			class="login-modal-logo"
+			src="/logos/school_gov-b.svg"
+			alt=""
+			width="224"
+			height="83"
+			loading="lazy"
+			decoding="async"
+		/>
 		<div class="f contact-text">
-			<img src="/icons/chat.svg" alt="" width="20" height="20" />
+			<img src="/icons/chat.svg" alt="" width="20" height="20" loading="lazy" decoding="async" />
 			<span>ติดต่อเจ้าหน้าที่</span>
 		</div>
 		<a
@@ -22,7 +30,14 @@
 			target="_blank"
 			rel="nofollow noopener noreferrer"
 		>
-			<img src="/icons/facebook.svg" alt="" width="24" height="24" />
+			<img
+				src="/icons/facebook.svg"
+				alt=""
+				width="24"
+				height="24"
+				loading="lazy"
+				decoding="async"
+			/>
 			Facebook
 		</a>
 		<a
@@ -31,7 +46,7 @@
 			target="_blank"
 			rel="nofollow noopener noreferrer"
 		>
-			<img src="/icons/twitter.svg" alt="" width="24" height="24" />
+			<img src="/icons/twitter.svg" alt="" width="24" height="24" loading="lazy" decoding="async" />
 			Twitter
 		</a>
 		<a
@@ -40,7 +55,7 @@
 			target="_blank"
 			rel="nofollow noopener noreferrer"
 		>
-			<img src="/icons/line.svg" alt="" width="24" height="24" />
+			<img src="/icons/line.svg" alt="" width="24" height="24" loading="lazy" decoding="async" />
 			LINE OpenChat
 		</a>
 	</div>

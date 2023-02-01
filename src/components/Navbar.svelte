@@ -96,18 +96,39 @@
 	{#if PAGE_BASE === 'search'}
 		<div class="nav-left">
 			<button class="f jcc nav-btn" type="button" on:click={() => ($show_search = true)}>
-				<img src="/icons/nav-search.svg" alt="ค้นหา" width="32" height="32" />
+				<img
+					src="/icons/nav-search.svg"
+					alt="ค้นหา"
+					width="32"
+					height="32"
+					loading="lazy"
+					decoding="async"
+				/>
 			</button>
 		</div>
 	{/if}
 	<div class="nav-logo">
 		<a href="/" on:click={() => (show_menu = false)}>
-			<img src="/logos/school_gov.svg" alt="" width="108" height="40" />
+			<img
+				src="/logos/school_gov.svg"
+				alt=""
+				width="108"
+				height="40"
+				loading="lazy"
+				decoding="async"
+			/>
 		</a>
 	</div>
 	<div class="nav-right nav-search">
 		<label class="f">
-			<img src="/icons/search-box.svg" alt="" width="24" height="24" />
+			<img
+				src="/icons/search-box.svg"
+				alt=""
+				width="24"
+				height="24"
+				loading="lazy"
+				decoding="async"
+			/>
 			<input
 				type="text"
 				placeholder="พิมพ์ชื่อโรงเรียนหรือจังหวัดที่คุณอยากค้นหา"
@@ -122,7 +143,14 @@
 				$search_string = '';
 			}}
 		>
-			<img src="/icons/close-bold.svg" alt="" width="20" height="20" />
+			<img
+				src="/icons/close-bold.svg"
+				alt=""
+				width="20"
+				height="20"
+				loading="lazy"
+				decoding="async"
+			/>
 		</button>
 	</div>
 	<div class="f nav-right">
@@ -133,10 +161,19 @@
 				alt=""
 				width="32"
 				height="32"
+				loading="lazy"
+				decoding="async"
 			/>
 		{/if}
 		<button class="f jcc nav-btn" type="button" on:click={() => (show_menu = !show_menu)}>
-			<img src="/icons/nav-ham.svg" alt="เปิดเมนู" width="32" height="32" />
+			<img
+				src="/icons/nav-ham.svg"
+				alt="เปิดเมนู"
+				width="32"
+				height="32"
+				loading="lazy"
+				decoding="async"
+			/>
 		</button>
 		<menu class="nav-menu" class:show={show_menu}>
 			{#if PAGE_BASE === 'search'}
@@ -146,27 +183,55 @@
 						type="button"
 						on:click={() => ($show_search = true)}
 					>
-						<img src="/icons/search.svg" alt="ค้นหา" width="20" height="20" />
+						<img
+							src="/icons/search.svg"
+							alt="ค้นหา"
+							width="20"
+							height="20"
+							loading="lazy"
+							decoding="async"
+						/>
 						<span>ค้นหาโรงเรียน</span>
 					</button>
 				</li>
 			{:else}
 				<li>
 					<a href="/search" on:click={() => (show_menu = false)}>
-						<img src="/icons/search.svg" alt="" width="20" height="20" />
+						<img
+							src="/icons/search.svg"
+							alt=""
+							width="20"
+							height="20"
+							loading="lazy"
+							decoding="async"
+						/>
 						<span>ค้นหาโรงเรียน</span>
 					</a>
 				</li>
 			{/if}
 			<li>
 				<a href="/#information" on:click={() => (show_menu = false)}>
-					<img src="/icons/question.svg" alt="" width="20" height="20" />
+					<img
+						src="/icons/question.svg"
+						alt=""
+						width="20"
+						height="20"
+						loading="lazy"
+						decoding="async"
+					/>
 					<span>School Governance คืออะไร?</span>
 				</a>
 			</li>
 			<li>
 				<a href=" " on:click={openContactModal}>
-					<img src="/icons/chat.svg" alt="" width="20" height="20" />
+					<img
+						src="/icons/chat.svg"
+						alt=""
+						width="20"
+						height="20"
+						loading="lazy"
+						decoding="async"
+					/>
 					<span>ติดต่อเจ้าหน้าที่</span>
 				</a>
 			</li>
@@ -179,6 +244,8 @@
 							alt=""
 							width="24"
 							height="24"
+							loading="lazy"
+							decoding="async"
 						/>
 						<span>Log out</span>
 					</button>
@@ -201,7 +268,15 @@
 <Modal title="Log in" hideTitle bind:isOpen={$login_modal_isopen} body_class="f login-modal-body">
 	{#if $currentUser}
 		<div class="f login-modal-top-content">
-			<img class="login-modal-logo" src="/logos/school_gov-b.svg" alt="" width="224" height="83" />
+			<img
+				class="login-modal-logo"
+				src="/logos/school_gov-b.svg"
+				alt=""
+				width="224"
+				height="83"
+				loading="lazy"
+				decoding="async"
+			/>
 			<div>
 				<h3 class="login-modal-title">Log in</h3>
 				<p class="login-modal-subtitle">สำเร็จ</p>
@@ -215,6 +290,8 @@
 							alt=""
 							width="80"
 							height="80"
+							loading="lazy"
+							decoding="async"
 						/>
 						{#if $currentUser?.providerData?.[0]?.providerId === 'facebook.com'}
 							<img
@@ -223,6 +300,8 @@
 								alt=""
 								width="24"
 								height="24"
+								loading="lazy"
+								decoding="async"
 							/>
 						{/if}
 					</div>
@@ -234,16 +313,37 @@
 				<div class="fspace small" />
 				<a class="f btn-school" href="/school/{$currentSchoolId}/rating">
 					<span>ให้คะแนน</span>
-					<img src="/icons/star-w.svg" alt="" width="24" height="24" />
+					<img
+						src="/icons/star-w.svg"
+						alt=""
+						width="24"
+						height="24"
+						loading="lazy"
+						decoding="async"
+					/>
 				</a>
 				<a class="f btn-school blue" href="/school/{$currentSchoolId}/comments">
 					<span>แสดงความเห็น</span>
-					<img src="/icons/comment-w.svg" alt="" width="24" height="24" />
+					<img
+						src="/icons/comment-w.svg"
+						alt=""
+						width="24"
+						height="24"
+						loading="lazy"
+						decoding="async"
+					/>
 				</a>
 			{:else}
 				<div class="fspace" />
 				<a class="f search-box" href="/search">
-					<img src="/icons/search-box.svg" alt="" width="24" height="24" />
+					<img
+						src="/icons/search-box.svg"
+						alt=""
+						width="24"
+						height="24"
+						loading="lazy"
+						decoding="async"
+					/>
 					<span>ลองค้นหาโรงเรียนคุณ</span>
 				</a>
 			{/if}
@@ -254,7 +354,15 @@
 				<h3 class="login-modal-title">Log in</h3>
 				<p class="login-modal-subtitle">เพื่อให้คะแนนและแสดงความคิดเห็น</p>
 			</div>
-			<img class="login-modal-logo" src="/logos/school_gov-b.svg" alt="" width="224" height="83" />
+			<img
+				class="login-modal-logo"
+				src="/logos/school_gov-b.svg"
+				alt=""
+				width="224"
+				height="83"
+				loading="lazy"
+				decoding="async"
+			/>
 			<p class="login-modal-text">
 				ขอความร่วมมือผู้ใช้งานทุกท่านแสดงความคิดเห็นด้วยภาษาสุภาพเพื่อสร้างสังคมการแลกเปลี่ยนที่เป็นมิตรและสร้างสรรค์
 			</p>
@@ -282,11 +390,25 @@
 		</div>
 		<div class="f login-modal-btns">
 			<button class="f login-modal-btn" type="button" on:click={loginFb} disabled={!isread_checked}>
-				<img src="/icons/facebook.svg" alt="" width="24" height="24" />
+				<img
+					src="/icons/facebook.svg"
+					alt=""
+					width="24"
+					height="24"
+					loading="lazy"
+					decoding="async"
+				/>
 				เชื่อมต่อกับ Facebook
 			</button>
 			<button class="f login-modal-btn" type="button" on:click={loginTw} disabled={!isread_checked}>
-				<img src="/icons/twitter.svg" alt="" width="24" height="24" />
+				<img
+					src="/icons/twitter.svg"
+					alt=""
+					width="24"
+					height="24"
+					loading="lazy"
+					decoding="async"
+				/>
 				เชื่อมต่อกับ Twitter
 			</button>
 		</div>
