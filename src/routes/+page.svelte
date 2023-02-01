@@ -91,47 +91,49 @@
 
 <section class="school-list-container">
 	<h2 class="school-list-header">หรือดูโรงเรียนอื่นที่สนใจ</h2>
-	<div class="f choice-con">
-		<input
-			id="school-list-choice1"
-			class="school-list-radio"
-			type="radio"
-			bind:group={schoolListType}
-			value="latest"
-		/>
-		<label for="school-list-choice1" class="f radio-pill">
-			<span>ล่าสุด</span>
-		</label>
-		<input
-			id="school-list-choice2"
-			class="school-list-radio"
-			type="radio"
-			bind:group={schoolListType}
-			value="score"
-		/>
-		<label for="school-list-choice2" class="f radio-pill">
-			<span>คะแนนเสียงมากที่สุด</span>
-		</label>
-		<input
-			id="school-list-choice3"
-			class="school-list-radio"
-			type="radio"
-			bind:group={schoolListType}
-			value="comment"
-		/>
-		<label for="school-list-choice3" class="f radio-pill">
-			<span>ความเห็นมากสุด</span>
-		</label>
-		<input
-			id="school-list-choice4"
-			class="school-list-radio"
-			type="radio"
-			bind:group={schoolListType}
-			value="debug"
-		/>
-		<label for="school-list-choice4" class="f radio-pill">
-			<span>ทดสอบระบบ</span>
-		</label>
+	<div class="overflow-x">
+		<div class="f choice-con">
+			<input
+				id="school-list-choice1"
+				class="school-list-radio"
+				type="radio"
+				bind:group={schoolListType}
+				value="latest"
+			/>
+			<label for="school-list-choice1" class="f radio-pill">
+				<span>ล่าสุด</span>
+			</label>
+			<input
+				id="school-list-choice2"
+				class="school-list-radio"
+				type="radio"
+				bind:group={schoolListType}
+				value="score"
+			/>
+			<label for="school-list-choice2" class="f radio-pill">
+				<span>คะแนนเสียงมากที่สุด</span>
+			</label>
+			<input
+				id="school-list-choice3"
+				class="school-list-radio"
+				type="radio"
+				bind:group={schoolListType}
+				value="comment"
+			/>
+			<label for="school-list-choice3" class="f radio-pill">
+				<span>ความเห็นมากสุด</span>
+			</label>
+			<input
+				id="school-list-choice4"
+				class="school-list-radio"
+				type="radio"
+				bind:group={schoolListType}
+				value="debug"
+			/>
+			<label for="school-list-choice4" class="f radio-pill">
+				<span>ทดสอบระบบ</span>
+			</label>
+		</div>
 	</div>
 	<SchoolList school_list={schoolList} />
 </section>
@@ -891,5 +893,9 @@
 				height: 56px;
 			}
 		}
+	}
+
+	.overflow-x {
+		overflow-x: auto;
 	}
 </style>
