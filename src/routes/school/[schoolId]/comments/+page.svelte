@@ -12,6 +12,7 @@
 	} from '@rgossiaux/svelte-headlessui';
 	import Modal from 'components/Modal.svelte';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
+	import CommentReadmore from 'components/school/CommentReadmore.svelte';
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
@@ -615,7 +616,7 @@
 						</button>
 					{/if}
 				</div>
-				<p class="comment-text">{post.comments}</p>
+				<CommentReadmore comment={post.comments} />
 				<div class="f g4 comment-images">
 					{#each parseImagesVal(post.images) as img (img.title)}
 						<button type="button" on:click={() => openLightbox(img.url)}>
