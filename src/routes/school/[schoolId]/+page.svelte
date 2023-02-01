@@ -127,6 +127,11 @@
 		}
 	};
 
+	const fixNaN = (val: string | number, defaultVal = '—') => {
+		if (typeof val === 'string') return val === 'NaN' ? defaultVal : val;
+		return Number.isNaN(val) ? defaultVal : val;
+	};
+
 	onMount(() => {
 		fetchScore();
 		fetchComments();
@@ -153,16 +158,16 @@
 			<div class="f school-data-block">
 				<span class="school-data-text">นักเรียนทั้งหมด</span>
 				<span class="school-data-val">
-					<span class="mitr school-bignum">{d?.student?.total?.all?.toLocaleString() ?? '...'}</span
-					> คน
+					<span class="mitr school-bignum">{d?.student?.total?.all?.toLocaleString() || '—'}</span> คน
 				</span>
 			</div>
 			<div class="f school-data-block">
 				<span class="school-data-text">นักเรียนต่อครู</span>
 				<span class="school-data-val">
 					<span class="mitr school-bignum"
-						>1:{Math.ceil(d?.student?.total?.all / d?.staff?.ครู?.total).toLocaleString() ??
-							'...'}</span
+						>1:{fixNaN(
+							Math.ceil(d?.student?.total?.all / d?.staff?.ครู?.total).toLocaleString()
+						)}</span
 					> คน
 				</span>
 			</div>
@@ -170,8 +175,9 @@
 				<span class="school-data-text">นักเรียนต่อห้อง</span>
 				<span class="school-data-val">
 					<span class="mitr school-bignum"
-						>{Math.ceil(d?.student?.total?.all / d?.student?.total?.class).toLocaleString() ??
-							'...'}</span
+						>{fixNaN(
+							Math.ceil(d?.student?.total?.all / d?.student?.total?.class).toLocaleString()
+						)}</span
 					> คน
 				</span>
 			</div>
@@ -179,8 +185,8 @@
 				<span class="school-data-text">อุปกรณ์การเรียน</span>
 				<span class="school-data-val">
 					<span class="mitr school-bignum"
-						>{~~((d?.durable_goods?.stats?.working / d?.durable_goods?.stats?.total) * 100) ??
-							'...'}%</span
+						>{~~((d?.durable_goods?.stats?.working / d?.durable_goods?.stats?.total) * 100) ||
+							'—'}%</span
 					> ใช้งานได้
 				</span>
 			</div>
@@ -191,64 +197,66 @@
 		<a href="/school/{$currentSchoolId}/rating" class="f section-header">
 			<img src="/mascots/star.svg" alt="" width="50" height="50" />
 			<span class="f header-text-adjust">
-				<span class="mitr header-bignum">{total_rating.toFixed(1)}</span>
+				<span class="mitr header-bignum">{fixNaN(total_rating.toFixed(1))}</span>
 				<span class="mitr"> คะแนน </span>
-				<small>| {total_rating_count.toLocaleString()} รีวิว</small>
+				<small>| {fixNaN(total_rating_count.toLocaleString())} รีวิว</small>
 			</span>
 			<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 		</a>
-		<div class="f score-summary">
-			<div>
-				<div>ระดับคุณภาพโรงเรียน</div>
-				<div style="color:#FA7CC7;">
-					{#if total_rating >= 4}
-						ภาพรวมดีมาก ตรงตามเกณฑ์มาตรฐาน
-					{:else if total_rating >= 3}
-						ภาพรวมดี แต่มีบางส่วนที่พัฒนาให้ดีกว่านี้ได้
-					{:else if total_rating >= 2}
-						มีหลายส่วนที่พัฒนาให้ดีกว่านี้ได้
-					{:else}
-						ยังมีหลายส่วนที่ต้องพัฒนาให้ดึกว่านี้
-					{/if}
+		{#if !Number.isNaN(total_rating) && total_rating}
+			<div class="f score-summary">
+				<div>
+					<div>ระดับคุณภาพโรงเรียน</div>
+					<div style="color:#FA7CC7;">
+						{#if total_rating >= 4}
+							ภาพรวมดีมาก ตรงตามเกณฑ์มาตรฐาน
+						{:else if total_rating >= 3}
+							ภาพรวมดี แต่มีบางส่วนที่พัฒนาให้ดีกว่านี้ได้
+						{:else if total_rating >= 2}
+							มีหลายส่วนที่พัฒนาให้ดีกว่านี้ได้
+						{:else}
+							ยังมีหลายส่วนที่ต้องพัฒนาให้ดึกว่านี้
+						{/if}
+					</div>
 				</div>
+				{#if total_rating >= 4}
+					<img src="/ratings/rating-text-4.svg" alt="" width="73" height="49" />
+				{:else if total_rating >= 3}
+					<img src="/ratings/rating-text-3.svg" alt="" width="73" height="49" />
+				{:else if total_rating >= 2}
+					<img src="/ratings/rating-text-2.svg" alt="" width="73" height="49" />
+				{:else}
+					<img src="/ratings/rating-text-1.svg" alt="" width="73" height="49" />
+				{/if}
 			</div>
-			{#if total_rating >= 4}
-				<img src="/ratings/rating-text-4.svg" alt="" width="73" height="49" />
-			{:else if total_rating >= 3}
-				<img src="/ratings/rating-text-3.svg" alt="" width="73" height="49" />
-			{:else if total_rating >= 2}
-				<img src="/ratings/rating-text-2.svg" alt="" width="73" height="49" />
-			{:else}
-				<img src="/ratings/rating-text-1.svg" alt="" width="73" height="49" />
-			{/if}
-		</div>
+		{/if}
 		<div class="f score-locations">
 			<div class="f score-location">
 				<div>ห้องเรียน</div>
 				<div class="f mitr header-text-adjust">
 					<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
-					<span class="location-star">{classroom_avg.toFixed(1)}</span>
+					<span class="location-star">{fixNaN(classroom_avg.toFixed(1))}</span>
 				</div>
 			</div>
 			<div class="f score-location">
 				<div>ห้องน้ำ</div>
 				<div class="f mitr header-text-adjust">
 					<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
-					<span class="location-star">{toilet_avg.toFixed(1)}</span>
+					<span class="location-star">{fixNaN(toilet_avg.toFixed(1))}</span>
 				</div>
 			</div>
 			<div class="f score-location">
 				<div>โรงอาหาร</div>
 				<div class="f mitr header-text-adjust">
 					<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
-					<span class="location-star">{canteen_avg.toFixed(1)}</span>
+					<span class="location-star">{fixNaN(canteen_avg.toFixed(1))}</span>
 				</div>
 			</div>
 			<div class="f score-location">
 				<div>สนามกีฬา</div>
 				<div class="f mitr header-text-adjust">
 					<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
-					<span class="location-star">{gym_avg.toFixed(1)}</span>
+					<span class="location-star">{fixNaN(gym_avg.toFixed(1))}</span>
 				</div>
 			</div>
 		</div>
