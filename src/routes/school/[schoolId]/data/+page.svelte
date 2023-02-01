@@ -1221,7 +1221,10 @@
 			{/each}
 		</Modal>
 
-		<ActAiBanner margin />
+		<ActAiBanner
+			margin
+			href="https://actai.co/Project?search=โรงเรียน{encodeURIComponent(d.name_th)}"
+		/>
 
 		<h2 bind:this={el_building_section} id="building-section" class="f">
 			<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
@@ -1374,7 +1377,10 @@
 			</ul>
 		</section>
 
-		<ActAiBanner margin />
+		<ActAiBanner
+			margin
+			href="https://actai.co/Project?search=โรงเรียน{encodeURIComponent(d.name_th)}"
+		/>
 
 		<h2 bind:this={el_general_section} id="general-section" class="f mb8">
 			<span>ข้อมูลทั่วไป</span>

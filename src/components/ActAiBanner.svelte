@@ -2,9 +2,10 @@
 	export let margin = false;
 	export let text =
 		'ค้นหาข้อมูลเพิ่มเติมเกี่ยวกับวัสดุอุปกรณ์และการก่อสร้างอาคารของโรงเรียนได้ที่นี่';
+	export let href = 'https://actai.co/';
 </script>
 
-<a href="https://actai.co/" class="f act-banner" class:margin>
+<a {href} class="f act-banner" class:margin>
 	<span>{text}</span>
 	<img src="/logos/act_upright.png" alt="" width="69" height="48" />
 </a>
