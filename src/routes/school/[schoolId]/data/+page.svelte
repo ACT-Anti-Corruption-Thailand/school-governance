@@ -1233,7 +1233,7 @@
 				{~~((d.buildings.stats.ดี / d.buildings.stats.รวม) * 100)}%
 			</span>
 		</h2>
-		<section>
+		<section style="margin-bottom:0;padding-bottom:0">
 			<dl class="f status-color">
 				<dt class="usable-color">เหลือง</dt>
 				<dd>ดี {~~((d.buildings.stats.ดี / d.buildings.stats.รวม) * 100)}%</dd>
@@ -1256,7 +1256,7 @@
 				]}
 			/>
 		</section>
-		<section>
+		<section style="margin-bottom:0">
 			<h3 class="f">
 				<span>อาคารการศึกษา <small>(อาคาร)</small></span>
 				<span>{d.buildings.data.อาคารเรียน.length.toLocaleString()}</span>
@@ -1298,7 +1298,7 @@
 
 		<button
 			type="button"
-			class="teacher-size-btn emp-btn mb8"
+			class="teacher-size-btn emp-btn"
 			on:click={() => {
 				อาคาร_modal_open = true;
 			}}
