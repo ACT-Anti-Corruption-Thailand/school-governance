@@ -24,40 +24,49 @@
 			<img src="/icons/chat.svg" alt="" width="20" height="20" loading="lazy" decoding="async" />
 			<span>ติดต่อเจ้าหน้าที่</span>
 		</div>
-		<a
-			class="f login-modal-btn"
-			href="https://www.facebook.com/schoolgovTH"
-			target="_blank"
-			rel="nofollow noopener noreferrer"
-		>
-			<img
-				src="/icons/facebook.svg"
-				alt=""
-				width="24"
-				height="24"
-				loading="lazy"
-				decoding="async"
-			/>
-			Facebook
-		</a>
-		<a
-			class="f login-modal-btn"
-			href="https://www.twitter.com/schoolgovTH"
-			target="_blank"
-			rel="nofollow noopener noreferrer"
-		>
-			<img src="/icons/twitter.svg" alt="" width="24" height="24" loading="lazy" decoding="async" />
-			Twitter
-		</a>
-		<a
-			class="f login-modal-btn"
-			href="https://line.me/ti/g2/Joczl7Owr2VK_hGM1xUETXXq9wVLxRGEuZM7CQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
-			target="_blank"
-			rel="nofollow noopener noreferrer"
-		>
-			<img src="/icons/line.svg" alt="" width="24" height="24" loading="lazy" decoding="async" />
-			LINE OpenChat
-		</a>
+		<div class="login-success-aligner">
+			<a
+				class="f login-modal-btn"
+				href="https://www.facebook.com/schoolgovTH"
+				target="_blank"
+				rel="nofollow noopener noreferrer"
+			>
+				<img
+					src="/icons/facebook.svg"
+					alt=""
+					width="24"
+					height="24"
+					loading="lazy"
+					decoding="async"
+				/>
+				<span>Facebook</span>
+			</a>
+			<a
+				class="f login-modal-btn"
+				href="https://www.twitter.com/schoolgovTH"
+				target="_blank"
+				rel="nofollow noopener noreferrer"
+			>
+				<img
+					src="/icons/twitter.svg"
+					alt=""
+					width="24"
+					height="24"
+					loading="lazy"
+					decoding="async"
+				/>
+				<span>Twitter</span>
+			</a>
+			<a
+				class="f login-modal-btn"
+				href="https://line.me/ti/g2/Joczl7Owr2VK_hGM1xUETXXq9wVLxRGEuZM7CQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+				target="_blank"
+				rel="nofollow noopener noreferrer"
+			>
+				<img src="/icons/line.svg" alt="" width="24" height="24" loading="lazy" decoding="async" />
+				<span>LINE OpenChat</span>
+			</a>
+		</div>
 	</div>
 </Modal>
 
@@ -81,7 +90,7 @@
 
 	.login-modal-btn {
 		padding: 8px 16px;
-		gap: 8px;
+		gap: 16px;
 
 		background: #ffffff;
 		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
@@ -92,5 +101,16 @@
 		&:hover {
 			text-decoration: none;
 		}
+
+		> span {
+			flex: 1 1 0;
+		}
+	}
+
+	.login-success-aligner {
+		display: grid;
+		grid-template-columns: max-content;
+		justify-content: center;
+		gap: 16px;
 	}
 </style>

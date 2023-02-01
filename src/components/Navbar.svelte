@@ -311,28 +311,30 @@
 			</div>
 			{#if $currentSchoolId}
 				<div class="fspace small" />
-				<a class="f btn-school" href="/school/{$currentSchoolId}/rating">
-					<span>ให้คะแนน</span>
-					<img
-						src="/icons/star-w.svg"
-						alt=""
-						width="24"
-						height="24"
-						loading="lazy"
-						decoding="async"
-					/>
-				</a>
-				<a class="f btn-school blue" href="/school/{$currentSchoolId}/comments">
-					<span>แสดงความเห็น</span>
-					<img
-						src="/icons/comment-w.svg"
-						alt=""
-						width="24"
-						height="24"
-						loading="lazy"
-						decoding="async"
-					/>
-				</a>
+				<div class="login-success-aligner">
+					<a class="f btn-school" href="/school/{$currentSchoolId}/rating">
+						<span>ให้คะแนน</span>
+						<img
+							src="/icons/star-w.svg"
+							alt=""
+							width="24"
+							height="24"
+							loading="lazy"
+							decoding="async"
+						/>
+					</a>
+					<a class="f btn-school blue" href="/school/{$currentSchoolId}/comments">
+						<span>แสดงความเห็น</span>
+						<img
+							src="/icons/comment-w.svg"
+							alt=""
+							width="24"
+							height="24"
+							loading="lazy"
+							decoding="async"
+						/>
+					</a>
+				</div>
 			{:else}
 				<div class="fspace" />
 				<a class="f search-box" href="/search">
@@ -388,7 +390,7 @@
 				</span>
 			</label>
 		</div>
-		<div class="f login-modal-btns">
+		<div class="login-modal-btns">
 			<button class="f login-modal-btn" type="button" on:click={loginFb} disabled={!isread_checked}>
 				<img
 					src="/icons/facebook.svg"
@@ -398,7 +400,7 @@
 					loading="lazy"
 					decoding="async"
 				/>
-				เชื่อมต่อกับ Facebook
+				<span>เชื่อมต่อกับ Facebook</span>
 			</button>
 			<button class="f login-modal-btn" type="button" on:click={loginTw} disabled={!isread_checked}>
 				<img
@@ -409,7 +411,7 @@
 					loading="lazy"
 					decoding="async"
 				/>
-				เชื่อมต่อกับ Twitter
+				<span>เชื่อมต่อกับ Twitter</span>
 			</button>
 		</div>
 	{/if}
@@ -939,12 +941,14 @@
 	}
 
 	.login-modal-btns {
+		display: grid;
+		grid-template-columns: max-content;
+		justify-content: center;
+		gap: 16px;
+
 		background: #ecf7f7;
 		padding: 32px 0;
 		width: 100%;
-
-		flex-direction: column;
-		gap: 16px;
 	}
 
 	.login-modal-btn {
@@ -955,9 +959,15 @@
 		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 200px;
 
+		justify-content: center;
+
 		&:disabled {
 			opacity: 0.5;
 			cursor: not-allowed;
+		}
+
+		> span {
+			flex: 1 1 0;
 		}
 	}
 
@@ -1084,12 +1094,11 @@
 		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 24px;
 		color: #fff;
+		font-family: 'Mitr';
 		text-decoration: none;
 		font-weight: 500;
 
-		&:first-of-type {
-			margin-bottom: 16px;
-		}
+		justify-content: space-between;
 
 		&.blue {
 			background: #6bc9ff;
@@ -1106,5 +1115,12 @@
 		@media screen and (min-width: 768px) {
 			display: initial;
 		}
+	}
+
+	.login-success-aligner {
+		display: grid;
+		grid-template-columns: max-content;
+		justify-content: center;
+		gap: 16px;
 	}
 </style>
