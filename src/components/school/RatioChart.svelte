@@ -11,9 +11,36 @@
 
 	const updatePercentage = (data: ChartSeries[]) => {
 		total = data.reduce((a, c) => a + c.number, 0);
-		data_as_percentage = data.map((d) => ({
+
+		const calcLabel = (data: any, percentage_label: number) => {
+			if (data.label) return data.label;
+			if (label_type === 'percentage' && data.percentage > percentage_threshold)
+				return `${percentage_label}%`;
+			if (label_type === 'value') return data.number;
+			return '';
+		};
+
+		const data_with_percentage = data.map((d) => ({
 			...d,
 			percentage: (d.number / total) * 100
+		}));
+
+		if (label_type === 'value') {
+			data_as_percentage = data_with_percentage;
+			return;
+		}
+
+		// เพื่อไม่ให้เกิดการ 101% ต้องคิดเพื่อทำ label แยก
+		// เอาตัวสุดท้ายออก จะได้หาได้ว่า ก่อนหน้านั้นจะมีค่าเท่าไร
+		const almost_total_percentage = data_with_percentage
+			.slice(0, data_with_percentage.length - 1)
+			.reduce((a, c) => a + Math.round(c.percentage), 0);
+		let data_percentage_label = data_with_percentage.map((d) => Math.round(d.percentage));
+		data_percentage_label[data_percentage_label.length - 1] = 100 - almost_total_percentage;
+
+		data_as_percentage = data_with_percentage.map((d, i) => ({
+			...d,
+			label: calcLabel(d, data_percentage_label[i])
 		}));
 	};
 
@@ -34,10 +61,6 @@
 						<span class="serie-text">{d.label}</span>
 					{:else if d.label === ''}
 						<span class="serie-text" />
-					{:else if label_type === 'percentage' && d.percentage > percentage_threshold}
-						<span class="serie-text">{~~d.percentage}%</span>
-					{:else if label_type === 'value'}
-						<span class="serie-text">{d.number}</span>
 					{/if}
 				</div>
 			{/if}
