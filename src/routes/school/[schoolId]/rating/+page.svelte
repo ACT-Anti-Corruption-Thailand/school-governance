@@ -786,6 +786,7 @@
 					<img
 						loading="lazy"
 						decoding="async"
+						class="rating-text"
 						src="/ratings/rating-text-4.svg"
 						alt=""
 						width="73"
@@ -795,6 +796,7 @@
 					<img
 						loading="lazy"
 						decoding="async"
+						class="rating-text"
 						src="/ratings/rating-text-3.svg"
 						alt=""
 						width="73"
@@ -804,6 +806,7 @@
 					<img
 						loading="lazy"
 						decoding="async"
+						class="rating-text"
 						src="/ratings/rating-text-2.svg"
 						alt=""
 						width="73"
@@ -813,6 +816,7 @@
 					<img
 						loading="lazy"
 						decoding="async"
+						class="rating-text"
 						src="/ratings/rating-text-1.svg"
 						alt=""
 						width="73"
@@ -1623,6 +1627,10 @@
 		&.long {
 			min-width: 51%;
 		}
+	}
+
+	.rating-text {
+		filter: drop-shadow(0px 1px 4px rgba(12, 22, 107, 0.2));
 	}
 
 	// #region UTILS
