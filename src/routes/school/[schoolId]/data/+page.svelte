@@ -23,10 +23,10 @@
 
 	$: d = $currentSchool;
 
-	const getConditionClass = (condition: string) => {
+	const getConditionClass = (condition: string, await2 = false) => {
 		const CONDITIONS_CLASS: Record<string, string> = {
 			ดี: 'usable-color',
-			พอใช้: 'await-color',
+			พอใช้: await2 ? 'await2-color' : 'await-color',
 			ทรุดโทรม: 'unusable-color'
 		};
 		return CONDITIONS_CLASS[condition] ?? '';
@@ -1234,7 +1234,7 @@
 			<dl class="f status-color">
 				<dt class="usable-color">เหลือง</dt>
 				<dd>ดี {~~((d.buildings.stats.ดี / d.buildings.stats.รวม) * 100)}%</dd>
-				<dt class="await-color">เหลืองเข้ม</dt>
+				<dt class="await2-color">เหลืองเข้ม</dt>
 				<dd>พอใช้ {~~((d.buildings.stats['พอใช้'] / d.buildings.stats.รวม) * 100)}%</dd>
 				<dt class="unusable-color">แดง</dt>
 				<dd>ทรุดโทรม {~~((d.buildings.stats.ทรุดโทรม / d.buildings.stats.รวม) * 100)}%</dd>
@@ -1248,7 +1248,7 @@
 			<RatioChart
 				data={[
 					{ number: d.buildings.stats.ดี, color: '#FFC700' },
-					{ number: d.buildings.stats.พอใช้, color: '#ddab29' },
+					{ number: d.buildings.stats.พอใช้, color: '#7d5b05' },
 					{ number: d.buildings.stats.ทรุดโทรม, color: '#fc5858' }
 				]}
 			/>
@@ -1267,7 +1267,7 @@
 			<hr />
 			<div class="col2-on-desktop">
 				{#each d.buildings.data.อาคารเรียน as b, bi}
-					<article class="building-card {getConditionClass(b.current_condition)}">
+					<article class="building-card {getConditionClass(b.current_condition, true)}">
 						<div
 							class="building-image"
 							style:--bg0="url({b.image_url_0})"
@@ -1310,7 +1310,7 @@
 			<dl class="f status-color fs10 mb16">
 				<dt class="usable-color">เหลือง</dt>
 				<dd>ดี</dd>
-				<dt class="await-color">เหลืองเข้ม</dt>
+				<dt class="await2-color">เหลืองเข้ม</dt>
 				<dd>พอใช้</dd>
 				<dt class="unusable-color">แดง</dt>
 				<dd>ทรุดโทรม</dd>
@@ -1321,7 +1321,10 @@
 					<div class="col2-on-desktop">
 						{#each d.buildings.data[buildings_key] as b}
 							<div
-								class="modal-section building f jcs ais g8 {getConditionClass(b.current_condition)}"
+								class="modal-section building f jcs ais g8 {getConditionClass(
+									b.current_condition,
+									true
+								)}"
 							>
 								<div
 									class="building-image"
@@ -1342,7 +1345,7 @@
 		<section class="other-buildings">
 			<div>
 				{#each d.buildings.data.อาคารทั่วไป as b}
-					<article class={getConditionClass(b.current_condition)}>
+					<article class={getConditionClass(b.current_condition, true)}>
 						<div
 							class="building-image"
 							style:--bg0="url({b.image_url_0})"
@@ -1505,6 +1508,10 @@
 
 	.await-color {
 		--std-color: #ddab29;
+	}
+
+	.await2-color {
+		--std-color: #7d5b05;
 	}
 
 	.unusable-color {
