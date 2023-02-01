@@ -1202,6 +1202,7 @@
 	.review-count {
 		font-size: 0.625rem;
 		line-height: 1;
+		white-space: nowrap;
 
 		@media screen and (min-width: 768px) {
 			font-size: 0.8125rem;
