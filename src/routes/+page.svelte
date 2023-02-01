@@ -300,13 +300,13 @@
 		<strong>#schoolgovernanceTH</strong>
 	</p>
 	<div class="f social-links">
-		<a href="http://www.facebook.com/sharer/sharer.php?u=https://wevis.info">
+		<a href="http://www.facebook.com/sharer/sharer.php?u=https://schoolgov.actai.co/">
 			<img src="/icons/facebook.svg" alt="Facebook" width="40" height="40" />
 		</a>
-		<a href="https://twitter.com/intent/tweet?url=https://wevis.info">
+		<a href="https://twitter.com/intent/tweet?url=https://schoolgov.actai.co/">
 			<img src="/icons/twitter.svg" alt="Twitter" width="40" height="40" />
 		</a>
-		<a href="https://social-plugins.line.me/lineit/share?url=https://wevis.info">
+		<a href="https://social-plugins.line.me/lineit/share?url=https://schoolgov.actai.co/">
 			<img src="/icons/line.svg" alt="Line" width="40" height="40" />
 		</a>
 	</div>
