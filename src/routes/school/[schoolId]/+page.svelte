@@ -200,11 +200,15 @@
 		<div class="card">
 			<header class="f section-header">
 				<img src="/mascots/star.svg" alt="" width="50" height="50" />
-				<span class="f header-text-adjust">
-					<span class="mitr header-bignum">{fixNaN(total_rating.toFixed(1))}</span>
-					<span class="mitr"> คะแนน </span>
-					<small>| {fixNaN(total_rating_count.toLocaleString())} รีวิว</small>
-				</span>
+				{#if fixNaN(total_rating.toFixed(1)) === '—'}
+					<span class="f header-text-adjust mitr">ยังไม่มีคะแนน</span>
+				{:else}
+					<span class="f header-text-adjust">
+						<span class="mitr header-bignum">{fixNaN(total_rating.toFixed(1))}</span>
+						<span class="mitr"> คะแนน </span>
+						<small>| {fixNaN(total_rating_count.toLocaleString())} รีวิว</small>
+					</span>
+				{/if}
 				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
 			</header>
 			{#if !Number.isNaN(total_rating) && total_rating}
@@ -219,7 +223,7 @@
 							{:else if total_rating >= 2}
 								มีหลายส่วนที่พัฒนาให้ดีกว่านี้ได้
 							{:else}
-								ยังมีหลายส่วนที่ต้องพัฒนาให้ดึกว่านี้
+								ยังมีหลายส่วนที่ต้องพัฒนาให้ดีกว่านี้
 							{/if}
 						</div>
 					</div>
