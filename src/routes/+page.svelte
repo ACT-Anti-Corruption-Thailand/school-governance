@@ -386,7 +386,6 @@
 
 			font-family: 'Mitr';
 			font-weight: 500;
-			line-height: 125%;
 			letter-spacing: 0.02em;
 		}
 	}
@@ -403,7 +402,7 @@
 		padding: 0 16px;
 		gap: 8px;
 
-		line-height: 136%;
+		line-height: 1;
 		color: #3c55ab;
 		text-decoration: none;
 	}
@@ -416,7 +415,7 @@
 		font-family: 'IBM Plex Sans Thai Looped';
 		font-weight: 400;
 		font-size: 13px;
-		line-height: 136%;
+		line-height: 1;
 		color: #16338f;
 	}
 
@@ -461,7 +460,7 @@
 			font-family: 'Mitr';
 			font-weight: 500;
 			font-size: 20px;
-			line-height: 125%;
+
 			letter-spacing: 0.02em;
 			gap: 8px;
 		}
@@ -472,8 +471,6 @@
 			font-family: 'Mitr';
 			font-weight: 700;
 			font-size: 1.25rem;
-			line-height: 125%;
-
 			text-align: center;
 			letter-spacing: 0.02em;
 
@@ -526,7 +523,6 @@
 			font-family: 'Mitr';
 			font-weight: 500;
 			font-size: 1rem;
-			line-height: 125%;
 			letter-spacing: 0.02em;
 			color: #fff;
 
@@ -549,7 +545,6 @@
 					font-family: 'Mitr';
 					font-weight: 500;
 					font-size: 1rem;
-					line-height: 125%;
 					letter-spacing: 0.02em;
 					margin-bottom: 8px;
 				}
@@ -559,7 +554,7 @@
 				border-radius: 5px;
 				padding: 12px 16px;
 				color: #3c55ab;
-				line-height: 136%;
+
 				flex: 1 1 0;
 			}
 		}
@@ -581,7 +576,6 @@
 			font-family: 'Mitr';
 			font-weight: 500;
 			font-size: 1.25rem;
-			line-height: 125%;
 			letter-spacing: 0.02em;
 		}
 	}
@@ -610,14 +604,13 @@
 				background: rgba(255, 255, 255, 0.1);
 				border-radius: 5px;
 				padding: 16px;
-				line-height: 136%;
+
 				flex: 1 1 0;
 
 				h3 {
 					font-family: 'Mitr';
 					font-weight: 500;
 					font-size: 1rem;
-					line-height: 125%;
 					text-align: center;
 					letter-spacing: 0.02em;
 					gap: 12px;
@@ -663,7 +656,6 @@
 		border-radius: 24px 24px 0 0;
 		color: #fff;
 		text-align: center;
-		line-height: 136%;
 
 		gap: 16px;
 
