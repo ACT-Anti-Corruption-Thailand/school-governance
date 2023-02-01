@@ -148,9 +148,7 @@
 	<figure>
 		<InViewLottie class="balloon-img" src="/lotties/wordbubble.json" />
 		<figcaption>
-			ที่มา: <a href="https://www.thaipbs.or.th/news/content/315668"
-				>https://www.thaipbs.or.th/news/content/315668</a
-			>
+			ที่มา: <a href="https://www.thaipbs.or.th/news/content/315668">สำนักข่าว Thai PBS</a>
 		</figcaption>
 	</figure>
 	<p class="info-title2">
