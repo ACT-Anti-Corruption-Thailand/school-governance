@@ -14,6 +14,8 @@
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
 	import { years } from 'stores/school';
+	import { login_modal_isopen } from 'stores/login_modal';
+
 	$: schoolId = $page.params.schoolId;
 
 	const DROPDOWN_DATA = $years?.map((y) => ({ label: y + 543, value: y })) ?? [];
@@ -321,22 +323,22 @@
 			console.error(e);
 		}
 	};
+
+	const openQuizModal = () => {
+		if ($currentUser) {
+			quiz_isopen = true;
+		} else {
+			$login_modal_isopen = true;
+		}
+	};
 </script>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }} />
 
-{#if $currentUser}
-	<button
-		type="button"
-		class="f rate-btn"
-		on:click={() => {
-			quiz_isopen = true;
-		}}
-	>
-		<span>แล้วคุณละ ให้กี่คะแนน?</span>
-		<img src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
-	</button>
-{/if}
+<button type="button" class="f rate-btn" on:click={openQuizModal}>
+	<span>แล้วคุณละ ให้กี่คะแนน?</span>
+	<img src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
+</button>
 
 <!--  ██████╗ ██╗   ██╗██╗███████╗ -->
 <!-- ██╔═══██╗██║   ██║██║╚══███╔╝ -->
@@ -543,9 +545,7 @@
 		class="metric-btn mlra"
 		type="button"
 		on:click={() => {
-			detail_modal_callback = () => {
-				quiz_isopen = true;
-			};
+			detail_modal_callback = openQuizModal;
 			quiz_isopen = false;
 			if (quiz_location) {
 				detail_choice = {
@@ -625,9 +625,7 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(() => {
-					quiz_isopen = true;
-				});
+				requestAnimationFrame(openQuizModal);
 			}}
 		>
 			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
@@ -643,9 +641,7 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(() => {
-					quiz_isopen = true;
-				});
+				requestAnimationFrame(openQuizModal);
 			}}
 		>
 			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
@@ -661,9 +657,7 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(() => {
-					quiz_isopen = true;
-				});
+				requestAnimationFrame(openQuizModal);
 			}}
 		>
 			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
@@ -679,9 +673,7 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(() => {
-					quiz_isopen = true;
-				});
+				requestAnimationFrame(openQuizModal);
 			}}
 		>
 			<img src="/ratings/gym.svg" alt="" width="16" height="16" />

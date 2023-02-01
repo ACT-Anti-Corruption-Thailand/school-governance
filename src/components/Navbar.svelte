@@ -16,6 +16,7 @@
 	import { auth, currentUser } from 'stores/firebaseapp';
 	import { show_search, search_string } from 'stores/search';
 	import { currentSchoolId } from 'stores/school';
+	import { login_modal_isopen } from 'stores/login_modal';
 
 	let PAGE_BASE = $page.route.id?.split('/')[1];
 
@@ -71,11 +72,10 @@
 		document.documentElement.classList.toggle('navbar-shown', show);
 	}
 
-	let login_isopen = false;
 	let term_isopen = false;
 
 	const term_modal_callback = () => {
-		login_isopen = true;
+		$login_modal_isopen = true;
 	};
 
 	let isread_checked = false;
@@ -186,7 +186,7 @@
 					<button
 						type="button"
 						on:click={() => {
-							login_isopen = true;
+							$login_modal_isopen = true;
 						}}>Log in</button
 					>
 				{/if}
@@ -198,7 +198,7 @@
 	<div class="nav-compensate" />
 {/if}
 
-<Modal title="Log in" hideTitle bind:isOpen={login_isopen} body_class="f login-modal-body">
+<Modal title="Log in" hideTitle bind:isOpen={$login_modal_isopen} body_class="f login-modal-body">
 	{#if $currentUser}
 		<div class="f login-modal-top-content">
 			<img class="login-modal-logo" src="/logos/school_gov-b.svg" alt="" width="224" height="83" />
@@ -271,7 +271,7 @@
 						class="policy-btn"
 						type="button"
 						on:click={() => {
-							login_isopen = false;
+							$login_modal_isopen = false;
 							requestAnimationFrame(() => {
 								term_isopen = true;
 							});

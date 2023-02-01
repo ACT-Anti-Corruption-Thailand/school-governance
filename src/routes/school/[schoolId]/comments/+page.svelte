@@ -16,6 +16,7 @@
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
 	import { LATEST_YEAR, years } from 'stores/school';
+	import { login_modal_isopen } from 'stores/login_modal';
 
 	$: schoolId = $page.params.schoolId;
 
@@ -297,10 +298,14 @@
 
 	let el_comment_modal_txtarea: HTMLTextAreaElement;
 	const openCommentModal = () => {
-		comment_modal_isopen = true;
-		requestAnimationFrame(() => {
-			el_comment_modal_txtarea.focus();
-		});
+		if ($currentUser) {
+			comment_modal_isopen = true;
+			requestAnimationFrame(() => {
+				el_comment_modal_txtarea.focus();
+			});
+		} else {
+			$login_modal_isopen = true;
+		}
 	};
 </script>
 
@@ -311,13 +316,13 @@
 	</div>
 </SchoolHeader>
 
-{#if $currentUser}
-	<button class="f comment-btn" type="button" on:click={openCommentModal}>
-		<div class="comment-btn-txtbox">แล้วคุณละ คิดอย่างไร?</div>
-		<img src="/icons/image.svg" alt="" width="24" height="24" />
-	</button>
-	<div class="comment-btn-compensate" />
+<button class="f comment-btn" type="button" on:click={openCommentModal}>
+	<div class="comment-btn-txtbox">แล้วคุณละ คิดอย่างไร?</div>
+	<img src="/icons/image.svg" alt="" width="24" height="24" />
+</button>
+<div class="comment-btn-compensate" />
 
+{#if $currentUser}
 	<Modal title="เพิ่มความเห็นใหม่" hideTitle bind:isOpen={comment_modal_isopen}>
 		<button
 			class="cf-submit"
