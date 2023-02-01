@@ -16,17 +16,29 @@
 			<img src="/icons/chat.svg" alt="" width="20" height="20" />
 			<span>ติดต่อเจ้าหน้าที่</span>
 		</div>
-		<a class="f login-modal-btn" href="https://www.facebook.com/schoolgovTH">
+		<a
+			class="f login-modal-btn"
+			href="https://www.facebook.com/schoolgovTH"
+			target="_blank"
+			rel="nofollow noopener noreferrer"
+		>
 			<img src="/icons/facebook.svg" alt="" width="24" height="24" />
 			Facebook
 		</a>
-		<a class="f login-modal-btn" href="https://www.twitter.com/schoolgovTH">
+		<a
+			class="f login-modal-btn"
+			href="https://www.twitter.com/schoolgovTH"
+			target="_blank"
+			rel="nofollow noopener noreferrer"
+		>
 			<img src="/icons/twitter.svg" alt="" width="24" height="24" />
 			Twitter
 		</a>
 		<a
 			class="f login-modal-btn"
 			href="https://line.me/ti/g2/Joczl7Owr2VK_hGM1xUETXXq9wVLxRGEuZM7CQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+			target="_blank"
+			rel="nofollow noopener noreferrer"
 		>
 			<img src="/icons/line.svg" alt="" width="24" height="24" />
 			LINE OpenChat

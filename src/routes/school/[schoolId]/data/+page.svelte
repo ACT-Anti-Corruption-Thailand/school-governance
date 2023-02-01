@@ -1409,8 +1409,10 @@
 					</dt>
 					<dd>
 						{#if d.website}
-							<a href={d.website.includes('http') ? d.website : `https://${d.website}`}
-								>{d.website}</a
+							<a
+								href={d.website.includes('http') ? d.website : `https://${d.website}`}
+								target="_blank"
+								rel="nofollow noopener noreferrer">{d.website}</a
 							>
 						{:else}
 							<span>—</span>
@@ -1421,7 +1423,9 @@
 					</dt>
 					<dd>
 						{#if d.email}
-							<a href="mailto:{d.email}">{d.email}</a>
+							<a href="mailto:{d.email}" target="_blank" rel="nofollow noopener noreferrer"
+								>{d.email}</a
+							>
 						{:else}
 							<span>—</span>
 						{/if}
@@ -1451,7 +1455,11 @@
 			<p>
 				สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่<br
 				/>
-				<a href="https://data.bopp-obec.info/emis">
+				<a
+					href="https://data.bopp-obec.info/emis"
+					target="_blank"
+					rel="nofollow noopener noreferrer"
+				>
 					ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)
 				</a>
 			</p>

@@ -339,7 +339,9 @@
 		<p>
 			&ldquo;ผู้ใช้ข้อมูล&rdquo; หมายความว่า บุคคล คณะบุคคล นิติบุคคล หน่วยงาน
 			หรือองค์กรทั้งภาครัฐและภาคเอกชนทั้งในประเทศและต่างประเทศ ที่เข้าใช้ข้อมูลซึ่งเผยแพร่บน
-			<a href="https://schoolgov.actai.co">https://schoolgov.actai.co</a> และตกลงยอมรับเงื่อนไขการใช้บริการและการใช้ข้อมูลภายใต้ข้อกำหนด
+			<a href="https://schoolgov.actai.co" target="_blank" rel="nofollow noopener noreferrer"
+				>https://schoolgov.actai.co</a
+			> และตกลงยอมรับเงื่อนไขการใช้บริการและการใช้ข้อมูลภายใต้ข้อกำหนด
 		</p>
 		<p>
 			&ldquo;การใช้บริการ&rdquo; หมายความว่า การเข้าถึง ลงทะเบียน หรือใช้งานผลิตภัณฑ์ ซอฟต์แวร์
@@ -354,14 +356,22 @@
 			และภายใต้การยอมรับการปฏิบัติตามข้อกำหนดการได้มาซึ่งข้อมูล
 		</p>
 		<p>
-			ข้อมูลที่เผยแพร่บน <a href="https://schoolgov.actai.co">https://schoolgov.actai.co</a>
+			ข้อมูลที่เผยแพร่บน <a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
+			>
 			เป็นข้อมูลเปิดเผยที่เผยแพร่ผ่านระบบสารสนเทศเพื่อบริหารการศึกษา (Education Management Information
 			System : EMIS) และระบบจัดเก็บข้อมูลสิ่งก่อสร้าง (B-OBEC) ของสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน
 			(สพฐ.) โดยองค์กรต่อต้านคอร์รัปชัน (ประเทศไทย) ได้ดำเนินการรวบรวมและเผยแพร่ข้อมูลในรูปแบบดิจิทัล
 			เพื่อประโยชน์ของสาธารณะในการส่งเสริมความโปร่งใสและสร้างการมีส่วนร่วมภายในสถานศึกษา
 		</p>
 		<p>
-			ข้อมูลที่เผยแพร่บน <a href="https://schoolgov.actai.co">https://schoolgov.actai.co</a>
+			ข้อมูลที่เผยแพร่บน <a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
+			>
 			ดำเนินการปรับปรุงอย่างสม่ำเสมอเพื่อให้ข้อมูลเป็นปัจจุบันมากที่สุด โดยผู้ใช้งานสามารถตรวจสอบความถูกต้องของข้อมูล
 			ได้ดังนี้
 		</p>
@@ -371,7 +381,10 @@
 				<ul>
 					<li>
 						เข้าถึงจาก ระบบสารสนเทศเพื่อบริหารการศึกษา (Education Management Information System :
-						EMIS) - <a href="https://data.bopp-obec.info/emis/">https://data.bopp-obec.info/emis/</a
+						EMIS) - <a
+							href="https://data.bopp-obec.info/emis/"
+							target="_blank"
+							rel="nofollow noopener noreferrer">https://data.bopp-obec.info/emis/</a
 						>
 					</li>
 				</ul>
@@ -381,7 +394,9 @@
 				<ul>
 					<li>
 						เข้าถึงจาก ระบบจัดเก็บข้อมูลสิ่งก่อสร้าง (B-OBEC) - <a
-							href="https://bobec.bopp-obec.info/">https://bobec.bopp-obec.info/</a
+							href="https://bobec.bopp-obec.info/"
+							target="_blank"
+							rel="nofollow noopener noreferrer">https://bobec.bopp-obec.info/</a
 						>
 					</li>
 				</ul>
@@ -391,7 +406,9 @@
 		<h4>ข้อกำหนดและเงื่อนไขของข้อกำหนด</h4>
 		<p>
 			ผู้ใช้บริการและใช้ข้อมูล มีสิทธิและหน้าที่ในการใช้บริการและข้อมูลบน <a
-				href="https://schoolgov.actai.co">https://schoolgov.actai.co</a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
 			>
 			ดังนี้
 		</p>
@@ -425,7 +442,13 @@
 			ผู้ใช้ข้อมูลต้องใช้ข้อมูลเพื่อวัตถุประสงค์อันชอบด้วยกฎหมายและไม่ขัดต่อความสงบเรียบร้อยหรือศีลธรรมอันดีของประชาชน
 		</p>
 
-		<h4>การอ้างอิงข้อมูลจาก <a href="https://schoolgov.actai.co">https://schoolgov.actai.co</a></h4>
+		<h4>
+			การอ้างอิงข้อมูลจาก <a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
+			>
+		</h4>
 		<p>
 			ในการนำข้อมูลไม่ว่าทั้งหมดหรือบางส่วนไปใช้งาน หรือดำเนินการอื่นเพื่อวัตถุประสงค์ใด ๆ
 			อันชอบด้วยกฎหมายของผู้ใช้ข้อมูล ผู้ใช้ข้อมูลต้องอ้างอิงถึงหน่วยงานผู้จัดทำข้อมูล
@@ -434,8 +457,10 @@
 		</p>
 		<p>
 			องค์กรต่อต้านคอร์รัปชัน (ประเทศไทย) ขอสงวนสิทธิ์ในการเก็บค่าบริการการเข้าถึงข้อมูล
-			การระงับชั่วคราวหรือยกเลิกการเผยแพร่ข้อมูลบน <a href="https://schoolgov.actai.co"
-				>https://schoolgov.actai.co</a
+			การระงับชั่วคราวหรือยกเลิกการเผยแพร่ข้อมูลบน <a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
 			>
 			หรือยกเลิกการให้ข้อมูลต่อไปไม่ว่ากรณีใด ๆ โดยไม่จำต้องบอกกล่าวล่วงหน้า และไม่ก่อให้เกิดความรับผิดชอบใด
 			ๆ แก่องค์กรต่อต้านคอร์รัปชัน (ประเทศไทย)

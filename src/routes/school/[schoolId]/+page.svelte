@@ -306,7 +306,7 @@
 </div>
 
 <div class="overview-download">
-	<a class="download-btn" href="/data/{$LATEST_YEAR}/{$currentSchoolId}.json">
+	<a class="download-btn" href="/data/{$LATEST_YEAR}/{$currentSchoolId}.json" download>
 		<img src="/icons/download.svg" alt="" width="24" height="24" />
 		<span>ดาวน์โหลดข้อมูลโรงเรียน</span>
 	</a>
@@ -314,7 +314,9 @@
 		สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่<br
 		/>
 		ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)<br />
-		<a href="https://data.bopp-obec.info/emis" download>https://data.bopp-obec.info/emis</a>
+		<a href="https://data.bopp-obec.info/emis" target="_blank" rel="nofollow noopener noreferrer"
+			>https://data.bopp-obec.info/emis</a
+		>
 	</p>
 	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date[$LATEST_YEAR]}</p>
 </div>

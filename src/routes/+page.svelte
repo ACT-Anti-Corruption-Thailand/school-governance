@@ -161,7 +161,11 @@
 	<figure>
 		<InViewLottie class="balloon-img" src="/lotties/wordbubble.json" />
 		<figcaption>
-			ที่มา: <a href="https://www.thaipbs.or.th/news/content/315668">สำนักข่าว Thai PBS</a>
+			ที่มา: <a
+				href="https://www.thaipbs.or.th/news/content/315668"
+				target="_blank"
+				rel="nofollow noopener noreferrer">สำนักข่าว Thai PBS</a
+			>
 		</figcaption>
 	</figure>
 	<p class="info-title2">
@@ -180,7 +184,11 @@
 	<p class="origin-title">นี่คือที่มาของ</p>
 	<img class="origin-logo" src="/logos/school_gov.svg" alt="" width="224" height="83" />
 	<p style="line-height:1.7">
-		เครื่องมือที่จะแสดง <a href="https://data.bopp-obec.info/emis/index.php">ฐานข้อมูลโรงเรียน</a>
+		เครื่องมือที่จะแสดง <a
+			href="https://data.bopp-obec.info/emis/index.php"
+			target="_blank"
+			rel="nofollow noopener noreferrer">ฐานข้อมูลโรงเรียน</a
+		>
 		ซึ่งรวบรวมโดยสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน (สพฐ.) เพื่อช่วยให้ทุกคนสามารถตรวจสอบข้อมูลสำคัญต่าง
 		ๆ ที่เกี่ยวข้องกับโรงเรียนได้
 	</p>
@@ -329,20 +337,38 @@
 		<strong>#schoolgovernanceTH</strong>
 	</p>
 	<div class="f social-links">
-		<a href="http://www.facebook.com/sharer/sharer.php?u=https://schoolgov.actai.co/">
+		<a
+			href="http://www.facebook.com/sharer/sharer.php?u=https://schoolgov.actai.co/"
+			target="_blank"
+			rel="nofollow noopener noreferrer"
+		>
 			<img src="/icons/facebook.svg" alt="Facebook" width="40" height="40" />
 		</a>
-		<a href="https://twitter.com/intent/tweet?url=https://schoolgov.actai.co/">
+		<a
+			href="https://twitter.com/intent/tweet?url=https://schoolgov.actai.co/"
+			target="_blank"
+			rel="nofollow noopener noreferrer"
+		>
 			<img src="/icons/twitter.svg" alt="Twitter" width="40" height="40" />
 		</a>
-		<a href="https://social-plugins.line.me/lineit/share?url=https://schoolgov.actai.co/">
+		<a
+			href="https://social-plugins.line.me/lineit/share?url=https://schoolgov.actai.co/"
+			target="_blank"
+			rel="nofollow noopener noreferrer"
+		>
 			<img src="/icons/line.svg" alt="Line" width="40" height="40" />
 		</a>
 	</div>
 	<div class="f more-links">
 		<span class="bold">ติดตามข้อมูลข่าวสารเพิ่มเติมได้ที่</span>
-		<a href="https://www.facebook.com/wethestudentsTH">Facebook: We The students Thailand</a>
-		<a href="https://twitter.com/wethestudentst1">Twitter: We The Student TH</a>
+		<a
+			href="https://www.facebook.com/wethestudentsTH"
+			target="_blank"
+			rel="nofollow noopener noreferrer">Facebook: We The students Thailand</a
+		>
+		<a href="https://twitter.com/wethestudentst1" target="_blank" rel="nofollow noopener noreferrer"
+			>Twitter: We The Student TH</a
+		>
 	</div>
 </section>
 

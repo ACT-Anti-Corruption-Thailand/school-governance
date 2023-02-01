@@ -5,7 +5,7 @@
 	export let href = 'https://actai.co/';
 </script>
 
-<a {href} class="f act-banner" class:margin>
+<a {href} class="f act-banner" class:margin target="_blank" rel="nofollow noopener noreferrer">
 	<span>{text}</span>
 	<img src="/logos/act_upright.png" alt="" width="69" height="48" />
 </a>
