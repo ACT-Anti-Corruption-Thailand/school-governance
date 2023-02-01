@@ -294,6 +294,14 @@
 		lightbox_url = url;
 		lightbox_open = true;
 	};
+
+	let el_comment_modal_txtarea: HTMLTextAreaElement;
+	const openCommentModal = () => {
+		comment_modal_isopen = true;
+		requestAnimationFrame(() => {
+			el_comment_modal_txtarea.focus();
+		});
+	};
 </script>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
@@ -304,7 +312,7 @@
 </SchoolHeader>
 
 {#if $currentUser}
-	<button class="f comment-btn" type="button" on:click={() => (comment_modal_isopen = true)}>
+	<button class="f comment-btn" type="button" on:click={openCommentModal}>
 		<div class="comment-btn-txtbox">แล้วคุณละ คิดอย่างไร?</div>
 		<img src="/icons/image.svg" alt="" width="24" height="24" />
 	</button>
@@ -323,6 +331,7 @@
 
 		<!-- <p>Current user is: {$currentUser.uid}</p> -->
 		<textarea
+			bind:this={el_comment_modal_txtarea}
 			class="cf-comment"
 			rows="5"
 			placeholder="คิดเห็นหรืออยากฝากอะไรถึงโรงเรียนบ้าง?"
@@ -411,7 +420,7 @@
 					type="button"
 					on:click={() => {
 						sent_comment_modal_isopen = false;
-						comment_modal_isopen = true;
+						openCommentModal();
 					}}
 				>
 					<img src="/icons/comment-add.svg" alt="" width="16" height="16" />
