@@ -261,6 +261,13 @@
 		</menu>
 	</div>
 </nav>
+{#if show_menu}
+	<button
+		type="button"
+		class="nav-mobile-close-trigger"
+		on:click={() => (show_menu = !show_menu)}
+	/>
+{/if}
 {#if show_when !== 'not_top'}
 	<div class="nav-compensate" />
 {/if}
@@ -1122,5 +1129,10 @@
 		grid-template-columns: max-content;
 		justify-content: center;
 		gap: 16px;
+	}
+
+	.nav-mobile-close-trigger {
+		position: fixed;
+		inset: 0;
 	}
 </style>
