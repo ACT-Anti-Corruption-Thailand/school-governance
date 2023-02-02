@@ -249,6 +249,12 @@
 	onDestroy(() => {
 		$show_search = false;
 	});
+
+	const formatDistrict = (district: string | null): string => {
+		if (!district || district === 'null') return '(ไม่ทราบอำเภอ)';
+		if (!district.includes('เขต') && !district.includes('อำเภอ')) return `อำเภอ${district}`;
+		return district;
+	};
 </script>
 
 <div class="search-container">
@@ -266,15 +272,7 @@
 				<details>
 					<summary>
 						<h2 class="f">
-							{#if district === null || district === 'null'}
-								<span>(ไม่ทราบอำเภอ)</span>
-							{:else}
-								<span>
-									{!district.includes('เขต') && !district.includes('อำเภอ')
-										? `อำเภอ${district}`
-										: district}
-								</span>
-							{/if}
+							<span>{formatDistrict(district)}</span>
 							<small>พบ {school_data.length} โรงเรียน</small>
 							<img
 								class="summary-chevron"
@@ -307,7 +305,7 @@
 		<div class="desktop-grid" class:four={related_school_list.length}>
 			{#if related_school_list.length}
 				<section>
-					<h2>โรงเรียนในเขต/อำเภอเดียวกัน</h2>
+					<h2>โรงเรียนใน{formatDistrict($currentSchool.district)}</h2>
 					<SchoolList school_list={related_school_listdata} />
 				</section>
 			{/if}
