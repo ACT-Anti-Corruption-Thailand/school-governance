@@ -9,6 +9,7 @@
 	export let options: {
 		value: string | number;
 		label?: string | number;
+		icon?: string;
 	}[];
 	export let selected_option = options[0];
 </script>
@@ -19,13 +20,26 @@
 	on:change={(e) => (selected_option = e.detail)}
 >
 	<ListboxButton class="dropdown-button">
+		{#if selected_option.icon}
+			<img
+				src={selected_option.icon}
+				alt=""
+				width="16"
+				height="16"
+				loading="lazy"
+				decoding="async"
+			/>
+		{/if}
 		<span class="nobr">{selected_option.label ?? selected_option.value}</span>
 		<img src="/chevrons/bottom.svg" alt="" width="24" height="24" loading="lazy" decoding="async" />
 	</ListboxButton>
 	<ListboxOptions class="dropdown-list">
 		{#each options as option (option.value)}
 			<ListboxOption value={option} class={({ active }) => (active ? 'active' : '')}>
-				{option.label ?? option.value}
+				{#if option.icon}
+					<img src={option.icon} alt="" width="16" height="16" loading="lazy" decoding="async" />
+				{/if}
+				<span class="nobr">{option.label ?? option.value}</span>
 			</ListboxOption>
 		{/each}
 	</ListboxOptions>
@@ -92,7 +106,9 @@
 		letter-spacing: 0.02em;
 		color: #3c55ab;
 
-		display: block;
+		display: flex;
+		align-items: center;
+		gap: 8px;
 		width: 100%;
 
 		cursor: pointer;

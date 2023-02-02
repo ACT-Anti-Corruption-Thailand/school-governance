@@ -23,18 +23,18 @@
 
 	const METRIC_DROPDOWN = [
 		{ label: 'ทุกสถานที่', value: 'all' },
-		{ label: 'ห้องเรียน', value: 'classroom' },
-		{ label: 'ห้องน้ำ', value: 'toilet' },
-		{ label: 'โรงอาหาร', value: 'canteen' },
-		{ label: 'สนามกีฬา', value: 'gym' }
+		{ label: 'ห้องเรียน', value: 'classroom', icon: '/ratings/classroom.svg' },
+		{ label: 'ห้องน้ำ', value: 'toilet', icon: '/ratings/toilet.svg' },
+		{ label: 'โรงอาหาร', value: 'canteen', icon: '/ratings/canteen.svg' },
+		{ label: 'สนามกีฬา', value: 'gym', icon: '/ratings/gym.svg' }
 	];
 	let metric_choice = METRIC_DROPDOWN[0];
 
 	const DETAIL_DROPDOWN = [
-		{ value: 'ห้องเรียน' },
-		{ value: 'ห้องน้ำ' },
-		{ value: 'โรงอาหาร' },
-		{ value: 'สนามกีฬา' }
+		{ value: 'ห้องเรียน', icon: '/ratings/classroom.svg' },
+		{ value: 'ห้องน้ำ', icon: '/ratings/toilet.svg' },
+		{ value: 'โรงอาหาร', icon: '/ratings/canteen.svg' },
+		{ value: 'สนามกีฬา', icon: '/ratings/gym.svg' }
 	];
 	let detail_choice = DETAIL_DROPDOWN[0];
 	let detail_modal_isopen = false;
@@ -589,6 +589,12 @@
 						toilet: 'ห้องน้ำ',
 						canteen: 'โรงอาหาร',
 						gym: 'สนามกีฬา'
+					}[quiz_location],
+					icon: {
+						classroom: '/ratings/classroom.svg',
+						toilet: '/ratings/toilet.svg',
+						canteen: '/ratings/canteen.svg',
+						gym: '/ratings/gym.svg'
 					}[quiz_location]
 				};
 			}
@@ -851,7 +857,7 @@
 		onCloseCallback={detail_modal_callback}
 	>
 		<div class="f" slot="title">
-			<h3 class="mitr" role="presentation">เกณฑ์มาตรฐาน</h3>
+			<h3 class="mitr" role="presentation" style="font-size:.9rem">เกณฑ์มาตรฐาน</h3>
 			<Dropdown options={DETAIL_DROPDOWN} bind:selected_option={detail_choice} />
 		</div>
 		{#if detail_choice.value === 'ห้องเรียน'}
