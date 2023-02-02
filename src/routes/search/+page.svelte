@@ -303,10 +303,12 @@
 		</section>
 	{:else}
 		<div class="desktop-grid" class:four={related_school_list.length}>
-			{#if related_school_list.length}
+			{#if $currentSchool}
 				<section>
-					<h2>โรงเรียนใน{formatDistrict($currentSchool.district)}</h2>
-					<SchoolList school_list={related_school_listdata} />
+					<h2>โรงเรียนใน{formatDistrict($currentSchool.district)}และใกล้เคียง</h2>
+					{#if related_school_list.length}
+						<SchoolList school_list={related_school_listdata} />
+					{/if}
 				</section>
 			{/if}
 			<section>
