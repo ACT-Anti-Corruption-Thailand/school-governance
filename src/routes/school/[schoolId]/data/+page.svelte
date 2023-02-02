@@ -1513,7 +1513,7 @@
 		>
 			<h3 class="f">
 				<span>อาคารและสิ่งก่อสร้างอื่น</span>
-				<span class="mla ibm fs10">ดูทั้งหมด</span>
+				<span class="mla ibm fs10">ดูรายละเอียด</span>
 				<img
 					loading="lazy"
 					decoding="async"
@@ -1524,7 +1524,7 @@
 				/>
 			</h3>
 		</button>
-		<Modal title="สิ่งก่อสร้างอื่นๆ" bind:isOpen={อาคาร_modal_open}>
+		<Modal title="อาคารและสิ่งก่อสร้างอื่น" bind:isOpen={อาคาร_modal_open}>
 			<dl class="f status-color fs10 mb16">
 				<dt class="usable-color">เหลือง</dt>
 				<dd>ดี</dd>
