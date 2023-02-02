@@ -52,6 +52,7 @@
 
 		background: #fff;
 		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		border: 1px #9daad5 solid;
 		border-radius: 24px;
 
 		color: #3c55ab;

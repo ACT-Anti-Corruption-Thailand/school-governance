@@ -43,6 +43,7 @@
 		formatted_search_string = search_string.trim();
 		if (!formatted_search_string || formatted_search_string.length < 2) {
 			province_query = school_result = [];
+			school_result_count = 0;
 			return;
 		}
 
@@ -69,7 +70,10 @@
 			school_result_count = 0;
 		}
 
-		if (!school_result_count) return;
+		if (!school_result_count) {
+			school_result = [];
+			return;
+		}
 		school_index = 10;
 
 		try {
@@ -248,68 +252,83 @@
 </script>
 
 <div class="search-container">
-	<ProvinceDropdown
-		options={PROVINCES_CHOICE}
-		selected_option={selected_province}
-		on:change={getSchoolByProvince}
-	/>
+	<div class="province-dropdown-wrapper" class:white-bg={school_by_province.length}>
+		<ProvinceDropdown
+			options={PROVINCES_CHOICE}
+			selected_option={selected_province}
+			on:change={getSchoolByProvince}
+		/>
+	</div>
 
 	{#if school_by_province.length}
 		<section class="search-result inline">
 			{#each school_by_province as [district, school_data] (district)}
-				<h2 class="f">
-					{#if district === null}
-						<span>(ไม่ทราบอำเภอ)</span>
-					{:else}
-						<span>
-							{!district.includes('เขต') && !district.includes('อำเภอ')
-								? `อำเภอ${district}`
-								: district}
-						</span>
-					{/if}
-					<small>พบ {school_data.length} โรงเรียน</small>
-				</h2>
-				<ul>
-					{#each school_data as { schoolId, nameTh } (schoolId)}
-						<li>
-							<a
-								class="f"
-								href="/school/{schoolId}"
-								on:click={() => (($show_search = false), ($search_string = ''))}
-							>
-								{nameTh}
-							</a>
-						</li>
-					{/each}
-				</ul>
+				<details>
+					<summary>
+						<h2 class="f">
+							{#if district === null || district === 'null'}
+								<span>(ไม่ทราบอำเภอ)</span>
+							{:else}
+								<span>
+									{!district.includes('เขต') && !district.includes('อำเภอ')
+										? `อำเภอ${district}`
+										: district}
+								</span>
+							{/if}
+							<small>พบ {school_data.length} โรงเรียน</small>
+							<img
+								class="summary-chevron"
+								loading="lazy"
+								decoding="async"
+								src="/chevrons/bottom.svg"
+								alt=""
+								width="20"
+								height="20"
+							/>
+						</h2>
+					</summary>
+					<ul>
+						{#each school_data as { schoolId, nameTh } (schoolId)}
+							<li>
+								<a
+									class="f"
+									href="/school/{schoolId}"
+									on:click={() => (($show_search = false), ($search_string = ''))}
+								>
+									{nameTh}
+								</a>
+							</li>
+						{/each}
+					</ul>
+				</details>
 			{/each}
 		</section>
-	{/if}
-
-	<div class="desktop-grid" class:four={related_school_list.length}>
-		{#if related_school_list.length}
+	{:else}
+		<div class="desktop-grid" class:four={related_school_list.length}>
+			{#if related_school_list.length}
+				<section>
+					<h2>โรงเรียนในเขต/อำเภอเดียวกัน</h2>
+					<SchoolList school_list={related_school_listdata} />
+				</section>
+			{/if}
 			<section>
-				<h2>โรงเรียนในเขต/อำเภอเดียวกัน</h2>
-				<SchoolList school_list={related_school_listdata} />
+				<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
+				<SchoolList school_list={latestActivityList} />
 			</section>
-		{/if}
-		<section>
-			<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
-			<SchoolList school_list={latestActivityList} />
-		</section>
-		<section>
-			<h2>โรงเรียนที่มีคะแนนเสียงมากที่สุด</h2>
-			<SchoolList school_list={mostRatingList} />
-		</section>
-		<section>
-			<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
-			<SchoolList school_list={mostCommentList} />
-		</section>
-		<section>
-			<h2>โรงเรียนที่เอาไว้ Debug</h2>
-			<SchoolList school_list={DEBUG_SCHOOL_LIST} />
-		</section>
-	</div>
+			<section>
+				<h2>โรงเรียนที่มีคะแนนเสียงมากที่สุด</h2>
+				<SchoolList school_list={mostRatingList} />
+			</section>
+			<section>
+				<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
+				<SchoolList school_list={mostCommentList} />
+			</section>
+			<section>
+				<h2>โรงเรียนที่เอาไว้ Debug</h2>
+				<SchoolList school_list={DEBUG_SCHOOL_LIST} />
+			</section>
+		</div>
+	{/if}
 
 	{#if school_result.length || province_query.length}
 		<section class="search-result">
@@ -401,7 +420,24 @@
 		}
 
 		&.inline {
-			margin: 16px -16px 0;
+			margin: 0 -16px;
+		}
+
+		summary {
+			cursor: pointer;
+			list-style: none;
+
+			&::-webkit-details-marker {
+				display: none;
+			}
+
+			.summary-chevron {
+				margin-left: auto;
+			}
+		}
+
+		details[open] summary .summary-chevron {
+			transform: rotate(180deg);
 		}
 
 		h2,
@@ -420,6 +456,7 @@
 		h2 {
 			gap: 8px;
 			border-bottom: 1px solid #ced5ea;
+			background: #ecf7f7;
 
 			> span {
 				font-weight: 500;
@@ -446,6 +483,7 @@
 				text-decoration: none;
 				width: 100%;
 				text-align: start;
+				box-sizing: border-box;
 			}
 		}
 
@@ -474,5 +512,14 @@
 				grid-template-rows: 1fr 1fr;
 			}
 		}
+	}
+
+	.province-dropdown-wrapper {
+		margin: -16px;
+		margin-bottom: 0;
+		padding: 16px;
+
+		background: white;
+		box-shadow: -80vw 0 0 white, 80vw 0 0 white;
 	}
 </style>
