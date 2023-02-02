@@ -814,7 +814,7 @@
 		position: fixed;
 		bottom: 64px;
 		width: 100%;
-		z-index: 15;
+		z-index: 10;
 
 		> .comment-btn-txtbox {
 			background: white;
@@ -910,6 +910,10 @@
 		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
 		left: 0;
 		right: 0;
+		height: calc(100vh - var(--navbar-height) - 60px - 46px - 64px);
+		box-sizing: border-box;
+		transition: height 0.3s;
+		will-change: height;
 
 		fieldset {
 			border: none;
