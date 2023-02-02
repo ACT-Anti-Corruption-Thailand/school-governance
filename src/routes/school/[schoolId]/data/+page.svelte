@@ -1293,9 +1293,9 @@
 						/>
 					</span>
 				</summary>
-				<div class="f mt8 mb8">
+				<div class="f" style="margin:8px 0 4px">
 					{#if d.computer.learning.source.obec}
-						<span>งบประมาณ สพฐ</span>
+						<span style="color:#0c166b">งบประมาณ สพฐ</span>
 					{/if}
 					{#if d.computer.learning.source.self}
 						<span>จัดหาเอง/บริจาค</span>
@@ -1303,7 +1303,7 @@
 				</div>
 				<RatioChart
 					data={[
-						{ number: d.computer.learning.source.obec, color: '#3c55ab' },
+						{ number: d.computer.learning.source.obec, color: '#0c166b' },
 						{ number: d.computer.learning.source.self, color: '#3c55ab' }
 					]}
 				/>
