@@ -20,7 +20,7 @@
 				lottie_animation_controller?.play?.();
 			},
 			{
-				amount: 0.5
+				amount: 1
 			}
 		);
 	});
