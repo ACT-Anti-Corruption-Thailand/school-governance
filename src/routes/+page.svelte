@@ -181,7 +181,7 @@
 		เพื่อหวังจะเห็นความเปลี่ยนแปลง
 	</p>
 	<figure>
-		<InViewLottie class="balloon-img" src="/lotties/wordbubble.json" />
+		<!-- <InViewLottie class="balloon-img" src="/lotties/wordbubble.json" /> -->
 		<figcaption>
 			ที่มา: <a
 				href="https://www.thaipbs.or.th/news/content/315668"
@@ -199,7 +199,7 @@
 		ซึ่งไม่ได้มาจากแค่นักเรียนอย่างพวกเราเพียงฝ่ายเดียว แต่ผู้อำนวยการ คุณครู บุคลากร ฯลฯ ก็เป็นกำลังสำคัญในการร่วมรับรู้ข้อมูลของโรงเรียน
 		ก่อนนำไปสู่การแลกเปลี่ยน แสดงความคิดเห็นและแก้ปัญหาเพื่อพัฒนาโรงเรียนไปพร้อมกับพวกเราด้วย
 	</p>
-	<InViewLottie class="contribute-img" src="/lotties/key.json" />
+	<!-- <InViewLottie class="contribute-img" src="/lotties/key.json" /> -->
 </section>
 
 <section class="origin">
@@ -287,7 +287,7 @@
 			></strong
 		>
 	</p>
-	<InViewLottie class="openjoinlearn-img" src="/lotties/openjoinlearn.json" />
+	<!-- <InViewLottie class="openjoinlearn-img" src="/lotties/openjoinlearn.json" /> -->
 	<p>
 		การสร้างพื้นที่ปลอดภัยให้ทุกคนมีส่วนร่วมจึงสำคัญมาก ไม่เพียงเพื่อให้โรงเรียนก้าวไปข้างหน้าได้
 		<strong
