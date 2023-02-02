@@ -23,6 +23,45 @@
 
 	$: d = $currentSchool;
 
+	const FALLBACK_BUILDING_IMG = '/school/school-placeholder.png';
+
+	const tryImage = (url: string) => {
+		return new Promise((res, rej) => {
+			const img = new Image();
+			img.addEventListener('error', rej);
+			img.addEventListener('load', res);
+			img.src = url;
+		});
+	};
+
+	const getUsableImage = async (...urls: string[]) => {
+		for (const url of urls) {
+			try {
+				await tryImage(url);
+				return url;
+			} catch (e) {
+				console.error('ImageRequestErr ' + e);
+			}
+		}
+		return FALLBACK_BUILDING_IMG;
+	};
+
+	const getUsableImageObject = async (schoolData: any) => {
+		const building_data = { ...schoolData.buildings.data };
+
+		for (const building_type in building_data) {
+			building_data[building_type] = await Promise.all(
+				building_data[building_type].map((e: any) => getUsableImage(e.image_url_0, e.image_url_1))
+			);
+		}
+
+		return building_data;
+	};
+
+	let building_imgs: Record<string, string[]> = {};
+
+	$: if (d) getUsableImageObject(d).then((e) => (building_imgs = e));
+
 	const getConditionClass = (condition: string, await2 = false) => {
 		const CONDITIONS_CLASS: Record<string, string> = {
 			ดี: 'usable-color',
@@ -47,14 +86,17 @@
 
 	let lightbox_open = false;
 	let lightbox_building_name = '';
-	let lightbox_url0 = '';
-	let lightbox_url1 = '';
+	let lightbox_url = '';
+	let lightbox_callback = () => {};
 
-	const openLightbox = (name: string, img0: string, img1: string) => {
+	const openLightbox = (name: string, url: string, callback = () => {}) => {
+		if (url === FALLBACK_BUILDING_IMG) return;
 		lightbox_building_name = name;
-		lightbox_url0 = img0;
-		lightbox_url1 = img1;
-		lightbox_open = true;
+		lightbox_url = url;
+		lightbox_callback = callback;
+		requestAnimationFrame(() => {
+			lightbox_open = true;
+		});
 	};
 
 	let [current_year, ...other_years] = [...($years ?? [])];
@@ -1434,12 +1476,15 @@
 			<div class="col2-on-desktop">
 				{#each d.buildings.data.อาคารเรียน as b, bi}
 					<article class="building-card {getConditionClass(b.current_condition, true)}">
-						<div
+						<img
 							class="building-image"
-							style:--bg0="url({b.image_url_0})"
-							style:--bg1="url({b.image_url_1})"
-							on:click={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
-							on:keypress={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
+							class:no-zoom={building_imgs?.อาคารเรียน?.[bi] === FALLBACK_BUILDING_IMG}
+							src={building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG}
+							alt=""
+							on:click={() =>
+								openLightbox(b.name, building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG)}
+							on:keypress={() =>
+								openLightbox(b.name, building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG)}
 						/>
 						<div>
 							<h4>{b.name} {bi + 1}</h4>
@@ -1492,17 +1537,38 @@
 				{#if d.buildings.data[buildings_key].length}
 					<div class="f modal-section-header mitr">{buildings_key}</div>
 					<div class="col2-on-desktop">
-						{#each d.buildings.data[buildings_key] as b}
+						{#each d.buildings.data[buildings_key] as b, bi}
 							<div
 								class="modal-section building f jcs ais g8 {getConditionClass(
 									b.current_condition,
 									true
 								)}"
 							>
-								<div
+								<img
 									class="building-image"
-									style:--bg0="url({b.image_url_0})"
-									style:--bg1="url({b.image_url_1})"
+									class:no-zoom={building_imgs?.[buildings_key]?.[bi] === FALLBACK_BUILDING_IMG}
+									src={building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG}
+									alt=""
+									on:click={() => {
+										อาคาร_modal_open = false;
+										openLightbox(
+											b.name,
+											building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG,
+											() => {
+												อาคาร_modal_open = true;
+											}
+										);
+									}}
+									on:keypress={() => {
+										อาคาร_modal_open = false;
+										openLightbox(
+											b.name,
+											building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG,
+											() => {
+												อาคาร_modal_open = true;
+											}
+										);
+									}}
 								/>
 								<span class="building-status cv" />
 								<div>
@@ -1517,14 +1583,17 @@
 
 		<section class="other-buildings">
 			<div>
-				{#each d.buildings.data.อาคารทั่วไป as b}
+				{#each d.buildings.data.อาคารทั่วไป as b, bi}
 					<article class={getConditionClass(b.current_condition, true)}>
-						<div
+						<img
 							class="building-image"
-							style:--bg0="url({b.image_url_0})"
-							style:--bg1="url({b.image_url_1})"
-							on:click={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
-							on:keypress={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
+							class:no-zoom={building_imgs?.อาคารทั่วไป?.[bi] === FALLBACK_BUILDING_IMG}
+							src={building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG}
+							alt=""
+							on:click={() =>
+								openLightbox(b.name, building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG)}
+							on:keypress={() =>
+								openLightbox(b.name, building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG)}
 						/>
 						<h4>{b.name}</h4>
 						<p>สร้างปี {b.build_at}</p>
@@ -1675,13 +1744,26 @@
 </div>
 
 <!-- Lightbox Dialog -->
-<Dialog open={lightbox_open} on:close={() => (lightbox_open = false)}>
+<Dialog
+	open={lightbox_open}
+	on:close={() => {
+		lightbox_open = false;
+		requestAnimationFrame(lightbox_callback);
+	}}
+>
 	<DialogOverlay class="lightbox-backdrop" />
 
 	<DialogTitle class="sr-only">{lightbox_building_name}</DialogTitle>
 	<DialogDescription>ภาพ{lightbox_building_name}</DialogDescription>
 
-	<button class="lightbox-close" type="button" on:click={() => (lightbox_open = false)}>
+	<button
+		class="lightbox-close"
+		type="button"
+		on:click={() => {
+			lightbox_open = false;
+			requestAnimationFrame(lightbox_callback);
+		}}
+	>
 		<img
 			loading="lazy"
 			decoding="async"
@@ -1691,11 +1773,7 @@
 			height="32"
 		/>
 	</button>
-	<div
-		class="lightbox-image"
-		style:--bg0="url({lightbox_url0})"
-		style:--bg1="url({lightbox_url1})"
-	/>
+	<img class="lightbox-image" src={lightbox_url} alt="" />
 </Dialog>
 
 <style lang="scss">
@@ -2038,9 +2116,11 @@
 			height: auto;
 			aspect-ratio: 1;
 			border-top: 2px var(--std-color) solid;
-			background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
-			background-size: cover;
 			cursor: zoom-in;
+
+			&.no-zoom {
+				cursor: auto;
+			}
 		}
 
 		h4 {
@@ -2079,11 +2159,15 @@
 
 			> article {
 				> .building-image {
+					width: 100%;
+					height: auto;
 					aspect-ratio: 1;
 					border-top: 2px var(--std-color) solid;
-					background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
-					background-size: cover;
 					cursor: zoom-in;
+
+					&.no-zoom {
+						cursor: auto;
+					}
 				}
 
 				> h4 {
@@ -2156,8 +2240,11 @@
 				width: 40px;
 				height: 40px;
 				border-top: 2px var(--std-color) solid;
-				background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
-				background-size: cover;
+				cursor: zoom-in;
+
+				&.no-zoom {
+					cursor: auto;
+				}
 			}
 		}
 	}
@@ -2203,10 +2290,8 @@
 		height: 100vh;
 		z-index: 20;
 
-		background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
-		background-size: contain;
-		background-repeat: no-repeat;
-		background-position: 50%;
+		object-fit: contain;
+		object-position: center;
 
 		cursor: zoom-out;
 		pointer-events: none;

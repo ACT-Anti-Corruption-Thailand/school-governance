@@ -11,7 +11,7 @@
 	export let description = '';
 	export let isOpen: boolean;
 	export let body_class = '';
-	export let onCloseCallback: Function = () => {};
+	export let onCloseCallback = () => {};
 	export let boxWidth = '480px';
 	export let boxLeftShift = '0px';
 </script>
@@ -20,7 +20,7 @@
 	open={isOpen}
 	on:close={() => {
 		isOpen = false;
-		onCloseCallback();
+		requestAnimationFrame(onCloseCallback);
 	}}
 >
 	<!-- <DialogOverlay class="modal-backdrop" /> -->
@@ -37,7 +37,7 @@
 				class="f"
 				on:click={() => {
 					isOpen = false;
-					onCloseCallback();
+					requestAnimationFrame(onCloseCallback);
 				}}
 			>
 				<img
