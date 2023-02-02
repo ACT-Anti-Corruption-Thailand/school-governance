@@ -3,7 +3,11 @@
 
 	import { onMount } from 'svelte';
 
-	import { QUIZ_QUESTIONS_DESC, QUIZ_QUESTIONS_TITLE } from 'data/quiz-questions';
+	import {
+		QUIZ_QUESTIONS_DESC,
+		QUIZ_QUESTIONS_TITLE,
+		QUIZ_QUESTIONS_IMAGE
+	} from 'data/quiz-questions';
 
 	import Dropdown from 'components/Dropdown.svelte';
 	import Modal from 'components/Modal.svelte';
@@ -353,6 +357,7 @@
 	body_class="quiz-body f {quiz_location ? 'quiz-body-gap' : ''}"
 	onCloseCallback={quiz_onclose}
 	boxWidth="640px"
+	boxHeight="700px"
 	boxLeftShift="24px"
 >
 	<div class="quiz-location" slot="title">
@@ -379,14 +384,17 @@
 		<!-- <p>
 			{JSON.stringify(quiz_rating_values)}
 		</p> -->
-		<img
-			loading="lazy"
-			decoding="async"
-			src="/ratings/placeholder.png"
-			alt=""
-			width="228"
-			height="125"
-		/>
+		<div class="f quiz-img-wrapper">
+			<img
+				class="quiz-img"
+				loading="lazy"
+				decoding="async"
+				src={QUIZ_QUESTIONS_IMAGE[quiz_location][quiz_current_step]}
+				alt=""
+				width="228"
+				height="125"
+			/>
+		</div>
 		<h3 class="mitr asfs">{QUIZ_QUESTIONS_TITLE[quiz_current_step]}</h3>
 		<p class="tal asfs">{QUIZ_QUESTIONS_DESC[quiz_location][quiz_current_step]}</p>
 
@@ -1314,10 +1322,6 @@
 		text-decoration: underline;
 		margin-right: auto;
 		width: max-content;
-
-		@media screen and (min-width: 768px) {
-			margin-top: 16px;
-		}
 	}
 
 	.meter {
@@ -1455,7 +1459,7 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 8px;
-		margin-top: 16px;
+		margin: 16px 0;
 		width: 100%;
 	}
 
@@ -1637,6 +1641,26 @@
 
 	.rating-text {
 		filter: drop-shadow(0px 1px 4px rgba(12, 22, 107, 0.2));
+	}
+
+	.quiz-img {
+		width: 90%;
+		height: 120px;
+		object-fit: contain;
+
+		@media screen and (min-width: 768px) {
+			width: auto;
+			height: 200px;
+		}
+	}
+
+	.quiz-img-wrapper {
+		justify-content: center;
+		padding: 8px 0 0;
+
+		@media screen and (min-width: 768px) {
+			padding: 16px 0 8px;
+		}
 	}
 
 	// #region UTILS

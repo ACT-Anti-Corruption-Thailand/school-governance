@@ -36,3 +36,34 @@ export const QUIZ_QUESTIONS_DESC = {
 		'ความพึ่งพอใจของฉันต่อลานกีฬาโดยภาพรวม'
 	]
 };
+
+export const QUIZ_QUESTIONS_IMAGE = {
+	classroom: [
+		'/ratings/illustrations/classroom_clean.png',
+		'/ratings/illustrations/classroom_enough.png',
+		'/ratings/illustrations/classroom_safe.png',
+		'/ratings/illustrations/classroom_beauty.png',
+		'/ratings/illustrations/classroom_pleasure.png'
+	],
+	toilet: [
+		'/ratings/illustrations/toilet_clean.png',
+		'/ratings/illustrations/toilet_enough.png',
+		'/ratings/illustrations/toilet_safe.png',
+		'/ratings/illustrations/toilet_beauty.png',
+		'/ratings/illustrations/toilet_pleasure.png'
+	],
+	canteen: [
+		'/ratings/illustrations/canteen_clean.png',
+		'/ratings/illustrations/canteen_enough.png',
+		'/ratings/illustrations/canteen_safe.png',
+		'/ratings/illustrations/canteen_beauty.png',
+		'/ratings/illustrations/canteen_pleasure.png'
+	],
+	gym: [
+		'/ratings/illustrations/gym_clean.png',
+		'/ratings/illustrations/gym_enough.png',
+		'/ratings/illustrations/gym_safe.png',
+		'/ratings/illustrations/gym_beauty.png',
+		'/ratings/illustrations/gym_pleasure.png'
+	]
+};

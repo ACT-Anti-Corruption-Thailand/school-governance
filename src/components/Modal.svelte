@@ -13,6 +13,7 @@
 	export let body_class = '';
 	export let onCloseCallback = () => {};
 	export let boxWidth = '480px';
+	export let boxHeight = '600px';
 	export let boxLeftShift = '0px';
 </script>
 
@@ -29,6 +30,7 @@
 	<div
 		class="modal-box"
 		style:--modal-box-width={boxWidth}
+		style:--modal-box-height={boxHeight}
 		style:--modal-box-left-shift={boxLeftShift}
 	>
 		<header class="f modal-header" class:header-background={!hideTitle || $$slots.title}>
@@ -87,7 +89,7 @@
 			top: 50%;
 			transform: translate(-50%, -50%);
 			width: var(--modal-box-width, 480px);
-			max-height: 600px;
+			max-height: var(--modal-box-height, 600px);
 		}
 	}
 
