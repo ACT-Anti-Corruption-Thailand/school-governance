@@ -814,6 +814,7 @@
 		position: fixed;
 		bottom: 64px;
 		width: 100%;
+		z-index: 15;
 
 		> .comment-btn-txtbox {
 			background: white;

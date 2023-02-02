@@ -4,6 +4,7 @@
 
 	import { page } from '$app/stores';
 	$: is_school_page = $page.route.id?.split('/')?.[1] === 'school';
+	$: is_school_comment_page = is_school_page && $page.route.id?.split('/')?.[3] === 'comments';
 
 	let goTop = () => {};
 
@@ -31,6 +32,7 @@
 	aria-label="กลับด้านบน"
 	on:click={goTop}
 	class:school={is_school_page}
+	class:school-comment={is_school_comment_page}
 >
 	<img src="/chevrons/gotop.svg" alt="" width="14" height="8" loading="lazy" decoding="async" />
 </button>
@@ -63,6 +65,14 @@
 
 		&.school {
 			bottom: 80px;
+
+			@media screen and (min-width: 768px) {
+				bottom: 40px;
+			}
+		}
+
+		&.school-comment {
+			bottom: 132px;
 
 			@media screen and (min-width: 768px) {
 				bottom: 40px;
