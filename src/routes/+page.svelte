@@ -1177,10 +1177,17 @@
 		border-radius: 200px;
 		color: inherit;
 		font-size: 0.8125rem;
+		border: 1px solid #ced5ea;
+
+		transition: box-shadow 0.1s;
 
 		&,
 		&:hover {
 			text-decoration: none;
+		}
+
+		&:hover {
+			box-shadow: 0 0 0 rgba(12, 22, 107, 0.2);
 		}
 
 		> span {
