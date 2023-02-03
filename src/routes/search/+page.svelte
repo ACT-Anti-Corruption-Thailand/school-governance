@@ -185,8 +185,7 @@
 		district: string;
 	};
 	let school_by_province: [string, SchoolMetadataType[]][] = [];
-	const getSchoolByProvince = async (event: any) => {
-		const province = event.detail;
+	const getSchoolByProvince = async (province: any) => {
 		if (province === 'เลือกจังหวัด') return (school_by_province = []);
 
 		try {
@@ -214,6 +213,8 @@
 			console.error(e);
 		}
 	};
+
+	$: getSchoolByProvince(selected_province);
 
 	const DEBUG_SCHOOL_LIST = [
 		{ id: '1010720001', name: 'พญาไท' },
@@ -259,11 +260,7 @@
 
 <div class="search-container">
 	<div class="province-dropdown-wrapper" class:white-bg={school_by_province.length}>
-		<ProvinceDropdown
-			options={PROVINCES_CHOICE}
-			selected_option={selected_province}
-			on:change={getSchoolByProvince}
-		/>
+		<ProvinceDropdown options={PROVINCES_CHOICE} bind:selected_option={selected_province} />
 	</div>
 
 	{#if school_by_province.length}
