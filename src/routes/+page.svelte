@@ -55,6 +55,16 @@
 				amount: 0.9
 			}
 		);
+
+		inView(
+			'.problem-img',
+			(info) => {
+				animate(info.target, { transform: 'translateY(0) scale(1)' }, { duration: 1 });
+			},
+			{
+				amount: 0.9
+			}
+		);
 	});
 </script>
 
@@ -192,7 +202,21 @@
 		เพื่อหวังจะเห็นความเปลี่ยนแปลง
 	</p>
 	<figure>
-		<InViewLottie class="balloon-img" src="/lotties/wordbubble.json" />
+		<img
+			class="problem-img"
+			src="/index/problem1.png"
+			alt="ค่าเทอมอย่างแพงแต่ แอร์เสีย ห้องมีแต่ฝุ่นห้องน้ำทุเรศมาก โต๊ะเก้าอี้ชำรุด ทางเดิน = ไซต์ก่อสร้าง ให้มาทำความสะอาดกันเองครูบางคนริดรอนสิทธิ์ไม่ให้ลงมาแสดงความเห็น ผู้บริหารทั้งหลายอิกนอความชุ่ยการบริหาร แจ้งอะไรเสียก็ไม่มาซ่อมจนเรียนจบพึ่งจะมา"
+			loading="lazy"
+			decoding="async"
+			style="margin-bottom:8px"
+		/>
+		<img
+			class="problem-img"
+			src="/index/problem2.png"
+			alt="ที่สนามแถวๆแป้น6 มีตะปูโผล่ขึ้นมาทุเรดสุดๆ อันนี้เรียกว่าพร้อมยังโกโก้ออกมาพูดที"
+			loading="lazy"
+			decoding="async"
+		/>
 		<figcaption>
 			ที่มา: <a
 				href="https://www.thaipbs.or.th/news/content/315668"
@@ -752,7 +776,7 @@
 
 		.info-title2 {
 			font-size: 1rem;
-			margin: 24px 0;
+			margin: 40px 0 24px;
 			font-weight: 500;
 		}
 
@@ -1176,5 +1200,15 @@
 		gap: 16px;
 
 		margin: 16px 0 24px;
+	}
+
+	.problem-img {
+		max-width: 100%;
+		width: auto;
+		display: block;
+		margin: auto;
+
+		transform-origin: bottom center;
+		transform: translateY(50%) scale(0);
 	}
 </style>
