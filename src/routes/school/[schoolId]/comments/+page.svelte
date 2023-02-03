@@ -777,7 +777,7 @@
 		gap: 4px;
 
 		background: #6bc9ff;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 4px;
 
 		color: #fff;
@@ -807,8 +807,8 @@
 		gap: 8px;
 
 		background: #6bc9ff;
-		box-shadow: 0px -1px 4px rgba(12, 22, 107, 0.2);
-		border-radius: 8px 8px 0px 0px;
+		box-shadow: 0 -1px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 8px 8px 0 0;
 		cursor: pointer;
 
 		position: fixed;
@@ -872,7 +872,7 @@
 		padding: 8px 16px;
 		background: #fff;
 
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 
 		cursor: pointer;
 		list-style: none;
@@ -907,7 +907,7 @@
 		padding: 8px 16px 16px;
 		position: absolute;
 		background: #fff;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		left: 0;
 		right: 0;
 		height: calc(100vh - var(--navbar-height) - 60px - 46px - 64px);
@@ -981,7 +981,7 @@
 
 		color: #0c166b;
 		background: #6bc9ff;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border: 1px solid transparent;
 		border-radius: 16px;
 
@@ -1037,7 +1037,7 @@
 
 			border: 1px solid transparent;
 			background: #6bc9ff;
-			box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+			box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 			color: #fff;
 
 			&::before {
@@ -1204,7 +1204,7 @@
 		transform: translateY(-50%);
 		z-index: 32;
 		background: #fff;
-		box-shadow: 0px 1px 4px rgb(12 22 107 / 20%);
+		box-shadow: 0 1px 4px rgb(12 22 107 / 20%);
 		border-radius: 8px;
 		padding: 16px;
 		text-align: center;
@@ -1245,7 +1245,7 @@
 		width: 100%;
 
 		border: 1px solid #3c55ab;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 40px;
 
 		font-family: 'Mitr';

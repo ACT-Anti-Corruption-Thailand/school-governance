@@ -93,7 +93,7 @@
 		gap: 16px;
 
 		background: #fff;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 200px;
 		color: inherit;
 

@@ -172,8 +172,8 @@
 
 		padding: 16px 24px;
 		background: #6bc9ff;
-		box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
-		border-radius: 16px 16px 0px 0px;
+		box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+		border-radius: 16px 16px 0 0;
 
 		color: #0c166b;
 	}
@@ -195,7 +195,7 @@
 	}
 
 	.cookie-modal-btn {
-		box-shadow: 0px 1px 4px rgb(12 22 107 / 20%);
+		box-shadow: 0 1px 4px rgb(12 22 107 / 20%);
 		border-radius: 20px;
 		padding: 4px 12px;
 		border: 1px #3c55ab solid;

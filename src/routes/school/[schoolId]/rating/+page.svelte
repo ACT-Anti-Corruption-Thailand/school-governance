@@ -1397,7 +1397,7 @@
 		gap: 8px;
 
 		background: #fa7cc7;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 24px;
 
 		color: #fff;
@@ -1469,7 +1469,7 @@
 		padding: 12px 0;
 		background: #fff;
 		border: 1px solid #fcbde3;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 4px;
 
 		gap: 8px;
@@ -1574,7 +1574,7 @@
 	.rating-form-btn {
 		background: #fa7cc7;
 		border: 2px solid #fa7cc7;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 24px;
 
 		font-family: 'Mitr';
@@ -1593,7 +1593,7 @@
 		&:is([disabled], .secondary) {
 			background: #fff;
 			border: 2px solid #fcbde3;
-			box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+			box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 			color: #fcbde3;
 		}
 	}

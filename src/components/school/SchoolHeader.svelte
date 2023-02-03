@@ -29,7 +29,7 @@
 	.school-header {
 		justify-content: space-between;
 
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		background: #fff;
 		padding: 12px 16px;
 

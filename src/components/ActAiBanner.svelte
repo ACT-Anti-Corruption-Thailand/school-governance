@@ -14,7 +14,7 @@
 	.act-banner {
 		padding: 16px;
 		background: #000;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 4px;
 		color: #fff;
 		text-decoration: none;

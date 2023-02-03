@@ -688,7 +688,7 @@
 				align-items: center;
 
 				background: #fff;
-				box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+				box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 				border-radius: 30px;
 
 				width: 100%;
@@ -971,7 +971,7 @@
 		gap: 8px;
 
 		background: #fff;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 200px;
 
 		justify-content: center;
@@ -1072,7 +1072,7 @@
 		width: 32px;
 		height: 32px;
 
-		background: white;
+		background: #fff;
 		border-radius: 99px;
 		border: 4px #fff solid;
 	}
@@ -1110,7 +1110,7 @@
 		gap: 8px;
 
 		background: #fa7cc7;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 24px;
 		color: #fff;
 		font-family: 'Mitr';

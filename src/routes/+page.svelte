@@ -1193,7 +1193,7 @@
 		gap: 16px;
 
 		background: #fff;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 200px;
 		color: inherit;
 		font-size: 0.8125rem;
@@ -1230,7 +1230,7 @@
 		gap: 8px;
 
 		background: #fff;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 10px;
 
 		text-align: left;
