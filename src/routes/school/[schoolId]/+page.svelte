@@ -5,6 +5,7 @@
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import RatingStat from 'components/RatingStat.svelte';
 	import CommentStat from 'components/CommentStat.svelte';
+	import InViewLottie from 'components/InViewLottie.svelte';
 
 	import { currentSchool, currentSchoolId, update_date, LATEST_YEAR } from 'stores/school';
 	$: d = $currentSchool;
@@ -150,14 +151,7 @@
 	<a href="/school/{$currentSchoolId}/data" class="section-link">
 		<div class="card">
 			<header class="f section-header mitr">
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/mascots/data.svg"
-					alt=""
-					width="50"
-					height="50"
-				/>
+				<InViewLottie class="school-data-lottie-img" src="/lotties/data_ch.json" loop autoplay />
 				<span>ข้อมูลโรงเรียน</span>
 				<img
 					loading="lazy"
@@ -213,13 +207,11 @@
 	<a href="/school/{$currentSchoolId}/rating" class="section-link">
 		<div class="card">
 			<header class="f section-header">
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/mascots/star.svg"
-					alt=""
-					width="50"
-					height="50"
+				<InViewLottie
+					class="school-data-lottie-img"
+					src="/lotties/rating_completed.json"
+					loop
+					autoplay
 				/>
 				{#if fixNaN(total_rating.toFixed(1)) === '—'}
 					<span class="f header-text-adjust mitr">ยังไม่มีคะแนน</span>
@@ -358,13 +350,11 @@
 	<a href="/school/{$currentSchoolId}/comments" class="section-link">
 		<div class="card">
 			<header class="f section-header mitr">
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/mascots/speak.svg"
-					alt=""
-					width="50"
-					height="50"
+				<InViewLottie
+					class="school-data-lottie-img"
+					src="/lotties/feedback_completed.json"
+					loop
+					autoplay
 				/>
 				<span class="f header-text-adjust">
 					<span class="header-bignum">{total_comment.toLocaleString()}</span>
@@ -663,5 +653,10 @@
 		border-radius: 20px;
 		color: #fff;
 		text-decoration: none;
+	}
+
+	:global(.school-data-lottie-img) {
+		width: 50px;
+		height: 50px;
 	}
 </style>
