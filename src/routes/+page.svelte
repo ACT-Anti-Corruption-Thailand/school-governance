@@ -429,13 +429,59 @@
 </section>
 
 <section class="f ending">
+	<div class="f more-links">
+		<span class="bold">ติดตามข้อมูลข่าวสารเพิ่มเติมได้ที่</span>
+		<div class="login-success-aligner">
+			<a
+				class="f login-modal-btn"
+				href="https://www.facebook.com/wethestudentsTH"
+				target="_blank"
+				rel="nofollow noopener noreferrer"
+			>
+				<img
+					src="/icons/facebook.svg"
+					alt=""
+					width="24"
+					height="24"
+					loading="lazy"
+					decoding="async"
+				/>
+				<span>Facebook Page</span>
+			</a>
+			<a
+				class="f login-modal-btn"
+				href="https://twitter.com/wethestudentst1"
+				target="_blank"
+				rel="nofollow noopener noreferrer"
+			>
+				<img
+					src="/icons/twitter.svg"
+					alt=""
+					width="24"
+					height="24"
+					loading="lazy"
+					decoding="async"
+				/>
+				<span>Twitter</span>
+			</a>
+			<a
+				class="f login-modal-btn"
+				href="https://line.me/ti/g2/Joczl7Owr2VK_hGM1xUETXXq9wVLxRGEuZM7CQ?utm_source=invitation&utm_medium=link_copy&utm_campaign=default"
+				target="_blank"
+				rel="nofollow noopener noreferrer"
+			>
+				<img src="/icons/line.svg" alt="" width="24" height="24" loading="lazy" decoding="async" />
+				<span>LINE OpenChat</span>
+			</a>
+		</div>
+	</div>
 	<p>
 		แชร์ให้เพื่อน ๆ มาร่วมตรวจสอบด้วยกัน<br />
-		<strong>#schoolgovernanceTH</strong>
+		<strong>#โปร่งใสวิทยาคม</strong>
 	</p>
 	<div class="f social-links">
 		<a
-			href="http://www.facebook.com/sharer/sharer.php?u=https://schoolgov.actai.co/"
+			href="http://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fschoolgov.actai.co%2F"
 			target="_blank"
 			rel="nofollow noopener noreferrer"
 		>
@@ -449,7 +495,7 @@
 			/>
 		</a>
 		<a
-			href="https://twitter.com/intent/tweet?url=https://schoolgov.actai.co/"
+			href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fschoolgov.actai.co%2F"
 			target="_blank"
 			rel="nofollow noopener noreferrer"
 		>
@@ -463,7 +509,7 @@
 			/>
 		</a>
 		<a
-			href="https://social-plugins.line.me/lineit/share?url=https://schoolgov.actai.co/"
+			href="https://social-plugins.line.me/lineit/share?url=https%3A%2F%2Fschoolgov.actai.co%2F"
 			target="_blank"
 			rel="nofollow noopener noreferrer"
 		>
@@ -476,17 +522,6 @@
 				height="40"
 			/>
 		</a>
-	</div>
-	<div class="f more-links">
-		<span class="bold">ติดตามข้อมูลข่าวสารเพิ่มเติมได้ที่</span>
-		<a
-			href="https://www.facebook.com/wethestudentsTH"
-			target="_blank"
-			rel="nofollow noopener noreferrer">Facebook: We The students Thailand</a
-		>
-		<a href="https://twitter.com/wethestudentst1" target="_blank" rel="nofollow noopener noreferrer"
-			>Twitter: We The Student TH</a
-		>
 	</div>
 </section>
 
@@ -878,7 +913,6 @@
 
 		.more-links {
 			flex-direction: column;
-			gap: 4px;
 
 			a {
 				color: #3c55ab;
@@ -1113,5 +1147,34 @@
 
 	:global(.lottie-mini.flip) {
 		transform: scaleX(-100%);
+	}
+
+	.login-modal-btn {
+		padding: 8px 16px;
+		gap: 16px;
+
+		background: #fff;
+		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 200px;
+		color: inherit;
+		font-size: 0.8125rem;
+
+		&,
+		&:hover {
+			text-decoration: none;
+		}
+
+		> span {
+			flex: 1 1 0;
+		}
+	}
+
+	.login-success-aligner {
+		display: grid;
+		grid-template-columns: max-content;
+		justify-content: center;
+		gap: 16px;
+
+		margin: 16px 0 24px;
 	}
 </style>
