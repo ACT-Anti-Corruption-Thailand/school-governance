@@ -341,7 +341,9 @@
 
 <button type="button" class="f rate-btn" on:click={openQuizModal}>
 	<span>แล้วคุณละ ให้กี่คะแนน?</span>
-	<img loading="lazy" decoding="async" src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
+	<div class="school-quiz-lottie">
+		<Lottie path="/lotties/littlestar.json" loop={true} autoplay={true} />
+	</div>
 </button>
 
 <!--  ██████╗ ██╗   ██╗██╗███████╗ -->
@@ -800,7 +802,7 @@
 					<img
 						loading="lazy"
 						decoding="async"
-						class="rating-text"
+						class="rating-text pop"
 						src="/ratings/rating-text-4.svg"
 						alt=""
 						width="73"
@@ -810,7 +812,7 @@
 					<img
 						loading="lazy"
 						decoding="async"
-						class="rating-text"
+						class="rating-text pop"
 						src="/ratings/rating-text-3.svg"
 						alt=""
 						width="73"
@@ -820,7 +822,7 @@
 					<img
 						loading="lazy"
 						decoding="async"
-						class="rating-text"
+						class="rating-text pop"
 						src="/ratings/rating-text-2.svg"
 						alt=""
 						width="73"
@@ -830,7 +832,7 @@
 					<img
 						loading="lazy"
 						decoding="async"
-						class="rating-text"
+						class="rating-text pop"
 						src="/ratings/rating-text-1.svg"
 						alt=""
 						width="73"
@@ -1661,6 +1663,53 @@
 		@media screen and (min-width: 768px) {
 			padding: 16px 0 8px;
 		}
+	}
+
+	@keyframes swingBounceIn {
+		from,
+		20%,
+		40%,
+		60%,
+		80%,
+		to {
+			animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+		}
+
+		0% {
+			opacity: 0;
+			transform: scale3d(0.3, 0.3, 0.3);
+		}
+
+		20% {
+			transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 15deg);
+		}
+
+		40% {
+			transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -10deg);
+		}
+
+		60% {
+			opacity: 1;
+			transform: scale3d(1.03, 1.03, 1.03) rotate3d(0, 0, 1, 5deg);
+		}
+
+		80% {
+			transform: scale3d(0.97, 0.97, 0.97) rotate3d(0, 0, 1, -5deg);
+		}
+
+		to {
+			opacity: 1;
+			transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 0deg);
+		}
+	}
+
+	.pop {
+		animation: swingBounceIn 1s;
+	}
+
+	.school-quiz-lottie {
+		width: 25px;
+		height: 25px;
 	}
 
 	// #region UTILS
