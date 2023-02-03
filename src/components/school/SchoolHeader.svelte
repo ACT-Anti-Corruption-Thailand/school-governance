@@ -33,6 +33,8 @@
 		background: #fff;
 		padding: 12px 16px;
 
+		gap: 12px;
+
 		position: fixed;
 		top: var(--navbar-height);
 		transition: top 0.3s;
@@ -47,6 +49,8 @@
 
 		> hgroup {
 			color: #3c55ab;
+			overflow: auto hidden;
+			white-space: nowrap;
 
 			> h1 {
 				font-family: 'Mitr';
@@ -66,6 +70,9 @@
 				letter-spacing: 0.02em;
 
 				margin: 0;
+
+				position: sticky;
+				left: 0;
 			}
 
 			> p {
