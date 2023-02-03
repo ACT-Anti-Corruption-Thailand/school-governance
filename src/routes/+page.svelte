@@ -384,46 +384,21 @@
 	<div class="f feature-card-container">
 		<div class="feature-card">
 			<h3 class="f">
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/mascots/star.svg"
-					alt=""
-					width="40"
-					height="40"
-				/>
+				<InViewLottie class="lottie-mini" src="/lotties/rating_completed.json" loop autoplay />
 				<span>ให้คะแนนโรงเรียน</span>
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/mascots/star.svg"
-					alt=""
-					width="40"
-					height="40"
-					style="transform:scaleX(-100%)"
-				/>
+				<InViewLottie class="lottie-mini flip" src="/lotties/rating_completed.json" loop autoplay />
 			</h3>
 			<p>เทียบบริการในโรงเรียนกับเกณฑ์มาตรฐาน พร้อมประเมิน ให้คะแนนโรงเรียนในแต่ละด้าน</p>
 		</div>
 		<div class="feature-card">
 			<h3 class="f">
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/mascots/speak.svg"
-					alt=""
-					width="40"
-					height="40"
-				/>
+				<InViewLottie class="lottie-mini" src="/lotties/feedback_completed.json" loop autoplay />
 				<span>โรงเรียนในมุมของเรา</span>
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/mascots/speak.svg"
-					alt=""
-					width="40"
-					height="40"
-					style="transform:scaleX(-100%)"
+				<InViewLottie
+					class="lottie-mini flip"
+					src="/lotties/feedback_completed.json"
+					loop
+					autoplay
 				/>
 			</h3>
 			<p>
@@ -433,24 +408,9 @@
 		</div>
 		<div class="feature-card">
 			<h3 class="f">
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/mascots/exclaim.svg"
-					alt=""
-					width="40"
-					height="40"
-				/>
+				<InViewLottie class="lottie-mini" src="/lotties/announce_ch.json" loop autoplay />
 				<span>ติดตามประกาศ</span>
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/mascots/exclaim.svg"
-					alt=""
-					width="40"
-					height="40"
-					style="transform:scaleX(-100%)"
-				/>
+				<InViewLottie class="lottie-mini flip" src="/lotties/announce_ch.json" loop autoplay />
 			</h3>
 			<p>ช่องทางสำหรับสื่อสารหรือตอบกลับข้อคิดเห็นของเพื่อน ๆ โดยตรงจากโรงเรียน</p>
 		</div>
