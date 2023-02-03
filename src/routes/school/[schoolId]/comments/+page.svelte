@@ -817,7 +817,7 @@
 		z-index: 10;
 
 		> .comment-btn-txtbox {
-			background: white;
+			background: #fff;
 			border-radius: 99px;
 			padding: 8px 12px;
 

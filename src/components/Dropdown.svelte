@@ -63,7 +63,7 @@
 		gap: 8px;
 		height: 32px;
 
-		background: #ffffff;
+		background: #fff;
 		border: 1px solid #9daad5;
 		border-radius: 30px;
 
@@ -86,7 +86,7 @@
 		align-items: flex-start;
 		padding: 0;
 
-		background: #ffffff;
+		background: #fff;
 		border: 0.5px solid #9daad5;
 		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 10px;

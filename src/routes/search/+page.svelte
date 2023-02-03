@@ -517,7 +517,7 @@
 		margin-bottom: 0;
 		padding: 16px;
 
-		background: white;
-		box-shadow: -80vw 0 0 white, 80vw 0 0 white;
+		background: #fff;
+		box-shadow: -80vw 0 0 #fff, 80vw 0 0 #fff;
 	}
 </style>

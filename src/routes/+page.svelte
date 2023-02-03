@@ -571,7 +571,7 @@
 		justify-content: space-between;
 		text-align: center;
 
-		color: #ffffff;
+		color: #fff;
 
 		margin-bottom: 20px;
 	}

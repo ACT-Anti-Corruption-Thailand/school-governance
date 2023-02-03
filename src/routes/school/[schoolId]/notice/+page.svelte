@@ -179,7 +179,7 @@
 
 	article {
 		padding: 16px;
-		background: #ffffff;
+		background: #fff;
 		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 5px;
 		width: 100%;

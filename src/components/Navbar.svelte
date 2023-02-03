@@ -962,7 +962,7 @@
 		padding: 8px 16px;
 		gap: 8px;
 
-		background: #ffffff;
+		background: #fff;
 		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 200px;
 

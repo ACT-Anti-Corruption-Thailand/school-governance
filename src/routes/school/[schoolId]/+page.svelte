@@ -492,7 +492,7 @@
 	.school-data-block {
 		padding: 16px;
 
-		background: #ffffff;
+		background: #fff;
 		border: 1px solid #fff5dd;
 		// box-shadow: 0px 0px 5px rgba(12, 22, 107, 0.2);
 		border-radius: 5px;
@@ -598,7 +598,7 @@
 		padding: 16px;
 		gap: 8px;
 
-		background: #ffffff;
+		background: #fff;
 		border: 1px solid #ecf7f7;
 		border-radius: 5px;
 

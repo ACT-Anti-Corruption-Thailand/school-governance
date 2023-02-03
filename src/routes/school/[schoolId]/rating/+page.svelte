@@ -1327,7 +1327,7 @@
 	.meter {
 		min-width: 35%;
 		height: 4px;
-		background: #dddddd;
+		background: #ddd;
 		display: flex;
 		border-radius: 2px;
 		overflow: hidden;
@@ -1484,7 +1484,7 @@
 	}
 
 	.quiz-step {
-		background: #dddddd;
+		background: #ddd;
 		border-radius: 4px;
 		flex: 1 1 0;
 
