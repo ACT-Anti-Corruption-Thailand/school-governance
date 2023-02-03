@@ -18,8 +18,17 @@
 
 	<link
 		href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;700&family=Mitr:wght@400;500;700&display=swap"
-		rel="stylesheet">
-
+		rel="stylesheet"
+		media="print"
+		data-lazy>
+	<noscript>
+		<link
+			href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;700&family=Mitr:wght@400;500;700&display=swap"
+			rel="stylesheet">
+	</noscript>
+	<script defer>
+		[...document.querySelectorAll("[data-lazy]")].forEach(l => l.media = "all")
+	</script>
 	%sveltekit.head%
 </head>
 
