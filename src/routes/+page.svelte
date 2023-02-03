@@ -551,7 +551,7 @@
 
 <footer class="f footer">
 	<div class="f credit">
-		<span>Powered by</span>
+		<span class="nobr">Powered by</span>
 		<img
 			loading="lazy"
 			decoding="async"
@@ -563,7 +563,7 @@
 		/>
 	</div>
 	<div class="f credit">
-		<span>Co-Developed by</span>
+		<span class="nobr">Co-Developed by</span>
 		<img
 			loading="lazy"
 			decoding="async"
@@ -584,7 +584,6 @@
 		/>
 	</div>
 	<div class="f credit">
-		<span>Sponsors by </span>
 		<img
 			loading="lazy"
 			decoding="async"
@@ -630,11 +629,7 @@
 	</p>
 </footer>
 
-<style lang="scss" scoped>
-	.nobr {
-		white-space: nowrap;
-	}
-
+<style lang="scss">
 	.header,
 	.school-list-container,
 	.information,

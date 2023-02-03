@@ -46,10 +46,6 @@
 </Listbox>
 
 <style lang="scss">
-	.nobr {
-		white-space: nowrap;
-	}
-
 	:global(.dropdown-root) {
 		position: relative;
 	}
