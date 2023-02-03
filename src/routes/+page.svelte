@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { animate, inView } from 'motion';
 
 	import SchoolList from 'components/SchoolList.svelte';
 	import ActAiBanner from 'components/ActAiBanner.svelte';
@@ -44,6 +45,16 @@
 	onMount(() => {
 		_getLatestActivityList();
 		_getStatsList();
+
+		inView(
+			'.data-cards > .card',
+			(info) => {
+				animate(info.target, { opacity: 1 }, { duration: 1 });
+			},
+			{
+				amount: 0.9
+			}
+		);
 	});
 </script>
 
@@ -223,37 +234,91 @@
 		ๆ ที่เกี่ยวข้องกับโรงเรียนได้
 	</p>
 	<h3 class="f jcc">
-		<img loading="lazy" decoding="async" src="/mascots/data.svg" alt="" width="40" height="40" />
+		<InViewLottie class="lottie-mini" src="/lotties/data_ch.json" loop autoplay />
 		<span>ส่องข้อมูลโรงเรียนของเรา</span>
-		<img
-			loading="lazy"
-			decoding="async"
-			src="/mascots/data.svg"
-			alt=""
-			width="40"
-			height="40"
-			style="transform:scaleX(-100%)"
-		/>
+		<InViewLottie class="lottie-mini flip" src="/lotties/data_ch.json" loop autoplay />
 	</h3>
 	<div class="f data-cards">
 		<div class="card">
-			<h4>ข้อมูลพื้นฐานโรงเรียน</h4>
+			<h4>
+				<img
+					src="/icons/location-b.svg"
+					alt=""
+					loading="lazy"
+					decoding="async"
+					width="16"
+					height="16"
+				/>
+				<span>ข้อมูลพื้นฐานโรงเรียน</span>
+				<img
+					src="/icons/location-b.svg"
+					alt=""
+					loading="lazy"
+					decoding="async"
+					width="16"
+					height="16"
+				/>
+			</h4>
 			<p>เช็ครหัส ที่อยู่ เบอร์โทรโรงเรียน ฯลฯ</p>
 		</div>
 		<div class="card">
-			<h4>ข้อมูลนักเรียน</h4>
+			<h4>
+				<img src="/icons/cap.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
+				<span>ข้อมูลนักเรียน</span>
+				<img src="/icons/cap.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
+			</h4>
 			<p>นับจำนวนเพื่อนพี่น้องร่วมสถาบัน</p>
 		</div>
 		<div class="card">
-			<h4>ข้อมูลบุคลากร</h4>
+			<h4>
+				<img
+					src="/icons/person-b.svg"
+					alt=""
+					loading="lazy"
+					decoding="async"
+					width="16"
+					height="16"
+				/>
+				<span>ข้อมูลบุคลากร</span>
+				<img
+					src="/icons/person-b.svg"
+					alt=""
+					loading="lazy"
+					decoding="async"
+					width="16"
+					height="16"
+				/>
+			</h4>
 			<p>เช็คจำนวนครูมีสัดส่วนเท่าไรเมื่อเทียบกับนักเรียน</p>
 		</div>
 		<div class="card">
-			<h4>ข้อมูลอุปกรณ์</h4>
+			<h4>
+				<img src="/icons/chair.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
+				<span>ข้อมูลอุปกรณ์</span>
+				<img src="/icons/chair.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
+			</h4>
 			<p>ตรวจดูวัสดุ อุปกรณ์การเรียนต่าง ๆ ใช้งานได้จริงครบถ้วนหรือไม่</p>
 		</div>
 		<div class="card">
-			<h4>ข้อมูลสิ่งปลูกสร้าง</h4>
+			<h4>
+				<img
+					src="/icons/school.svg"
+					alt=""
+					loading="lazy"
+					decoding="async"
+					width="16"
+					height="16"
+				/>
+				<span>ข้อมูลสิ่งปลูกสร้าง</span>
+				<img
+					src="/icons/school.svg"
+					alt=""
+					loading="lazy"
+					decoding="async"
+					width="16"
+					height="16"
+				/>
+			</h4>
 			<p>เช็คสภาพสิ่งปลูกสร้าง จำนวนห้องเรียน ตรงกับความเป็นจริงแค่ไหน</p>
 		</div>
 	</div>
@@ -758,6 +823,11 @@
 					font-size: 1rem;
 					letter-spacing: 0.02em;
 					margin-bottom: 8px;
+
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					gap: 8px;
 				}
 
 				background: #fff5dd;
@@ -767,6 +837,8 @@
 				color: #3c55ab;
 
 				flex: 1 1 0;
+
+				opacity: 0;
 			}
 		}
 
@@ -1072,5 +1144,14 @@
 
 	.overflow-x {
 		overflow-x: auto;
+	}
+
+	:global(.lottie-mini) {
+		width: 40px;
+		height: 40px;
+	}
+
+	:global(.lottie-mini.flip) {
+		transform: scaleX(-100%);
 	}
 </style>

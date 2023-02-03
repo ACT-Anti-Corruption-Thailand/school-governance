@@ -5,6 +5,8 @@
 	import type { AnimationEvent } from 'lottie-svelte/iface';
 
 	export let src: string;
+	export let loop = false;
+	export let autoplay = false;
 
 	let el: HTMLElement;
 	let lottie_animation_controller: AnimationEvent['detail'];
@@ -27,5 +29,5 @@
 </script>
 
 <div bind:this={el} {...$$restProps}>
-	<Lottie path={src} loop={false} autoplay={false} on:animation={lottieAnimationHandler} />
+	<Lottie path={src} {loop} {autoplay} on:animation={lottieAnimationHandler} />
 </div>
