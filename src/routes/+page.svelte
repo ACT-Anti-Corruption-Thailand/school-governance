@@ -57,9 +57,9 @@
 		);
 
 		inView(
-			'.problem-img',
+			'.socialmedia-card',
 			(info) => {
-				animate(info.target, { transform: 'translateY(0) scale(1)' }, { duration: 1 });
+				animate(info.target, { transform: 'scale(1) translateY(0)', opacity: 1 }, { duration: 1 });
 			},
 			{
 				amount: 0.9
@@ -201,30 +201,63 @@
 		นักเรียนหลายต่อหลายโรงเรียน ต่างพยายามส่งเสียงของพวกเขาออกไปนอกโรงเรียน
 		เพื่อหวังจะเห็นความเปลี่ยนแปลง
 	</p>
-	<figure>
-		<img
-			class="problem-img"
-			src="/index/problem1.png"
-			alt="ค่าเทอมอย่างแพงแต่ แอร์เสีย ห้องมีแต่ฝุ่นห้องน้ำทุเรศมาก โต๊ะเก้าอี้ชำรุด ทางเดิน = ไซต์ก่อสร้าง ให้มาทำความสะอาดกันเองครูบางคนริดรอนสิทธิ์ไม่ให้ลงมาแสดงความเห็น ผู้บริหารทั้งหลายอิกนอความชุ่ยการบริหาร แจ้งอะไรเสียก็ไม่มาซ่อมจนเรียนจบพึ่งจะมา"
-			loading="lazy"
-			decoding="async"
-			style="margin-bottom:8px"
-		/>
-		<img
-			class="problem-img"
-			src="/index/problem2.png"
-			alt="ที่สนามแถวๆแป้น6 มีตะปูโผล่ขึ้นมาทุเรดสุดๆ อันนี้เรียกว่าพร้อมยังโกโก้ออกมาพูดที"
-			loading="lazy"
-			decoding="async"
-		/>
-		<figcaption>
-			ที่มา: <a
-				href="https://www.thaipbs.or.th/news/content/315668"
-				target="_blank"
-				rel="nofollow noopener noreferrer">สำนักข่าว Thai PBS</a
-			>
-		</figcaption>
-	</figure>
+	<div class="socialmedia-card">
+		<div class="f smc-profile">
+			<img src="/index/sad.svg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+			<div>
+				<div class="smc-name">Anon</div>
+				<div class="smc-id">@anonymous01</div>
+			</div>
+		</div>
+		<p class="smc-text">
+			ค่าเทอมอย่างแพงแต่ แอร์เสีย ห้องมีแต่ฝุ่นห้องน้ำทุเรศมาก โต๊ะเก้าอี้ชำรุด ทางเดิน =
+			ไซต์ก่อสร้าง ให้มาทำความสะอาดกันเองครูบางคนริดรอนสิทธิ์ไม่ให้ลงมาแสดงความเห็น
+			ผู้บริหารทั้งหลายอิกนอความชุ่ยการบริหาร แจ้งอะไรเสียก็ไม่มาซ่อมจนเรียนจบพึ่งจะมา
+		</p>
+		<div class="f" style="justify-content:space-between">
+			<img
+				class="smc-like"
+				src="/index/love.svg"
+				alt=""
+				width="16"
+				height="16"
+				loading="lazy"
+				decoding="async"
+			/>
+			<span class="smc-id">May 19, 2022</span>
+		</div>
+	</div>
+	<div class="socialmedia-card">
+		<div class="f smc-profile">
+			<img src="/index/angry.svg" alt="" width="40" height="40" loading="lazy" decoding="async" />
+			<div>
+				<div class="smc-name">Anny</div>
+				<div class="smc-id">@anonymous02</div>
+			</div>
+		</div>
+		<p class="smc-text">
+			ที่สนามแถวๆแป้น6 มีตะปูโผล่ขึ้นมาทุเรดสุดๆ อันนี้เรียกว่าพร้อมยังโกโก้ออกมาพูดที
+		</p>
+		<div class="f" style="justify-content:space-between">
+			<img
+				class="smc-like"
+				src="/index/love.svg"
+				alt=""
+				width="16"
+				height="16"
+				loading="lazy"
+				decoding="async"
+			/>
+			<span class="smc-id">May 19, 2022</span>
+		</div>
+	</div>
+	<p>
+		ที่มา: <a
+			href="https://www.thaipbs.or.th/news/content/315668"
+			target="_blank"
+			rel="nofollow noopener noreferrer">สำนักข่าว Thai PBS</a
+		>
+	</p>
 	<p class="info-title2">
 		แต่ไม่ใช่ทุกคำเรียกร้องที่จะไปได้ไกล เกินกว่าพาดหัวข่าว หรือ ข้อความในโลกอินเทอร์เน็ต
 	</p>
@@ -784,14 +817,6 @@
 		p {
 			margin-bottom: 24px;
 		}
-
-		figcaption,
-		figcaption > a {
-			font-family: 'IBM Plex Sans Thai Looped';
-			font-size: 0.625rem;
-			color: #9daad5;
-			margin-top: 8px;
-		}
 	}
 
 	.origin {
@@ -1072,11 +1097,6 @@
 			.info-title3 {
 				font-size: 1.9375rem;
 			}
-
-			figcaption,
-			figcaption > a {
-				font-size: 0.8125rem;
-			}
 		}
 
 		.origin {
@@ -1204,13 +1224,44 @@
 		margin: 16px 0 24px;
 	}
 
-	.problem-img {
-		max-width: 100%;
-		width: auto;
-		display: block;
-		margin: auto;
+	.socialmedia-card {
+		padding: 16px;
+		margin-bottom: 16px;
+		gap: 8px;
 
-		transform-origin: bottom center;
-		transform: translateY(50%) scale(0);
+		background: #fff;
+		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 10px;
+
+		text-align: left;
+
+		transform: scale(0.8) translateY(50%);
+		opacity: 0;
+
+		.smc-profile {
+			gap: 16px;
+		}
+
+		.smc-name,
+		.smc-id {
+			line-height: 1.36;
+			font-weight: 500;
+		}
+
+		.smc-id {
+			font-weight: 400;
+			color: #9daad5;
+		}
+
+		.smc-text {
+			margin: 8px 0;
+		}
+
+		@media screen and (min-width: 768px) {
+			.smc-like {
+				width: 24px;
+				height: 24px;
+			}
+		}
 	}
 </style>
