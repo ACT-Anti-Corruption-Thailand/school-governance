@@ -2,11 +2,10 @@
 	import { onMount } from 'svelte';
 	import { scroll } from 'motion';
 	import {
-		signInAnonymously,
 		signInWithPopup,
 		FacebookAuthProvider,
-		signOut,
-		ProviderId
+		GoogleAuthProvider,
+		signOut
 	} from 'firebase/auth';
 
 	import Modal from './Modal.svelte';
@@ -32,11 +31,10 @@
 			signInWithPopup($auth, fbProvider);
 		}
 	};
-	const loginTw = () => {
+	const ggProvider = new GoogleAuthProvider();
+	const loginGg = () => {
 		if ($auth) {
-			if (confirm('ฟีเจอร์นี้ยังไม่ได้ทำจ้า แต่จะล็อกอินแบบ Anon ไปก่อนเพื่อทดสอบเว็บไหม?')) {
-				signInAnonymously($auth);
-			}
+			signInWithPopup($auth, ggProvider);
 		}
 	};
 
@@ -310,6 +308,16 @@
 								loading="lazy"
 								decoding="async"
 							/>
+						{:else if $currentUser?.providerData?.[0]?.providerId === 'google.com'}
+							<img
+								class="login-social-logo"
+								src="/icons/google.svg"
+								alt=""
+								width="24"
+								height="24"
+								loading="lazy"
+								decoding="async"
+							/>
 						{/if}
 					</div>
 				</div>
@@ -398,6 +406,17 @@
 			</label>
 		</div>
 		<div class="login-modal-btns">
+			<button class="f login-modal-btn" type="button" on:click={loginGg} disabled={!isread_checked}>
+				<img
+					src="/icons/google.svg"
+					alt=""
+					width="24"
+					height="24"
+					loading="lazy"
+					decoding="async"
+				/>
+				<span>เชื่อมต่อกับ Google</span>
+			</button>
 			<button class="f login-modal-btn" type="button" on:click={loginFb} disabled={!isread_checked}>
 				<img
 					src="/icons/facebook.svg"
@@ -408,17 +427,6 @@
 					decoding="async"
 				/>
 				<span>เชื่อมต่อกับ Facebook</span>
-			</button>
-			<button class="f login-modal-btn" type="button" on:click={loginTw} disabled={!isread_checked}>
-				<img
-					src="/icons/twitter.svg"
-					alt=""
-					width="24"
-					height="24"
-					loading="lazy"
-					decoding="async"
-				/>
-				<span>เชื่อมต่อกับ Twitter</span>
 			</button>
 		</div>
 	{/if}
@@ -1061,8 +1069,12 @@
 		position: absolute;
 		bottom: 0;
 		right: 0;
-		width: 24px;
-		height: 24px;
+		width: 32px;
+		height: 32px;
+
+		background: white;
+		border-radius: 99px;
+		border: 4px #fff solid;
 	}
 
 	.search-box {
