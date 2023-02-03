@@ -1477,6 +1477,8 @@
 				{#each d.buildings.data.อาคารเรียน as b, bi}
 					<article class="building-card {getConditionClass(b.current_condition, true)}">
 						<img
+							loading="lazy"
+							decoding="async"
 							class="building-image"
 							class:no-zoom={building_imgs?.อาคารเรียน?.[bi] === FALLBACK_BUILDING_IMG}
 							src={building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG}
@@ -1545,6 +1547,8 @@
 								)}"
 							>
 								<img
+									loading="lazy"
+									decoding="async"
 									class="building-image"
 									class:no-zoom={building_imgs?.[buildings_key]?.[bi] === FALLBACK_BUILDING_IMG}
 									src={building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG}
@@ -1640,11 +1644,16 @@
 						/>
 					</dt>
 					<dd>
-						{d.address ?? ''}
-						{d.subdistrict ?? ''}
-						{d.district ?? ''}
-						{d.province ?? ''}
-						{d.postcode ?? ''}
+						{[
+							d.address ?? '',
+							d.subdistrict ?? '',
+							d.district ?? '',
+							d.province ?? '',
+							d.postcode ?? ''
+						]
+							.join(' ')
+							.replace(/\s+/g, ' ')
+							.trim()}
 					</dd>
 					<dt>
 						<img
@@ -1773,7 +1782,7 @@
 			height="32"
 		/>
 	</button>
-	<img class="lightbox-image" src={lightbox_url} alt="" />
+	<img loading="lazy" decoding="async" class="lightbox-image" src={lightbox_url} alt="" />
 </Dialog>
 
 <style lang="scss">
