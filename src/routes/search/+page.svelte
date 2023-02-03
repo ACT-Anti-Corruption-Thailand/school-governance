@@ -412,6 +412,12 @@
 			position: fixed;
 			inset: var(--navbar-height) 0 0;
 			overflow: hidden auto;
+
+			@media screen and (min-width: 768px) {
+				inset: calc(var(--navbar-height) + 72px) 0 0;
+				padding: 0 10%;
+				background: #ecf7f7;
+			}
 		}
 
 		&.inline {
@@ -446,6 +452,7 @@
 		ul {
 			margin: 0;
 			list-style: none;
+			background: #fff;
 		}
 
 		h2 {
