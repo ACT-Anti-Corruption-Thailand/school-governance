@@ -2,6 +2,7 @@
 	export type SchoolData = {
 		id: string;
 		name: string;
+		latestPost?: string;
 	};
 </script>
 
@@ -23,9 +24,11 @@
 			<a class="f" href="/school/{school.id}/">
 				<div>
 					<div class="school-list-title">โรงเรียน{school.name}</div>
-					<!-- <div class="school-list-date">
-						โพสต์ล่าสุด {new Date(school.date).toLocaleDateString()}
-					</div> -->
+					{#if school.latestPost}
+						<div class="school-list-date">
+							โพสต์ล่าสุด {new Date(school.latestPost).toLocaleDateString()}
+						</div>
+					{/if}
 				</div>
 				<SchoolRating schoolId={school.id} />
 			</a>

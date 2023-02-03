@@ -71,12 +71,17 @@ export const getLatestActivityList = async () => {
 			school_data = [...school_data, ...school_data_temp];
 		}
 
-		const a: SchoolData[] = school_data.map(
-			(e: { schoolId: string; nameTh?: string; SchoolIndex?: { nameTh: string } }) => ({
-				id: e.schoolId,
-				name: e.nameTh ?? e?.SchoolIndex?.nameTh ?? '(ไม่พบชื่อ)'
-			})
-		);
+		type SchoolDataType = {
+			schoolId: string;
+			nameTh?: string;
+			SchoolIndex?: { nameTh: string };
+			createDate?: string;
+		};
+		const a: SchoolData[] = school_data.map((e: SchoolDataType) => ({
+			id: e.schoolId,
+			name: e.nameTh ?? e?.SchoolIndex?.nameTh ?? '(ไม่พบชื่อ)',
+			latestPost: e?.createDate
+		}));
 		return a;
 	} catch (e) {
 		console.error(e);
