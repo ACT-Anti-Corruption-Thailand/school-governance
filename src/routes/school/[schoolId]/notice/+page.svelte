@@ -90,7 +90,7 @@
 </script>
 
 <svelte:head>
-	<title>ประกาศโรงเรียน — โปร่งใสวิทยา</title>
+	<title>ประกาศโรงเรียน — โปร่งใสวิทยาคม</title>
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ประกาศ', color: '#FC5858' }}>

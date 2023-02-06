@@ -69,7 +69,7 @@
 </script>
 
 <svelte:head>
-	<title>โปร่งใสวิทยา</title>
+	<title>โปร่งใสวิทยาคม</title>
 </svelte:head>
 
 <header class="f header">
@@ -182,7 +182,7 @@
 	<h2 class="f jcc">
 		<img loading="lazy" decoding="async" src="/index/q1.svg" alt="" width="38" height="39" />
 		<span>
-			"โปร่งใสวิทยา" <br class="hide-desktop" />คืออะไร?<br />
+			"โปร่งใสวิทยาคม" <br class="hide-desktop" />คืออะไร?<br />
 			<img
 				loading="lazy"
 				decoding="async"
@@ -397,7 +397,7 @@
 <section class="f open-join-learn">
 	<h2>
 		<span class="nobr">การแสดงฐานข้อมูลโรงเรียน</span><br class="hide-desktop" /><span class="nobr"
-			>ของแพลตฟอร์ม "โปร่งใสวิทยา"</span
+			>ของแพลตฟอร์ม "โปร่งใสวิทยาคม"</span
 		><br />
 		<span class="nobr">เป็นส่วนหนึ่งของ</span><br class="hide-desktop" />
 		<span class="nobr">Open Join Learn</span>
@@ -431,7 +431,7 @@
 
 <section class="f feature">
 	<p>
-		"โปร่งใสวิทยา" จึงไม่ได้มีแค่ข้อมูลโรงเรียนให้ได้ส่องกันเท่านั้น แต่เพื่อน ๆ
+		"โปร่งใสวิทยาคม" จึงไม่ได้มีแค่ข้อมูลโรงเรียนให้ได้ส่องกันเท่านั้น แต่เพื่อน ๆ
 		ยังสามารถเข้ามาช่วยกัน
 		<strong>
 			<span class="nobr">เปรียบเทียบ</span><span class="nobr">สิ่ง</span><span class="nobr"
@@ -661,7 +661,7 @@
 		/>
 	</div>
 	<p>
-		"โปร่งใสวิทยา" ต่อยอดจากแพลตฟอร์ม We The Students
+		"โปร่งใสวิทยาคม" ต่อยอดจากแพลตฟอร์ม We The Students
 		หนึ่งในผลการวิจัยภายใต้ชุดโครงการวิจัยเพื่อสังคมไทยไร้คอร์รัปชัน ระยะที่ 2 โดย ผศ. ดร.ธานี
 		ชัยวัฒน์ และคณะ<br class="hide-desktop" /> คณะเศรษฐศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย สนับสนุนโดย สำนักงานการวิจัยแห่งชาติ
 		(วช.) และสำนักงานคณะกรรมการส่งเสริมวิทยาศาสตร์ วิจัยและนวัตกรรม (สกสว.)

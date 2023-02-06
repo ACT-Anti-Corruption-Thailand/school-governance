@@ -232,7 +232,7 @@
 </script>
 
 <svelte:head>
-	<title>ข้อมูลโรงเรียน — โปร่งใสวิทยา</title>
+	<title>ข้อมูลโรงเรียน — โปร่งใสวิทยาคม</title>
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>

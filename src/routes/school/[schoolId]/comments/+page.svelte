@@ -311,7 +311,7 @@
 </script>
 
 <svelte:head>
-	<title>ความคิดเห็นโรงเรียน — โปร่งใสวิทยา</title>
+	<title>ความคิดเห็นโรงเรียน — โปร่งใสวิทยาคม</title>
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>

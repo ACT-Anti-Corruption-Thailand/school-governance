@@ -140,7 +140,7 @@
 </script>
 
 <svelte:head>
-	<title>ภาพรวมโรงเรียน — โปร่งใสวิทยา</title>
+	<title>ภาพรวมโรงเรียน — โปร่งใสวิทยาคม</title>
 </svelte:head>
 
 <SchoolHeader>

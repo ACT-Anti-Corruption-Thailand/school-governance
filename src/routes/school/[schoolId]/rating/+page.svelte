@@ -338,7 +338,7 @@
 </script>
 
 <svelte:head>
-	<title>คะแนนโรงเรียน — โปร่งใสวิทยา</title>
+	<title>คะแนนโรงเรียน — โปร่งใสวิทยาคม</title>
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }} />

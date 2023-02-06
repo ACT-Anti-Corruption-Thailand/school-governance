@@ -259,7 +259,7 @@
 </script>
 
 <svelte:head>
-	<title>ค้นหาโรงเรียน — โปร่งใสวิทยา</title>
+	<title>ค้นหาโรงเรียน — โปร่งใสวิทยาคม</title>
 </svelte:head>
 
 <div class="search-container">

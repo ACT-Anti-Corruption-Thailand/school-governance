@@ -217,7 +217,7 @@
 						loading="lazy"
 						decoding="async"
 					/>
-					<span>"โปร่งใสวิทยา" คืออะไร?</span>
+					<span>"โปร่งใสวิทยาคม" คืออะไร?</span>
 				</a>
 			</li>
 			<li>
