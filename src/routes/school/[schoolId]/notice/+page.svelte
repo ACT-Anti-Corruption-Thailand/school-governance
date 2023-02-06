@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import { PUBLIC_API_HOST } from '$env/static/public';
 
 	import { onMount } from 'svelte';
 
@@ -25,12 +25,6 @@
 		'มกราคม'
 	];
 
-	const groupBy = <T, K extends keyof any>(arr: T[], groupFn: (element: T) => K): Record<K, T[]> =>
-		arr.reduce(
-			(r, v, _i, _a, k = groupFn(v)) => ((r[k] || (r[k] = [])).push(v), r),
-			{} as Record<K, T[]>
-		);
-
 	const DROPDOWN_DATA = $years?.map((y) => ({ label: y + 543, value: y })) ?? [];
 	let dropdown_choice = DROPDOWN_DATA[0];
 
@@ -43,40 +37,17 @@
 		announceDate: string;
 	};
 
-	type AnnouncementDataExtra = AnnouncementData & {
-		month: string;
-	};
-
-	let data: Record<string, AnnouncementDataExtra[]>;
-	let len = 0;
+	let has_data = false;
+	let data: Record<string, AnnouncementData[]>;
 
 	const fetchAnnouncements = async () => {
-		const WHERE_CAUSE = `(schoolId,eq,${schoolId})~and(announceDate,btw,"${
-			dropdown_choice.value
-		}/5/1","${dropdown_choice.value + 1}/4/30")`;
-
 		const resp = await fetch(
-			`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/Announcements?fields=announceTitle%2CannouncePerson%2CannounceContent%2CannounceDate&sort=-announceDate&limit=1000&where=${encodeURIComponent(
-				WHERE_CAUSE
-			)}`,
-			{
-				method: 'GET',
-				headers: {
-					'xc-token': PUBLIC_NOCO_TOKEN_KEY
-				}
-			}
+			`${PUBLIC_API_HOST}/schools/${schoolId}/annoucements?schoolYear=${dropdown_choice.value}`
 		);
 		const json = await resp.json();
-		const temp_data = json?.list ?? [];
 
-		len = temp_data.length;
-		data = groupBy(
-			temp_data.map((e: AnnouncementData) => ({
-				...e,
-				month: new Date(e.announceDate).toLocaleDateString('th-TH', { month: 'long' })
-			})),
-			(e: AnnouncementDataExtra) => e.month
-		);
+		has_data = json.has_data;
+		data = json.data;
 	};
 
 	let mounted = false;
@@ -97,7 +68,7 @@
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
 <div class="desktop-margin">
-	{#if len}
+	{#if has_data}
 		<section class="f news-body">
 			{#each MONTHS as m}
 				{#if data[m]?.length}

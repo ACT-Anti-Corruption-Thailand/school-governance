@@ -34,14 +34,19 @@ export function registerRoutes(app: FastifyInstance) {
 		return searchSchool(query);
 	});
 
-	app.get('/schools/:schoolId/annoucements', ({ params }) => {
+	app.get('/schools/:schoolId/annoucements', (req) => {
 		const { schoolId } = z
 			.object({
 				schoolId: z.string()
 			})
-			.parse(params);
+			.parse(req.params);
+		const query = z
+			.object({
+				schoolYear: z.preprocess((year) => +year, z.number().positive())
+			})
+			.parse(req.query);
 
-		return getSchoolAnnoucement(schoolId);
+		return getSchoolAnnoucement(schoolId, query);
 	});
 
 	app.get('/schools/:schoolId/comments', (req) => {

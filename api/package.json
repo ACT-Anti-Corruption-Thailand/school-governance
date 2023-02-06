@@ -8,6 +8,7 @@
 		"dev": "nodemon --exec node --loader ts-node/esm -r dotenv/config src/index.ts"
 	},
 	"dependencies": {
+		"@fastify/cors": "^8.2.0",
 		"fastify": "^4.11.0",
 		"nocodb-sdk": "^0.101.2",
 		"zod": "^3.20.2",
