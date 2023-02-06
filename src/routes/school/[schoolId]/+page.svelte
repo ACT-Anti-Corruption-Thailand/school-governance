@@ -139,6 +139,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>ภาพรวมโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
+
 <SchoolHeader>
 	<div class="f header-score">
 		<RatingStat rating={total_rating} />

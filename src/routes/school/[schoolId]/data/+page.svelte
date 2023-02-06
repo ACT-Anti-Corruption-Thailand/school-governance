@@ -231,6 +231,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>ข้อมูลโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
+
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
@@ -1622,6 +1626,7 @@
 
 		<ActAiBanner
 			margin
+			text="ค้นหาข้อมูลการจัดซื้อจัดจ้างเกี่ยวกับอุปกรณ์และการก่อสร้างอาคารของโรงเรียนเพิ่มเติมได้ที่เครื่องมือ"
 			href="https://actai.co/Project?search=โรงเรียน{encodeURIComponent(d.name_th)}"
 		/>
 

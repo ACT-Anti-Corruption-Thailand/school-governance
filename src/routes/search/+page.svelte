@@ -258,6 +258,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>ค้นหาโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
+
 <div class="search-container">
 	<div class="province-dropdown-wrapper" class:white-bg={school_by_province.length}>
 		<ProvinceDropdown options={PROVINCES_CHOICE} bind:selected_option={selected_province} />

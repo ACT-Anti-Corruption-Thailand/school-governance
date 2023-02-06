@@ -217,7 +217,7 @@
 						loading="lazy"
 						decoding="async"
 					/>
-					<span>School Governance คืออะไร?</span>
+					<span>"โปร่งใสวิทยา" คืออะไร?</span>
 				</a>
 			</li>
 			<li>

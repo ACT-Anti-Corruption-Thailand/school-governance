@@ -310,6 +310,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>ความคิดเห็นโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
+
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
 	<div class="f g4">
 		<img

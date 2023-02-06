@@ -337,6 +337,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>คะแนนโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
+
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }} />
 
 <button type="button" class="f rate-btn" on:click={openQuizModal}>

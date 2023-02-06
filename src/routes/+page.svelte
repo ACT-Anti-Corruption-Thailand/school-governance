@@ -68,6 +68,10 @@
 	});
 </script>
 
+<svelte:head>
+	<title>โปร่งใสวิทยา</title>
+</svelte:head>
+
 <header class="f header">
 	<div />
 	<p>
@@ -178,7 +182,7 @@
 	<h2 class="f jcc">
 		<img loading="lazy" decoding="async" src="/index/q1.svg" alt="" width="38" height="39" />
 		<span>
-			School Governance <br class="hide-desktop" />คืออะไร?<br />
+			"โปร่งใสวิทยา" <br class="hide-desktop" />คืออะไร?<br />
 			<img
 				loading="lazy"
 				decoding="async"
@@ -271,7 +275,7 @@
 </section>
 
 <section class="origin">
-	<p class="origin-title">นี่คือที่มาของ</p>
+	<p class="origin-title">เพราะการมีส่วนร่วมคือกุญแจสำคัญในการพัฒนาโรงเรียน นี่จึงเป็นที่มาของ</p>
 	<img
 		loading="lazy"
 		decoding="async"
@@ -381,7 +385,7 @@
 	</div>
 	<div class="act-banner">
 		<ActAiBanner
-			text="โดยทุกคนยังสามารถค้นหาข้อมูลเพิ่มเติมเกี่ยวกับอุปกรณ์ในโรงเรียนและการก่อสร้างอาคารได้ที่เครื่องมือ "
+			text="โดยทุกคนยังสามารถค้นหาข้อมูลการจัดซื้อจัดจ้างเกี่ยวกับอุปกรณ์และการก่อสร้างอาคารของโรงเรียนเพิ่มเติมได้ที่เครื่องมือ"
 		/>
 	</div>
 	<p>
@@ -392,9 +396,11 @@
 
 <section class="f open-join-learn">
 	<h2>
-		การเปิดฐานข้อมูลโรงเรียน<br class="hide-desktop" />
-		เป็นส่วนหนึ่งของ<br />
-		Open Join Learn
+		<span class="nobr">การแสดงฐานข้อมูลโรงเรียน</span><br class="hide-desktop" /><span class="nobr"
+			>ของแพลตฟอร์ม "โปร่งใสวิทยา"</span
+		><br />
+		<span class="nobr">เป็นส่วนหนึ่งของ</span><br class="hide-desktop" />
+		<span class="nobr">Open Join Learn</span>
 	</h2>
 	<p>
 		กระบวนการ Open Join Learn คือกลไกสำคัญ ที่จะช่วยส่งเสริมให้การพัฒนาขับเคลื่อนโรงเรียน
@@ -425,7 +431,7 @@
 
 <section class="f feature">
 	<p>
-		School Governace จึงไม่ได้มีแค่ข้อมูลโรงเรียนให้ได้ส่องกันเท่านั้น แต่เพื่อน ๆ
+		"โปร่งใสวิทยา" จึงไม่ได้มีแค่ข้อมูลโรงเรียนให้ได้ส่องกันเท่านั้น แต่เพื่อน ๆ
 		ยังสามารถเข้ามาช่วยกัน
 		<strong>
 			<span class="nobr">เปรียบเทียบ</span><span class="nobr">สิ่ง</span><span class="nobr"
@@ -655,7 +661,7 @@
 		/>
 	</div>
 	<p>
-		School Governance ต่อยอดจากแพลตฟอร์ม We The Students
+		"โปร่งใสวิทยา" ต่อยอดจากแพลตฟอร์ม We The Students
 		หนึ่งในผลการวิจัยภายใต้ชุดโครงการวิจัยเพื่อสังคมไทยไร้คอร์รัปชัน ระยะที่ 2 โดย ผศ. ดร.ธานี
 		ชัยวัฒน์ และคณะ<br class="hide-desktop" /> คณะเศรษฐศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย สนับสนุนโดย สำนักงานการวิจัยแห่งชาติ
 		(วช.) และสำนักงานคณะกรรมการส่งเสริมวิทยาศาสตร์ วิจัยและนวัตกรรม (สกสว.)

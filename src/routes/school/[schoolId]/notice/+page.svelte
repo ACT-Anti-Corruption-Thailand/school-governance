@@ -89,6 +89,10 @@
 	let contact_modal_isopen = false;
 </script>
 
+<svelte:head>
+	<title>ประกาศโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
+
 <SchoolHeader pageData={{ name: 'ประกาศ', color: '#FC5858' }}>
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
