@@ -1,651 +1,12 @@
 {
- "smis_id": 10010013,
- "obec_id": 720032,
- "name_th": "ทุ่งมหาเมฆ",
- "name_en": "Tungmahamek",
- "address": "หมู่ที่ 13 บ้าน",
- "subdistrict": "แขวงทุ่งวัดดอน",
- "district": "เขตสาทร",
- "province": "กรุงเทพมหานคร",
- "postcode": "10120",
- "telephone": "22861748",
- "fax": "22873240",
- "grades": "อนุบาล-ประถมศึกษา",
- "established": "18/05/2507",
- "email": "tungmahamek11@gmail.com",
- "url_text_0": "เว็บไซต์โรงเรียน (สารสนเทศ)",
- "url_0": "https://data.bopp-obec.info/emis/../web/?School_ID=1010720032",
- "website": "www.tms.ac.th",
- "network_of_education_development_center": null,
- "local_gov_org": "สาทร",
- "distance_to_edu_area": "10 กม.",
- "distance_to_district": "3 กม.",
- "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/1010720032.jpg",
- "principal_image_path": "https://data.bopp-obec.info/emis/pic/1010720036-20130822-082741.jpg",
- "latlng": "13.714324,100.529678",
- "school_id": "1010720032",
- "buildings": {
-  "data": {
-   "อาคารเรียน": [
-    {
-     "name": "อาคารเรียน",
-     "model": "อื่นๆ 004,008,030,107,206,210,214,315,415,308",
-     "room_number": "21 ห้อง",
-     "build_at": "พ.ศ. 2520",
-     "current_condition": "ดี",
-     "image_url_0": "https://bobec.bopp-obec.info/b01/7200323012125290120191031143458994364368.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b01/7200323012125290120191031143508266494990.jpg"
-    },
-    {
-     "name": "อาคารเรียน",
-     "model": "สปช.2/28",
-     "room_number": "18 ห้อง",
-     "build_at": "พ.ศ. 2534",
-     "current_condition": "พอใช้",
-     "image_url_0": "https://bobec.bopp-obec.info/b01/7200324010725310120191031143533644622759.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b01/7200324010725310120191031143542630876246.jpg"
-    },
-    {
-     "name": "อาคารเรียน",
-     "model": "อื่นๆ 004,008,030,107,206,210,214,315,415,308",
-     "room_number": "15 ห้อง",
-     "build_at": "พ.ศ. 2532",
-     "current_condition": "ดี",
-     "image_url_0": "https://bobec.bopp-obec.info/b01/7200325012125350120191031143610624185780.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b01/7200325012125350120191031143621785583970.jpg"
-    }
-   ],
-   "อาคารทั่วไป": [
-    {
-     "name": "อาคารอเนกประสงค์/โรงอาหาร/โรงฝึกงาน/หอประชุม",
-     "model": "อื่น อื่น(สร้างเอง)",
-     "room_number": null,
-     "build_at": "พ.ศ. 2509",
-     "current_condition": "พอใช้",
-     "image_url_0": "https://bobec.bopp-obec.info/b02/100100131021125092010220191031143707659970388.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b02/100100131021125092010220191031143726548167957.jpg"
-    },
-    {
-     "name": "สนามเด็กเล่น",
-     "model": "อื่น อื่น",
-     "room_number": null,
-     "build_at": "พ.ศ. 2558",
-     "current_condition": "ดี",
-     "image_url_0": "https://bobec.bopp-obec.info/b08/7200321080225200820191031143955948019810.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b08/7200321080225200820191031144007943091210.jpg"
-    }
-   ],
-   "ห้องน้ำ": [],
-   "บ้านพัก": [
-    {
-     "name": "บ้านพักครู",
-     "model": "อื่น อื่น(สร้างเอง)",
-     "room_number": null,
-     "build_at": "พ.ศ. 2507",
-     "current_condition": "ทรุดโทรม",
-     "image_url_0": "https://bobec.bopp-obec.info/b03/7200321030625070320191031143757564696826.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b03/7200321030625070320191031143808547285327.jpg"
-    },
-    {
-     "name": "บ้านพักครู",
-     "model": "อื่น อื่น(สร้างเอง)",
-     "room_number": null,
-     "build_at": "พ.ศ. 2510",
-     "current_condition": "ทรุดโทรม",
-     "image_url_0": "https://bobec.bopp-obec.info/b03/7200322030625100320191031143837192894446.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b03/7200322030625100320191031143849540640032.jpg"
-    },
-    {
-     "name": "บ้านพักภารโรง",
-     "model": "อื่น อื่น",
-     "room_number": null,
-     "build_at": "พ.ศ. 2542",
-     "current_condition": "ทรุดโทรม",
-     "image_url_0": "https://bobec.bopp-obec.info/b04/720032104022542042019103114392171392956.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b04/7200321040225420420191031143930534877927.jpg"
-    }
-   ],
-   "การเกษตร": [],
-   "อื่นๆ": [
-    {
-     "name": "ถังเก็บน้ำ",
-     "model": "แท้งค์น้ำ",
-     "room_number": null,
-     "build_at": "พ.ศ. 2531",
-     "current_condition": "ทรุดโทรม",
-     "image_url_0": "https://bobec.bopp-obec.info/b16/7200321160525311620191031144044243900884.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b16/7200321160525311620191031144057547447884.jpg"
-    },
-    {
-     "name": "ถังเก็บน้ำ",
-     "model": "หอส่งน้ำ(ประปา ร.ร.)",
-     "room_number": null,
-     "build_at": "พ.ศ. 2536",
-     "current_condition": "ทรุดโทรม",
-     "image_url_0": "https://bobec.bopp-obec.info/b16/7200322160725361620191031144124314904324.jpg",
-     "image_url_1": "https://bobec.bopp-obec.info/b16/7200322160725361620191031144138588982793.jpg"
-    }
-   ]
-  },
-  "stats": {
-   "ดี": 3,
-   "พอใช้": 2,
-   "ทรุดโทรม": 5,
-   "จำนวนห้องในอาคารเรียน": 54,
-   "รวม": 10
-  }
- },
- "computer": {
-  "working": 106,
-  "broken": 0,
-  "total": 106,
-  "learning": {
-   "working": 80,
-   "broken": 0,
-   "total": 80,
-   "source": {
-    "obec": 0,
-    "self": 80
-   }
-  },
-  "management": {
-   "working": 26,
-   "broken": 0,
-   "total": 26,
-   "source": {
-    "obec": 0,
-    "self": 26
-   }
-  }
- },
- "durable_goods": {
-  "data": {
-   "โต๊ะเก้าอี้นักเรียน": {
-    "working": 885,
-    "to_be_repaired": 0,
-    "to_be_removed": 0,
-    "total": 885,
-    "list": [
-     {
-      "code": 11001,
-      "type": "โต๊ะเก้าอี้นักเรียน",
-      "name": "โต๊ะเก้าอี้นักเรียนก่อนประถมศึกษา",
-      "working": 145,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 145
-     },
-     {
-      "code": 22001,
-      "type": "โต๊ะเก้าอี้นักเรียน",
-      "name": "โต๊ะเก้าอี้นักเรียน ประถมศึกษา",
-      "working": 740,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 740
-     }
-    ]
-   },
-   "ครุภัณฑ์การศึกษา": {
-    "working": 235,
-    "to_be_repaired": 0,
-    "to_be_removed": 0,
-    "total": 235,
-    "list": [
-     {
-      "code": 11003,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "ตู้เก็บอุปกรณ์นักเรียนก่อนประถมศึกษา",
-      "working": 21,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 21
-     },
-     {
-      "code": 22003,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "ครุภัณฑ์การสอนวิทยาศาสตร์ ประถมศึกษา",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     },
-     {
-      "code": 22006,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "หุ่นจำลองแสดงอวัยวะภายในมนุษย์",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     },
-     {
-      "code": 22007,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "ครุภัณฑ์ไฟฟ้า",
-      "working": 31,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 31
-     },
-     {
-      "code": 22020,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "เครื่องดนตรีสากล",
-      "working": 50,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 50
-     },
-     {
-      "code": 22021,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "เครื่องดนตรีไทย ชุดเล็ก ประถมศึกษา",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     },
-     {
-      "code": 22024,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "โต๊ะเทเบิลเทนนิส",
-      "working": 3,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 3
-     },
-     {
-      "code": 22028,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "เครื่องเล่น ดีวีดี",
-      "working": 32,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 32
-     },
-     {
-      "code": 22029,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "จานรับสัญญาณดาวเทียม",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     },
-     {
-      "code": 22030,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "ครุภัณฑ์ห้องสมุด ชุดเล็ก ประถมศึกษา",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     },
-     {
-      "code": 22032,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "เครื่องมัลติมีเดียโปรเจคเตอร์ Lcd",
-      "working": 15,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 15
-     },
-     {
-      "code": 22034,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "เครื่องพิมพ์ (Printer)",
-      "working": 15,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 15
-     },
-     {
-      "code": 22039,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "อุปกรณ์ห้องปฏิบัติการวิทยาศาสตร์ (ประถม-มัธยมต้น)",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     },
-     {
-      "code": 22042,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "เครื่องคอมพิวเตอร์พกพา (Notebook)",
-      "working": 9,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 9
-     },
-     {
-      "code": 22043,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "โทรทัศน์สีชนิด จอแบน (Lcd)",
-      "working": 50,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 50
-     }
-    ]
-   },
-   "ครุภัณฑ์สำนักงาน/โรงเรียน": {
-    "working": 77,
-    "to_be_repaired": 0,
-    "to_be_removed": 0,
-    "total": 77,
-    "list": [
-     {
-      "code": 21001,
-      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-      "name": "เครื่องถ่ายเอกสาร",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     },
-     {
-      "code": 21003,
-      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-      "name": "เครื่องโทรสาร",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     },
-     {
-      "code": 21006,
-      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-      "name": "ตู้นิรภัย",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     },
-     {
-      "code": 21008,
-      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-      "name": "เครื่องพิมพ์ (Printer)",
-      "working": 16,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 16
-     },
-     {
-      "code": 21011,
-      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-      "name": "คอมพิวเตอร์พกพา (Tablet)",
-      "working": 45,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 45
-     },
-     {
-      "code": 21012,
-      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-      "name": "เครื่องคอมพิวเตอร์พกพา (Notebook)",
-      "working": 9,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 9
-     },
-     {
-      "code": 21013,
-      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-      "name": "กล้องถ่ายภาพดิจิตอล",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     }
-    ]
-   },
-   "ครุภัณฑ์ไฟฟ้าและวิทยุ": {
-    "working": 69,
-    "to_be_repaired": 0,
-    "to_be_removed": 0,
-    "total": 69,
-    "list": [
-     {
-      "code": 23002,
-      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
-      "name": "เครื่องตัดกระแสไฟฟ้า",
-      "working": 3,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 3
-     },
-     {
-      "code": 23003,
-      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
-      "name": "เครื่องขยายเสียง",
-      "working": 3,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 3
-     },
-     {
-      "code": 23005,
-      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
-      "name": "เครื่องปรับอากาศ",
-      "working": 63,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 63
-     }
-    ]
-   },
-   "ครุภัณฑ์งานบ้านและงานครัว": {
-    "working": 50,
-    "to_be_repaired": 0,
-    "to_be_removed": 0,
-    "total": 50,
-    "list": [
-     {
-      "code": 24001,
-      "type": "ครุภัณฑ์งานบ้านและงานครัว",
-      "name": "เครื่องกรองน้ำ",
-      "working": 6,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 6
-     },
-     {
-      "code": 24002,
-      "type": "ครุภัณฑ์งานบ้านและงานครัว",
-      "name": "เครื่องทำน้ำเย็น",
-      "working": 6,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 6
-     },
-     {
-      "code": 24003,
-      "type": "ครุภัณฑ์งานบ้านและงานครัว",
-      "name": "ถังน้ำขนาด 2000 ลิตร แบบไฟเบอร์กลาส",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     },
-     {
-      "code": 24005,
-      "type": "ครุภัณฑ์งานบ้านและงานครัว",
-      "name": "โต๊ะอาหารพร้อมเก้าอี้",
-      "working": 34,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 34
-     },
-     {
-      "code": 24006,
-      "type": "ครุภัณฑ์งานบ้านและงานครัว",
-      "name": "ตู้เย็น",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     }
-    ]
-   },
-   "ครุภัณฑ์ยานพาหนะ": {
-    "working": 1,
-    "to_be_repaired": 0,
-    "to_be_removed": 1,
-    "total": 2,
-    "list": [
-     {
-      "code": 25001,
-      "type": "ครุภัณฑ์ยานพาหนะ",
-      "name": "รถโดยสาร 12 ที่นั่ง",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 1,
-      "total": 2
-     }
-    ]
-   }
-  },
-  "stats": {
-   "working": 1317,
-   "to_be_repaired": 0,
-   "to_be_removed": 1,
-   "total": 1318
-  }
- },
- "internet": {
-  "provider": null,
-  "type": null,
-  "speed": null,
-  "status": null,
-  "monthly_price": null,
-  "lan_network": "มีระบบเครือข่าย LAN",
-  "wireless_lan_network": "มีระบบเครือข่ายไร้สาย (Wireless LAN)"
- },
- "staff": {
-  "men": 14,
-  "women": 42,
-  "total": 56,
-  "ผู้อำนวยการ": {
-   "men": 0,
-   "women": 1,
-   "total": 1,
-   "คศ1": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ2": {
-    "men": 0,
-    "women": 1,
-    "total": 1
-   },
-   "คศ3": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ4": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ5": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   }
-  },
-  "รองผู้อำนวยการ": {
-   "men": 0,
-   "women": 0,
-   "total": 0,
-   "คศ1": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ2": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ3": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ4": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   }
-  },
-  "ครู": {
-   "men": 2,
-   "women": 23,
-   "total": 25,
-   "ครูผู้ช่วย": {
-    "men": 0,
-    "women": 6,
-    "total": 6
-   },
-   "คศ1": {
-    "men": 1,
-    "women": 3,
-    "total": 4
-   },
-   "คศ2": {
-    "men": 1,
-    "women": 8,
-    "total": 9
-   },
-   "คศ3": {
-    "men": 0,
-    "women": 6,
-    "total": 6
-   },
-   "คศ4": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ5": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   }
-  },
-  "พนักงาน": {
-   "men": 7,
-   "women": 16,
-   "total": 23,
-   "ลูกจ้างประจำ": {
-    "men": 0,
-    "women": 3,
-    "total": 3
-   },
-   "พนักงานราชการ": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "ลูกจ้างชั่วคราว": {
-    "men": 7,
-    "women": 13,
-    "total": 20
-   }
-  }
- },
  "student": {
   "total": {
-   "อ": 112,
    "ป": 515,
-   "มต": 0,
-   "มป": 0,
+   "ปวช": 0,
    "ม": 0,
-   "class": 24,
-   "all": 627
+   "อ": 112,
+   "all": 627,
+   "class": 24
   },
   "อ1": {
    "men": 14,
@@ -755,5 +116,680 @@
    "total": 0,
    "class": 0
   }
- }
+ },
+ "staff": {
+  "ครู": {
+   "men": 2,
+   "women": 23,
+   "total": 25,
+   "คศ1": {
+    "men": 1,
+    "women": 3,
+    "total": 4
+   },
+   "คศ2": {
+    "men": 1,
+    "women": 8,
+    "total": 9
+   },
+   "คศ3": {
+    "men": 0,
+    "women": 6,
+    "total": 6
+   },
+   "คศ4": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ5": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "ครูผู้ช่วย": {
+    "men": 0,
+    "women": 6,
+    "total": 6
+   }
+  },
+  "ผู้อำนวยการ": {
+   "men": 0,
+   "women": 1,
+   "total": 1,
+   "คศ1": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ2": {
+    "men": 0,
+    "women": 1,
+    "total": 1
+   },
+   "คศ3": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ4": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ5": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   }
+  },
+  "พนักงาน": {
+   "men": 7,
+   "women": 16,
+   "total": 23,
+   "ลูกจ้างประจำ": {
+    "men": 0,
+    "women": 3,
+    "total": 3
+   },
+   "พนักงานราชการ": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "ลูกจ้างชั่วคราว": {
+    "men": 7,
+    "women": 13,
+    "total": 20
+   }
+  },
+  "men": 14,
+  "women": 42,
+  "total": 56,
+  "รองผู้อำนวยการ": {
+   "men": 0,
+   "women": 0,
+   "total": 0,
+   "คศ1": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ2": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ3": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ4": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   }
+  }
+ },
+ "computer": {
+  "learning": {
+   "source": {
+    "obec": 0,
+    "self": 80
+   },
+   "total": 80,
+   "working": 80,
+   "broken": 0
+  },
+  "management": {
+   "source": {
+    "obec": 0,
+    "self": 26
+   },
+   "total": 26,
+   "working": 26,
+   "broken": 0
+  },
+  "total": 106,
+  "working": 106,
+  "broken": 0
+ },
+ "internet": {
+  "provider": null,
+  "type": null,
+  "speed": null,
+  "status": null,
+  "monthly_price": null,
+  "lan_network": "มีระบบเครือข่าย LAN",
+  "wireless_lan_network": "มีระบบเครือข่ายไร้สาย (Wireless LAN)"
+ },
+ "durable_goods": {
+  "ครุภัณฑ์การศึกษา": {
+   "working": 235,
+   "to_be_repaired": 0,
+   "to_be_removed": 0,
+   "total": 235,
+   "list": [
+    {
+     "code": "11003",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "ตู้เก็บอุปกรณ์นักเรียนก่อนประถมศึกษา",
+     "working": 21,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 21
+    },
+    {
+     "code": "22003",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "ครุภัณฑ์การสอนวิทยาศาสตร์ ประถมศึกษา",
+     "working": 2,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 2
+    },
+    {
+     "code": "22006",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "หุ่นจำลองแสดงอวัยวะภายในมนุษย์",
+     "working": 1,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 1
+    },
+    {
+     "code": "22007",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "ครุภัณฑ์ไฟฟ้า",
+     "working": 31,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 31
+    },
+    {
+     "code": "22020",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "เครื่องดนตรีสากล",
+     "working": 50,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 50
+    },
+    {
+     "code": "22021",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "เครื่องดนตรีไทย ชุดเล็ก ประถมศึกษา",
+     "working": 2,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 2
+    },
+    {
+     "code": "22024",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "โต๊ะเทเบิลเทนนิส",
+     "working": 3,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 3
+    },
+    {
+     "code": "22028",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "เครื่องเล่น ดีวีดี",
+     "working": 32,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 32
+    },
+    {
+     "code": "22029",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "จานรับสัญญาณดาวเทียม",
+     "working": 1,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 1
+    },
+    {
+     "code": "22030",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "ครุภัณฑ์ห้องสมุด ชุดเล็ก ประถมศึกษา",
+     "working": 1,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 1
+    },
+    {
+     "code": "22032",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "เครื่องมัลติมีเดียโปรเจคเตอร์ LCD",
+     "working": 15,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 15
+    },
+    {
+     "code": "22034",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "เครื่องพิมพ์ (Printer)",
+     "working": 15,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 15
+    },
+    {
+     "code": "22039",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "อุปกรณ์ห้องปฏิบัติการวิทยาศาสตร์ (ประถม-มัธยมต้น)",
+     "working": 2,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 2
+    },
+    {
+     "code": "22042",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "เครื่องคอมพิวเตอร์พกพา (Notebook)",
+     "working": 9,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 9
+    },
+    {
+     "code": "22043",
+     "type": "ครุภัณฑ์การศึกษา",
+     "name": "โทรทัศน์สีชนิด จอแบน (LCD)",
+     "working": 50,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 50
+    }
+   ]
+  },
+  "ครุภัณฑ์งานบ้านและงานครัว": {
+   "working": 50,
+   "to_be_repaired": 0,
+   "to_be_removed": 0,
+   "total": 50,
+   "list": [
+    {
+     "code": "24001",
+     "type": "ครุภัณฑ์งานบ้านและงานครัว",
+     "name": "เครื่องกรองน้ำ",
+     "working": 6,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 6
+    },
+    {
+     "code": "24002",
+     "type": "ครุภัณฑ์งานบ้านและงานครัว",
+     "name": "เครื่องทำน้ำเย็น",
+     "working": 6,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 6
+    },
+    {
+     "code": "24003",
+     "type": "ครุภัณฑ์งานบ้านและงานครัว",
+     "name": "ถังน้ำขนาด 2000 ลิตร แบบไฟเบอร์กลาส",
+     "working": 2,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 2
+    },
+    {
+     "code": "24005",
+     "type": "ครุภัณฑ์งานบ้านและงานครัว",
+     "name": "โต๊ะอาหารพร้อมเก้าอี้",
+     "working": 34,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 34
+    },
+    {
+     "code": "24006",
+     "type": "ครุภัณฑ์งานบ้านและงานครัว",
+     "name": "ตู้เย็น",
+     "working": 2,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 2
+    }
+   ]
+  },
+  "ครุภัณฑ์ยานพาหนะ": {
+   "working": 1,
+   "to_be_repaired": 0,
+   "to_be_removed": 1,
+   "total": 2,
+   "list": [
+    {
+     "code": "25001",
+     "type": "ครุภัณฑ์ยานพาหนะ",
+     "name": "รถโดยสาร 12 ที่นั่ง",
+     "working": 1,
+     "to_be_repaired": 0,
+     "to_be_removed": 1,
+     "total": 2
+    }
+   ]
+  },
+  "ครุภัณฑ์สำนักงาน/โรงเรียน": {
+   "working": 77,
+   "to_be_repaired": 0,
+   "to_be_removed": 0,
+   "total": 77,
+   "list": [
+    {
+     "code": "21001",
+     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+     "name": "เครื่องถ่ายเอกสาร",
+     "working": 1,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 1
+    },
+    {
+     "code": "21003",
+     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+     "name": "เครื่องโทรสาร",
+     "working": 2,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 2
+    },
+    {
+     "code": "21006",
+     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+     "name": "ตู้นิรภัย",
+     "working": 2,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 2
+    },
+    {
+     "code": "21008",
+     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+     "name": "เครื่องพิมพ์ (Printer)",
+     "working": 16,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 16
+    },
+    {
+     "code": "21011",
+     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+     "name": "คอมพิวเตอร์พกพา (Tablet)",
+     "working": 45,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 45
+    },
+    {
+     "code": "21012",
+     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+     "name": "เครื่องคอมพิวเตอร์พกพา (Notebook)",
+     "working": 9,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 9
+    },
+    {
+     "code": "21013",
+     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+     "name": "กล้องถ่ายภาพดิจิตอล",
+     "working": 2,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 2
+    }
+   ]
+  },
+  "ครุภัณฑ์ไฟฟ้าและวิทยุ": {
+   "working": 69,
+   "to_be_repaired": 0,
+   "to_be_removed": 0,
+   "total": 69,
+   "list": [
+    {
+     "code": "23002",
+     "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
+     "name": "เครื่องตัดกระแสไฟฟ้า",
+     "working": 3,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 3
+    },
+    {
+     "code": "23003",
+     "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
+     "name": "เครื่องขยายเสียง",
+     "working": 3,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 3
+    },
+    {
+     "code": "23005",
+     "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
+     "name": "เครื่องปรับอากาศ",
+     "working": 63,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 63
+    }
+   ]
+  },
+  "โต๊ะเก้าอี้นักเรียน": {
+   "working": 885,
+   "to_be_repaired": 0,
+   "to_be_removed": 0,
+   "total": 885,
+   "list": [
+    {
+     "code": "11001",
+     "type": "โต๊ะเก้าอี้นักเรียน",
+     "name": "โต๊ะเก้าอี้นักเรียนก่อนประถมศึกษา",
+     "working": 145,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 145
+    },
+    {
+     "code": "22001",
+     "type": "โต๊ะเก้าอี้นักเรียน",
+     "name": "โต๊ะเก้าอี้นักเรียน ประถมศึกษา",
+     "working": 740,
+     "to_be_repaired": 0,
+     "to_be_removed": 0,
+     "total": 740
+    }
+   ]
+  }
+ },
+ "school_id": "1010720032",
+ "smis_id": "10010013",
+ "obec_id": "720032",
+ "name_th": "ทุ่งมหาเมฆ",
+ "name_en": "TUNGMAHAMEK",
+ "address": "หมู่ที่ 13 บ้าน",
+ "subdistrict": "ทุ่งวัดดอน",
+ "district": "เขตสาทร",
+ "province": "กรุงเทพมหานคร",
+ "postcode": "10120",
+ "telephone": "022861748",
+ "fax": "022873240",
+ "grades": "อนุบาล-ประถมศึกษา",
+ "established": "18/05/2507",
+ "email": "tungmahamek11@gmail.com",
+ "links": [
+  {
+   "text": "www.tms.ac.th",
+   "url": "https://www.tms.ac.th"
+  },
+  {
+   "text": "เว็บไซต์โรงเรียน (สารสนเทศ)",
+   "url": "https://data.bopp-obec.info/emis/../web/?School_ID=1010720032"
+  }
+ ],
+ "network_of_education_development_center": "",
+ "local_gov_org": "สาทร",
+ "distance_to_edu_area": "10 กม.",
+ "distance_to_district": "3 กม.",
+ "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/1010720032.jpg",
+ "principal": {
+  "name": "นางสุดารัตน์ พลแพงพา",
+  "position_title": "ผู้อำนวยการโรงเรียนทุ่งมหาเมฆ",
+  "image_path": "https://data.bopp-obec.info/emis/pic/1010720036-20130822-082741.jpg"
+ },
+ "latlng": [
+  "13.714324",
+  "100.529678"
+ ],
+ "building": {
+  "data": {
+   "อาคารเรียน": [
+    {
+     "name": "อาคารเรียน",
+     "raw_name": "อาคารเรียน ลำดับที่ 1",
+     "model": "อื่นๆ 004,008,030,107,206,210,214,315,415,308",
+     "room_number": 21,
+     "build_at": "พ.ศ. 2520",
+     "current_condition": "ดี",
+     "images": [
+      "https://bobec.bopp-obec.info/b01/7200323012125290120191031143458994364368.jpg",
+      "https://bobec.bopp-obec.info/b01/7200323012125290120191031143508266494990.jpg"
+     ]
+    },
+    {
+     "name": "อาคารเรียน",
+     "raw_name": "อาคารเรียน ลำดับที่ 2",
+     "model": "สปช.2/28",
+     "room_number": 18,
+     "build_at": "พ.ศ. 2534",
+     "current_condition": "พอใช้",
+     "images": [
+      "https://bobec.bopp-obec.info/b01/7200324010725310120191031143533644622759.jpg",
+      "https://bobec.bopp-obec.info/b01/7200324010725310120191031143542630876246.jpg"
+     ]
+    },
+    {
+     "name": "อาคารเรียน",
+     "raw_name": "อาคารเรียน ลำดับที่ 3",
+     "model": "อื่นๆ 004,008,030,107,206,210,214,315,415,308",
+     "room_number": 15,
+     "build_at": "พ.ศ. 2532",
+     "current_condition": "ดี",
+     "images": [
+      "https://bobec.bopp-obec.info/b01/7200325012125350120191031143610624185780.jpg",
+      "https://bobec.bopp-obec.info/b01/7200325012125350120191031143621785583970.jpg"
+     ]
+    }
+   ],
+   "อาคารทั่วไป": [
+    {
+     "name": "อาคารอเนกประสงค์/โรงอาหาร/โรงฝึกงาน/หอประชุม",
+     "raw_name": "อาคารอเนกประสงค์/โรงอาหาร/โรงฝึกงาน/หอประชุม ลำดับที่ 1",
+     "model": "อื่น อื่น(สร้างเอง)",
+     "build_at": "พ.ศ. 2509",
+     "current_condition": "พอใช้",
+     "room_number": null,
+     "images": [
+      "https://bobec.bopp-obec.info/b02/100100131021125092010220191031143707659970388.jpg",
+      "https://bobec.bopp-obec.info/b02/100100131021125092010220191031143726548167957.jpg"
+     ]
+    },
+    {
+     "name": "สนามเด็กเล่น",
+     "raw_name": "สนามเด็กเล่น ลำดับที่ 7",
+     "model": "อื่น อื่น",
+     "build_at": "พ.ศ. 2558",
+     "current_condition": "ดี",
+     "room_number": null,
+     "images": [
+      "https://bobec.bopp-obec.info/b08/7200321080225200820191031143955948019810.jpg",
+      "https://bobec.bopp-obec.info/b08/7200321080225200820191031144007943091210.jpg"
+     ]
+    }
+   ],
+   "ห้องน้ำ": [],
+   "บ้านพัก": [
+    {
+     "name": "บ้านพักครู",
+     "raw_name": "บ้านพักครู ลำดับที่ 4",
+     "model": "อื่น อื่น(สร้างเอง)",
+     "build_at": "พ.ศ. 2507",
+     "current_condition": "ทรุดโทรม",
+     "room_number": null,
+     "images": [
+      "https://bobec.bopp-obec.info/b03/7200321030625070320191031143757564696826.jpg",
+      "https://bobec.bopp-obec.info/b03/7200321030625070320191031143808547285327.jpg"
+     ]
+    },
+    {
+     "name": "บ้านพักครู",
+     "raw_name": "บ้านพักครู ลำดับที่ 5",
+     "model": "อื่น อื่น(สร้างเอง)",
+     "build_at": "พ.ศ. 2510",
+     "current_condition": "ทรุดโทรม",
+     "room_number": null,
+     "images": [
+      "https://bobec.bopp-obec.info/b03/7200322030625100320191031143837192894446.jpg",
+      "https://bobec.bopp-obec.info/b03/7200322030625100320191031143849540640032.jpg"
+     ]
+    },
+    {
+     "name": "บ้านพักภารโรง",
+     "raw_name": "บ้านพักภารโรง ลำดับที่ 6",
+     "model": "อื่น อื่น",
+     "build_at": "พ.ศ. 2542",
+     "current_condition": "ทรุดโทรม",
+     "room_number": null,
+     "images": [
+      "https://bobec.bopp-obec.info/b04/720032104022542042019103114392171392956.jpg",
+      "https://bobec.bopp-obec.info/b04/7200321040225420420191031143930534877927.jpg"
+     ]
+    }
+   ],
+   "การเกษตร": [],
+   "อื่นๆ": [
+    {
+     "name": "ถังเก็บน้ำ",
+     "raw_name": "ถังเก็บน้ำ ลำดับที่ 8",
+     "model": "แท้งค์น้ำ",
+     "build_at": "พ.ศ. 2531",
+     "current_condition": "ทรุดโทรม",
+     "room_number": null,
+     "images": [
+      "https://bobec.bopp-obec.info/b16/7200321160525311620191031144044243900884.jpg",
+      "https://bobec.bopp-obec.info/b16/7200321160525311620191031144057547447884.jpg"
+     ]
+    },
+    {
+     "name": "ถังเก็บน้ำ",
+     "raw_name": "ถังเก็บน้ำ ลำดับที่ 9",
+     "model": "หอส่งน้ำ(ประปา ร.ร.)",
+     "build_at": "พ.ศ. 2536",
+     "current_condition": "ทรุดโทรม",
+     "room_number": null,
+     "images": [
+      "https://bobec.bopp-obec.info/b16/7200322160725361620191031144124314904324.jpg",
+      "https://bobec.bopp-obec.info/b16/7200322160725361620191031144138588982793.jpg"
+     ]
+    }
+   ]
+  },
+  "stats": {
+   "ดี": 0,
+   "พอใช้": 0,
+   "ทรุดโทรม": 0,
+   "จำนวนห้องในอาคารเรียน": 54
+  }
+ },
+ "affiliation": "สพป.",
+ "school_size": "ใหญ่"
 }

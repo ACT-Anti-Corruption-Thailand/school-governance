@@ -23,6 +23,11 @@
 
 	$: d = $currentSchool;
 
+	$: มต_count = d
+		? d.student.total.ม - d.student.ม1.total - d.student.ม2.total - d.student.ม3.total
+		: 0;
+	$: มป_count = d ? d.student.total.ม + d.student.total.ปวช - มต_count : 0;
+
 	const FALLBACK_BUILDING_IMG = '/school/school-placeholder.png';
 
 	const tryImage = (url: string) => {
@@ -306,7 +311,11 @@
 				>
 			</div>
 			<hr />
-			<span class="mitr">โรงเรียนขนาดใหญ่ <!-- TODO: รอข้อมูลจากฟีน --></span>
+			{#if d.school_size}
+				<span class="mitr">
+					โรงเรียนขนาด{d.school_size}
+				</span>
+			{/if}
 			<details class="school-size-detail">
 				<summary>
 					<span class="f">
@@ -366,8 +375,8 @@
 				data={[
 					{ number: d.student.total.อ, color: '#3f836e' },
 					{ number: d.student.total.ป, color: '#b1a215' },
-					{ number: d.student.total.มต, color: '#f09326' },
-					{ number: d.student.total.มป, color: '#ffc700' }
+					{ number: มต_count, color: '#f09326' },
+					{ number: มป_count, color: '#ffc700' }
 				]}
 			/>
 			<div class="col2-on-desktop">
@@ -576,7 +585,7 @@
 						</div>
 					</Modal>
 				{/if}
-				{#if d.student.total.มต}
+				{#if มต_count}
 					<button
 						type="button"
 						class="mitr f student-size-btn"
@@ -586,7 +595,7 @@
 					>
 						<span class="student-color-3 std-size-color" />
 						<span>มัธยมต้น</span>
-						<span class="std-size-count">{d.student.total.มต.toLocaleString()}</span>
+						<span class="std-size-count">{มต_count.toLocaleString()}</span>
 						<img
 							loading="lazy"
 							decoding="async"
@@ -596,10 +605,7 @@
 							height="24"
 						/>
 					</button>
-					<Modal
-						title={`มัธยมต้น ${d.student.total.มต.toLocaleString()} คน`}
-						bind:isOpen={มต_modal_open}
-					>
+					<Modal title={`มัธยมต้น ${มต_count.toLocaleString()} คน`} bind:isOpen={มต_modal_open}>
 						<div class="f mitr modal-section-header">
 							<span>มัธยม 1</span>
 							<span class="mitr">{d.student.ม1.total.toLocaleString()}</span>
@@ -653,7 +659,7 @@
 						</div>
 					</Modal>
 				{/if}
-				{#if d.student.total.มป}
+				{#if มป_count}
 					<button
 						type="button"
 						class="mitr f student-size-btn"
@@ -663,7 +669,7 @@
 					>
 						<span class="student-color-4 std-size-color" />
 						<span>มัธยมปลาย</span>
-						<span class="std-size-count">{d.student.total.มป.toLocaleString()}</span>
+						<span class="std-size-count">{มป_count.toLocaleString()}</span>
 						<img
 							loading="lazy"
 							decoding="async"
@@ -673,10 +679,7 @@
 							height="24"
 						/>
 					</button>
-					<Modal
-						title={`มัธยมปลาย ${d.student.total.มป.toLocaleString()} คน`}
-						bind:isOpen={มป_modal_open}
-					>
+					<Modal title={`มัธยมปลาย ${มป_count.toLocaleString()} คน`} bind:isOpen={มป_modal_open}>
 						{#if d.student.ม4.total + d.student.ม5.total + d.student.ม6.total}
 							<div class="f mitr modal-section-header">
 								<span>มัธยม 4</span>
@@ -801,8 +804,8 @@
 						data={[
 							{ number: d.student.total.อ, color: '#3f836e' },
 							{ number: d.student.total.ป, color: '#b1a215' },
-							{ number: d.student.total.มต, color: '#f09326' },
-							{ number: d.student.total.มป, color: '#ffc700' }
+							{ number: มต_count, color: '#f09326' },
+							{ number: มป_count, color: '#ffc700' }
 						]}
 					/>
 					<div>{d.student.total.all.toLocaleString()}</div>
@@ -901,7 +904,7 @@
 						</div>
 					</details>
 				</div>
-				{#if d.staff.ครู.คศ5.total}
+				{#if d.staff.ครู.คศ5?.total}
 					<div class="f modal-section">
 						<span>ครูเชี่ยวชาญพิเศษ</span>
 						<span class="mitr">{d.staff.ครู.คศ5.total.toLocaleString()}</span>
@@ -931,7 +934,7 @@
 						<span class="mitr">{d.staff.ครู.คศ1.total.toLocaleString()}</span>
 					</div>
 				{/if}
-				{#if d.staff.ครู.ครูผู้ช่วย.total}
+				{#if d.staff.ครู.ครูผู้ช่วย?.total}
 					<div class="f modal-section">
 						<span>ครูผู้ช่วย</span>
 						<span class="mitr">{d.staff.ครู.ครูผู้ช่วย.total.toLocaleString()}</span>
@@ -1084,15 +1087,19 @@
 		<section class="f">
 			<div class="f directors">
 				<h3>ผู้อำนวยการ</h3>
-				<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม <!-- TODO: รอข้อมูลจากฟีน --></p>
-				<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
+				{#if d.principal.name}
+					<p class="fw500">{d.principal.name}</p>
+				{/if}
+				{#if d.principal.position_title}
+					<small>{d.principal.position_title}</small>
+				{/if}
 			</div>
-			{#if d.principal_image_path}
+			{#if d.principal.image_path}
 				<img
 					loading="lazy"
 					decoding="async"
 					class="director-img"
-					src={d.principal_image_path}
+					src={d.principal.image_path}
 					alt=""
 				/>
 			{/if}
@@ -1100,12 +1107,12 @@
 
 		<h2 bind:this={el_goods_section} id="goods-section" class="f">
 			<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
-			<span class="f g8">
+			<!-- <span class="f g8">
 				<CircularProgress
 					percent={(d.durable_goods.stats.working / d.durable_goods.stats.total) * 100}
 				/>
 				{~~((d.durable_goods.stats.working / d.durable_goods.stats.total) * 100)}%
-			</span>
+			</span> -->
 		</h2>
 		<section>
 			<dl class="f status-color">
@@ -1147,7 +1154,7 @@
 				<dt class="unusable-color">แดง</dt>
 				<dd>ใช้งานไม่ได้</dd>
 			</dl>
-			{#each d.durable_goods.data.ครุภัณฑ์การศึกษา.list as eduitem (eduitem.code)}
+			{#each d.durable_goods.ครุภัณฑ์การศึกษา.list as eduitem (eduitem.code)}
 				<div class="f mb8 mitr">
 					<span>
 						{eduitem.name}
@@ -1179,33 +1186,33 @@
 					โต๊ะเก้าอี้นักเรียน
 					<small>(ตัว)</small>
 				</span>
-				<span>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.total.toLocaleString()}</span>
+				<span>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.total.toLocaleString()}</span>
 			</h3>
 			<RatioChart
 				data={[
-					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working, color: '#FFC700' },
-					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired, color: '#ddab29' },
-					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed, color: '#fc5858' }
+					{ number: d.durable_goods.โต๊ะเก้าอี้นักเรียน.working, color: '#FFC700' },
+					{ number: d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_repaired, color: '#ddab29' },
+					{ number: d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_removed, color: '#fc5858' }
 				]}
 			/>
 			<p class="mb8 fs10 ratio-stat-text">
 				<span class="cv usable-color"
-					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working.toLocaleString()}</span
+					>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.working.toLocaleString()}</span
 				>
 				|
 				<span class="cv await-color"
-					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired.toLocaleString()}</span
+					>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_repaired.toLocaleString()}</span
 				>
 				|
 				<span class="cv unusable-color"
-					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed.toLocaleString()}</span
+					>{d.durable_goods.โต๊ะเก้าอี้นักเรียน.to_be_removed.toLocaleString()}</span
 				> ตัว
 			</p>
 			<div class="f">
 				<span>สัดส่วนโต๊ะเก้าอี้ ต่อ นักเรียน</span>
 				<span class="mitr fs20"
 					>1:{Math.ceil(
-						d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working
+						d.student.total.all / d.durable_goods.โต๊ะเก้าอี้นักเรียน.working
 					).toLocaleString()}</span
 				>
 			</div>
@@ -1222,7 +1229,7 @@
 					/>
 				</div>
 				<div class="f">
-					{#each Array(Math.ceil(d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working)) as _}
+					{#each Array(Math.ceil(d.student.total.all / d.durable_goods.โต๊ะเก้าอี้นักเรียน.working)) as _}
 						<img
 							loading="lazy"
 							decoding="async"
@@ -1404,12 +1411,12 @@
 				</h3>
 			</button>
 			<ul class="other-appliance-list">
-				{#each Object.keys(d.durable_goods.data).filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/)) as appliance_key (appliance_key)}
-					{#if d.durable_goods.data[appliance_key].total}
+				{#each Object.keys(d.durable_goods).filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/)) as appliance_key (appliance_key)}
+					{#if d.durable_goods[appliance_key].total}
 						<li>
 							<span class="mitr">{appliance_key.replace('ครุภัณฑ์', '')}</span>
 							<span class="fs10">
-								{mergeGoodsName(d.durable_goods.data[appliance_key].list)}
+								{mergeGoodsName(d.durable_goods[appliance_key].list)}
 							</span>
 						</li>
 					{/if}
@@ -1417,10 +1424,10 @@
 			</ul>
 		</section>
 		<Modal title="อุปกรณ์อื่นๆ" bind:isOpen={อุปกรณ์อื่น_modal_open}>
-			{#each Object.keys(d.durable_goods.data).filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/)) as appliance_key (appliance_key)}
-				{#if d.durable_goods.data[appliance_key].total}
+			{#each Object.keys(d.durable_goods).filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/)) as appliance_key (appliance_key)}
+				{#if d.durable_goods[appliance_key].total}
 					<div class="f modal-section-header mitr">{appliance_key}</div>
-					{#each d.durable_goods.data[appliance_key].list as good (good.code)}
+					{#each d.durable_goods[appliance_key].list as good (good.code)}
 						<div class="f modal-section">
 							<span>{good.name}</span>
 							<span class="mitr">{good.total.toLocaleString()}</span>
@@ -1435,7 +1442,7 @@
 			href="https://actai.co/Project?search=โรงเรียน{encodeURIComponent(d.name_th)}"
 		/>
 
-		<h2 bind:this={el_building_section} id="building-section" class="f">
+		<!-- <h2 bind:this={el_building_section} id="building-section" class="f">
 			<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 			<span class="f g8">
 				<CircularProgress percent={(d.buildings.stats.ดี / d.buildings.stats.รวม) * 100} />
@@ -1508,9 +1515,9 @@
 					</article>
 				{/each}
 			</div>
-		</section>
+		</section> -->
 
-		<button
+		<!-- <button
 			type="button"
 			class="teacher-size-btn emp-btn"
 			on:click={() => {
@@ -1622,7 +1629,7 @@
 					{/if}
 				{/each}
 			</ul>
-		</section>
+		</section> -->
 
 		<ActAiBanner
 			margin
@@ -1682,11 +1689,13 @@
 						/>
 					</dt>
 					<dd>
-						{#if d.website}
+						{#if d.links.length}
 							<a
-								href={d.website.includes('http') ? d.website : `https://${d.website}`}
+								href={d.links[0].url.includes('http')
+									? d.links[0].url
+									: `https://${d.links[0].url}`}
 								target="_blank"
-								rel="nofollow noopener noreferrer">{d.website}</a
+								rel="nofollow noopener noreferrer">{d.links[0].text}</a
 							>
 						{:else}
 							<span>—</span>
@@ -1729,7 +1738,7 @@
 					<dt>รหัสโรงเรียน</dt>
 					<dd>{$currentSchoolId}</dd>
 					<dt>สังกัด</dt>
-					<dd><!-- TODO: รอข้อมูลจากฟีน --> ไม่มีข้อมูล</dd>
+					<dd>{d.affiliation ?? '—'}</dd>
 					<dt>ก่อตั้งเมื่อ</dt>
 					<dd>{d.established ?? '—'}</dd>
 					<dt>ระดับที่เปิดสอน</dt>
