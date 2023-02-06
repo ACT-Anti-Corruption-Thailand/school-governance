@@ -4,6 +4,7 @@
 
 	import { page } from '$app/stores';
 	$: is_school_page = $page.route.id?.split('/')?.[1] === 'school';
+	$: is_school_comment_page = is_school_page && $page.route.id?.split('/')?.[3] === 'comments';
 
 	let goTop = () => {};
 
@@ -31,8 +32,9 @@
 	aria-label="กลับด้านบน"
 	on:click={goTop}
 	class:school={is_school_page}
+	class:school-comment={is_school_comment_page}
 >
-	<img src="/chevrons/gotop.svg" alt="" width="14" height="8" />
+	<img src="/chevrons/gotop.svg" alt="" width="14" height="8" loading="lazy" decoding="async" />
 </button>
 
 <style lang="scss">
@@ -44,7 +46,7 @@
 		height: 40px;
 
 		background: #3c55ab;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 20px;
 
 		position: fixed;
@@ -63,6 +65,18 @@
 
 		&.school {
 			bottom: 80px;
+
+			@media screen and (min-width: 768px) {
+				bottom: 40px;
+			}
+		}
+
+		&.school-comment {
+			bottom: 132px;
+
+			@media screen and (min-width: 768px) {
+				bottom: 40px;
+			}
 		}
 
 		@media screen and (min-width: 768px) {

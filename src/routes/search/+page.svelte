@@ -12,6 +12,8 @@
 	import { show_search, search_string } from 'stores/search';
 	import { currentSchool, currentSchoolId } from 'stores/school';
 
+	import { getLatestActivityList, getStatsList } from 'utils/data_fetching';
+
 	const SCHOOL_PER_REQUEST = 10;
 
 	const PROVINCES_CHOICE = ['เลือกจังหวัด', ...PROVINCES];
@@ -41,6 +43,7 @@
 		formatted_search_string = search_string.trim();
 		if (!formatted_search_string || formatted_search_string.length < 2) {
 			province_query = school_result = [];
+			school_result_count = 0;
 			return;
 		}
 
@@ -67,7 +70,10 @@
 			school_result_count = 0;
 		}
 
-		if (!school_result_count) return;
+		if (!school_result_count) {
+			school_result = [];
+			return;
+		}
 		school_index = 10;
 
 		try {
@@ -166,18 +172,6 @@
 		comment: 0
 	})) as SchoolData[];
 
-	onMount(() => {
-		$show_search = true;
-		if ($currentSchool && $currentSchoolId) {
-			const { district, province } = $currentSchool;
-			fetchRelatedSchool($currentSchoolId, district, province);
-		}
-	});
-
-	onDestroy(() => {
-		$show_search = false;
-	});
-
 	const groupBy = <T, K extends keyof any>(arr: T[], groupFn: (element: T) => K): Record<K, T[]> =>
 		arr.reduce(
 			(r, v, _i, _a, k = groupFn(v)) => ((r[k] || (r[k] = [])).push(v), r),
@@ -191,8 +185,7 @@
 		district: string;
 	};
 	let school_by_province: [string, SchoolMetadataType[]][] = [];
-	const getSchoolByProvince = async (event: any) => {
-		const province = event.detail;
+	const getSchoolByProvince = async (province: any) => {
 		if (province === 'เลือกจังหวัด') return (school_by_province = []);
 
 		try {
@@ -220,70 +213,121 @@
 			console.error(e);
 		}
 	};
+
+	$: getSchoolByProvince(selected_province);
+
+	const DEBUG_SCHOOL_LIST = [
+		{ id: '1010720001', name: 'พญาไท' },
+		{ id: '1010720002', name: 'โฆสิตสโมสร' },
+		{ id: '1010720003', name: 'ราชวินิต' },
+		{ id: '1010720004', name: 'ทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
+		{ id: '1010720005', name: 'วัดโสมนัส' }
+	];
+	let latestActivityList: any[] = [];
+	let mostCommentList: any[] = [];
+	let mostRatingList: any[] = [];
+
+	const _getLatestActivityList = async () => {
+		latestActivityList = await getLatestActivityList();
+	};
+
+	const _getStatsList = async () => {
+		const a = await getStatsList();
+		mostCommentList = a.mostCommentList;
+		mostRatingList = a.mostRatingList;
+	};
+
+	onMount(() => {
+		$show_search = true;
+		if ($currentSchool && $currentSchoolId) {
+			const { district, province } = $currentSchool;
+			fetchRelatedSchool($currentSchoolId, district, province);
+		}
+		_getLatestActivityList();
+		_getStatsList();
+	});
+
+	onDestroy(() => {
+		$show_search = false;
+	});
+
+	const formatDistrict = (district: string | null): string => {
+		if (!district || district === 'null') return '(ไม่ทราบอำเภอ)';
+		if (!district.includes('เขต') && !district.includes('อำเภอ')) return `อำเภอ${district}`;
+		return district;
+	};
 </script>
 
+<svelte:head>
+	<title>ค้นหาโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
+
 <div class="search-container">
-	<ProvinceDropdown
-		options={PROVINCES_CHOICE}
-		selected_option={selected_province}
-		on:change={getSchoolByProvince}
-	/>
+	<div class="province-dropdown-wrapper" class:white-bg={school_by_province.length}>
+		<ProvinceDropdown options={PROVINCES_CHOICE} bind:selected_option={selected_province} />
+	</div>
 
 	{#if school_by_province.length}
 		<section class="search-result inline">
 			{#each school_by_province as [district, school_data] (district)}
-				<h2 class="f">
-					<span>{district}</span>
-					<small>พบ {school_data.length} โรงเรียน</small>
-				</h2>
-				<ul>
-					{#each school_data as { schoolId, nameTh } (schoolId)}
-						<li>
-							<a
-								class="f"
-								href="/school/{schoolId}"
-								on:click={() => (($show_search = false), ($search_string = ''))}
-							>
-								{nameTh}
-							</a>
-						</li>
-					{/each}
-				</ul>
+				<details>
+					<summary>
+						<h2 class="f">
+							<span>{formatDistrict(district)}</span>
+							<small>พบ {school_data.length} โรงเรียน</small>
+							<img
+								class="summary-chevron"
+								loading="lazy"
+								decoding="async"
+								src="/chevrons/bottom.svg"
+								alt=""
+								width="20"
+								height="20"
+							/>
+						</h2>
+					</summary>
+					<ul>
+						{#each school_data as { schoolId, nameTh } (schoolId)}
+							<li>
+								<a
+									class="f"
+									href="/school/{schoolId}"
+									on:click={() => (($show_search = false), ($search_string = ''))}
+								>
+									{nameTh}
+								</a>
+							</li>
+						{/each}
+					</ul>
+				</details>
 			{/each}
 		</section>
-	{/if}
-
-	<div class="desktop-grid" class:four={related_school_list.length}>
-		{#if related_school_list.length}
+	{:else}
+		<div class="desktop-grid" class:four={$currentSchool}>
+			{#if $currentSchool}
+				<section>
+					<h2>โรงเรียนใน{formatDistrict($currentSchool.district)}และใกล้เคียง</h2>
+					<SchoolList school_list={related_school_listdata} />
+				</section>
+			{/if}
 			<section>
-				<h2>โรงเรียนในเขต/อำเภอเดียวกัน</h2>
-				<SchoolList school_list={related_school_listdata} />
+				<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
+				<SchoolList school_list={latestActivityList} />
 			</section>
-		{/if}
-		<section>
-			<h2>โรงเรียนที่มีส่วนร่วมล่าสุด</h2>
-			<SchoolList
-				school_list={[
-					{ id: '1010720001', name: '(Test) โรงเรียนพญาไท' },
-					{ id: '1010720002', name: '(Test) โรงเรียนโฆสิตสโมสร' },
-					{ id: '1010720003', name: '(Test) โรงเรียนราชวินิต' },
-					{
-						id: '1010720004',
-						name: '(Test) โรงเรียนทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ'
-					},
-					{ id: '1010720005', name: '(Test) โรงเรียนวัดโสมนัส' }
-				]}
-			/>
-		</section>
-		<section>
-			<h2>โรงเรียนที่มีคะแนนเฉลี่ยสูงสุด</h2>
-			<SchoolList />
-		</section>
-		<section>
-			<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
-			<SchoolList />
-		</section>
-	</div>
+			<section>
+				<h2>โรงเรียนที่มีคะแนนเสียงมากที่สุด</h2>
+				<SchoolList school_list={mostRatingList} />
+			</section>
+			<section>
+				<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
+				<SchoolList school_list={mostCommentList} />
+			</section>
+			<section>
+				<h2>โรงเรียนที่เอาไว้ Debug</h2>
+				<SchoolList school_list={DEBUG_SCHOOL_LIST} />
+			</section>
+		</div>
+	{/if}
 
 	{#if school_result.length || province_query.length}
 		<section class="search-result">
@@ -372,10 +416,33 @@
 			position: fixed;
 			inset: var(--navbar-height) 0 0;
 			overflow: hidden auto;
+
+			@media screen and (min-width: 768px) {
+				inset: calc(var(--navbar-height) + 72px) 0 0;
+				padding: 0 10%;
+				background: #ecf7f7;
+			}
 		}
 
 		&.inline {
-			margin: 16px -16px 0;
+			margin: 0 -16px;
+		}
+
+		summary {
+			cursor: pointer;
+			list-style: none;
+
+			&::-webkit-details-marker {
+				display: none;
+			}
+
+			.summary-chevron {
+				margin-left: auto;
+			}
+		}
+
+		details[open] summary .summary-chevron {
+			transform: rotate(180deg);
 		}
 
 		h2,
@@ -389,11 +456,13 @@
 		ul {
 			margin: 0;
 			list-style: none;
+			background: #fff;
 		}
 
 		h2 {
 			gap: 8px;
 			border-bottom: 1px solid #ced5ea;
+			background: #ecf7f7;
 
 			> span {
 				font-weight: 500;
@@ -420,6 +489,7 @@
 				text-decoration: none;
 				width: 100%;
 				text-align: start;
+				box-sizing: border-box;
 			}
 		}
 
@@ -448,5 +518,14 @@
 				grid-template-rows: 1fr 1fr;
 			}
 		}
+	}
+
+	.province-dropdown-wrapper {
+		margin: -16px;
+		margin-bottom: 0;
+		padding: 16px;
+
+		background: #fff;
+		box-shadow: -80vw 0 0 #fff, 80vw 0 0 #fff;
 	}
 </style>

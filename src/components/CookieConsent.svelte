@@ -85,14 +85,14 @@
 
 {#if isShow}
 	<div class="cookie-consent" transition:fly={{ y: 100, duration: 500 }}>
-		<p>We care about your data, and we'd love to use cookies to make your experience better.</p>
+		<p>เว็บไซต์นี้ใช้คุกกี้เพื่อเพิ่มประสิทธิภาพและประสบการณ์ที่ดีในการใช้งานเว็บไซต์</p>
 		<div class="f cookie-action">
 			<button
 				class="readmore"
 				type="button"
 				on:click={() => {
 					term_isopen = true;
-				}}>อ่านเพิ่มเติม</button
+				}}>อ่านรายละเอียด</button
 			>
 			<button class="accept" type="button" on:click={() => save(true)}>ยอมรับ</button>
 		</div>
@@ -172,8 +172,8 @@
 
 		padding: 16px 24px;
 		background: #6bc9ff;
-		box-shadow: 0px -2px 5px rgba(0, 0, 0, 0.2);
-		border-radius: 16px 16px 0px 0px;
+		box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.2);
+		border-radius: 16px 16px 0 0;
 
 		color: #0c166b;
 	}
@@ -195,7 +195,7 @@
 	}
 
 	.cookie-modal-btn {
-		box-shadow: 0px 1px 4px rgb(12 22 107 / 20%);
+		box-shadow: 0 1px 4px rgb(12 22 107 / 20%);
 		border-radius: 20px;
 		padding: 4px 12px;
 		border: 1px #3c55ab solid;

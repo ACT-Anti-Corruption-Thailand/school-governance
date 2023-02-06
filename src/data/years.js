@@ -1,1 +1,0 @@
-export const years = [2022]

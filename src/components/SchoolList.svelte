@@ -2,55 +2,45 @@
 	export type SchoolData = {
 		id: string;
 		name: string;
+		latestPost?: string;
 	};
 </script>
 
 <script lang="ts">
 	import SchoolRating from './SchoolMiniStats.svelte';
+	import { Lottie } from 'lottie-svelte';
 
-	export let school_list: SchoolData[] = [
-		{
-			id: '1',
-			name: 'โรงเรียนร่วมใจศึกษา'
-		},
-		{
-			id: '2',
-			name: 'โรงเรียนศึกษาวิทยาการเรียนเจริญก้าวหน้า'
-		},
-		{
-			id: '3',
-			name: 'โรงเรียนโปร่งใสวิทยา'
-		},
-		{
-			id: '4',
-			name: 'โรงเรียนบ้านร่วมสร้าง'
-		},
-		{
-			id: '5',
-			name: 'โรงเรียนวัดป่าสามัคคี'
-		}
-	];
+	export let school_list: SchoolData[];
 </script>
 
-<ol class="school-list">
-	{#each school_list as school (school.id)}
-		<li>
-			<a class="f" href="/school/{school.id}/">
-				<div>
-					<div class="school-list-title">{school.name}</div>
-					<!-- <div class="school-list-date">
-						โพสต์ล่าสุด {new Date(school.date).toLocaleDateString()}
-					</div> -->
-				</div>
-				<SchoolRating schoolId={school.id} />
-			</a>
-		</li>
-	{/each}
-</ol>
+{#if school_list.length}
+	<ol class="school-list">
+		{#each school_list as school (school.id)}
+			<li>
+				<a class="f" href="/school/{school.id}/">
+					<div>
+						<div class="school-list-title">โรงเรียน{school.name}</div>
+						{#if school.latestPost}
+							<div class="school-list-date">
+								โพสต์ล่าสุด {new Date(school.latestPost).toLocaleDateString()}
+							</div>
+						{/if}
+					</div>
+					<SchoolRating schoolId={school.id} />
+				</a>
+			</li>
+		{/each}
+	</ol>
+{:else}
+	<div class="f school-list loading">
+		<Lottie path="/lotties/loading.json" loop={true} autoplay={true} />
+	</div>
+{/if}
 
 <style lang="scss">
 	.school-list {
-		box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+		background: #fff;
+		box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 		border-radius: 8px;
 		overflow: hidden;
 
@@ -67,8 +57,6 @@
 				gap: 8px;
 				border-bottom: 1px #ecf7f7 solid;
 				text-decoration: none;
-
-				background: #fff;
 				transition: background 0.1s;
 
 				&::before {
@@ -132,5 +120,11 @@
 				border-bottom: none;
 			}
 		}
+	}
+
+	.loading {
+		height: 340px;
+		justify-content: center;
+		flex-direction: column;
 	}
 </style>

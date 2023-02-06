@@ -1,28 +1,15 @@
 <script lang="ts">
-	import { page } from '$app/stores';
-	import { years } from 'data/years.js';
-	import { currentSchool, currentSchoolId } from 'stores/school';
-
-	const LATEST_YEAR = years[years.length - 1];
+	import { currentSchool } from 'stores/school';
 
 	export let pageData: {
 		name: string;
 		color: string;
 	} | null = null;
-
-	const updateData = (schoolId: number) => {
-		$currentSchoolId = schoolId;
-		fetch(`/data/${LATEST_YEAR}/${$page.params.schoolId}.json`)
-			.then((resp) => resp.json())
-			.then((data) => ($currentSchool = data));
-	};
-
-	$: if ($currentSchoolId !== +$page.params.schoolId) updateData(+$page.params.schoolId);
 </script>
 
 <header class="f school-header">
 	<hgroup>
-		<h1>{$currentSchool?.name_th ?? '(ไม่พบชื่อ)'}</h1>
+		<h1>โรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'}</h1>
 		{#if pageData}
 			<h2 style="color:{pageData.color}">{pageData.name}</h2>
 		{:else if $currentSchool?.name_en}
@@ -42,9 +29,11 @@
 	.school-header {
 		justify-content: space-between;
 
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		background: #fff;
 		padding: 12px 16px;
+
+		gap: 12px;
 
 		position: fixed;
 		top: var(--navbar-height);
@@ -60,6 +49,8 @@
 
 		> hgroup {
 			color: #3c55ab;
+			overflow: auto hidden;
+			white-space: nowrap;
 
 			> h1 {
 				font-family: 'Mitr';
@@ -79,6 +70,9 @@
 				letter-spacing: 0.02em;
 
 				margin: 0;
+
+				position: sticky;
+				left: 0;
 			}
 
 			> p {

@@ -1,19 +1,17 @@
 <script lang="ts">
 	import { page } from '$app/stores';
-	import { years } from 'data/years.js';
 	import SchoolNav from 'components/school/SchoolNav.svelte';
-	import { currentSchool, currentSchoolId } from 'stores/school';
-
-	const LATEST_YEAR = years[years.length - 1];
+	import { currentSchool, currentSchoolId, LATEST_YEAR } from 'stores/school';
 
 	const updateData = (schoolId: number) => {
 		$currentSchoolId = schoolId;
-		fetch(`/data/${LATEST_YEAR}/${$page.params.schoolId}.json`)
+		fetch(`/data/${$LATEST_YEAR}/${$page.params.schoolId}.json`)
 			.then((resp) => resp.json())
 			.then((data) => ($currentSchool = data));
 	};
 
-	$: if ($currentSchoolId !== +$page.params.schoolId) updateData(+$page.params.schoolId);
+	$: if ($LATEST_YEAR && $currentSchoolId !== +$page.params.schoolId)
+		updateData(+$page.params.schoolId);
 </script>
 
 <section class="school-container">

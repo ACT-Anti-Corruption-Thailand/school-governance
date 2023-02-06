@@ -25,7 +25,7 @@
 >
 	<ListboxButton class="f province-dropdown-button">
 		<span>{selected_option}</span>
-		<img src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+		<img loading="lazy" decoding="async" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
 	</ListboxButton>
 	<ListboxOptions class="province-dropdown-list">
 		{#each options as option (option)}
@@ -51,7 +51,8 @@
 		margin: 0 auto;
 
 		background: #fff;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
+		border: 1px #9daad5 solid;
 		border-radius: 24px;
 
 		color: #3c55ab;
@@ -77,7 +78,7 @@
 		padding: 0;
 
 		background: #fff;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 8px;
 
 		list-style: none;

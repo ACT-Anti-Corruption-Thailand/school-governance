@@ -3,9 +3,11 @@
 
 	import { onMount } from 'svelte';
 
-	import { years } from 'data/years.js';
-
-	import { QUIZ_QUESTIONS_DESC, QUIZ_QUESTIONS_TITLE } from 'data/quiz-questions';
+	import {
+		QUIZ_QUESTIONS_DESC,
+		QUIZ_QUESTIONS_TITLE,
+		QUIZ_QUESTIONS_IMAGE
+	} from 'data/quiz-questions';
 
 	import Dropdown from 'components/Dropdown.svelte';
 	import Modal from 'components/Modal.svelte';
@@ -15,25 +17,28 @@
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
+	import { years } from 'stores/school';
+	import { login_modal_isopen } from 'stores/login_modal';
+
 	$: schoolId = $page.params.schoolId;
 
-	const DROPDOWN_DATA = years.map((y) => ({ label: y + 543, value: y }));
+	const DROPDOWN_DATA = $years?.map((y) => ({ label: y + 543, value: y })) ?? [];
 	let dropdown_choice = DROPDOWN_DATA[0];
 
 	const METRIC_DROPDOWN = [
 		{ label: 'ทุกสถานที่', value: 'all' },
-		{ label: 'ห้องเรียน', value: 'classroom' },
-		{ label: 'ห้องน้ำ', value: 'toilet' },
-		{ label: 'โรงอาหาร', value: 'canteen' },
-		{ label: 'สนามกีฬา', value: 'gym' }
+		{ label: 'ห้องเรียน', value: 'classroom', icon: '/ratings/classroom.svg' },
+		{ label: 'ห้องน้ำ', value: 'toilet', icon: '/ratings/toilet.svg' },
+		{ label: 'โรงอาหาร', value: 'canteen', icon: '/ratings/canteen.svg' },
+		{ label: 'สนามกีฬา', value: 'gym', icon: '/ratings/gym.svg' }
 	];
 	let metric_choice = METRIC_DROPDOWN[0];
 
 	const DETAIL_DROPDOWN = [
-		{ value: 'ห้องเรียน' },
-		{ value: 'ห้องน้ำ' },
-		{ value: 'โรงอาหาร' },
-		{ value: 'สนามกีฬา' }
+		{ value: 'ห้องเรียน', icon: '/ratings/classroom.svg' },
+		{ value: 'ห้องน้ำ', icon: '/ratings/toilet.svg' },
+		{ value: 'โรงอาหาร', icon: '/ratings/canteen.svg' },
+		{ value: 'สนามกีฬา', icon: '/ratings/gym.svg' }
 	];
 	let detail_choice = DETAIL_DROPDOWN[0];
 	let detail_modal_isopen = false;
@@ -322,22 +327,28 @@
 			console.error(e);
 		}
 	};
+
+	const openQuizModal = () => {
+		if ($currentUser) {
+			quiz_isopen = true;
+		} else {
+			$login_modal_isopen = true;
+		}
+	};
 </script>
+
+<svelte:head>
+	<title>คะแนนโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }} />
 
-{#if $currentUser}
-	<button
-		type="button"
-		class="f rate-btn"
-		on:click={() => {
-			quiz_isopen = true;
-		}}
-	>
-		<span>แล้วคุณละ ให้กี่คะแนน?</span>
-		<img src="/ratings/mascot-w.svg" alt="" width="25" height="25" />
-	</button>
-{/if}
+<button type="button" class="f rate-btn" on:click={openQuizModal}>
+	<span>แล้วคุณละ ให้กี่คะแนน?</span>
+	<div class="school-quiz-lottie">
+		<Lottie path="/lotties/littlestar.json" loop={true} autoplay={true} />
+	</div>
+</button>
 
 <!--  ██████╗ ██╗   ██╗██╗███████╗ -->
 <!-- ██╔═══██╗██║   ██║██║╚══███╔╝ -->
@@ -351,10 +362,20 @@
 	bind:isOpen={quiz_isopen}
 	body_class="quiz-body f {quiz_location ? 'quiz-body-gap' : ''}"
 	onCloseCallback={quiz_onclose}
+	boxWidth="640px"
+	boxHeight="700px"
+	boxLeftShift="24px"
 >
 	<div class="quiz-location" slot="title">
 		{#if quiz_location}
-			<img src="/ratings/{quiz_location}.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/{quiz_location}.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">{location_thname(quiz_location)}</span>
 		{/if}
 	</div>
@@ -369,7 +390,17 @@
 		<!-- <p>
 			{JSON.stringify(quiz_rating_values)}
 		</p> -->
-		<img src="/ratings/placeholder.png" alt="" width="228" height="125" />
+		<div class="f quiz-img-wrapper">
+			<img
+				class="quiz-img"
+				loading="lazy"
+				decoding="async"
+				src={QUIZ_QUESTIONS_IMAGE[quiz_location][quiz_current_step]}
+				alt=""
+				width="228"
+				height="125"
+			/>
+		</div>
 		<h3 class="mitr asfs">{QUIZ_QUESTIONS_TITLE[quiz_current_step]}</h3>
 		<p class="tal asfs">{QUIZ_QUESTIONS_DESC[quiz_location][quiz_current_step]}</p>
 
@@ -498,7 +529,14 @@
 					quiz_location = 'classroom';
 				}}
 			>
-				<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/ratings/classroom.svg"
+					alt=""
+					width="16"
+					height="16"
+				/>
 				<span class="mitr">ห้องเรียน</span>
 			</button>
 			<button
@@ -509,7 +547,14 @@
 					quiz_location = 'toilet';
 				}}
 			>
-				<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/ratings/toilet.svg"
+					alt=""
+					width="16"
+					height="16"
+				/>
 				<span class="mitr">ห้องน้ำ</span>
 			</button>
 			<button
@@ -520,7 +565,14 @@
 					quiz_location = 'canteen';
 				}}
 			>
-				<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/ratings/canteen.svg"
+					alt=""
+					width="16"
+					height="16"
+				/>
 				<span class="mitr">โรงอาหาร</span>
 			</button>
 			<button
@@ -531,7 +583,7 @@
 					quiz_location = 'gym';
 				}}
 			>
-				<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+				<img loading="lazy" decoding="async" src="/ratings/gym.svg" alt="" width="16" height="16" />
 				<span class="mitr">สนามกีฬา</span>
 			</button>
 		</div>
@@ -542,9 +594,7 @@
 		class="metric-btn mlra"
 		type="button"
 		on:click={() => {
-			detail_modal_callback = () => {
-				quiz_isopen = true;
-			};
+			detail_modal_callback = openQuizModal;
 			quiz_isopen = false;
 			if (quiz_location) {
 				detail_choice = {
@@ -553,6 +603,12 @@
 						toilet: 'ห้องน้ำ',
 						canteen: 'โรงอาหาร',
 						gym: 'สนามกีฬา'
+					}[quiz_location],
+					icon: {
+						classroom: '/ratings/classroom.svg',
+						toilet: '/ratings/toilet.svg',
+						canteen: '/ratings/canteen.svg',
+						gym: '/ratings/gym.svg'
 					}[quiz_location]
 				};
 			}
@@ -576,6 +632,8 @@
 	bind:isOpen={quizfinish_isopen}
 	body_class="quiz-body f"
 	onCloseCallback={quiz_onclose}
+	boxWidth="640px"
+	boxLeftShift="24px"
 >
 	<div class="quiz-body-spacer" />
 
@@ -587,12 +645,19 @@
 
 	<div class="quiz-body-spacer" />
 
-	<p>คะแนนที่คุณให้</p>
+	<p class="mt16">คะแนนที่คุณให้</p>
 	<div class="f qfm-score-list">
 		<span class="mitr">คะแนนตามเกณฑ์มาตรฐาน</span>
 		<span class="mitr f qfm-score">
 			{quiz_display_avg.toFixed(1)}
-			<img src="/ratings/radio-star-checked.svg" alt="" width="20" height="20" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/radio-star-checked.svg"
+				alt=""
+				width="20"
+				height="20"
+			/>
 		</span>
 	</div>
 	<div class="f qfm-score-list">
@@ -600,6 +665,8 @@
 		<span class="mitr f qfm-score">
 			{quiz_display_pleasure.toFixed(1)}
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(quiz_display_pleasure)}a.svg"
 				alt=""
 				width="20"
@@ -610,7 +677,7 @@
 
 	<div class="quiz-body-spacer" />
 
-	<p>เลือกให้คะแนนสถานที่อื่น</p>
+	<p class="mt16">เลือกให้คะแนนสถานที่อื่น</p>
 	<div class="quiz-location-selector">
 		<button
 			class="quiz-location-btn f"
@@ -622,12 +689,17 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(() => {
-					quiz_isopen = true;
-				});
+				requestAnimationFrame(openQuizModal);
 			}}
 		>
-			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/classroom.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องเรียน</span>
 		</button>
 		<button
@@ -640,12 +712,17 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(() => {
-					quiz_isopen = true;
-				});
+				requestAnimationFrame(openQuizModal);
 			}}
 		>
-			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/toilet.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องน้ำ</span>
 		</button>
 		<button
@@ -658,12 +735,17 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(() => {
-					quiz_isopen = true;
-				});
+				requestAnimationFrame(openQuizModal);
 			}}
 		>
-			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/canteen.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">โรงอาหาร</span>
 		</button>
 		<button
@@ -676,12 +758,10 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(() => {
-					quiz_isopen = true;
-				});
+				requestAnimationFrame(openQuizModal);
 			}}
 		>
-			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+			<img loading="lazy" decoding="async" src="/ratings/gym.svg" alt="" width="16" height="16" />
 			<span class="mitr">สนามกีฬา</span>
 		</button>
 	</div>
@@ -694,7 +774,14 @@
 			{#if school_total_count}
 				<div class="total-rating-container">
 					<div class="f g4">
-						<img src="/icons/star.svg" alt="" width="20" height="20" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt=""
+							width="20"
+							height="20"
+						/>
 						<span class="mitr total-rating">{school_total_avg.toFixed(1)}</span>
 					</div>
 					<span>{school_total_count} รีวิว</span>
@@ -712,17 +799,49 @@
 					{:else if school_total_avg >= 2}
 						<p>มีหลายส่วนที่พัฒนาให้ดีกว่านี้ได้</p>
 					{:else}
-						<p>ยังมีหลายส่วนที่ต้องพัฒนาให้ดึกว่านี้</p>
+						<p>ยังมีหลายส่วนที่ต้องพัฒนาให้ดีกว่านี้</p>
 					{/if}
 				</div>
 				{#if school_total_avg >= 4}
-					<img src="/ratings/rating-text-4.svg" alt="" width="73" height="49" />
+					<img
+						loading="lazy"
+						decoding="async"
+						class="rating-text pop"
+						src="/ratings/rating-text-4.svg"
+						alt=""
+						width="73"
+						height="49"
+					/>
 				{:else if school_total_avg >= 3}
-					<img src="/ratings/rating-text-3.svg" alt="" width="73" height="49" />
+					<img
+						loading="lazy"
+						decoding="async"
+						class="rating-text pop"
+						src="/ratings/rating-text-3.svg"
+						alt=""
+						width="73"
+						height="49"
+					/>
 				{:else if school_total_avg >= 2}
-					<img src="/ratings/rating-text-2.svg" alt="" width="73" height="49" />
+					<img
+						loading="lazy"
+						decoding="async"
+						class="rating-text pop"
+						src="/ratings/rating-text-2.svg"
+						alt=""
+						width="73"
+						height="49"
+					/>
 				{:else}
-					<img src="/ratings/rating-text-1.svg" alt="" width="73" height="49" />
+					<img
+						loading="lazy"
+						decoding="async"
+						class="rating-text pop"
+						src="/ratings/rating-text-1.svg"
+						alt=""
+						width="73"
+						height="49"
+					/>
 				{/if}
 			</div>
 		{/if}
@@ -752,7 +871,7 @@
 		onCloseCallback={detail_modal_callback}
 	>
 		<div class="f" slot="title">
-			<h3 class="mitr" role="presentation">เกณฑ์มาตรฐาน</h3>
+			<h3 class="mitr" role="presentation" style="font-size:.9rem">เกณฑ์มาตรฐาน</h3>
 			<Dropdown options={DETAIL_DROPDOWN} bind:selected_option={detail_choice} />
 		</div>
 		{#if detail_choice.value === 'ห้องเรียน'}
@@ -944,7 +1063,14 @@
 	<div class="card">
 		<h3 class="fw400">แบ่งตามสถานที่</h3>
 		<div class="f g8">
-			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/classroom.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องเรียน</span>
 			<span class="f110" />
 			{#if +school_data?.countC1}
@@ -956,7 +1082,14 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/toilet.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องน้ำ</span>
 			<span class="f110" />
 			{#if +school_data?.countT1}
@@ -968,7 +1101,14 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/canteen.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">โรงอาหาร</span>
 			<span class="f110" />
 			{#if +school_data?.countF1}
@@ -980,7 +1120,7 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+			<img loading="lazy" decoding="async" src="/ratings/gym.svg" alt="" width="16" height="16" />
 			<span class="mitr">สนามกีฬา</span>
 			<span class="f110" />
 			{#if +school_data?.countG1}
@@ -1013,6 +1153,8 @@
 				<div class="total-rating-container">
 					<div class="f g4">
 						<img
+							loading="lazy"
+							decoding="async"
 							src="/ratings/rate-{Math.round(school_total_pleasure_avg)}a.svg"
 							alt=""
 							width="32"
@@ -1025,10 +1167,19 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/classroom.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/classroom.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องเรียน</span>
 			<span class="f110" />
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(school_pleasure_classroom_avg)}a.svg"
 				alt=""
 				width="28"
@@ -1043,10 +1194,19 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/toilet.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/toilet.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">ห้องน้ำ</span>
 			<span class="f110" />
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(school_pleasure_toilet_avg)}a.svg"
 				alt=""
 				width="28"
@@ -1061,10 +1221,19 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/canteen.svg" alt="" width="16" height="16" />
+			<img
+				loading="lazy"
+				decoding="async"
+				src="/ratings/canteen.svg"
+				alt=""
+				width="16"
+				height="16"
+			/>
 			<span class="mitr">โรงอาหาร</span>
 			<span class="f110" />
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(school_pleasure_canteen_avg)}a.svg"
 				alt=""
 				width="28"
@@ -1079,10 +1248,12 @@
 			{/if}
 		</div>
 		<div class="f g8">
-			<img src="/ratings/gym.svg" alt="" width="16" height="16" />
+			<img loading="lazy" decoding="async" src="/ratings/gym.svg" alt="" width="16" height="16" />
 			<span class="mitr">สนามกีฬา</span>
 			<span class="f110" />
 			<img
+				loading="lazy"
+				decoding="async"
 				src="/ratings/rate-{Math.round(school_pleasure_gym_avg)}a.svg"
 				alt=""
 				width="28"
@@ -1107,6 +1278,7 @@
 			width: 100%;
 			max-width: 640px;
 			margin: auto;
+			margin-top: 73px;
 		}
 	}
 
@@ -1133,6 +1305,10 @@
 
 	.mobile-spacer {
 		height: 64px;
+
+		@media screen and (min-width: 768px) {
+			height: 32px;
+		}
 	}
 
 	.total-rating-container {
@@ -1157,7 +1333,7 @@
 	.meter {
 		min-width: 35%;
 		height: 4px;
-		background: #dddddd;
+		background: #ddd;
 		display: flex;
 		border-radius: 2px;
 		overflow: hidden;
@@ -1190,16 +1366,29 @@
 	.review-count {
 		font-size: 0.625rem;
 		line-height: 1;
+		white-space: nowrap;
+
+		@media screen and (min-width: 768px) {
+			font-size: 0.8125rem;
+		}
 	}
 
 	.detail-header {
 		font-size: 0.8125rem;
 		font-weight: 500;
+
+		@media screen and (min-width: 768px) {
+			font-size: 1rem;
+		}
 	}
 
 	.detail-list {
 		font-size: 0.8125rem;
 		margin: 4px 16px 16px;
+
+		@media screen and (min-width: 768px) {
+			font-size: 1rem;
+		}
 	}
 
 	.rate-btn {
@@ -1212,7 +1401,7 @@
 		gap: 8px;
 
 		background: #fa7cc7;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 24px;
 
 		color: #fff;
@@ -1228,8 +1417,12 @@
 			width: 100%;
 			max-width: 640px;
 			left: calc(50% + 32px);
-			bottom: 16px;
+			top: calc(60px + 16px + var(--navbar-height));
+			bottom: unset;
 			transform: translateX(-50%);
+
+			transition: top 0.3s;
+			will-change: top;
 		}
 	}
 
@@ -1250,6 +1443,12 @@
 		font-size: 0.8125rem;
 	}
 
+	@media screen and (min-width: 768px) {
+		:global(.quiz-body) {
+			font-size: 1rem;
+		}
+	}
+
 	:global(.quiz-body-gap) {
 		gap: 8px;
 	}
@@ -1266,7 +1465,7 @@
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 8px;
-		margin-top: 16px;
+		margin: 16px 0;
 		width: 100%;
 	}
 
@@ -1274,7 +1473,7 @@
 		padding: 12px 0;
 		background: #fff;
 		border: 1px solid #fcbde3;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 4px;
 
 		gap: 8px;
@@ -1291,7 +1490,7 @@
 	}
 
 	.quiz-step {
-		background: #dddddd;
+		background: #ddd;
 		border-radius: 4px;
 		flex: 1 1 0;
 
@@ -1305,6 +1504,10 @@
 
 		.rating-select-label {
 			font-size: 0.625rem;
+
+			@media screen and (min-width: 768px) {
+				font-size: 0.8125rem;
+			}
 		}
 
 		> .rating-select-controls {
@@ -1314,6 +1517,7 @@
 			> label {
 				line-height: 1;
 				font-size: 0;
+				cursor: pointer;
 
 				> input {
 					position: absolute;
@@ -1374,7 +1578,7 @@
 	.rating-form-btn {
 		background: #fa7cc7;
 		border: 2px solid #fa7cc7;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 24px;
 
 		font-family: 'Mitr';
@@ -1393,7 +1597,7 @@
 		&:is([disabled], .secondary) {
 			background: #fff;
 			border: 2px solid #fcbde3;
-			box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+			box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 			color: #fcbde3;
 		}
 	}
@@ -1441,6 +1645,77 @@
 		}
 	}
 
+	.rating-text {
+		filter: drop-shadow(0px 1px 4px rgba(12, 22, 107, 0.2));
+	}
+
+	.quiz-img {
+		width: 90%;
+		height: 120px;
+		object-fit: contain;
+
+		@media screen and (min-width: 768px) {
+			width: auto;
+			height: 200px;
+		}
+	}
+
+	.quiz-img-wrapper {
+		justify-content: center;
+		padding: 8px 0 0;
+
+		@media screen and (min-width: 768px) {
+			padding: 16px 0 8px;
+		}
+	}
+
+	@keyframes swingBounceIn {
+		from,
+		20%,
+		40%,
+		60%,
+		80%,
+		to {
+			animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+		}
+
+		0% {
+			opacity: 0;
+			transform: scale3d(0.3, 0.3, 0.3);
+		}
+
+		20% {
+			transform: scale3d(1.1, 1.1, 1.1) rotate3d(0, 0, 1, 15deg);
+		}
+
+		40% {
+			transform: scale3d(0.9, 0.9, 0.9) rotate3d(0, 0, 1, -10deg);
+		}
+
+		60% {
+			opacity: 1;
+			transform: scale3d(1.03, 1.03, 1.03) rotate3d(0, 0, 1, 5deg);
+		}
+
+		80% {
+			transform: scale3d(0.97, 0.97, 0.97) rotate3d(0, 0, 1, -5deg);
+		}
+
+		to {
+			opacity: 1;
+			transform: scale3d(1, 1, 1) rotate3d(0, 0, 1, 0deg);
+		}
+	}
+
+	.pop {
+		animation: swingBounceIn 1s;
+	}
+
+	.school-quiz-lottie {
+		width: 25px;
+		height: 25px;
+	}
+
 	// #region UTILS
 	.g4 {
 		gap: 4px;
@@ -1481,6 +1756,10 @@
 
 	.tal {
 		text-align: left;
+	}
+
+	.mt16 {
+		margin-top: 16px;
 	}
 	// #endregion
 </style>

@@ -10,8 +10,6 @@
 		stroke="#3C55AB"
 		stroke-width="4"
 		stroke-dasharray="{(percent / 100) * 63} 63"
-		stroke-linecap="round"
-		stroke-linejoin="round"
 		style="transform:rotate(-90deg);transform-origin:center"
 	/></svg
 >

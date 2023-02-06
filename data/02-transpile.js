@@ -8,7 +8,7 @@ import INTERNET from './json/internet.json' assert { type: 'json' };
 import STAFF from './json/staff.json' assert { type: 'json' };
 import STUDENT from './json/student.json' assert { type: 'json' };
 
-import { years } from './years.js';
+import YEARS from './years_data.json' assert { type: 'json' };
 
 const groupBy = (arr, groupFn) =>
 	arr.reduce((r, v, _i, _a, k = groupFn(v)) => ((r[k] || (r[k] = [])).push(v), r), {});
@@ -42,16 +42,16 @@ const formatSchoolName = (name) => {
 		.trim();
 };
 
-if (!years.includes(CURRENT_SCHOOL_YEAR)) {
-	let new_years = [...years, CURRENT_SCHOOL_YEAR].sort((a, z) => a - z);
-	for (const path of ['data/years.js', 'src/data/years.js'])
-		fs.writeFileSync(path, 'export const years = ' + JSON.stringify(new_years));
+if (!YEARS.map((e) => e.year).includes(CURRENT_SCHOOL_YEAR)) {
+	let new_years = [
+		{ year: CURRENT_SCHOOL_YEAR, update_date: new Date().toLocaleDateString('th-TH') },
+		...YEARS
+	].sort((a, z) => z.year - a.year);
+	// เอาไว้ Track เพื่อรันด้วยตัวมันเอง
+	fs.writeFileSync('data/years_data.json', JSON.stringify(new_years));
+	// เอาไว้ให้ FE `fetch`
+	fs.writeFileSync(`static/data/years_data.json`, JSON.stringify(new_years));
 }
-
-fs.writeFileSync(
-	'src/data/update_date.js',
-	`export const update_date = "${new Date().toLocaleDateString('th-TH')}"`
-);
 
 let loopcount = 0;
 for (let school_id in GENERAL) {

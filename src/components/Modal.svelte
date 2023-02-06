@@ -11,30 +11,45 @@
 	export let description = '';
 	export let isOpen: boolean;
 	export let body_class = '';
-	export let onCloseCallback: Function = () => {};
+	export let onCloseCallback = () => {};
+	export let boxWidth = '480px';
+	export let boxHeight = '600px';
+	export let boxLeftShift = '0px';
 </script>
 
 <Dialog
 	open={isOpen}
 	on:close={() => {
 		isOpen = false;
-		onCloseCallback();
+		requestAnimationFrame(onCloseCallback);
 	}}
 >
 	<!-- <DialogOverlay class="modal-backdrop" /> -->
 	<DialogDescription>{description}</DialogDescription>
 
-	<div class="modal-box">
+	<div
+		class="modal-box"
+		style:--modal-box-width={boxWidth}
+		style:--modal-box-height={boxHeight}
+		style:--modal-box-left-shift={boxLeftShift}
+	>
 		<header class="f modal-header" class:header-background={!hideTitle || $$slots.title}>
 			<button
 				type="button"
 				class="f"
 				on:click={() => {
 					isOpen = false;
-					onCloseCallback();
+					requestAnimationFrame(onCloseCallback);
 				}}
 			>
-				<img src="/icons/close.svg" alt="ปิด" width="32" height="32" />
+				<img
+					src="/icons/close.svg"
+					alt="ปิด"
+					width="32"
+					height="32"
+					loading="lazy"
+					decoding="async"
+				/>
 			</button>
 			<DialogTitle class="modal-title {hideTitle ? 'sr-only' : ''}">{title}</DialogTitle>
 			<slot name="title" />
@@ -66,15 +81,15 @@
 		overflow: hidden auto;
 
 		@media screen and (min-width: 768px) {
-			box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+			box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
 			border-radius: 8px;
 
 			inset: unset;
-			left: 50%;
+			left: calc(50% + var(--modal-box-left-shift, 0px));
 			top: 50%;
 			transform: translate(-50%, -50%);
-			width: 480px;
-			max-height: 600px;
+			width: var(--modal-box-width, 480px);
+			max-height: var(--modal-box-height, 600px);
 		}
 	}
 

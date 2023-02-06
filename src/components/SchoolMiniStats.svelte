@@ -6,6 +6,8 @@
 	import RatingStat from './RatingStat.svelte';
 	import CommentStat from './CommentStat.svelte';
 
+	import { schoolStatsCache } from 'stores/school_stats_cache';
+
 	export let schoolId: string = '';
 	export let noFetch = false;
 	export let rating = 0;
@@ -16,6 +18,11 @@
 
 	const fetchScore = async () => {
 		if (!schoolId) return;
+		if (schoolId in $schoolStatsCache) {
+			_rating = $schoolStatsCache[schoolId].rating;
+			_comment = $schoolStatsCache[schoolId].comment;
+			return;
+		}
 
 		try {
 			const comment_count_resp = await fetch(
@@ -84,6 +91,11 @@
 					+!!school_toilet_avg +
 					+!!school_canteen_avg +
 					+!!school_gym_avg);
+
+			$schoolStatsCache = {
+				...$schoolStatsCache,
+				[schoolId]: { comment: _comment, rating: _rating }
+			};
 		} catch (e) {
 			console.error(e);
 		}

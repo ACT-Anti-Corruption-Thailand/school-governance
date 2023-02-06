@@ -5,12 +5,9 @@
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import RatingStat from 'components/RatingStat.svelte';
 	import CommentStat from 'components/CommentStat.svelte';
+	import InViewLottie from 'components/InViewLottie.svelte';
 
-	import { update_date } from 'data/update_date.js';
-	import { years } from 'data/years.js';
-	const LATEST_YEAR = years[years.length - 1];
-
-	import { currentSchool, currentSchoolId } from 'stores/school';
+	import { currentSchool, currentSchoolId, update_date, LATEST_YEAR } from 'stores/school';
 	$: d = $currentSchool;
 
 	let total_rating = 0;
@@ -105,7 +102,7 @@
 		let location_query = ['classroom', 'toilet', 'canteen', 'gym', 'other']
 			.map((loc) => `(location,like,${loc})`)
 			.join('~or');
-		let year_query = `(schoolYear,eq,${LATEST_YEAR})`;
+		let year_query = `(schoolYear,eq,${$LATEST_YEAR})`;
 		let where_query = [schoolid_query, approved_query, location_query, year_query]
 			.filter((e) => e)
 			.map((e) => `(${e})`)
@@ -131,11 +128,20 @@
 		}
 	};
 
+	const fixNaN = (val: string | number, defaultVal = '—') => {
+		if (typeof val === 'string') return val === 'NaN' ? defaultVal : val;
+		return Number.isNaN(val) ? defaultVal : val;
+	};
+
 	onMount(() => {
 		fetchScore();
 		fetchComments();
 	});
 </script>
+
+<svelte:head>
+	<title>ภาพรวมโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
 
 <SchoolHeader>
 	<div class="f header-score">
@@ -146,162 +152,272 @@
 </SchoolHeader>
 
 <div class="overview-container">
-	<div class="card">
-		<a href="/school/{$currentSchoolId}/data" class="f section-header mitr">
-			<img src="/mascots/data.svg" alt="" width="50" height="50" />
-			<span>ข้อมูลโรงเรียน</span>
-			<img src="/chevrons/right.svg" alt="" width="24" height="24" />
-		</a>
+	<a href="/school/{$currentSchoolId}/data" class="section-link">
+		<div class="card">
+			<header class="f section-header mitr">
+				<InViewLottie class="school-data-lottie-img" src="/lotties/data_ch.json" loop autoplay />
+				<span>ข้อมูลโรงเรียน</span>
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
+			</header>
 
-		<div class="school-data-grid">
-			<div class="f school-data-block">
-				<span class="school-data-text">นักเรียนทั้งหมด</span>
-				<span class="school-data-val">
-					<span class="mitr school-bignum">{d?.student?.total?.all?.toLocaleString() ?? '...'}</span
-					> คน
-				</span>
-			</div>
-			<div class="f school-data-block">
-				<span class="school-data-text">นักเรียนต่อครู</span>
-				<span class="school-data-val">
-					<span class="mitr school-bignum"
-						>1:{Math.ceil(d?.student?.total?.all / d?.staff?.ครู?.total).toLocaleString() ??
-							'...'}</span
-					> คน
-				</span>
-			</div>
-			<div class="f school-data-block">
-				<span class="school-data-text">นักเรียนต่อห้อง</span>
-				<span class="school-data-val">
-					<span class="mitr school-bignum"
-						>{Math.ceil(d?.student?.total?.all / d?.student?.total?.class).toLocaleString() ??
-							'...'}</span
-					> คน
-				</span>
-			</div>
-			<div class="f school-data-block">
-				<span class="school-data-text">อุปกรณ์การเรียน</span>
-				<span class="school-data-val">
-					<span class="mitr school-bignum"
-						>{~~((d?.durable_goods?.stats?.working / d?.durable_goods?.stats?.total) * 100) ??
-							'...'}%</span
-					> ใช้งานได้
-				</span>
-			</div>
-		</div>
-	</div>
-
-	<div class="card">
-		<a href="/school/{$currentSchoolId}/rating" class="f section-header">
-			<img src="/mascots/star.svg" alt="" width="50" height="50" />
-			<span class="f header-text-adjust">
-				<span class="mitr header-bignum">{total_rating.toFixed(1)}</span>
-				<span class="mitr"> คะแนน </span>
-				<small>| {total_rating_count.toLocaleString()} รีวิว</small>
-			</span>
-			<img src="/chevrons/right.svg" alt="" width="24" height="24" />
-		</a>
-		<div class="f score-summary">
-			<div>
-				<div>ระดับคุณภาพโรงเรียน</div>
-				<div style="color:#FA7CC7;">
-					{#if total_rating >= 4}
-						ภาพรวมดีมาก ตรงตามเกณฑ์มาตรฐาน
-					{:else if total_rating >= 3}
-						ภาพรวมดี แต่มีบางส่วนที่พัฒนาให้ดีกว่านี้ได้
-					{:else if total_rating >= 2}
-						มีหลายส่วนที่พัฒนาให้ดีกว่านี้ได้
-					{:else}
-						ยังมีหลายส่วนที่ต้องพัฒนาให้ดึกว่านี้
-					{/if}
+			<div class="school-data-grid">
+				<div class="f school-data-block">
+					<span class="school-data-text">นักเรียนทั้งหมด</span>
+					<span class="school-data-val">
+						<span class="mitr school-bignum">{d?.student?.total?.all?.toLocaleString() || '—'}</span
+						> คน
+					</span>
 				</div>
-			</div>
-			{#if total_rating >= 4}
-				<img src="/ratings/rating-text-4.svg" alt="" width="73" height="49" />
-			{:else if total_rating >= 3}
-				<img src="/ratings/rating-text-3.svg" alt="" width="73" height="49" />
-			{:else if total_rating >= 2}
-				<img src="/ratings/rating-text-2.svg" alt="" width="73" height="49" />
-			{:else}
-				<img src="/ratings/rating-text-1.svg" alt="" width="73" height="49" />
-			{/if}
-		</div>
-		<div class="f score-locations">
-			<div class="f score-location">
-				<div>ห้องเรียน</div>
-				<div class="f mitr header-text-adjust">
-					<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
-					<span class="location-star">{classroom_avg.toFixed(1)}</span>
+				<div class="f school-data-block">
+					<span class="school-data-text">นักเรียนต่อครู</span>
+					<span class="school-data-val">
+						<span class="mitr school-bignum"
+							>1:{fixNaN(
+								Math.ceil(d?.student?.total?.all / d?.staff?.ครู?.total).toLocaleString()
+							)}</span
+						> คน
+					</span>
 				</div>
-			</div>
-			<div class="f score-location">
-				<div>ห้องน้ำ</div>
-				<div class="f mitr header-text-adjust">
-					<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
-					<span class="location-star">{toilet_avg.toFixed(1)}</span>
+				<div class="f school-data-block">
+					<span class="school-data-text">นักเรียนต่อห้อง</span>
+					<span class="school-data-val">
+						<span class="mitr school-bignum"
+							>{fixNaN(
+								Math.ceil(d?.student?.total?.all / d?.student?.total?.class).toLocaleString()
+							)}</span
+						> คน
+					</span>
 				</div>
-			</div>
-			<div class="f score-location">
-				<div>โรงอาหาร</div>
-				<div class="f mitr header-text-adjust">
-					<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
-					<span class="location-star">{canteen_avg.toFixed(1)}</span>
-				</div>
-			</div>
-			<div class="f score-location">
-				<div>สนามกีฬา</div>
-				<div class="f mitr header-text-adjust">
-					<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
-					<span class="location-star">{gym_avg.toFixed(1)}</span>
+				<div class="f school-data-block">
+					<span class="school-data-text">อุปกรณ์การเรียน</span>
+					<span class="school-data-val">
+						<span class="mitr school-bignum"
+							>{~~((d?.durable_goods?.stats?.working / d?.durable_goods?.stats?.total) * 100) ||
+								'—'}%</span
+						> ใช้งานได้
+					</span>
 				</div>
 			</div>
 		</div>
-	</div>
+	</a>
 
-	<div class="card">
-		<a href="/school/{$currentSchoolId}/comments" class="f section-header mitr">
-			<img src="/mascots/speak.svg" alt="" width="50" height="50" />
-			<span class="f header-text-adjust">
-				<span class="header-bignum">{total_comment.toLocaleString()}</span>
-				ความคิดเห็น
-			</span>
-			<img src="/chevrons/right.svg" alt="" width="24" height="24" />
-		</a>
-		<div class="comments-scrolling">
-			{#each posts as post (post.Id)}
-				<div class="f comment">
-					<p class="comment-text">{post.comments}</p>
+	<a href="/school/{$currentSchoolId}/rating" class="section-link">
+		<div class="card">
+			<header class="f section-header">
+				<InViewLottie
+					class="school-data-lottie-img"
+					src="/lotties/rating_completed.json"
+					loop
+					autoplay
+				/>
+				{#if fixNaN(total_rating.toFixed(1)) === '—'}
+					<span class="f header-text-adjust mitr">ยังไม่มีคะแนน</span>
+				{:else}
+					<span class="f header-text-adjust">
+						<span class="mitr header-bignum">{fixNaN(total_rating.toFixed(1))}</span>
+						<span class="mitr"> คะแนน </span>
+						<small>| {fixNaN(total_rating_count.toLocaleString())} รีวิว</small>
+					</span>
+				{/if}
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
+			</header>
+			{#if !Number.isNaN(total_rating) && total_rating}
+				<div class="f score-summary">
 					<div>
-						<div class="comment-date">
-							โพสต์เมื่อ {new Date(post.createDate).toLocaleDateString('th')}
-						</div>
-						<div class="f comment-like">
-							<img src="/icons/like.svg" alt="" width="16" height="16" />
-							{#if +post.likeCount}
-								<span>{post.likeCount.toLocaleString()} คนเห็นด้วยกับสิ่งนี้</span>
+						<div>ระดับคุณภาพโรงเรียน</div>
+						<div style="color:#FA7CC7;">
+							{#if total_rating >= 4}
+								ภาพรวมดีมาก ตรงตามเกณฑ์มาตรฐาน
+							{:else if total_rating >= 3}
+								ภาพรวมดี แต่มีบางส่วนที่พัฒนาให้ดีกว่านี้ได้
+							{:else if total_rating >= 2}
+								มีหลายส่วนที่พัฒนาให้ดีกว่านี้ได้
 							{:else}
-								<span>ยังไม่มีใครเห็นด้วยกับสิ่งนี้</span>
+								ยังมีหลายส่วนที่ต้องพัฒนาให้ดีกว่านี้
 							{/if}
 						</div>
 					</div>
+					{#if total_rating >= 4}
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/ratings/rating-text-4.svg"
+							alt=""
+							width="73"
+							height="49"
+						/>
+					{:else if total_rating >= 3}
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/ratings/rating-text-3.svg"
+							alt=""
+							width="73"
+							height="49"
+						/>
+					{:else if total_rating >= 2}
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/ratings/rating-text-2.svg"
+							alt=""
+							width="73"
+							height="49"
+						/>
+					{:else}
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/ratings/rating-text-1.svg"
+							alt=""
+							width="73"
+							height="49"
+						/>
+					{/if}
 				</div>
-			{/each}
+			{/if}
+			<div class="f score-locations">
+				<div class="f score-location">
+					<div>ห้องเรียน</div>
+					<div class="f mitr header-text-adjust">
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt="คะแนนเฉลี่ย"
+							width="16"
+							height="16"
+						/>
+						<span class="location-star">{fixNaN(classroom_avg.toFixed(1))}</span>
+					</div>
+				</div>
+				<div class="f score-location">
+					<div>ห้องน้ำ</div>
+					<div class="f mitr header-text-adjust">
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt="คะแนนเฉลี่ย"
+							width="16"
+							height="16"
+						/>
+						<span class="location-star">{fixNaN(toilet_avg.toFixed(1))}</span>
+					</div>
+				</div>
+				<div class="f score-location">
+					<div>โรงอาหาร</div>
+					<div class="f mitr header-text-adjust">
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt="คะแนนเฉลี่ย"
+							width="16"
+							height="16"
+						/>
+						<span class="location-star">{fixNaN(canteen_avg.toFixed(1))}</span>
+					</div>
+				</div>
+				<div class="f score-location">
+					<div>สนามกีฬา</div>
+					<div class="f mitr header-text-adjust">
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/star.svg"
+							alt="คะแนนเฉลี่ย"
+							width="16"
+							height="16"
+						/>
+						<span class="location-star">{fixNaN(gym_avg.toFixed(1))}</span>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
+	</a>
+
+	<a href="/school/{$currentSchoolId}/comments" class="section-link">
+		<div class="card">
+			<header class="f section-header mitr">
+				<InViewLottie
+					class="school-data-lottie-img"
+					src="/lotties/feedback_completed.json"
+					loop
+					autoplay
+				/>
+				<span class="f header-text-adjust">
+					<span class="header-bignum">{total_comment.toLocaleString()}</span>
+					ความคิดเห็น
+				</span>
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
+			</header>
+			<div class="comments-scrolling">
+				{#each posts as post (post.Id)}
+					<div class="f comment">
+						<p class="comment-text">{post.comments}</p>
+						<div>
+							<div class="comment-date">
+								โพสต์เมื่อ {new Date(post.createDate).toLocaleDateString('th')}
+							</div>
+							<div class="f comment-like">
+								<img
+									loading="lazy"
+									decoding="async"
+									src="/icons/like.svg"
+									alt=""
+									width="16"
+									height="16"
+								/>
+								{#if +post.likeCount}
+									<span>{post.likeCount.toLocaleString()} คนเห็นด้วยกับสิ่งนี้</span>
+								{:else}
+									<span>ยังไม่มีใครเห็นด้วยกับสิ่งนี้</span>
+								{/if}
+							</div>
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+	</a>
 </div>
 
 <div class="overview-download">
-	<a class="download-btn" href="/data/{LATEST_YEAR}/{$currentSchoolId}.json">
-		<img src="/icons/download.svg" alt="" width="24" height="24" />
+	<a class="download-btn" href="/data/{$LATEST_YEAR}/{$currentSchoolId}.json" download>
+		<img loading="lazy" decoding="async" src="/icons/download.svg" alt="" width="24" height="24" />
 		<span>ดาวน์โหลดข้อมูลโรงเรียน</span>
 	</a>
 	<p>
 		สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่<br
 		/>
 		ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)<br />
-		<a href="https://data.bopp-obec.info/emis" download>https://data.bopp-obec.info/emis</a>
+		<a href="https://data.bopp-obec.info/emis" target="_blank" rel="nofollow noopener noreferrer"
+			>https://data.bopp-obec.info/emis</a
+		>
 	</p>
-	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
+	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date[$LATEST_YEAR]}</p>
 </div>
 
 <style lang="scss">
@@ -312,6 +428,16 @@
 		> .spacer {
 			width: 4px;
 		}
+	}
+
+	.section-link {
+		&,
+		&:hover {
+			text-decoration: none;
+			color: inherit;
+		}
+
+		flex: 1 1 0;
 	}
 
 	.mitr {
@@ -331,7 +457,6 @@
 		gap: 8px;
 
 		margin-bottom: 16px;
-		flex: 1 1 0;
 	}
 
 	.section-header {
@@ -361,9 +486,9 @@
 	.school-data-block {
 		padding: 16px;
 
-		background: #ffffff;
+		background: #fff;
 		border: 1px solid #fff5dd;
-		// box-shadow: 0px 0px 5px rgba(12, 22, 107, 0.2);
+		// box-shadow: 0 0 5px rgba(12, 22, 107, 0.2);
 		border-radius: 5px;
 
 		justify-content: space-between;
@@ -467,7 +592,7 @@
 		padding: 16px;
 		gap: 8px;
 
-		background: #ffffff;
+		background: #fff;
 		border: 1px solid #ecf7f7;
 		border-radius: 5px;
 
@@ -528,9 +653,14 @@
 		align-items: center;
 
 		background: #3c55ab;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 20px;
 		color: #fff;
 		text-decoration: none;
+	}
+
+	:global(.school-data-lottie-img) {
+		width: 50px;
+		height: 50px;
 	}
 </style>

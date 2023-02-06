@@ -111,8 +111,8 @@
 		justify-content: center;
 		gap: 32px;
 
-		background: #ffffff;
-		box-shadow: 0px -2px 5px rgba(12, 22, 107, 0.2);
+		background: #fff;
+		box-shadow: 0 -2px 5px rgba(12, 22, 107, 0.2);
 	}
 
 	.nav-menu {

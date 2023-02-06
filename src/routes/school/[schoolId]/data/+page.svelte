@@ -1,6 +1,7 @@
 <script lang="ts">
-	import { update_date } from 'data/update_date.js';
-	import { years } from 'data/years.js';
+	import { onMount } from 'svelte';
+	import { scroll } from 'motion';
+
 	import {
 		Dialog,
 		DialogOverlay,
@@ -15,18 +16,56 @@
 	import RatioChart from 'components/school/RatioChart.svelte';
 	import Modal from 'components/Modal.svelte';
 
-	import { currentSchool, currentSchoolId } from 'stores/school';
+	import { currentSchool, currentSchoolId, update_date, years, LATEST_YEAR } from 'stores/school';
 
-	const DROPDOWN_DATA = years.map((y) => ({ label: y + 543, value: y }));
-
+	const DROPDOWN_DATA = $years?.map((y) => ({ label: y + 543, value: y })) ?? [];
 	let dropdown_choice = DROPDOWN_DATA[0];
 
 	$: d = $currentSchool;
 
-	const getConditionClass = (condition: string) => {
+	const FALLBACK_BUILDING_IMG = '/school/school-placeholder.png';
+
+	const tryImage = (url: string) => {
+		return new Promise((res, rej) => {
+			const img = new Image();
+			img.addEventListener('error', rej);
+			img.addEventListener('load', res);
+			img.src = url;
+		});
+	};
+
+	const getUsableImage = async (...urls: string[]) => {
+		for (const url of urls) {
+			try {
+				await tryImage(url);
+				return url;
+			} catch (e) {
+				console.error('ImageRequestErr ' + e);
+			}
+		}
+		return FALLBACK_BUILDING_IMG;
+	};
+
+	const getUsableImageObject = async (schoolData: any) => {
+		const building_data = { ...schoolData.buildings.data };
+
+		for (const building_type in building_data) {
+			building_data[building_type] = await Promise.all(
+				building_data[building_type].map((e: any) => getUsableImage(e.image_url_0, e.image_url_1))
+			);
+		}
+
+		return building_data;
+	};
+
+	let building_imgs: Record<string, string[]> = {};
+
+	$: if (d) getUsableImageObject(d).then((e) => (building_imgs = e));
+
+	const getConditionClass = (condition: string, await2 = false) => {
 		const CONDITIONS_CLASS: Record<string, string> = {
 			ดี: 'usable-color',
-			พอใช้: 'await-color',
+			พอใช้: await2 ? 'await2-color' : 'await-color',
 			ทรุดโทรม: 'unusable-color'
 		};
 		return CONDITIONS_CLASS[condition] ?? '';
@@ -47,23 +86,213 @@
 
 	let lightbox_open = false;
 	let lightbox_building_name = '';
-	let lightbox_url0 = '';
-	let lightbox_url1 = '';
+	let lightbox_url = '';
+	let lightbox_callback = () => {};
 
-	const openLightbox = (name: string, img0: string, img1: string) => {
+	const openLightbox = (name: string, url: string, callback = () => {}) => {
+		if (url === FALLBACK_BUILDING_IMG) return;
 		lightbox_building_name = name;
-		lightbox_url0 = img0;
-		lightbox_url1 = img1;
-		lightbox_open = true;
+		lightbox_url = url;
+		lightbox_callback = callback;
+		requestAnimationFrame(() => {
+			lightbox_open = true;
+		});
 	};
+
+	let [current_year, ...other_years] = [...($years ?? [])];
+	let school_other_years_data: { year: number; data: any }[] = [];
+
+	const fetchOtherYearData = () => {
+		if (other_years.length > 1) {
+			other_years.forEach((year, index) => {
+				fetch(`/data/${year}/${currentSchoolId}.json`)
+					.then((resp) => resp.json())
+					.then(
+						(data) =>
+							(school_other_years_data[index] = {
+								year,
+								data
+							})
+					);
+			});
+		}
+	};
+
+	let el_student_section: HTMLElement;
+	let el_employee_section: HTMLElement;
+	let el_goods_section: HTMLElement;
+	let el_building_section: HTMLElement;
+	let el_general_section: HTMLElement;
+
+	let employee_section_intx = false;
+	let goods_section_intx = false;
+	let building_section_intx = false;
+	let general_section_intx = false;
+
+	let active_section: 'student' | 'employee' | 'goods' | 'building' | 'general' = 'student';
+	$: if (general_section_intx) active_section = 'general';
+	else if (building_section_intx) active_section = 'building';
+	else if (goods_section_intx) active_section = 'goods';
+	else if (employee_section_intx) active_section = 'employee';
+	else active_section = 'student';
+
+	let current_scrolly = 0;
+	let section_pos = [0, 0, 0, 0, 0];
+
+	const getOffsetY = (el: HTMLElement, scrollY: number) => {
+		const rect = el.getBoundingClientRect();
+		return rect.top + scrollY;
+	};
+
+	const calcHeaderPos = () => {
+		const winY = window.scrollY;
+
+		section_pos = [
+			getOffsetY(el_student_section, winY),
+			getOffsetY(el_employee_section, winY),
+			getOffsetY(el_goods_section, winY),
+			getOffsetY(el_building_section, winY),
+			getOffsetY(el_general_section, winY)
+		];
+	};
+
+	// because nav is shifting around
+	// we have to check if nav *will* be shown or not
+	// and scroll to accordingly
+	const scrollToSection = (section: 'student' | 'employee' | 'goods' | 'building' | 'general') => {
+		const SECTION_LOOKUP = {
+			student: 0,
+			employee: 1,
+			goods: 2,
+			building: 3,
+			general: 4
+		};
+		let section_offset = section_pos[SECTION_LOOKUP[section]];
+		let is_desktop = window.matchMedia('(min-width: 768px)').matches;
+		let jumpnav_size = is_desktop ? 48 : 32;
+
+		if (section_offset > current_scrolly) {
+			// if scroll down, nav will hide
+			return scrollTo({
+				behavior: 'smooth',
+				top: section_offset - 60 - jumpnav_size
+			});
+		} else {
+			// if scroll up, nav will be displayed
+			let nav_size = is_desktop ? 72 : 48;
+			return scrollTo({
+				behavior: 'smooth',
+				top: section_offset - 60 - jumpnav_size - nav_size
+			});
+		}
+	};
+
+	let mounted = false;
+	onMount(() => {
+		mounted = true;
+	});
+
+	$: if (mounted && $years) {
+		fetchOtherYearData();
+	}
+
+	$: if (
+		mounted &&
+		d &&
+		el_student_section &&
+		el_employee_section &&
+		el_goods_section &&
+		el_building_section &&
+		el_general_section
+	) {
+		calcHeaderPos();
+
+		scroll(({ y }) => (employee_section_intx = !!y.progress), {
+			target: el_employee_section,
+			offset: ['start 0.5', 'end start']
+		});
+
+		scroll(({ y }) => (goods_section_intx = !!y.progress), {
+			target: el_goods_section,
+			offset: ['start 0.5', 'end start']
+		});
+
+		scroll(({ y }) => (building_section_intx = !!y.progress), {
+			target: el_building_section,
+			offset: ['start 0.5', 'end start']
+		});
+
+		scroll(({ y }) => (general_section_intx = !!y.progress), {
+			target: el_general_section,
+			offset: ['start 0.5', 'end start']
+		});
+
+		scroll(({ y }) => (current_scrolly = y.current));
+	}
 </script>
+
+<svelte:head>
+	<title>ข้อมูลโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
+
+<div class="jumpnav-wrapper">
+	<menu class="f jumpnav">
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'student'}
+				on:click={() => scrollToSection('student')}
+			>
+				นักเรียน
+			</button>
+		</li>
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'employee'}
+				on:click={() => scrollToSection('employee')}
+			>
+				ครู/บุคลากร
+			</button>
+		</li>
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'goods'}
+				on:click={() => scrollToSection('goods')}
+			>
+				อุปกรณ์
+			</button>
+		</li>
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'building'}
+				on:click={() => scrollToSection('building')}
+			>
+				สิ่งก่อสร้าง
+			</button>
+		</li>
+		<li>
+			<button
+				type="button"
+				class:j-active={active_section === 'general'}
+				on:click={() => scrollToSection('general')}
+			>
+				ทั่วไป
+			</button>
+		</li>
+	</menu>
+</div>
+<div class="jumpnav-compensate" />
+
 <div class="desktop-margin">
 	{#if d}
-		<h2 class="f">
+		<h2 bind:this={el_student_section} id="student-section" class="f">
 			<span>นักเรียน <small>(คน)</small></span>
 			<span>{d.student.total.all.toLocaleString()}</span>
 		</h2>
@@ -77,13 +306,28 @@
 				>
 			</div>
 			<hr />
-			<span class="mitr">โรงเรียนขนาดใหญ่</span>
+			<span class="mitr">โรงเรียนขนาดใหญ่ <!-- TODO: รอข้อมูลจากฟีน --></span>
 			<details class="school-size-detail">
 				<summary>
 					<span class="f">
-						<img src="/icons/info.svg" alt="" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/info.svg"
+							alt=""
+							width="16"
+							height="16"
+						/>
 						<span>ดูเกณฑ์การแบ่งขนาดโรงเรียน</span>
-						<img class="chevron" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							class="chevron"
+							src="/chevrons/bottom.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					</span>
 				</summary>
 				<div class="school-size-flex">
@@ -126,425 +370,459 @@
 					{ number: d.student.total.มป, color: '#ffc700' }
 				]}
 			/>
-			{#if d.student.total.อ}
-				<button
-					type="button"
-					class="mitr f student-size-btn"
-					on:click={() => {
-						อ_modal_open = true;
-					}}
-				>
-					<span class="student-color-1 std-size-color" />
-					<span>อนุบาล</span>
-					<span class="std-size-count">{d.student.total.อ.toLocaleString()}</span>
-					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
-				</button>
-				<Modal title={`อนุบาล ${d.student.total.อ.toLocaleString()} คน`} bind:isOpen={อ_modal_open}>
-					<div class="f mitr modal-section-header">
-						<span>อนุบาล 1</span>
-						<span class="mitr">{d.student.อ1.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.อ1.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.อ1.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.อ1.men.toLocaleString()}</span>
-						</span>
-					</div>
-					<div class="f mitr modal-section-header">
-						<span>อนุบาล 2</span>
-						<span class="mitr">{d.student.อ2.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.อ2.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.อ2.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.อ2.men.toLocaleString()}</span>
-						</span>
-					</div>
-					<div class="f mitr modal-section-header">
-						<span>อนุบาล 3</span>
-						<span class="mitr">{d.student.อ3.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.อ3.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.อ3.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.อ3.men.toLocaleString()}</span>
-						</span>
-					</div>
-				</Modal>
-			{/if}
-			{#if d.student.total.ป}
-				<button
-					type="button"
-					class="mitr f student-size-btn"
-					on:click={() => {
-						ป_modal_open = true;
-					}}
-				>
-					<span class="student-color-2 std-size-color" />
-					<span>ประถม</span>
-					<span class="std-size-count">{d.student.total.ป.toLocaleString()}</span>
-					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
-				</button>
-				<Modal title={`ประถม ${d.student.total.ป.toLocaleString()} คน`} bind:isOpen={ป_modal_open}>
-					<div class="f mitr modal-section-header">
-						<span>ประถม 1</span>
-						<span class="mitr">{d.student.ป1.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.ป1.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.ป1.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.ป1.men.toLocaleString()}</span>
-						</span>
-					</div>
-					<div class="f mitr modal-section-header">
-						<span>ประถม 2</span>
-						<span class="mitr">{d.student.ป2.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.ป2.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.ป2.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.ป2.men.toLocaleString()}</span>
-						</span>
-					</div>
-					<div class="f mitr modal-section-header">
-						<span>ประถม 3</span>
-						<span class="mitr">{d.student.ป3.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.ป3.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.ป3.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.ป3.men.toLocaleString()}</span>
-						</span>
-					</div>
-					<div class="f mitr modal-section-header">
-						<span>ประถม 4</span>
-						<span class="mitr">{d.student.ป4.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.ป4.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.ป4.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.ป4.men.toLocaleString()}</span>
-						</span>
-					</div>
-					<div class="f mitr modal-section-header">
-						<span>ประถม 5</span>
-						<span class="mitr">{d.student.ป5.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.ป5.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.ป5.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.ป5.men.toLocaleString()}</span>
-						</span>
-					</div>
-					<div class="f mitr modal-section-header">
-						<span>ประถม 6</span>
-						<span class="mitr">{d.student.ป6.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.ป6.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.ป6.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.ป6.men.toLocaleString()}</span>
-						</span>
-					</div>
-				</Modal>
-			{/if}
-			{#if d.student.total.มต}
-				<button
-					type="button"
-					class="mitr f student-size-btn"
-					on:click={() => {
-						มต_modal_open = true;
-					}}
-				>
-					<span class="student-color-3 std-size-color" />
-					<span>มัธยมต้น</span>
-					<span class="std-size-count">{d.student.total.มต.toLocaleString()}</span>
-					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
-				</button>
-				<Modal
-					title={`มัธยมต้น ${d.student.total.มต.toLocaleString()} คน`}
-					bind:isOpen={มต_modal_open}
-				>
-					<div class="f mitr modal-section-header">
-						<span>มัธยม 1</span>
-						<span class="mitr">{d.student.ม1.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.ม1.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.ม1.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.ม1.men.toLocaleString()}</span>
-						</span>
-					</div>
-					<div class="f mitr modal-section-header">
-						<span>มัธยม 2</span>
-						<span class="mitr">{d.student.ม2.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.ม2.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.ม2.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.ม2.men.toLocaleString()}</span>
-						</span>
-					</div>
-					<div class="f mitr modal-section-header">
-						<span>มัธยม 3</span>
-						<span class="mitr">{d.student.ม3.total.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-						<span class="mitr">{d.student.ม3.class.toLocaleString()}</span>
-					</div>
-					<div class="f modal-section">
-						<span>แบ่งตามเพศ</span>
-						<span>
-							หญิง
-							<span class="mitr">{d.student.ม3.women.toLocaleString()}</span>
-							ชาย
-							<span class="mitr">{d.student.ม3.men.toLocaleString()}</span>
-						</span>
-					</div>
-				</Modal>
-			{/if}
-			{#if d.student.total.มป}
-				<button
-					type="button"
-					class="mitr f student-size-btn"
-					on:click={() => {
-						มป_modal_open = true;
-					}}
-				>
-					<span class="student-color-4 std-size-color" />
-					<span>มัธยมปลาย</span>
-					<span class="std-size-count">{d.student.total.มป.toLocaleString()}</span>
-					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
-				</button>
-				<Modal
-					title={`มัธยมปลาย ${d.student.total.มป.toLocaleString()} คน`}
-					bind:isOpen={มป_modal_open}
-				>
-					{#if d.student.ม4.total + d.student.ม5.total + d.student.ม6.total}
+			<div class="col2-on-desktop">
+				{#if d.student.total.อ}
+					<button
+						type="button"
+						class="mitr f student-size-btn"
+						on:click={() => {
+							อ_modal_open = true;
+						}}
+					>
+						<span class="student-color-1 std-size-color" />
+						<span>อนุบาล</span>
+						<span class="std-size-count">{d.student.total.อ.toLocaleString()}</span>
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/chevrons/right.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
+					</button>
+					<Modal
+						title={`อนุบาล ${d.student.total.อ.toLocaleString()} คน`}
+						bind:isOpen={อ_modal_open}
+					>
 						<div class="f mitr modal-section-header">
-							<span>มัธยม 4</span>
-							<span class="mitr">{d.student.ม4.total.toLocaleString()}</span>
+							<span>อนุบาล 1</span>
+							<span class="mitr">{d.student.อ1.total.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ม4.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.อ1.class.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ม4.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ1.women.toLocaleString()}</span>
 								ชาย
-								<span class="mitr">{d.student.ม4.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ1.men.toLocaleString()}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
-							<span>มัธยม 5</span>
-							<span class="mitr">{d.student.ม5.total.toLocaleString()}</span>
+							<span>อนุบาล 2</span>
+							<span class="mitr">{d.student.อ2.total.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ม5.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.อ2.class.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ม5.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ2.women.toLocaleString()}</span>
 								ชาย
-								<span class="mitr">{d.student.ม5.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ2.men.toLocaleString()}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
-							<span>มัธยม 6</span>
-							<span class="mitr">{d.student.ม6.total.toLocaleString()}</span>
+							<span>อนุบาล 3</span>
+							<span class="mitr">{d.student.อ3.total.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ม6.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.อ3.class.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ม6.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ3.women.toLocaleString()}</span>
 								ชาย
-								<span class="mitr">{d.student.ม6.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ3.men.toLocaleString()}</span>
 							</span>
 						</div>
-					{/if}
-					{#if d.student.ปวช1.total + d.student.ปวช2.total + d.student.ปวช3.total}
+					</Modal>
+				{/if}
+				{#if d.student.total.ป}
+					<button
+						type="button"
+						class="mitr f student-size-btn"
+						on:click={() => {
+							ป_modal_open = true;
+						}}
+					>
+						<span class="student-color-2 std-size-color" />
+						<span>ประถม</span>
+						<span class="std-size-count">{d.student.total.ป.toLocaleString()}</span>
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/chevrons/right.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
+					</button>
+					<Modal
+						title={`ประถม ${d.student.total.ป.toLocaleString()} คน`}
+						bind:isOpen={ป_modal_open}
+					>
 						<div class="f mitr modal-section-header">
-							<span>ปวช 1</span>
-							<span class="mitr">{d.student.ปวช1.total.toLocaleString()}</span>
+							<span>ประถม 1</span>
+							<span class="mitr">{d.student.ป1.total.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ปวช1.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป1.class.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ปวช1.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป1.women.toLocaleString()}</span>
 								ชาย
-								<span class="mitr">{d.student.ปวช1.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป1.men.toLocaleString()}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
-							<span>ปวช 2</span>
-							<span class="mitr">{d.student.ปวช2.total.toLocaleString()}</span>
+							<span>ประถม 2</span>
+							<span class="mitr">{d.student.ป2.total.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ปวช2.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป2.class.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ปวช2.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป2.women.toLocaleString()}</span>
 								ชาย
-								<span class="mitr">{d.student.ปวช2.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป2.men.toLocaleString()}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
-							<span>ปวช 3</span>
-							<span class="mitr">{d.student.ปวช3.total.toLocaleString()}</span>
+							<span>ประถม 3</span>
+							<span class="mitr">{d.student.ป3.total.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ปวช3.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป3.class.toLocaleString()}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ปวช3.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป3.women.toLocaleString()}</span>
 								ชาย
-								<span class="mitr">{d.student.ปวช3.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป3.men.toLocaleString()}</span>
 							</span>
 						</div>
-					{/if}
-				</Modal>
-			{/if}
-		</section>
-		<section>
-			<h3 class="mb16">เปรียบเทียบจำนวนนักเรียน 6 ปีที่ผ่านมา</h3>
-			<div class="f fw500">
-				<span>ปี</span>
-				<span>คน</span>
-			</div>
-			<div class="compare-chart">
-				<div>65</div>
-				<div class="cmp-chart-body student-chart">
-					<div class="student-color-1 student-section" style="--std-chart-ratio:25">250</div>
-					<div class="student-color-2 student-section" style="--std-chart-ratio:25">250</div>
-					<div class="student-color-3 student-section" style="--std-chart-ratio:25">250</div>
-					<div class="student-color-4 student-section" style="--std-chart-ratio:25">250</div>
-					<div class="student-section separator" style="--std-chart-ratio:0" />
-				</div>
-				<div>1000</div>
-				<div>64</div>
-				<div class="cmp-chart-body student-chart">
-					<div class="student-color-1 student-section" style="--std-chart-ratio:20">200</div>
-					<div class="student-color-2 student-section" style="--std-chart-ratio:20">200</div>
-					<div class="student-color-3 student-section" style="--std-chart-ratio:20">200</div>
-					<div class="student-color-4 student-section" style="--std-chart-ratio:20">200</div>
-					<div class="student-section separator" style="--std-chart-ratio:20" />
-				</div>
-				<div>800</div>
-				<div>63</div>
-				<div class="cmp-chart-body student-chart">
-					<div class="student-color-1 student-section" style="--std-chart-ratio:15">150</div>
-					<div class="student-color-2 student-section" style="--std-chart-ratio:15">150</div>
-					<div class="student-color-3 student-section" style="--std-chart-ratio:15">150</div>
-					<div class="student-color-4 student-section" style="--std-chart-ratio:15">150</div>
-					<div class="student-section separator" style="--std-chart-ratio:40" />
-				</div>
-				<div>600</div>
+						<div class="f mitr modal-section-header">
+							<span>ประถม 4</span>
+							<span class="mitr">{d.student.ป4.total.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+							<span class="mitr">{d.student.ป4.class.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>แบ่งตามเพศ</span>
+							<span>
+								หญิง
+								<span class="mitr">{d.student.ป4.women.toLocaleString()}</span>
+								ชาย
+								<span class="mitr">{d.student.ป4.men.toLocaleString()}</span>
+							</span>
+						</div>
+						<div class="f mitr modal-section-header">
+							<span>ประถม 5</span>
+							<span class="mitr">{d.student.ป5.total.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+							<span class="mitr">{d.student.ป5.class.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>แบ่งตามเพศ</span>
+							<span>
+								หญิง
+								<span class="mitr">{d.student.ป5.women.toLocaleString()}</span>
+								ชาย
+								<span class="mitr">{d.student.ป5.men.toLocaleString()}</span>
+							</span>
+						</div>
+						<div class="f mitr modal-section-header">
+							<span>ประถม 6</span>
+							<span class="mitr">{d.student.ป6.total.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+							<span class="mitr">{d.student.ป6.class.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>แบ่งตามเพศ</span>
+							<span>
+								หญิง
+								<span class="mitr">{d.student.ป6.women.toLocaleString()}</span>
+								ชาย
+								<span class="mitr">{d.student.ป6.men.toLocaleString()}</span>
+							</span>
+						</div>
+					</Modal>
+				{/if}
+				{#if d.student.total.มต}
+					<button
+						type="button"
+						class="mitr f student-size-btn"
+						on:click={() => {
+							มต_modal_open = true;
+						}}
+					>
+						<span class="student-color-3 std-size-color" />
+						<span>มัธยมต้น</span>
+						<span class="std-size-count">{d.student.total.มต.toLocaleString()}</span>
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/chevrons/right.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
+					</button>
+					<Modal
+						title={`มัธยมต้น ${d.student.total.มต.toLocaleString()} คน`}
+						bind:isOpen={มต_modal_open}
+					>
+						<div class="f mitr modal-section-header">
+							<span>มัธยม 1</span>
+							<span class="mitr">{d.student.ม1.total.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+							<span class="mitr">{d.student.ม1.class.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>แบ่งตามเพศ</span>
+							<span>
+								หญิง
+								<span class="mitr">{d.student.ม1.women.toLocaleString()}</span>
+								ชาย
+								<span class="mitr">{d.student.ม1.men.toLocaleString()}</span>
+							</span>
+						</div>
+						<div class="f mitr modal-section-header">
+							<span>มัธยม 2</span>
+							<span class="mitr">{d.student.ม2.total.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+							<span class="mitr">{d.student.ม2.class.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>แบ่งตามเพศ</span>
+							<span>
+								หญิง
+								<span class="mitr">{d.student.ม2.women.toLocaleString()}</span>
+								ชาย
+								<span class="mitr">{d.student.ม2.men.toLocaleString()}</span>
+							</span>
+						</div>
+						<div class="f mitr modal-section-header">
+							<span>มัธยม 3</span>
+							<span class="mitr">{d.student.ม3.total.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+							<span class="mitr">{d.student.ม3.class.toLocaleString()}</span>
+						</div>
+						<div class="f modal-section">
+							<span>แบ่งตามเพศ</span>
+							<span>
+								หญิง
+								<span class="mitr">{d.student.ม3.women.toLocaleString()}</span>
+								ชาย
+								<span class="mitr">{d.student.ม3.men.toLocaleString()}</span>
+							</span>
+						</div>
+					</Modal>
+				{/if}
+				{#if d.student.total.มป}
+					<button
+						type="button"
+						class="mitr f student-size-btn"
+						on:click={() => {
+							มป_modal_open = true;
+						}}
+					>
+						<span class="student-color-4 std-size-color" />
+						<span>มัธยมปลาย</span>
+						<span class="std-size-count">{d.student.total.มป.toLocaleString()}</span>
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/chevrons/right.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
+					</button>
+					<Modal
+						title={`มัธยมปลาย ${d.student.total.มป.toLocaleString()} คน`}
+						bind:isOpen={มป_modal_open}
+					>
+						{#if d.student.ม4.total + d.student.ม5.total + d.student.ม6.total}
+							<div class="f mitr modal-section-header">
+								<span>มัธยม 4</span>
+								<span class="mitr">{d.student.ม4.total.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+								<span class="mitr">{d.student.ม4.class.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>แบ่งตามเพศ</span>
+								<span>
+									หญิง
+									<span class="mitr">{d.student.ม4.women.toLocaleString()}</span>
+									ชาย
+									<span class="mitr">{d.student.ม4.men.toLocaleString()}</span>
+								</span>
+							</div>
+							<div class="f mitr modal-section-header">
+								<span>มัธยม 5</span>
+								<span class="mitr">{d.student.ม5.total.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+								<span class="mitr">{d.student.ม5.class.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>แบ่งตามเพศ</span>
+								<span>
+									หญิง
+									<span class="mitr">{d.student.ม5.women.toLocaleString()}</span>
+									ชาย
+									<span class="mitr">{d.student.ม5.men.toLocaleString()}</span>
+								</span>
+							</div>
+							<div class="f mitr modal-section-header">
+								<span>มัธยม 6</span>
+								<span class="mitr">{d.student.ม6.total.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+								<span class="mitr">{d.student.ม6.class.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>แบ่งตามเพศ</span>
+								<span>
+									หญิง
+									<span class="mitr">{d.student.ม6.women.toLocaleString()}</span>
+									ชาย
+									<span class="mitr">{d.student.ม6.men.toLocaleString()}</span>
+								</span>
+							</div>
+						{/if}
+						{#if d.student.ปวช1.total + d.student.ปวช2.total + d.student.ปวช3.total}
+							<div class="f mitr modal-section-header">
+								<span>ปวช 1</span>
+								<span class="mitr">{d.student.ปวช1.total.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+								<span class="mitr">{d.student.ปวช1.class.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>แบ่งตามเพศ</span>
+								<span>
+									หญิง
+									<span class="mitr">{d.student.ปวช1.women.toLocaleString()}</span>
+									ชาย
+									<span class="mitr">{d.student.ปวช1.men.toLocaleString()}</span>
+								</span>
+							</div>
+							<div class="f mitr modal-section-header">
+								<span>ปวช 2</span>
+								<span class="mitr">{d.student.ปวช2.total.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+								<span class="mitr">{d.student.ปวช2.class.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>แบ่งตามเพศ</span>
+								<span>
+									หญิง
+									<span class="mitr">{d.student.ปวช2.women.toLocaleString()}</span>
+									ชาย
+									<span class="mitr">{d.student.ปวช2.men.toLocaleString()}</span>
+								</span>
+							</div>
+							<div class="f mitr modal-section-header">
+								<span>ปวช 3</span>
+								<span class="mitr">{d.student.ปวช3.total.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
+								<span class="mitr">{d.student.ปวช3.class.toLocaleString()}</span>
+							</div>
+							<div class="f modal-section">
+								<span>แบ่งตามเพศ</span>
+								<span>
+									หญิง
+									<span class="mitr">{d.student.ปวช3.women.toLocaleString()}</span>
+									ชาย
+									<span class="mitr">{d.student.ปวช3.men.toLocaleString()}</span>
+								</span>
+							</div>
+						{/if}
+					</Modal>
+				{/if}
 			</div>
 		</section>
 
-		<h2 class="f">
+		{#if $years && $years.length}
+			<section>
+				<h3 class="mb16">เปรียบเทียบจำนวนนักเรียน {$years.length} ปีที่ผ่านมา</h3>
+				<div class="f fw500">
+					<span>ปี</span>
+					<span>คน</span>
+				</div>
+				<div class="compare-chart">
+					<div>{`${current_year + 543}`.substring(2, 4)}</div>
+					<RatioChart
+						data={[
+							{ number: d.student.total.อ, color: '#3f836e' },
+							{ number: d.student.total.ป, color: '#b1a215' },
+							{ number: d.student.total.มต, color: '#f09326' },
+							{ number: d.student.total.มป, color: '#ffc700' }
+						]}
+					/>
+					<div>{d.student.total.all.toLocaleString()}</div>
+					{#each school_other_years_data as yd}
+						<div>{`${yd.year + 543}`.substring(2, 4)}</div>
+						<RatioChart
+							data={[
+								{ number: yd.data?.student?.total?.อ, color: '#3f836e' },
+								{ number: yd.data?.student?.total?.ป, color: '#b1a215' },
+								{ number: yd.data?.student?.total?.มต, color: '#f09326' },
+								{ number: yd.data?.student?.total?.มป, color: '#ffc700' }
+							]}
+						/>
+						<div>{yd.data?.student?.total?.all?.toLocaleString()}</div>
+					{/each}
+				</div>
+			</section>
+		{/if}
+
+		<h2 bind:this={el_employee_section} id="employee-section" class="f">
 			<span>ครู/บุคลากร <small>(คน)</small></span>
 			<span>{d.staff.total.toLocaleString()}</span>
 		</h2>
@@ -558,15 +836,29 @@
 			>
 				<h3 class="mitr f">
 					<span>ครู</span>
-					<span class="tch-size-count">{d.staff.ครู.total.toLocaleString()}</span>
-					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+					<span class="mla">{d.staff.ครู.total.toLocaleString()}</span>
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/chevrons/right.svg"
+						alt=""
+						width="24"
+						height="24"
+					/>
 				</h3>
 				<p>ครูทั่วไป, ครูผู้ช่วย, ชำนาญการ, ชำนาญการพิเศษ...</p>
 			</button>
 			<Modal title={`ครู ${d.staff.ครู.total.toLocaleString()} คน`} bind:isOpen={ครู_modal_open}>
 				<div class="modal-section-header p16">
 					<div class="f ais fs10 g8">
-						<img src="/icons/info.svg" alt="" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/info.svg"
+							alt=""
+							width="16"
+							height="16"
+						/>
 						<p>
 							เอกสารจาก UNESCO ระบุว่า
 							คุณภาพของครูผู้สอนเป็นหนึ่งในปัจจัยที่สามารถบ่งชี้สภาพการให้บริการของโรงเรียนได้
@@ -577,9 +869,24 @@
 					<details class="school-size-detail">
 						<summary>
 							<span class="f">
-								<img src="/icons/info.svg" alt="" width="16" height="16" />
+								<img
+									loading="lazy"
+									decoding="async"
+									src="/icons/info.svg"
+									alt=""
+									width="16"
+									height="16"
+								/>
 								<span>ดูลำดับวิทยาฐานะและระดับตำแหน่งทั้งหมด</span>
-								<img class="chevron" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+								<img
+									loading="lazy"
+									decoding="async"
+									class="chevron"
+									src="/chevrons/bottom.svg"
+									alt=""
+									width="24"
+									height="24"
+								/>
 							</span>
 						</summary>
 						<div class="school-size-flex">
@@ -644,42 +951,73 @@
 			</div>
 			<div class="f ratio-chart">
 				<div class="f">
-					<img src="/icons/person-b.svg" alt="" width="24" height="24" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/person-b.svg"
+						alt=""
+						width="24"
+						height="24"
+					/>
 				</div>
 				<div class="f">
 					{#each Array(Math.ceil(d.student.total.all / d.staff.ครู.total)) as _}
-						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/person-y.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					{/each}
 				</div>
 			</div>
 		</section>
-		<section>
-			<h3 class="mb16">เปรียบเทียบจำนวนครู 6 ปีที่ผ่านมา</h3>
-			<div class="f fw500">
-				<span>ปี</span>
-				<span>คน</span>
-			</div>
-			<div class="compare-chart">
-				<div>65</div>
-				<div class="cmp-chart-body student-chart mitr">
-					<div class="primary-color student-section" style="--std-chart-ratio:100">1:1</div>
-					<div class="student-section separator" style="--std-chart-ratio:0" />
+
+		{#if $years && $years.length}
+			<section>
+				<h3 class="mb16">เปรียบเทียบจำนวนครู {$years.length} ปีที่ผ่านมา</h3>
+				<div class="f fw500">
+					<span>ปี</span>
+					<span>คน</span>
 				</div>
-				<div>1000</div>
-				<div>64</div>
-				<div class="cmp-chart-body student-chart mitr">
-					<div class="primary-color student-section" style="--std-chart-ratio:80">1:2</div>
-					<div class="student-section separator" style="--std-chart-ratio:20" />
+				<div class="compare-chart">
+					<div>{`${current_year + 543}`.substring(2, 4)}</div>
+					<RatioChart
+						label_type="value"
+						data={[
+							{ number: d.staff.ครู.total, color: '#3c55ab', label: '' },
+							{
+								number: d.student.total.all,
+								color: '#FFC700',
+								font_color: '#3c55ab',
+								label: `1:${Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString()}`
+							}
+						]}
+					/>
+					<div>{d.staff.ครู.total.toLocaleString()}</div>
+					{#each school_other_years_data as yd}
+						<div>{`${yd.year + 543}`.substring(2, 4)}</div>
+						<RatioChart
+							label_type="value"
+							data={[
+								{ number: yd.data?.staff?.ครู?.total, color: '#3c55ab', label: '' },
+								{
+									number: yd.data?.student?.total?.all,
+									color: '#FFC700',
+									font_color: '#3c55ab',
+									label: `1:${Math.ceil(
+										yd.data?.student?.total?.all / yd.data?.staff?.ครู?.total
+									).toLocaleString()}`
+								}
+							]}
+						/>
+						<div>{yd.data?.staff?.ครู?.total?.toLocaleString()}</div>
+					{/each}
 				</div>
-				<div>800</div>
-				<div>63</div>
-				<div class="cmp-chart-body student-chart mitr">
-					<div class="primary-color student-section" style="--std-chart-ratio:60">1:3</div>
-					<div class="student-section separator" style="--std-chart-ratio:40" />
-				</div>
-				<div>600</div>
-			</div>
-		</section>
+			</section>
+		{/if}
 
 		<button
 			type="button"
@@ -690,8 +1028,15 @@
 		>
 			<h3 class="mitr f">
 				<span>บุคลากร</span>
-				<span class="tch-size-count">{d.staff.พนักงาน.total.toLocaleString()}</span>
-				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+				<span class="mla">{d.staff.พนักงาน.total.toLocaleString()}</span>
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
 			</h3>
 			<p>พนักงานธุรการ การเงิน บัญชี นักโภชนาการ นักการ-ภารโรง</p>
 		</button>
@@ -701,7 +1046,14 @@
 		>
 			<div class="modal-section-header p16">
 				<div class="f ais fs10 g8">
-					<img src="/icons/info.svg" alt="" width="16" height="16" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/info.svg"
+						alt=""
+						width="16"
+						height="16"
+					/>
 					<p>
 						&ldquo;บุคลากรภายในโรงเรียน&rdquo; สามารถเป็นได้ทั้ง พนักงานธุรการ นักโภชนาการ
 						นักการภารโรง ฯลฯ ที่ถึงแม้นักเรียนส่วนใหญ่อาจจะไม่ค่อยได้คลุกคลีหรือมีปฏิสัมพันธ์โดยตรง
@@ -729,19 +1081,24 @@
 			{/if}
 		</Modal>
 
-		<section class="f directors">
-			<h3>ผู้อำนวยการ</h3>
-			<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม</p>
-			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
-			<!-- <h3>ผู้อำนวยการ 2</h3>
-			<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม</p>
-			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
-			<h3>รองผู้อำนวยการ</h3>
-			<p class="fw500">ผศ. วินัย ภาคเพียรดี</p>
-			<small>ตำแหน่งผู้ชำนาญการพิเศษ</small> -->
+		<section class="f">
+			<div class="f directors">
+				<h3>ผู้อำนวยการ</h3>
+				<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม <!-- TODO: รอข้อมูลจากฟีน --></p>
+				<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
+			</div>
+			{#if d.principal_image_path}
+				<img
+					loading="lazy"
+					decoding="async"
+					class="director-img"
+					src={d.principal_image_path}
+					alt=""
+				/>
+			{/if}
 		</section>
 
-		<h2 class="f">
+		<h2 bind:this={el_goods_section} id="goods-section" class="f">
 			<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
 			<span class="f g8">
 				<CircularProgress
@@ -770,8 +1127,15 @@
 		>
 			<h3 class="f">
 				<span>อุปกรณ์การเรียน</span>
-				<span class="tch-size-count ibm">ดูทั้งหมด</span>
-				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+				<span class="mla ibm fs10">ดูทั้งหมด</span>
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
 			</h3>
 		</button>
 		<Modal title="อุปกรณ์การเรียน" bind:isOpen={อุปกรณ์การเรียน_modal_open}>
@@ -793,7 +1157,7 @@
 				</div>
 				<RatioChart
 					data={[
-						{ number: eduitem.working, color: '#ffce4f' },
+						{ number: eduitem.working, color: '#FFC700' },
 						{ number: eduitem.to_be_repaired, color: '#ddab29' },
 						{ number: eduitem.to_be_removed, color: '#fc5858' }
 					]}
@@ -819,7 +1183,7 @@
 			</h3>
 			<RatioChart
 				data={[
-					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working, color: '#ffce4f' },
+					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working, color: '#FFC700' },
 					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired, color: '#ddab29' },
 					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed, color: '#fc5858' }
 				]}
@@ -848,11 +1212,25 @@
 			<hr />
 			<div class="f ratio-chart">
 				<div class="f">
-					<img src="/icons/chair.svg" alt="" width="24" height="24" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/chair.svg"
+						alt=""
+						width="24"
+						height="24"
+					/>
 				</div>
 				<div class="f">
 					{#each Array(Math.ceil(d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working)) as _}
-						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/person-y.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					{/each}
 				</div>
 			</div>
@@ -872,7 +1250,7 @@
 			</p>
 			<RatioChart
 				data={[
-					{ number: d.computer.learning.working, color: '#ffce4f' },
+					{ number: d.computer.learning.working, color: '#FFC700' },
 					{ number: d.computer.learning.broken, color: '#fc5858' }
 				]}
 			/>
@@ -889,11 +1267,18 @@
 			<hr />
 			<div class="f ratio-chart">
 				<div class="f">
-					<img src="/icons/tv.svg" alt="" width="24" height="24" />
+					<img loading="lazy" decoding="async" src="/icons/tv.svg" alt="" width="24" height="24" />
 				</div>
 				<div class="f">
 					{#each Array(Math.ceil(d.student.total.all / d.computer.learning.working)) as _}
-						<img src="/icons/person-y.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/person-y.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					{/each}
 				</div>
 			</div>
@@ -901,12 +1286,20 @@
 				<summary>
 					<span class="f">
 						<span class="mitr">ดูแหล่งที่มาของคอมพิวเตอร์ <small>(เครื่อง)</small></span>
-						<img class="chevron" src="/chevrons/bottom.svg" alt="" width="24" height="24" />
+						<img
+							loading="lazy"
+							decoding="async"
+							class="chevron"
+							src="/chevrons/bottom.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
 					</span>
 				</summary>
-				<div class="f mt8 mb8">
+				<div class="f" style="margin:8px 0 4px">
 					{#if d.computer.learning.source.obec}
-						<span>งบประมาณ สพฐ</span>
+						<span style="color:#0c166b">งบประมาณ สพฐ</span>
 					{/if}
 					{#if d.computer.learning.source.self}
 						<span>จัดหาเอง/บริจาค</span>
@@ -914,7 +1307,7 @@
 				</div>
 				<RatioChart
 					data={[
-						{ number: d.computer.learning.source.obec, color: '#3c55ab' },
+						{ number: d.computer.learning.source.obec, color: '#0c166b' },
 						{ number: d.computer.learning.source.self, color: '#3c55ab' }
 					]}
 				/>
@@ -931,7 +1324,14 @@
 					{/if}
 				</p>
 				<div class="f g8 ais">
-					<img src="/icons/info.svg" alt="" width="16" height="16" />
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/info.svg"
+						alt=""
+						width="16"
+						height="16"
+					/>
 					<p class="fs10">
 						แหล่งที่มาของคอมพิวเตอร์สามารถช่วยประกอบการประเมินได้ว่า สพฐ. หรือ
 						ตัวโรงเรียนเองได้จัดสรรงบประมาณที่เพียงพอสำหรับจัดหาคอมพิวเตอร์หรือไม่
@@ -941,7 +1341,7 @@
 		</section>
 		<section>
 			<h3 class="f jcs g8 mb8">
-				<img src="/icons/wifi.svg" alt="" width="24" height="24" />
+				<img loading="lazy" decoding="async" src="/icons/wifi.svg" alt="" width="24" height="24" />
 				<span
 					>อินเทอร์เน็ต {d.internet.speed ?? ''}
 					{#if d.internet.speed}<small>Mbps</small>{/if}</span
@@ -951,7 +1351,14 @@
 				<dt>สถานะการใช้งาน:</dt>
 				<dd class="f jcs g8">
 					{#if d.internet.status}
-						<img src="/icons/check-y.svg" alt="" width="16" height="16" />
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/check-y.svg"
+							alt=""
+							width="16"
+							height="16"
+						/>
 						{d.internet.status}
 					{:else}
 						<span class="no-data">ไม่มีข้อมูล</span>
@@ -985,8 +1392,15 @@
 			>
 				<h3 class="f">
 					<span>อุปกรณ์อื่น</span>
-					<span class="mla ibm">ดูทั้งหมด</span>
-					<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+					<span class="mla ibm fs10">ดูทั้งหมด</span>
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/chevrons/right.svg"
+						alt=""
+						width="24"
+						height="24"
+					/>
 				</h3>
 			</button>
 			<ul class="other-appliance-list">
@@ -1016,20 +1430,23 @@
 			{/each}
 		</Modal>
 
-		<ActAiBanner margin />
+		<ActAiBanner
+			margin
+			href="https://actai.co/Project?search=โรงเรียน{encodeURIComponent(d.name_th)}"
+		/>
 
-		<h2 class="f">
+		<h2 bind:this={el_building_section} id="building-section" class="f">
 			<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 			<span class="f g8">
 				<CircularProgress percent={(d.buildings.stats.ดี / d.buildings.stats.รวม) * 100} />
 				{~~((d.buildings.stats.ดี / d.buildings.stats.รวม) * 100)}%
 			</span>
 		</h2>
-		<section>
+		<section style="margin-bottom:0;padding-bottom:0">
 			<dl class="f status-color">
 				<dt class="usable-color">เหลือง</dt>
 				<dd>ดี {~~((d.buildings.stats.ดี / d.buildings.stats.รวม) * 100)}%</dd>
-				<dt class="await-color">เหลืองเข้ม</dt>
+				<dt class="await2-color">เหลืองเข้ม</dt>
 				<dd>พอใช้ {~~((d.buildings.stats['พอใช้'] / d.buildings.stats.รวม) * 100)}%</dd>
 				<dt class="unusable-color">แดง</dt>
 				<dd>ทรุดโทรม {~~((d.buildings.stats.ทรุดโทรม / d.buildings.stats.รวม) * 100)}%</dd>
@@ -1042,13 +1459,13 @@
 			</p>
 			<RatioChart
 				data={[
-					{ number: d.buildings.stats.ดี, color: '#ffce4f' },
-					{ number: d.buildings.stats.พอใช้, color: '#ddab29' },
+					{ number: d.buildings.stats.ดี, color: '#FFC700' },
+					{ number: d.buildings.stats.พอใช้, color: '#7d5b05' },
 					{ number: d.buildings.stats.ทรุดโทรม, color: '#fc5858' }
 				]}
 			/>
 		</section>
-		<section>
+		<section style="margin-bottom:0">
 			<h3 class="f">
 				<span>อาคารการศึกษา <small>(อาคาร)</small></span>
 				<span>{d.buildings.data.อาคารเรียน.length.toLocaleString()}</span>
@@ -1060,50 +1477,64 @@
 				<span class="mitr">{d.buildings.stats.จำนวนห้องในอาคารเรียน.toLocaleString()}</span>
 			</p>
 			<hr />
-			{#each d.buildings.data.อาคารเรียน as b}
-				<article class="building-card {getConditionClass(b.current_condition)}">
-					<div
-						class="building-image"
-						style:--bg0="url({b.image_url_0})"
-						style:--bg1="url({b.image_url_1})"
-						on:click={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
-						on:keypress={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
-					/>
-					<div>
-						<h4>{b.name}</h4>
-						<p>
-							สร้างปี {b.build_at}<br />
-							สภาพการใช้งาน
-							<span class="building-status cv">{b.current_condition}</span>
-						</p>
-						<Waffle number={parseInt(b.room_number)} />
+			<div class="col2-on-desktop">
+				{#each d.buildings.data.อาคารเรียน as b, bi}
+					<article class="building-card {getConditionClass(b.current_condition, true)}">
+						<img
+							loading="lazy"
+							decoding="async"
+							class="building-image"
+							class:no-zoom={building_imgs?.อาคารเรียน?.[bi] === FALLBACK_BUILDING_IMG}
+							src={building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG}
+							alt=""
+							on:click={() =>
+								openLightbox(b.name, building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG)}
+							on:keypress={() =>
+								openLightbox(b.name, building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG)}
+						/>
 						<div>
-							<span class="mitr">{parseInt(b.room_number).toLocaleString()}</span>
-							<span class="fs10">ห้อง</span>
+							<h4>{b.name} {bi + 1}</h4>
+							<p>
+								สร้างปี {b.build_at}<br />
+								สภาพการใช้งาน
+								<span class="building-status cv">{b.current_condition}</span>
+							</p>
+							<Waffle number={parseInt(b.room_number)} />
+							<div>
+								<span class="mitr">{parseInt(b.room_number).toLocaleString()}</span>
+								<span class="fs10">ห้อง</span>
+							</div>
 						</div>
-					</div>
-				</article>
-			{/each}
+					</article>
+				{/each}
+			</div>
 		</section>
 
 		<button
 			type="button"
-			class="teacher-size-btn emp-btn mb8"
+			class="teacher-size-btn emp-btn"
 			on:click={() => {
 				อาคาร_modal_open = true;
 			}}
 		>
 			<h3 class="f">
 				<span>อาคารและสิ่งก่อสร้างอื่น</span>
-				<span class="tch-size-count ibm">ดูทั้งหมด</span>
-				<img src="/chevrons/right.svg" alt="" width="24" height="24" />
+				<span class="mla ibm fs10">ดูรายละเอียด</span>
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/chevrons/right.svg"
+					alt=""
+					width="24"
+					height="24"
+				/>
 			</h3>
 		</button>
-		<Modal title="สิ่งก่อสร้างอื่นๆ" bind:isOpen={อาคาร_modal_open}>
+		<Modal title="อาคารและสิ่งก่อสร้างอื่น" bind:isOpen={อาคาร_modal_open}>
 			<dl class="f status-color fs10 mb16">
 				<dt class="usable-color">เหลือง</dt>
 				<dd>ดี</dd>
-				<dt class="await-color">เหลืองเข้ม</dt>
+				<dt class="await2-color">เหลืองเข้ม</dt>
 				<dd>พอใช้</dd>
 				<dt class="unusable-color">แดง</dt>
 				<dd>ทรุดโทรม</dd>
@@ -1111,35 +1542,66 @@
 			{#each Object.keys(d.buildings.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
 				{#if d.buildings.data[buildings_key].length}
 					<div class="f modal-section-header mitr">{buildings_key}</div>
-					{#each d.buildings.data[buildings_key] as b}
-						<div
-							class="modal-section building f jcs ais g8 {getConditionClass(b.current_condition)}"
-						>
+					<div class="col2-on-desktop">
+						{#each d.buildings.data[buildings_key] as b, bi}
 							<div
-								class="building-image"
-								style:--bg0="url({b.image_url_0})"
-								style:--bg1="url({b.image_url_1})"
-							/>
-							<span class="building-status cv" />
-							<div>
-								<span>{b.name}</span><br /><small>สร้างปี {b.build_at}</small>
+								class="modal-section building f jcs ais g8 {getConditionClass(
+									b.current_condition,
+									true
+								)}"
+							>
+								<img
+									loading="lazy"
+									decoding="async"
+									class="building-image"
+									class:no-zoom={building_imgs?.[buildings_key]?.[bi] === FALLBACK_BUILDING_IMG}
+									src={building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG}
+									alt=""
+									on:click={() => {
+										อาคาร_modal_open = false;
+										openLightbox(
+											b.name,
+											building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG,
+											() => {
+												อาคาร_modal_open = true;
+											}
+										);
+									}}
+									on:keypress={() => {
+										อาคาร_modal_open = false;
+										openLightbox(
+											b.name,
+											building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG,
+											() => {
+												อาคาร_modal_open = true;
+											}
+										);
+									}}
+								/>
+								<span class="building-status cv" />
+								<div>
+									<span>{b.name}</span><br /><small>สร้างปี {b.build_at}</small>
+								</div>
 							</div>
-						</div>
-					{/each}
+						{/each}
+					</div>
 				{/if}
 			{/each}
 		</Modal>
 
 		<section class="other-buildings">
 			<div>
-				{#each d.buildings.data.อาคารทั่วไป as b}
-					<article class={getConditionClass(b.current_condition)}>
-						<div
+				{#each d.buildings.data.อาคารทั่วไป as b, bi}
+					<article class={getConditionClass(b.current_condition, true)}>
+						<img
 							class="building-image"
-							style:--bg0="url({b.image_url_0})"
-							style:--bg1="url({b.image_url_1})"
-							on:click={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
-							on:keypress={() => openLightbox(b.name, b.image_url_0, b.image_url_1)}
+							class:no-zoom={building_imgs?.อาคารทั่วไป?.[bi] === FALLBACK_BUILDING_IMG}
+							src={building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG}
+							alt=""
+							on:click={() =>
+								openLightbox(b.name, building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG)}
+							on:keypress={() =>
+								openLightbox(b.name, building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG)}
 						/>
 						<h4>{b.name}</h4>
 						<p>สร้างปี {b.build_at}</p>
@@ -1162,77 +1624,170 @@
 			</ul>
 		</section>
 
-		<ActAiBanner margin />
+		<ActAiBanner
+			margin
+			text="ค้นหาข้อมูลการจัดซื้อจัดจ้างเกี่ยวกับอุปกรณ์และการก่อสร้างอาคารของโรงเรียนเพิ่มเติมได้ที่เครื่องมือ"
+			href="https://actai.co/Project?search=โรงเรียน{encodeURIComponent(d.name_th)}"
+		/>
 
-		<h2 class="f">
+		<h2 bind:this={el_general_section} id="general-section" class="f mb8">
 			<span>ข้อมูลทั่วไป</span>
 		</h2>
-		<section class="contact">
-			<h3 class="mb8">ติดต่อ</h3>
-			<dl class="list-grid">
-				<dt>
-					<img src="/icons/location.svg" alt="ที่อยู่" width="16" height="16" />
-				</dt>
-				<dd>{d.address} {d.subdistrict} {d.district} {d.province} {d.postcode}</dd>
-				<dt>
-					<img src="/icons/phone.svg" alt="เบอร์โทรศัพท์" width="16" height="16" />
-				</dt>
-				<dd>{d.telephone}</dd>
-				<dt>
-					<img src="/icons/globe.svg" alt="เว็บไซต์" width="16" height="16" />
-				</dt>
-				<dd>{d.website}</dd>
-				<dt>
-					<img src="/icons/mail.svg" alt="อีเมล์" width="16" height="16" />
-				</dt>
-				<dd>{d.email}</dd>
-			</dl>
-		</section>
-		<section class="other-data">
-			<img class="school-logo" src={d.logo_image_path} alt="" width="40" height="40" />
-			<h3 class="mb8">ข้อมูลอื่น</h3>
-			<dl class="list-grid">
-				<dt>รหัสโรงเรียน</dt>
-				<dd>{$currentSchoolId}</dd>
-				<dt>สังกัด</dt>
-				<dd><!-- TODO: ใส่ข้อมูลสังกัด --> ไม่มีข้อมูล</dd>
-				<dt>ก่อตั้งเมื่อ</dt>
-				<dd>{d.established}</dd>
-				<dt>ระดับที่เปิดสอน</dt>
-				<dd>{d.grades}</dd>
-				<dt>ประเภทโรงเรียน</dt>
-				<dd><!-- TODO: ใส่ข้อมูลประเภทโรงเรียน --> รัฐบาล</dd>
-				<dt>ลักษณะโรงเรียน</dt>
-				<dd><!-- TODO: ใส่ข้อมูลสังกัด --> ไม่มีข้อมูล</dd>
-			</dl>
-		</section>
+
+		<div class="col2-on-desktop">
+			<section class="contact">
+				<h3 class="mb8">ติดต่อ</h3>
+				<dl class="list-grid">
+					<dt>
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/location.svg"
+							alt="ที่อยู่"
+							width="16"
+							height="16"
+						/>
+					</dt>
+					<dd>
+						{[
+							d.address ?? '',
+							d.subdistrict ?? '',
+							d.district ?? '',
+							d.province ?? '',
+							d.postcode ?? ''
+						]
+							.join(' ')
+							.replace(/\s+/g, ' ')
+							.trim()}
+					</dd>
+					<dt>
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/phone.svg"
+							alt="เบอร์โทรศัพท์"
+							width="16"
+							height="16"
+						/>
+					</dt>
+					<dd>{d.telephone ?? '—'}</dd>
+					<dt>
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/globe.svg"
+							alt="เว็บไซต์"
+							width="16"
+							height="16"
+						/>
+					</dt>
+					<dd>
+						{#if d.website}
+							<a
+								href={d.website.includes('http') ? d.website : `https://${d.website}`}
+								target="_blank"
+								rel="nofollow noopener noreferrer">{d.website}</a
+							>
+						{:else}
+							<span>—</span>
+						{/if}
+					</dd>
+					<dt>
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/mail.svg"
+							alt="อีเมล์"
+							width="16"
+							height="16"
+						/>
+					</dt>
+					<dd>
+						{#if d.email}
+							<a href="mailto:{d.email}" target="_blank" rel="nofollow noopener noreferrer"
+								>{d.email}</a
+							>
+						{:else}
+							<span>—</span>
+						{/if}
+					</dd>
+				</dl>
+			</section>
+
+			<section class="other-data">
+				<img
+					loading="lazy"
+					decoding="async"
+					class="school-logo"
+					src={d.logo_image_path}
+					alt=""
+					width="40"
+					height="40"
+				/>
+				<h3 class="mb8">ข้อมูลอื่น</h3>
+				<dl class="list-grid">
+					<dt>รหัสโรงเรียน</dt>
+					<dd>{$currentSchoolId}</dd>
+					<dt>สังกัด</dt>
+					<dd><!-- TODO: รอข้อมูลจากฟีน --> ไม่มีข้อมูล</dd>
+					<dt>ก่อตั้งเมื่อ</dt>
+					<dd>{d.established ?? '—'}</dd>
+					<dt>ระดับที่เปิดสอน</dt>
+					<dd>{d.grades ?? '—'}</dd>
+					<dt>ประเภทโรงเรียน</dt>
+					<dd>รัฐบาล</dd>
+				</dl>
+			</section>
+		</div>
 
 		<footer>
 			<p>
-				สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่ระบบสารสนเทศเพื่อการบริหารการศึกษา
-				(Education Management Information System : EMIS)<br />
-				<a href="https://data.bopp-obec.info/emis">https://data.bopp-obec.info/emis</a>
+				สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่<br
+				/>
+				<a
+					href="https://data.bopp-obec.info/emis"
+					target="_blank"
+					rel="nofollow noopener noreferrer"
+				>
+					ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)
+				</a>
 			</p>
-			<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
+			<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date[$LATEST_YEAR]}</p>
 		</footer>
 	{/if}
 </div>
 
 <!-- Lightbox Dialog -->
-<Dialog open={lightbox_open} on:close={() => (lightbox_open = false)}>
+<Dialog
+	open={lightbox_open}
+	on:close={() => {
+		lightbox_open = false;
+		requestAnimationFrame(lightbox_callback);
+	}}
+>
 	<DialogOverlay class="lightbox-backdrop" />
 
 	<DialogTitle class="sr-only">{lightbox_building_name}</DialogTitle>
 	<DialogDescription>ภาพ{lightbox_building_name}</DialogDescription>
 
-	<button class="lightbox-close" type="button" on:click={() => (lightbox_open = false)}>
-		<img src="/icons/close-w.svg" alt="ปิด" width="32" height="32" />
+	<button
+		class="lightbox-close"
+		type="button"
+		on:click={() => {
+			lightbox_open = false;
+			requestAnimationFrame(lightbox_callback);
+		}}
+	>
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/icons/close-w.svg"
+			alt="ปิด"
+			width="32"
+			height="32"
+		/>
 	</button>
-	<div
-		class="lightbox-image"
-		style:--bg0="url({lightbox_url0})"
-		style:--bg1="url({lightbox_url1})"
-	/>
+	<img loading="lazy" decoding="async" class="lightbox-image" src={lightbox_url} alt="" />
 </Dialog>
 
 <style lang="scss">
@@ -1269,11 +1824,15 @@
 	}
 
 	.usable-color {
-		--std-color: #ffce4f;
+		--std-color: #ffc700;
 	}
 
 	.await-color {
 		--std-color: #ddab29;
+	}
+
+	.await2-color {
+		--std-color: #7d5b05;
 	}
 
 	.unusable-color {
@@ -1337,6 +1896,10 @@
 		font-size: 0.625rem;
 		line-height: 136%;
 		color: #9daad5;
+
+		@media screen and (min-width: 768px) {
+			font-size: 0.8125rem;
+		}
 	}
 
 	.mitr,
@@ -1374,6 +1937,10 @@
 	.school-size-detail {
 		font-size: 0.625rem;
 
+		@media screen and (min-width: 768px) {
+			font-size: 0.8125rem;
+		}
+
 		> summary {
 			cursor: pointer;
 
@@ -1399,6 +1966,10 @@
 		flex-direction: column;
 		gap: 16px;
 		margin-top: 4px;
+
+		@media screen and (min-width: 768px) {
+			flex-direction: row;
+		}
 	}
 
 	h4 {
@@ -1416,22 +1987,12 @@
 	.student-chart {
 		display: flex;
 		gap: 2px;
-
-		.student-section {
-			border-radius: 2px;
-			flex: var(--std-chart-ratio) var(--std-chart-ratio) 0;
-			padding: 8px 0;
-			text-align: right;
-			color: #fff;
-			background: var(--std-color);
-			min-height: 16px;
-		}
 	}
 
 	.student-size-btn {
 		width: 100%;
 		padding: 8px 0;
-		margin: 16px 0;
+		margin: 16px 0 0;
 
 		&.f {
 			justify-content: start;
@@ -1461,18 +2022,6 @@
 			text-align: right;
 			font-weight: 500;
 		}
-
-		> .cmp-chart-body {
-			> .student-section {
-				white-space: nowrap;
-				overflow: hidden;
-				padding: 4px;
-			}
-
-			> .separator {
-				padding: 0;
-			}
-		}
 	}
 
 	.teacher-size-btn {
@@ -1480,9 +2029,6 @@
 
 		h3 {
 			gap: 8px;
-			> .tch-size-count {
-				margin-left: auto;
-			}
 		}
 
 		p {
@@ -1490,6 +2036,10 @@
 			color: #9daad5;
 			margin-top: 4px;
 			text-align: left;
+
+			@media screen and (min-width: 768px) {
+				font-size: 0.8125rem;
+			}
 		}
 	}
 
@@ -1580,9 +2130,11 @@
 			height: auto;
 			aspect-ratio: 1;
 			border-top: 2px var(--std-color) solid;
-			background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
-			background-size: cover;
 			cursor: zoom-in;
+
+			&.no-zoom {
+				cursor: auto;
+			}
 		}
 
 		h4 {
@@ -1615,13 +2167,21 @@
 			gap: 16px;
 			padding: 8px;
 
+			@media screen and (min-width: 768px) {
+				grid-template-columns: 1fr 1fr 1fr 1fr;
+			}
+
 			> article {
 				> .building-image {
+					width: 100%;
+					height: auto;
 					aspect-ratio: 1;
 					border-top: 2px var(--std-color) solid;
-					background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
-					background-size: cover;
 					cursor: zoom-in;
+
+					&.no-zoom {
+						cursor: auto;
+					}
 				}
 
 				> h4 {
@@ -1694,8 +2254,11 @@
 				width: 40px;
 				height: 40px;
 				border-top: 2px var(--std-color) solid;
-				background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
-				background-size: cover;
+				cursor: zoom-in;
+
+				&.no-zoom {
+					cursor: auto;
+				}
 			}
 		}
 	}
@@ -1741,10 +2304,8 @@
 		height: 100vh;
 		z-index: 20;
 
-		background: var(--bg0), var(--bg1), url(/school/school-placeholder.png);
-		background-size: contain;
-		background-repeat: no-repeat;
-		background-position: 50%;
+		object-fit: contain;
+		object-position: center;
 
 		cursor: zoom-out;
 		pointer-events: none;
@@ -1769,6 +2330,96 @@
 			left: 10vw;
 			width: 80vw;
 			height: 80vh;
+		}
+	}
+
+	.director-img {
+		border-radius: 999px;
+		width: 64px;
+		height: 64px;
+		object-fit: cover;
+	}
+
+	@media screen and (min-width: 768px) {
+		.col2-on-desktop {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+			gap: 0 8px;
+		}
+
+		.modal-section.building:nth-of-type(2) {
+			border-top: none;
+		}
+	}
+
+	a {
+		color: inherit;
+	}
+
+	.jumpnav {
+		justify-content: center;
+		gap: 8px;
+
+		background: #fff;
+		list-style: none;
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
+
+		width: max-content;
+		min-width: 100%;
+
+		@media screen and (min-width: 768px) {
+			gap: 16px;
+		}
+
+		> li > button {
+			height: 32px;
+
+			font-family: 'Mitr';
+			font-weight: 500;
+			font-size: 0.8125rem;
+			line-height: 125%;
+			letter-spacing: 0.02em;
+			white-space: nowrap;
+
+			padding: 2px 8px 0;
+			border-bottom: 2px solid #fff;
+			color: #9daad5;
+
+			@media screen and (min-width: 768px) {
+				height: 48px;
+				padding: 2px 16px 0;
+				font-size: 1rem;
+			}
+
+			&.j-active {
+				border-bottom: 2px solid #ffc700;
+				color: #3c55ab;
+			}
+		}
+	}
+
+	.jumpnav-compensate {
+		height: 32px;
+
+		@media screen and (min-width: 768px) {
+			height: 48px;
+		}
+	}
+
+	.jumpnav-wrapper {
+		position: fixed;
+		top: calc(var(--navbar-height) + 60px);
+		width: 100%;
+		overflow-x: auto;
+
+		transition: top 0.3s;
+		will-change: top;
+		z-index: 10;
+
+		@media screen and (min-width: 768px) {
+			left: calc(50% + 32px);
+			transform: translateX(-50%);
+			max-width: 640px;
 		}
 	}
 </style>

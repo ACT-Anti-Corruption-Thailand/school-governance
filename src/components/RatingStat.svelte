@@ -2,7 +2,14 @@
 	export let rating: number;
 </script>
 
-<img src="/icons/star.svg" alt="คะแนนเฉลี่ย" width="16" height="16" />
+<img
+	loading="lazy"
+	decoding="async"
+	src="/icons/star.svg"
+	alt="คะแนนเฉลี่ย"
+	width="16"
+	height="16"
+/>
 {#if rating === null || rating === undefined || Number.isNaN(rating)}
 	<span class="header-score-text">—</span>
 {:else}

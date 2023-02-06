@@ -2,19 +2,20 @@
 	import { onMount } from 'svelte';
 	import { scroll } from 'motion';
 	import {
-		signInAnonymously,
 		signInWithPopup,
 		FacebookAuthProvider,
-		signOut,
-		ProviderId
+		GoogleAuthProvider,
+		signOut
 	} from 'firebase/auth';
 
 	import Modal from './Modal.svelte';
+	import ContactOfficer from './ContactOfficer.svelte';
 
 	import { page } from '$app/stores';
 	import { auth, currentUser } from 'stores/firebaseapp';
 	import { show_search, search_string } from 'stores/search';
 	import { currentSchoolId } from 'stores/school';
+	import { login_modal_isopen } from 'stores/login_modal';
 
 	let PAGE_BASE = $page.route.id?.split('/')[1];
 
@@ -30,11 +31,10 @@
 			signInWithPopup($auth, fbProvider);
 		}
 	};
-	const loginTw = () => {
+	const ggProvider = new GoogleAuthProvider();
+	const loginGg = () => {
 		if ($auth) {
-			if (confirm('ฟีเจอร์นี้ยังไม่ได้ทำจ้า แต่จะล็อกอินแบบ Anon ไปก่อนเพื่อทดสอบเว็บไหม?')) {
-				signInAnonymously($auth);
-			}
+			signInWithPopup($auth, ggProvider);
 		}
 	};
 
@@ -70,14 +70,23 @@
 		document.documentElement.classList.toggle('navbar-shown', show);
 	}
 
-	let login_isopen = false;
 	let term_isopen = false;
 
 	const term_modal_callback = () => {
-		login_isopen = true;
+		$login_modal_isopen = true;
 	};
 
 	let isread_checked = false;
+
+	let contact_modal_isopen = false;
+	const openContactModal = (e: MouseEvent) => {
+		e.preventDefault();
+		e.stopImmediatePropagation();
+
+		contact_modal_isopen = true;
+
+		return false;
+	};
 </script>
 
 <nav class="f main-nav" class:show class:show_search={$show_search}>
@@ -85,18 +94,39 @@
 	{#if PAGE_BASE === 'search'}
 		<div class="nav-left">
 			<button class="f jcc nav-btn" type="button" on:click={() => ($show_search = true)}>
-				<img src="/icons/nav-search.svg" alt="ค้นหา" width="32" height="32" />
+				<img
+					src="/icons/nav-search.svg"
+					alt="ค้นหา"
+					width="32"
+					height="32"
+					loading="lazy"
+					decoding="async"
+				/>
 			</button>
 		</div>
 	{/if}
 	<div class="nav-logo">
 		<a href="/" on:click={() => (show_menu = false)}>
-			<img src="/logos/school_gov.svg" alt="" width="108" height="40" />
+			<img
+				src="/logos/school_gov.svg"
+				alt=""
+				width="108"
+				height="40"
+				loading="lazy"
+				decoding="async"
+			/>
 		</a>
 	</div>
 	<div class="nav-right nav-search">
 		<label class="f">
-			<img src="/icons/search-box.svg" alt="" width="24" height="24" />
+			<img
+				src="/icons/search-box.svg"
+				alt=""
+				width="24"
+				height="24"
+				loading="lazy"
+				decoding="async"
+			/>
 			<input
 				type="text"
 				placeholder="พิมพ์ชื่อโรงเรียนหรือจังหวัดที่คุณอยากค้นหา"
@@ -111,7 +141,14 @@
 				$search_string = '';
 			}}
 		>
-			<img src="/icons/close-bold.svg" alt="" width="20" height="20" />
+			<img
+				src="/icons/close-bold.svg"
+				alt=""
+				width="20"
+				height="20"
+				loading="lazy"
+				decoding="async"
+			/>
 		</button>
 	</div>
 	<div class="f nav-right">
@@ -122,38 +159,77 @@
 				alt=""
 				width="32"
 				height="32"
+				loading="lazy"
+				decoding="async"
 			/>
 		{/if}
 		<button class="f jcc nav-btn" type="button" on:click={() => (show_menu = !show_menu)}>
-			<img src="/icons/nav-ham.svg" alt="เปิดเมนู" width="32" height="32" />
+			<img
+				src="/icons/nav-ham.svg"
+				alt="เปิดเมนู"
+				width="32"
+				height="32"
+				loading="lazy"
+				decoding="async"
+			/>
 		</button>
 		<menu class="nav-menu" class:show={show_menu}>
-			<li>
-				{#if PAGE_BASE === 'search'}
+			{#if PAGE_BASE === 'search'}
+				<li class="search-desktop-nav-list">
 					<button
 						class="f jcc nav-btn search-btn"
 						type="button"
 						on:click={() => ($show_search = true)}
 					>
-						<img src="/icons/search.svg" alt="ค้นหา" width="20" height="20" />
+						<img
+							src="/icons/search.svg"
+							alt="ค้นหา"
+							width="20"
+							height="20"
+							loading="lazy"
+							decoding="async"
+						/>
 						<span>ค้นหาโรงเรียน</span>
 					</button>
-				{:else}
+				</li>
+			{:else}
+				<li>
 					<a href="/search" on:click={() => (show_menu = false)}>
-						<img src="/icons/search.svg" alt="" width="20" height="20" />
+						<img
+							src="/icons/search.svg"
+							alt=""
+							width="20"
+							height="20"
+							loading="lazy"
+							decoding="async"
+						/>
 						<span>ค้นหาโรงเรียน</span>
 					</a>
-				{/if}
-			</li>
+				</li>
+			{/if}
 			<li>
 				<a href="/#information" on:click={() => (show_menu = false)}>
-					<img src="/icons/question.svg" alt="" width="20" height="20" />
-					<span>School Governance คืออะไร?</span>
+					<img
+						src="/icons/question.svg"
+						alt=""
+						width="20"
+						height="20"
+						loading="lazy"
+						decoding="async"
+					/>
+					<span>"โปร่งใสวิทยา" คืออะไร?</span>
 				</a>
 			</li>
 			<li>
-				<a href="https://www.google.co.th/">
-					<img src="/icons/chat.svg" alt="" width="20" height="20" />
+				<a href=" " on:click={openContactModal}>
+					<img
+						src="/icons/chat.svg"
+						alt=""
+						width="20"
+						height="20"
+						loading="lazy"
+						decoding="async"
+					/>
 					<span>ติดต่อเจ้าหน้าที่</span>
 				</a>
 			</li>
@@ -166,6 +242,8 @@
 							alt=""
 							width="24"
 							height="24"
+							loading="lazy"
+							decoding="async"
 						/>
 						<span>Log out</span>
 					</button>
@@ -173,7 +251,7 @@
 					<button
 						type="button"
 						on:click={() => {
-							login_isopen = true;
+							$login_modal_isopen = true;
 						}}>Log in</button
 					>
 				{/if}
@@ -181,14 +259,29 @@
 		</menu>
 	</div>
 </nav>
+{#if show_menu}
+	<button
+		type="button"
+		class="nav-mobile-close-trigger"
+		on:click={() => (show_menu = !show_menu)}
+	/>
+{/if}
 {#if show_when !== 'not_top'}
 	<div class="nav-compensate" />
 {/if}
 
-<Modal title="Log in" hideTitle bind:isOpen={login_isopen} body_class="f login-modal-body">
+<Modal title="Log in" hideTitle bind:isOpen={$login_modal_isopen} body_class="f login-modal-body">
 	{#if $currentUser}
 		<div class="f login-modal-top-content">
-			<img class="login-modal-logo" src="/logos/school_gov-b.svg" alt="" width="224" height="83" />
+			<img
+				class="login-modal-logo"
+				src="/logos/school_gov-b.svg"
+				alt=""
+				width="224"
+				height="83"
+				loading="lazy"
+				decoding="async"
+			/>
 			<div>
 				<h3 class="login-modal-title">Log in</h3>
 				<p class="login-modal-subtitle">สำเร็จ</p>
@@ -202,6 +295,8 @@
 							alt=""
 							width="80"
 							height="80"
+							loading="lazy"
+							decoding="async"
 						/>
 						{#if $currentUser?.providerData?.[0]?.providerId === 'facebook.com'}
 							<img
@@ -210,6 +305,18 @@
 								alt=""
 								width="24"
 								height="24"
+								loading="lazy"
+								decoding="async"
+							/>
+						{:else if $currentUser?.providerData?.[0]?.providerId === 'google.com'}
+							<img
+								class="login-social-logo"
+								src="/icons/google.svg"
+								alt=""
+								width="24"
+								height="24"
+								loading="lazy"
+								decoding="async"
 							/>
 						{/if}
 					</div>
@@ -219,18 +326,41 @@
 			</div>
 			{#if $currentSchoolId}
 				<div class="fspace small" />
-				<a class="f btn-school" href="/school/{$currentSchoolId}/rating">
-					<span>ให้คะแนน</span>
-					<img src="/icons/star-w.svg" alt="" width="24" height="24" />
-				</a>
-				<a class="f btn-school blue" href="/school/{$currentSchoolId}/comments">
-					<span>แสดงความเห็น</span>
-					<img src="/icons/comment-w.svg" alt="" width="24" height="24" />
-				</a>
+				<div class="login-success-aligner">
+					<a class="f btn-school" href="/school/{$currentSchoolId}/rating">
+						<span>ให้คะแนน</span>
+						<img
+							src="/icons/star-w.svg"
+							alt=""
+							width="24"
+							height="24"
+							loading="lazy"
+							decoding="async"
+						/>
+					</a>
+					<a class="f btn-school blue" href="/school/{$currentSchoolId}/comments">
+						<span>แสดงความเห็น</span>
+						<img
+							src="/icons/comment-w.svg"
+							alt=""
+							width="24"
+							height="24"
+							loading="lazy"
+							decoding="async"
+						/>
+					</a>
+				</div>
 			{:else}
 				<div class="fspace" />
 				<a class="f search-box" href="/search">
-					<img src="/icons/search-box.svg" alt="" width="24" height="24" />
+					<img
+						src="/icons/search-box.svg"
+						alt=""
+						width="24"
+						height="24"
+						loading="lazy"
+						decoding="async"
+					/>
 					<span>ลองค้นหาโรงเรียนคุณ</span>
 				</a>
 			{/if}
@@ -241,7 +371,15 @@
 				<h3 class="login-modal-title">Log in</h3>
 				<p class="login-modal-subtitle">เพื่อให้คะแนนและแสดงความคิดเห็น</p>
 			</div>
-			<img class="login-modal-logo" src="/logos/school_gov-b.svg" alt="" width="224" height="83" />
+			<img
+				class="login-modal-logo"
+				src="/logos/school_gov-b.svg"
+				alt=""
+				width="224"
+				height="83"
+				loading="lazy"
+				decoding="async"
+			/>
 			<p class="login-modal-text">
 				ขอความร่วมมือผู้ใช้งานทุกท่านแสดงความคิดเห็นด้วยภาษาสุภาพเพื่อสร้างสังคมการแลกเปลี่ยนที่เป็นมิตรและสร้างสรรค์
 			</p>
@@ -250,7 +388,7 @@
 				ซึ่งเป็นองค์กรส่วนกลางที่ไม่ขึ้นตรงต่อโรงเรียนใด
 				ขอยืนยันว่าข้อมูลของท่านจะถูกเก็บเป็นความลับและไม่มีการเปิดเผยระหว่างการใช้งาน
 			</p>
-			<label class="custom-control login-modal-text">
+			<label class="custom-control login-modal-text login-control">
 				<input type="checkbox" bind:checked={isread_checked} />
 				<span>
 					ฉันได้อ่านและยอมรับ&nbsp;
@@ -258,7 +396,7 @@
 						class="policy-btn"
 						type="button"
 						on:click={() => {
-							login_isopen = false;
+							$login_modal_isopen = false;
 							requestAnimationFrame(() => {
 								term_isopen = true;
 							});
@@ -267,14 +405,28 @@
 				</span>
 			</label>
 		</div>
-		<div class="f login-modal-btns">
-			<button class="f login-modal-btn" type="button" on:click={loginFb} disabled={!isread_checked}>
-				<img src="/icons/facebook.svg" alt="" width="24" height="24" />
-				เชื่อมต่อกับ Facebook
+		<div class="login-modal-btns">
+			<button class="f login-modal-btn" type="button" on:click={loginGg} disabled={!isread_checked}>
+				<img
+					src="/icons/google.svg"
+					alt=""
+					width="24"
+					height="24"
+					loading="lazy"
+					decoding="async"
+				/>
+				<span>เชื่อมต่อกับ Google</span>
 			</button>
-			<button class="f login-modal-btn" type="button" on:click={loginTw} disabled={!isread_checked}>
-				<img src="/icons/twitter.svg" alt="" width="24" height="24" />
-				เชื่อมต่อกับ Twitter
+			<button class="f login-modal-btn" type="button" on:click={loginFb} disabled={!isread_checked}>
+				<img
+					src="/icons/facebook.svg"
+					alt=""
+					width="24"
+					height="24"
+					loading="lazy"
+					decoding="async"
+				/>
+				<span>เชื่อมต่อกับ Facebook</span>
 			</button>
 		</div>
 	{/if}
@@ -293,7 +445,7 @@
 		<p>
 			องค์กรต่อต้านคอร์รัปชัน (ประเทศไทย)
 			ดำเนินการรวบรวมข้อมูลเปิดสาธารณะของโรงเรียนสังกัดสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน (สพฐ.)
-			ที่มีความสำคัญต่อการบริหารจัดการและการพัฒนาคุณภาพการให้บริการในสถานศึกษาน
+			ที่มีความสำคัญต่อการบริหารจัดการและการพัฒนาคุณภาพการให้บริการในสถานศึกษา
 			ทำการเชื่อมโยงและนำเสนอข้อมูลดังกล่าว
 			เพื่อประโยชน์ของสาธารณะในการส่งเสริมความโปร่งใสและสร้างการมีส่วนร่วมภายในสถานศึกษา
 			โดยอำนวยความสะดวกให้หน่วยงานและผู้ที่เกี่ยวข้องในระบบการศึกษาสามารถวิเคราะห์ข้อมูลเพื่อติดตามตรวจสอบและร่วมแลกเปลี่ยนความคิดเห็นได้โดยง่าย
@@ -326,13 +478,15 @@
 		<p>
 			&ldquo;ผู้ใช้ข้อมูล&rdquo; หมายความว่า บุคคล คณะบุคคล นิติบุคคล หน่วยงาน
 			หรือองค์กรทั้งภาครัฐและภาคเอกชนทั้งในประเทศและต่างประเทศ ที่เข้าใช้ข้อมูลซึ่งเผยแพร่บน
-			<a href="https://schoolgov.actai.co">https://schoolgov.actai.co</a> และตกลงยอมรับเงื่อนไขการใช้บริการและการใช้ข้อมูลภายใต้ข้อกำหนด
+			<a href="https://schoolgov.actai.co" target="_blank" rel="nofollow noopener noreferrer"
+				>https://schoolgov.actai.co</a
+			> และตกลงยอมรับเงื่อนไขการใช้บริการและการใช้ข้อมูลภายใต้ข้อกำหนด
 		</p>
 		<p>
 			&ldquo;การใช้บริการ&rdquo; หมายความว่า การเข้าถึง ลงทะเบียน หรือใช้งานผลิตภัณฑ์ ซอฟต์แวร์
 			และบริการบนเว็บไซต์ขององค์กร
 			ไม่ว่าส่วนใดส่วนหนึ่งหรือทั้งหมดและให้หมายรวมถึงผู้ใช้บริการที่ใช้งานโดยตรงผ่านเว็บไซต์
-			หรือช่องทางขององค์กรในรูปแบบต่างๆ
+			หรือช่องทางขององค์กรในรูปแบบต่าง ๆ
 		</p>
 		<p>
 			&ldquo;การใช้ข้อมูล&rdquo; หมายความว่า
@@ -341,14 +495,22 @@
 			และภายใต้การยอมรับการปฏิบัติตามข้อกำหนดการได้มาซึ่งข้อมูล
 		</p>
 		<p>
-			ข้อมูลที่เผยแพร่บน <a href="https://schoolgov.actai.co">https://schoolgov.actai.co</a>
+			ข้อมูลที่เผยแพร่บน <a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
+			>
 			เป็นข้อมูลเปิดเผยที่เผยแพร่ผ่านระบบสารสนเทศเพื่อบริหารการศึกษา (Education Management Information
 			System : EMIS) และระบบจัดเก็บข้อมูลสิ่งก่อสร้าง (B-OBEC) ของสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน
 			(สพฐ.) โดยองค์กรต่อต้านคอร์รัปชัน (ประเทศไทย) ได้ดำเนินการรวบรวมและเผยแพร่ข้อมูลในรูปแบบดิจิทัล
 			เพื่อประโยชน์ของสาธารณะในการส่งเสริมความโปร่งใสและสร้างการมีส่วนร่วมภายในสถานศึกษา
 		</p>
 		<p>
-			ข้อมูลที่เผยแพร่บน <a href="https://schoolgov.actai.co">https://schoolgov.actai.co</a>
+			ข้อมูลที่เผยแพร่บน <a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
+			>
 			ดำเนินการปรับปรุงอย่างสม่ำเสมอเพื่อให้ข้อมูลเป็นปัจจุบันมากที่สุด โดยผู้ใช้งานสามารถตรวจสอบความถูกต้องของข้อมูล
 			ได้ดังนี้
 		</p>
@@ -358,7 +520,10 @@
 				<ul>
 					<li>
 						เข้าถึงจาก ระบบสารสนเทศเพื่อบริหารการศึกษา (Education Management Information System :
-						EMIS) - <a href="https://data.bopp-obec.info/emis/">https://data.bopp-obec.info/emis/</a
+						EMIS) - <a
+							href="https://data.bopp-obec.info/emis/"
+							target="_blank"
+							rel="nofollow noopener noreferrer">https://data.bopp-obec.info/emis/</a
 						>
 					</li>
 				</ul>
@@ -368,7 +533,9 @@
 				<ul>
 					<li>
 						เข้าถึงจาก ระบบจัดเก็บข้อมูลสิ่งก่อสร้าง (B-OBEC) - <a
-							href="https://bobec.bopp-obec.info/">https://bobec.bopp-obec.info/</a
+							href="https://bobec.bopp-obec.info/"
+							target="_blank"
+							rel="nofollow noopener noreferrer">https://bobec.bopp-obec.info/</a
 						>
 					</li>
 				</ul>
@@ -378,7 +545,9 @@
 		<h4>ข้อกำหนดและเงื่อนไขของข้อกำหนด</h4>
 		<p>
 			ผู้ใช้บริการและใช้ข้อมูล มีสิทธิและหน้าที่ในการใช้บริการและข้อมูลบน <a
-				href="https://schoolgov.actai.co">https://schoolgov.actai.co</a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
 			>
 			ดังนี้
 		</p>
@@ -412,7 +581,13 @@
 			ผู้ใช้ข้อมูลต้องใช้ข้อมูลเพื่อวัตถุประสงค์อันชอบด้วยกฎหมายและไม่ขัดต่อความสงบเรียบร้อยหรือศีลธรรมอันดีของประชาชน
 		</p>
 
-		<h4>การอ้างอิงข้อมูลจาก <a href="https://schoolgov.actai.co">https://schoolgov.actai.co</a></h4>
+		<h4>
+			การอ้างอิงข้อมูลจาก <a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
+			>
+		</h4>
 		<p>
 			ในการนำข้อมูลไม่ว่าทั้งหมดหรือบางส่วนไปใช้งาน หรือดำเนินการอื่นเพื่อวัตถุประสงค์ใด ๆ
 			อันชอบด้วยกฎหมายของผู้ใช้ข้อมูล ผู้ใช้ข้อมูลต้องอ้างอิงถึงหน่วยงานผู้จัดทำข้อมูล
@@ -421,8 +596,10 @@
 		</p>
 		<p>
 			องค์กรต่อต้านคอร์รัปชัน (ประเทศไทย) ขอสงวนสิทธิ์ในการเก็บค่าบริการการเข้าถึงข้อมูล
-			การระงับชั่วคราวหรือยกเลิกการเผยแพร่ข้อมูลบน <a href="https://schoolgov.actai.co"
-				>https://schoolgov.actai.co</a
+			การระงับชั่วคราวหรือยกเลิกการเผยแพร่ข้อมูลบน <a
+				href="https://schoolgov.actai.co"
+				target="_blank"
+				rel="nofollow noopener noreferrer">https://schoolgov.actai.co</a
 			>
 			หรือยกเลิกการให้ข้อมูลต่อไปไม่ว่ากรณีใด ๆ โดยไม่จำต้องบอกกล่าวล่วงหน้า และไม่ก่อให้เกิดความรับผิดชอบใด
 			ๆ แก่องค์กรต่อต้านคอร์รัปชัน (ประเทศไทย)
@@ -465,6 +642,8 @@
 		</p>
 	</div>
 </Modal>
+
+<ContactOfficer bind:contact_modal_isopen />
 
 <style lang="scss">
 	.main-nav {
@@ -509,7 +688,7 @@
 				align-items: center;
 
 				background: #fff;
-				box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+				box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 				border-radius: 30px;
 
 				width: 100%;
@@ -719,10 +898,11 @@
 	}
 
 	.login-modal-top-content {
-		padding: 0 24px;
+		padding: 0 24px 24px;
 		flex-direction: column;
 		flex: 1 1 0;
 		justify-content: center;
+		width: 100%;
 	}
 
 	.login-modal-title {
@@ -736,17 +916,34 @@
 		text-transform: uppercase;
 	}
 
+	.login-control.custom-control.login-modal-text {
+		margin-bottom: -8px;
+	}
+
 	.login-modal-subtitle {
 		font-size: 0.8125rem;
+
+		@media screen and (min-width: 768px) {
+			font-size: 1rem;
+		}
 	}
 
 	.login-modal-logo {
 		width: 50%;
+		margin: 16px 0;
+
+		&:first-child {
+			margin-top: 0;
+		}
 	}
 
 	.login-modal-text {
 		font-size: 0.625rem;
 		margin-bottom: 16px;
+
+		@media screen and (min-width: 768px) {
+			font-size: 0.8125rem;
+		}
 
 		&.coral {
 			color: #f5a2a2;
@@ -759,25 +956,33 @@
 	}
 
 	.login-modal-btns {
+		display: grid;
+		grid-template-columns: max-content;
+		justify-content: center;
+		gap: 16px;
+
 		background: #ecf7f7;
 		padding: 32px 0;
 		width: 100%;
-
-		flex-direction: column;
-		gap: 16px;
 	}
 
 	.login-modal-btn {
 		padding: 8px 16px;
 		gap: 8px;
 
-		background: #ffffff;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		background: #fff;
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 200px;
+
+		justify-content: center;
 
 		&:disabled {
 			opacity: 0.5;
 			cursor: not-allowed;
+		}
+
+		> span {
+			flex: 1 1 0;
 		}
 	}
 
@@ -809,12 +1014,17 @@
 	.policy-content {
 		font-size: 0.8125rem;
 
-		h3 {
+		@media screen and (min-width: 768px) {
 			font-size: 1rem;
 		}
 
+		h3 {
+			font-size: 1.23em;
+			padding-top: 0.2rem;
+		}
+
 		h4 {
-			font-size: 0.875rem;
+			font-size: 1.07em;
 		}
 
 		h3,
@@ -859,8 +1069,12 @@
 		position: absolute;
 		bottom: 0;
 		right: 0;
-		width: 24px;
-		height: 24px;
+		width: 32px;
+		height: 32px;
+
+		background: #fff;
+		border-radius: 99px;
+		border: 4px #fff solid;
 	}
 
 	.search-box {
@@ -896,15 +1110,14 @@
 		gap: 8px;
 
 		background: #fa7cc7;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		border-radius: 24px;
 		color: #fff;
+		font-family: 'Mitr';
 		text-decoration: none;
 		font-weight: 500;
 
-		&:first-of-type {
-			margin-bottom: 16px;
-		}
+		justify-content: space-between;
 
 		&.blue {
 			background: #6bc9ff;
@@ -913,5 +1126,25 @@
 
 	.round-img {
 		border-radius: 999px;
+	}
+
+	.search-desktop-nav-list {
+		display: none;
+
+		@media screen and (min-width: 768px) {
+			display: initial;
+		}
+	}
+
+	.login-success-aligner {
+		display: grid;
+		grid-template-columns: max-content;
+		justify-content: center;
+		gap: 16px;
+	}
+
+	.nav-mobile-close-trigger {
+		position: fixed;
+		inset: 0;
 	}
 </style>

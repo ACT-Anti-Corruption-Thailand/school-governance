@@ -12,13 +12,12 @@
 	} from '@rgossiaux/svelte-headlessui';
 	import Modal from 'components/Modal.svelte';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
-
-	import { years } from 'data/years.js';
+	import CommentReadmore from 'components/school/CommentReadmore.svelte';
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
-
-	const LATEST_YEAR = years[years.length - 1];
+	import { LATEST_YEAR, years } from 'stores/school';
+	import { login_modal_isopen } from 'stores/login_modal';
 
 	$: schoolId = $page.params.schoolId;
 
@@ -165,7 +164,7 @@
 					schoolId: schoolId,
 					comments: txt_comment.trim(),
 					location: chk_locations.join(),
-					schoolYear: LATEST_YEAR,
+					schoolYear: $LATEST_YEAR,
 					userId: $currentUser.uid,
 					approved: true || !uploaded_files,
 					...(uploaded_files ? { images: JSON.stringify(uploaded_files) } : null)
@@ -195,7 +194,7 @@
 		'gym',
 		'other'
 	];
-	let filter_years: number[] = [LATEST_YEAR];
+	let filter_years: number[] = $LATEST_YEAR ? [$LATEST_YEAR] : [];
 
 	$: ((_) => {
 		fetchComments();
@@ -289,19 +288,237 @@
 
 	let going_to_delete_id: number | null = null;
 	let confirm_delete_isopen = false;
+
+	let lightbox_open = false;
+	let lightbox_url = '';
+
+	const openLightbox = (url: string) => {
+		lightbox_url = url;
+		lightbox_open = true;
+	};
+
+	let el_comment_modal_txtarea: HTMLTextAreaElement;
+	const openCommentModal = () => {
+		if ($currentUser) {
+			comment_modal_isopen = true;
+			requestAnimationFrame(() => {
+				el_comment_modal_txtarea.focus();
+			});
+		} else {
+			$login_modal_isopen = true;
+		}
+	};
 </script>
+
+<svelte:head>
+	<title>ความคิดเห็นโรงเรียน — โปร่งใสวิทยา</title>
+</svelte:head>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
 	<div class="f g4">
-		<img src="/icons/comment.svg" alt="ความคิดเห็น" width="20" height="20" />
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/icons/comment.svg"
+			alt="ความคิดเห็น"
+			width="20"
+			height="20"
+		/>
 		<span class="comment-header-val">{posts.length}</span>
 	</div>
 </SchoolHeader>
 
+<button class="f comment-btn" type="button" on:click={openCommentModal}>
+	<div class="comment-btn-txtbox">แล้วคุณละ คิดอย่างไร?</div>
+	<img loading="lazy" decoding="async" src="/icons/image.svg" alt="" width="24" height="24" />
+</button>
+<div class="comment-btn-compensate" />
+
+{#if $currentUser}
+	<Modal title="เพิ่มความเห็นใหม่" hideTitle bind:isOpen={comment_modal_isopen}>
+		<button
+			class="cf-submit"
+			type="button"
+			disabled={txt_comment.trim() === '' || chk_locations.length === 0}
+			on:click={post}
+			slot="title"
+		>
+			ส่งความเห็น
+		</button>
+
+		<!-- <p>Current user is: {$currentUser.uid}</p> -->
+		<textarea
+			bind:this={el_comment_modal_txtarea}
+			class="cf-comment"
+			rows="5"
+			placeholder="คิดเห็นหรืออยากฝากอะไรถึงโรงเรียนบ้าง?"
+			bind:value={txt_comment}
+		/>
+
+		<div class="f cf-files">
+			{#if files_objurl.length < 5}
+				<label class="cp">
+					<input
+						class="cf-file"
+						bind:this={el_img_input}
+						type="file"
+						multiple
+						accept="image/*"
+						on:change={processImagesInput}
+					/>
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/comments/add-img.svg"
+						alt="เพิ่มรูปภาพ"
+						width="50"
+						height="50"
+					/>
+				</label>
+			{/if}
+			{#if files_objurl.length}
+				{#each files_objurl as src, i}
+					<div class="cf-filepreview">
+						<img loading="lazy" decoding="async" {src} alt="" width="50" height="50" />
+						<button type="button" on:click={() => removeImg(i)}>
+							<img
+								loading="lazy"
+								decoding="async"
+								src="/comments/remove-img.svg"
+								alt=""
+								width="16"
+								height="16"
+							/>
+						</button>
+					</div>
+				{/each}
+			{:else}
+				<div class="cf-addfile">
+					<span>เพิ่มรูปภาพ</span><br />
+					<small>สูงสุด 5 รูป และต้องรอการยืนยันจาก admin</small>
+				</div>
+			{/if}
+		</div>
+
+		<div class="f cf-tags">
+			<label class="cp cf-tag">
+				<input type="checkbox" bind:group={chk_locations} value="classroom" />
+				<span>ห้องเรียน</span>
+			</label>
+			<label class="cp cf-tag">
+				<input type="checkbox" bind:group={chk_locations} value="toilet" />
+				<span>ห้องน้ำ</span>
+			</label>
+			<label class="cp cf-tag">
+				<input type="checkbox" bind:group={chk_locations} value="canteen" />
+				<span>โรงอาหาร</span>
+			</label>
+			<label class="cp cf-tag">
+				<input type="checkbox" bind:group={chk_locations} value="gym" />
+				<span>สนามกีฬา</span>
+			</label>
+			<label class="cp cf-tag">
+				<input type="checkbox" bind:group={chk_locations} value="other" />
+				<span>อื่นๆ</span>
+			</label>
+		</div>
+	</Modal>
+
+	<Modal title="เพิ่มความเห็นสำเร็จ" hideTitle bind:isOpen={sent_comment_modal_isopen}>
+		<div class="f fcm">
+			<h3 class="fcm-header">ส่งความคิดเห็นเรียบร้อย</h3>
+			<div class="fcm-img">
+				<Lottie path="/lotties/feedback_completed.json" loop={true} autoplay={true} />
+			</div>
+			<div>
+				<p class="fcm-t1">
+					ขอบคุณที่เข้ามามีส่วนร่วม ความเห็นของคุณมีความหมายต่อการพัฒนาโรงเรียนของเรา
+				</p>
+				{#if last_post_has_image}
+					<p class="fcm-t2">
+						Admin ขออนุญาตใช้เวลาตรวจเช็ครูปภาพของคุณ
+						โดยจะแสดงผลให้ตามปกติหลังตรวจสอบและยืนยันแล้วว่าไม่มีเนื้อหาที่ขัดต่อนโยบายของเว็บไซต์ซึ่งสนับสนุนการใช้ภาพเพื่อแลกเปลี่ยนความคิดเห็นอย่างสร้างสรรค์
+					</p>
+				{/if}
+			</div>
+			<div class="f fcm-btns">
+				<button class="fcm-btn" type="button" on:click={() => (sent_comment_modal_isopen = false)}>
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/comment.svg"
+						alt=""
+						width="16"
+						height="16"
+					/>
+					<span>กลับไปดูความเห็น</span>
+				</button>
+				<button
+					class="fcm-btn2"
+					type="button"
+					on:click={() => {
+						sent_comment_modal_isopen = false;
+						openCommentModal();
+					}}
+				>
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/comment-add.svg"
+						alt=""
+						width="16"
+						height="16"
+					/>
+					<span>เพิ่มความเห็นอื่น</span>
+				</button>
+			</div>
+		</div>
+	</Modal>
+
+	<Dialog open={confirm_delete_isopen} on:close={() => (confirm_delete_isopen = false)}>
+		<DialogOverlay class="delete-modal-backdrop" />
+
+		<div class="delete-modal-box">
+			<DialogTitle class="f jcc delete-modal-title">
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/icons/delete.svg"
+					alt=""
+					width="20"
+					height="20"
+				/>
+				<span>ลบความคิดเห็น</span>
+			</DialogTitle>
+			<DialogDescription class="delete-modal-desc">แน่ใจว่าจะลบความคิดเห็นของคุณ</DialogDescription>
+			<div class="f jcc delete-modal-btns">
+				<button
+					class="f jcc delete-modal-btn1"
+					type="button"
+					on:click={() => (confirm_delete_isopen = false)}
+				>
+					<span>ยกเลิก</span>
+				</button>
+				<button class="f jcc delete-modal-btn2" type="button" on:click={deleteComment}>
+					<img
+						loading="lazy"
+						decoding="async"
+						src="/icons/delete-w.svg"
+						alt=""
+						width="20"
+						height="20"
+					/>
+					<span>ลบ</span>
+				</button>
+			</div>
+		</div>
+	</Dialog>
+{/if}
+
 <details class="filter-container">
 	<summary class="filter-bar">
 		<span class="f">
-			<img src="/icons/filter.svg" alt="" width="24" height="24" />
+			<img loading="lazy" decoding="async" src="/icons/filter.svg" alt="" width="24" height="24" />
 			<span class="filter-field">{filter_sort_by_lbl}</span>
 			{#if filter_locations_lbl}
 				<span class="filter-field">{filter_locations_lbl}</span>
@@ -363,12 +580,14 @@
 		<fieldset>
 			<legend>ปีการศึกษา</legend>
 			<div>
-				{#each years as year (year)}
-					<label class="custom-control">
-						<input type="checkbox" bind:group={filter_years} value={year} />
-						<span>{year + 543}</span>
-					</label>
-				{/each}
+				{#if $years}
+					{#each $years as year (year)}
+						<label class="custom-control">
+							<input type="checkbox" bind:group={filter_years} value={year} />
+							<span>{year + 543}</span>
+						</label>
+					{/each}
+				{/if}
 			</div>
 		</fieldset>
 	</div>
@@ -376,155 +595,6 @@
 <div class="filter-compensate" />
 
 <div class="desktop-margin">
-	{#if $currentUser}
-		<button class="f comment-btn" type="button" on:click={() => (comment_modal_isopen = true)}>
-			<div class="comment-btn-txtbox">แล้วคุณละ คิดอย่างไร?</div>
-			<img src="/icons/image.svg" alt="" width="24" height="24" />
-		</button>
-
-		<Modal title="เพิ่มความเห็นใหม่" hideTitle bind:isOpen={comment_modal_isopen}>
-			<button
-				class="cf-submit"
-				type="button"
-				disabled={txt_comment.trim() === '' || chk_locations.length === 0}
-				on:click={post}
-				slot="title"
-			>
-				ส่งความเห็น
-			</button>
-
-			<!-- <p>Current user is: {$currentUser.uid}</p> -->
-			<textarea
-				class="cf-comment"
-				rows="5"
-				placeholder="คิดเห็นหรืออยากฝากอะไรถึงโรงเรียนบ้าง?"
-				bind:value={txt_comment}
-			/>
-
-			<div class="f cf-files">
-				{#if files_objurl.length < 5}
-					<label class="cp">
-						<input
-							class="cf-file"
-							bind:this={el_img_input}
-							type="file"
-							multiple
-							accept="image/*"
-							on:change={processImagesInput}
-						/>
-						<img src="/comments/add-img.svg" alt="เพิ่มรูปภาพ" width="50" height="50" />
-					</label>
-				{/if}
-				{#if files_objurl.length}
-					{#each files_objurl as src, i}
-						<div class="cf-filepreview">
-							<img {src} alt="" width="50" height="50" />
-							<button type="button" on:click={() => removeImg(i)}>
-								<img src="/comments/remove-img.svg" alt="" width="16" height="16" />
-							</button>
-						</div>
-					{/each}
-				{:else}
-					<div class="cf-addfile">
-						<span>เพิ่มรูปภาพ</span><br />
-						<small>สูงสุด 5 รูป และต้องรอการยืนยันจาก admin</small>
-					</div>
-				{/if}
-			</div>
-
-			<div class="f cf-tags">
-				<label class="cp cf-tag">
-					<input type="checkbox" bind:group={chk_locations} value="classroom" />
-					<span>ห้องเรียน</span>
-				</label>
-				<label class="cp cf-tag">
-					<input type="checkbox" bind:group={chk_locations} value="toilet" />
-					<span>ห้องน้ำ</span>
-				</label>
-				<label class="cp cf-tag">
-					<input type="checkbox" bind:group={chk_locations} value="canteen" />
-					<span>โรงอาหาร</span>
-				</label>
-				<label class="cp cf-tag">
-					<input type="checkbox" bind:group={chk_locations} value="gym" />
-					<span>สนามกีฬา</span>
-				</label>
-				<label class="cp cf-tag">
-					<input type="checkbox" bind:group={chk_locations} value="other" />
-					<span>อื่นๆ</span>
-				</label>
-			</div>
-		</Modal>
-
-		<Modal title="เพิ่มความเห็นสำเร็จ" hideTitle bind:isOpen={sent_comment_modal_isopen}>
-			<div class="f fcm">
-				<h3 class="fcm-header">ส่งความคิดเห็นเรียบร้อย</h3>
-				<div class="fcm-img">
-					<Lottie path="/lotties/feedback_completed.json" loop={true} autoplay={true} />
-				</div>
-				<div>
-					<p class="fcm-t1">
-						ขอบคุณที่เข้ามามีส่วนร่วม ความเห็นของคุณมีความหมายต่อการพัฒนาโรงเรียนของเรา
-					</p>
-					{#if last_post_has_image}
-						<p class="fcm-t2">
-							Admin ขออนุญาตใช้เวลาตรวจเช็ครูปภาพของคุณ
-							โดยจะแสดงผลให้ตามปกติหลังตรวจสอบและยืนยันแล้วว่าไม่มีเนื้อหาที่ขัดต่อนโยบายของเว็บไซต์ซึ่งสนับสนุนการใช้ภาพเพื่อแลกเปลี่ยนความคิดเห็นอย่างสร้างสรรค์
-						</p>
-					{/if}
-				</div>
-				<div class="f fcm-btns">
-					<button
-						class="fcm-btn"
-						type="button"
-						on:click={() => (sent_comment_modal_isopen = false)}
-					>
-						<img src="/icons/comment.svg" alt="" width="16" height="16" />
-						<span>กลับไปดูความเห็น</span>
-					</button>
-					<button
-						class="fcm-btn2"
-						type="button"
-						on:click={() => {
-							sent_comment_modal_isopen = false;
-							comment_modal_isopen = true;
-						}}
-					>
-						<img src="/icons/comment-add.svg" alt="" width="16" height="16" />
-						<span>เพิ่มความเห็นอื่น</span>
-					</button>
-				</div>
-			</div>
-		</Modal>
-
-		<Dialog open={confirm_delete_isopen} on:close={() => (confirm_delete_isopen = false)}>
-			<DialogOverlay class="delete-modal-backdrop" />
-
-			<div class="delete-modal-box">
-				<DialogTitle class="f jcc delete-modal-title">
-					<img src="/icons/delete.svg" alt="" width="20" height="20" />
-					<span>ลบความคิดเห็น</span>
-				</DialogTitle>
-				<DialogDescription class="delete-modal-desc"
-					>แน่ใจว่าจะลบความคิดเห็นของคุณ</DialogDescription
-				>
-				<div class="f jcc delete-modal-btns">
-					<button
-						class="f jcc delete-modal-btn1"
-						type="button"
-						on:click={() => (confirm_delete_isopen = false)}
-					>
-						<span>ยกเลิก</span>
-					</button>
-					<button class="f jcc delete-modal-btn2" type="button" on:click={deleteComment}>
-						<img src="/icons/delete-w.svg" alt="" width="20" height="20" />
-						<span>ลบ</span>
-					</button>
-				</div>
-			</div>
-		</Dialog>
-	{/if}
-
 	<section class="comments">
 		{#each posts as post (post.Id)}
 			<article class="comment-container">
@@ -539,14 +609,30 @@
 								confirm_delete_isopen = true;
 							}}
 						>
-							<img src="/icons/delete.svg" alt="ลบ" width="24" height="24" />
+							<img
+								loading="lazy"
+								decoding="async"
+								src="/icons/delete.svg"
+								alt="ลบ"
+								width="24"
+								height="24"
+							/>
 						</button>
 					{/if}
 				</div>
-				<p class="comment-text">{post.comments}</p>
+				<CommentReadmore comment={post.comments} />
 				<div class="f g4 comment-images">
 					{#each parseImagesVal(post.images) as img (img.title)}
-						<img src={img.url} alt={img.title} width="64" height="64" />
+						<button type="button" on:click={() => openLightbox(img.url)}>
+							<img
+								loading="lazy"
+								decoding="async"
+								src={img.url}
+								alt={img.title}
+								width="64"
+								height="64"
+							/>
+						</button>
 					{/each}
 				</div>
 				<p class="f g4 comment-small comment-like">
@@ -561,9 +647,23 @@
 							}}
 						>
 							{#if post.likedByYourself}
-								<img src="/icons/like-filled.svg" alt="" width="16" height="16" />
+								<img
+									loading="lazy"
+									decoding="async"
+									src="/icons/like-filled.svg"
+									alt=""
+									width="16"
+									height="16"
+								/>
 							{:else}
-								<img src="/icons/like.svg" alt="" width="16" height="16" />
+								<img
+									loading="lazy"
+									decoding="async"
+									src="/icons/like.svg"
+									alt=""
+									width="16"
+									height="16"
+								/>
 							{/if}
 						</button>
 					{/if}
@@ -572,7 +672,14 @@
 				<div class="f g4">
 					{#each formatTag(post.location) as loc}
 						<span class="tag">
-							<img src="/icons/tag.svg" alt="" width="8" height="8" />
+							<img
+								loading="lazy"
+								decoding="async"
+								src="/icons/tag.svg"
+								alt=""
+								width="8"
+								height="8"
+							/>
 							{loc}
 						</span>
 					{/each}
@@ -582,6 +689,25 @@
 		{/each}
 	</section>
 </div>
+
+<Dialog open={lightbox_open} on:close={() => (lightbox_open = false)}>
+	<DialogOverlay class="lightbox-backdrop" />
+
+	<DialogTitle class="sr-only">ภาพประกอบคอมเมนต์</DialogTitle>
+	<DialogDescription>URL: {lightbox_url}</DialogDescription>
+
+	<button class="lightbox-close" type="button" on:click={() => (lightbox_open = false)}>
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/icons/close-w.svg"
+			alt="ปิด"
+			width="32"
+			height="32"
+		/>
+	</button>
+	<img loading="lazy" decoding="async" src={lightbox_url} alt="" class="lightbox-image" />
+</Dialog>
 
 <style lang="scss">
 	@media screen and (min-width: 768px) {
@@ -616,6 +742,10 @@
 	.comments {
 		padding: 0 16px 64px;
 		background: #fff;
+
+		@media screen and (min-width: 768px) {
+			padding: 0 16px 32px;
+		}
 	}
 
 	.comment-container {
@@ -651,7 +781,7 @@
 		gap: 4px;
 
 		background: #6bc9ff;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 4px;
 
 		color: #fff;
@@ -661,8 +791,17 @@
 		margin: 4px 0;
 	}
 
-	.comment-images > img {
-		object-fit: cover;
+	.comment-images > button {
+		cursor: zoom-in;
+
+		> img {
+			object-fit: cover;
+
+			@media screen and (min-width: 768px) {
+				width: 128px;
+				height: 128px;
+			}
+		}
 	}
 
 	.comment-btn {
@@ -672,16 +811,17 @@
 		gap: 8px;
 
 		background: #6bc9ff;
-		box-shadow: 0px -1px 4px rgba(12, 22, 107, 0.2);
-		border-radius: 8px 8px 0px 0px;
+		box-shadow: 0 -1px 4px rgba(12, 22, 107, 0.2);
+		border-radius: 8px 8px 0 0;
 		cursor: pointer;
 
 		position: fixed;
 		bottom: 64px;
 		width: 100%;
+		z-index: 10;
 
 		> .comment-btn-txtbox {
-			background: white;
+			background: #fff;
 			border-radius: 99px;
 			padding: 8px 12px;
 
@@ -693,10 +833,23 @@
 
 	@media screen and (min-width: 768px) {
 		.comment-btn {
-			bottom: 0;
 			z-index: 11;
+
+			top: calc(var(--navbar-height) + 60px);
+			left: calc(50% + 32px);
+			bottom: unset;
+			transform: translateX(-50%);
+			transition: top 0.3s;
+			will-change: top;
+
 			width: 100%;
 			max-width: 640px;
+
+			border-radius: 0;
+		}
+
+		.comment-btn-compensate {
+			height: 56px;
 		}
 	}
 
@@ -711,6 +864,7 @@
 
 		@media screen and (min-width: 768px) {
 			width: calc(100% - 64px);
+			top: calc(var(--navbar-height) + 60px + 56px);
 		}
 	}
 
@@ -722,7 +876,7 @@
 		padding: 8px 16px;
 		background: #fff;
 
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 
 		cursor: pointer;
 		list-style: none;
@@ -757,9 +911,13 @@
 		padding: 8px 16px 16px;
 		position: absolute;
 		background: #fff;
-		box-shadow: 0px 1px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		left: 0;
 		right: 0;
+		height: calc(100vh - var(--navbar-height) - 60px - 46px - 64px);
+		box-sizing: border-box;
+		transition: height 0.3s;
+		will-change: height;
 
 		fieldset {
 			border: none;
@@ -827,7 +985,7 @@
 
 		color: #0c166b;
 		background: #6bc9ff;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border: 1px solid transparent;
 		border-radius: 16px;
 
@@ -883,7 +1041,7 @@
 
 			border: 1px solid transparent;
 			background: #6bc9ff;
-			box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+			box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 			color: #fff;
 
 			&::before {
@@ -1050,7 +1208,7 @@
 		transform: translateY(-50%);
 		z-index: 32;
 		background: #fff;
-		box-shadow: 0px 1px 4px rgb(12 22 107 / 20%);
+		box-shadow: 0 1px 4px rgb(12 22 107 / 20%);
 		border-radius: 8px;
 		padding: 16px;
 		text-align: center;
@@ -1091,7 +1249,7 @@
 		width: 100%;
 
 		border: 1px solid #3c55ab;
-		box-shadow: 0px 0px 4px rgba(12, 22, 107, 0.2);
+		box-shadow: 0 0 4px rgba(12, 22, 107, 0.2);
 		border-radius: 40px;
 
 		font-family: 'Mitr';
@@ -1109,5 +1267,50 @@
 
 	.cp {
 		cursor: pointer;
+	}
+
+	:global(.lightbox-backdrop) {
+		position: fixed;
+		inset: 0;
+		background: rgb(0, 0, 0);
+		cursor: zoom-out;
+
+		z-index: 20;
+	}
+
+	.lightbox-close {
+		position: fixed;
+		top: 8px;
+		left: 8px;
+		z-index: 20;
+	}
+
+	.lightbox-image {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 20;
+
+		object-fit: contain;
+		object-position: center;
+
+		cursor: zoom-out;
+		pointer-events: none;
+	}
+
+	@media screen and (min-width: 768px) {
+		.lightbox-close {
+			top: 32px;
+			left: 32px;
+		}
+
+		.lightbox-image {
+			top: 10vh;
+			left: 10vw;
+			width: 80vw;
+			height: 80vh;
+		}
 	}
 </style>
