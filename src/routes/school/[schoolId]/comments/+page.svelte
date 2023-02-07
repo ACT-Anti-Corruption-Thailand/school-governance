@@ -145,6 +145,14 @@
 			}
 			formData.append('json', JSON.stringify({}));
 
+			// uploaded_files = await fetch(`${PUBLIC_API_HOST}/schools/upload`, {
+			// 	method: 'POST',
+			// 	headers: {
+			// 		Authorization: `Bearer ${$currentUser.accessToken}`
+			// 	},
+			// 	body: formData
+			// });
+
 			const resp = await fetch(
 				'https://sheets.wevis.info/api/v1/db/storage/upload?path=noco%2FOpen-School-Test%2FSchoolComments%2Fimages',
 				{

@@ -6,6 +6,7 @@ import { getSchoolComments } from './routes/school/get-comments.js';
 import type { SchoolCommentsQuery, SchoolCommentsBody } from './routes/school/get-comments.js';
 import { getSchoolRating } from './routes/school/get-rating.js';
 import { addComment, deleteComment } from './routes/comment/add-delete.js';
+import { uploadImages } from './routes/comment/upload.js';
 import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
 import { getUserRatingRecord } from './routes/rating/get.js';
 import { setUserRatingRecord } from './routes/rating/set.js';
@@ -131,8 +132,10 @@ export function registerRoutes(app: FastifyInstance) {
 	);
 
 	app.post(
-		`/schools/:schoolId/comments/upload`,
-		withAuth((_) => 'not available now :(')
+		`/schools/upload`,
+		withAuth(({ body }: { body: any }) => {
+			return uploadImages(body);
+		})
 	);
 
 	app.put(

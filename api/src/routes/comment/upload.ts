@@ -1,10 +1,17 @@
-import { nocoConfig, nocodb } from '../../utils/nocodb.js';
+import fetch from 'node-fetch';
 
-export interface UploadBodyType {
-	json: string;
-	files: File[];
-}
-
-export async function uploadImages(body: UploadBodyType) {
-	return nocodb.storage.upload({ path: 'noco/Open-School-Test/SchoolComments/images' }, body);
+export async function uploadImages(body: FormData) {
+	const resp = await fetch(
+		`${process.env.NOCODB_URL}/api/v1/db/storage/upload?path=${encodeURIComponent(
+			`${process.env.NOCODB_ORG}/${process.env.NOCODB_PROJECT}/SchoolComments/images`
+		)}`,
+		{
+			method: 'GET',
+			headers: {
+				'xc-token': process.env.NOCODB_TOKEN
+			},
+			body
+		}
+	);
+	return await resp.json();
 }
