@@ -19,7 +19,9 @@ app.setErrorHandler(function (error, request, reply) {
 			error: 'Origin not allowed! >:('
 		});
 	} else {
+		console.error('='.repeat(20));
 		console.error(error);
+		console.error('='.repeat(20));
 		reply.status(500).send();
 	}
 });

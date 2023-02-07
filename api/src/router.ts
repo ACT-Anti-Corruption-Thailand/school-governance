@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { withAuth } from './utils/auth.js';
 import { likeComment, unlikeComment } from './routes/comment/like-unlike.js';
 import { getSchoolComments } from './routes/school/get-comments.js';
+import type { SchoolCommentsQuery, SchoolCommentsBody } from './routes/school/get-comments.js';
 import { getSchoolRating } from './routes/school/get-rating.js';
 import { addComment, deleteComment } from './routes/comment/add-delete.js';
 import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
@@ -10,14 +11,32 @@ import { getUserRatingRecord } from './routes/rating/get.js';
 import { setUserRatingRecord } from './routes/rating/set.js';
 import { searchSchool } from './routes/school/search.js';
 
+export const convertBodyToQuery = (body: SchoolCommentsBody): SchoolCommentsQuery => {
+	return {
+		locations: body.locations.join(','),
+		years: body.years.join(','),
+		sort: body.sort
+	};
+};
+
 const schoolCommentsQuerySchema = z.object({
 	locations: z.string().optional(),
 	years: z.string().optional(),
 	sort: z.string().optional()
 });
 
+const schoolCommentsBodySchema = z.object({
+	locations: z.string().array().optional(),
+	years: z.number().array().optional(),
+	sort: z.string().optional()
+});
+
 export function registerRoutes(app: FastifyInstance) {
 	app.get('/', () => 'School Governance API is doing OK :)');
+	app.get(
+		'/testauth',
+		withAuth((_req, _resp, uid) => `Welcome ${uid} Auth is good :)`)
+	);
 
 	app.get('/schools', (req) => {
 		const query = z
@@ -71,12 +90,12 @@ export function registerRoutes(app: FastifyInstance) {
 				.parse(params);
 			const { schoolCommentsQuery } = z
 				.object({
-					schoolCommentsQuery: schoolCommentsQuerySchema.optional()
+					schoolCommentsQuery: schoolCommentsBodySchema.optional()
 				})
 				.default({})
 				.parse(body);
 
-			return likeComment(userId, commentId, schoolId, schoolCommentsQuery);
+			return likeComment(userId, commentId, schoolId, convertBodyToQuery(schoolCommentsQuery));
 		})
 	);
 
@@ -91,13 +110,18 @@ export function registerRoutes(app: FastifyInstance) {
 				.parse(params);
 			const { schoolCommentsQuery } = z
 				.object({
-					schoolCommentsQuery: schoolCommentsQuerySchema.optional()
+					schoolCommentsQuery: schoolCommentsBodySchema.optional()
 				})
 				.default({})
 				.parse(body);
 
-			return unlikeComment(likeId, schoolId, schoolCommentsQuery);
+			return unlikeComment(likeId, schoolId, convertBodyToQuery(schoolCommentsQuery));
 		})
+	);
+
+	app.post(
+		`/schools/:schoolId/comments/upload`,
+		withAuth((_) => 'not available now :(')
 	);
 
 	app.put(
@@ -115,7 +139,7 @@ export function registerRoutes(app: FastifyInstance) {
 					location: z.string(),
 					schoolYear: z.number(),
 					uploadedFiles: z.string().array().optional(),
-					schoolCommentsQuery: schoolCommentsQuerySchema.optional()
+					schoolCommentsQuery: schoolCommentsBodySchema.optional()
 				})
 				.parse(body);
 
@@ -126,7 +150,7 @@ export function registerRoutes(app: FastifyInstance) {
 				location,
 				schoolYear,
 				uploadedFiles,
-				schoolCommentsQuery
+				convertBodyToQuery(schoolCommentsQuery)
 			);
 		})
 	);
@@ -143,12 +167,12 @@ export function registerRoutes(app: FastifyInstance) {
 
 			const { schoolCommentsQuery } = z
 				.object({
-					schoolCommentsQuery: schoolCommentsQuerySchema.optional()
+					schoolCommentsQuery: schoolCommentsBodySchema.optional()
 				})
 				.default({})
 				.parse(body);
 
-			return deleteComment(commentId, schoolId, schoolCommentsQuery);
+			return deleteComment(commentId, schoolId, convertBodyToQuery(schoolCommentsQuery));
 		})
 	);
 

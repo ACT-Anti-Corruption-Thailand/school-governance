@@ -6,6 +6,12 @@ export interface SchoolCommentsQuery {
 	sort?: string;
 }
 
+export interface SchoolCommentsBody {
+	locations?: string[];
+	years?: number[];
+	sort?: string;
+}
+
 export async function getSchoolComments(
 	schoolId: string,
 	{ locations, years, sort }: SchoolCommentsQuery = {}
