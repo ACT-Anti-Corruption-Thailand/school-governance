@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
 
-	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import { PUBLIC_API_HOST } from '$env/static/public';
 
 	import { PROVINCES } from 'data/provinces';
 
@@ -52,16 +52,9 @@
 		show_all_province = false;
 
 		try {
+			// ที่ต้องใช้ตัวนี้ เพราะต้องลิสต์ออกมาทั้งหมดก่อนเลย แต่ไม่ต้องการทุกตัวออกมาในเวลาเดียวกัน
 			const school_count_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex/count?where=${encodeURIComponent(
-					`(nameTh,like,%${formatted_search_string}%)`
-				)}`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
+				`${PUBLIC_API_HOST}/schools/count?name=${encodeURIComponent(formatted_search_string)}`
 			);
 			const school_count_json = await school_count_resp.json();
 			school_result_count = +school_count_json?.count ?? 0;
@@ -78,18 +71,14 @@
 
 		try {
 			const school_data_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex?where=${encodeURIComponent(
-					`(nameTh,like,%${formatted_search_string}%)`
-				)}&limit=${SCHOOL_PER_REQUEST}`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
+				`${PUBLIC_API_HOST}/schools?name=${encodeURIComponent(
+					formatted_search_string
+				)}&limit=${SCHOOL_PER_REQUEST}`
 			);
 			const school_data_json = await school_data_resp.json();
 			school_result = school_data_json?.list ?? [];
+			if (school_result.length === 0) {
+			}
 		} catch (e) {
 			console.error(e);
 			school_result_count = 0;
@@ -102,15 +91,9 @@
 
 		try {
 			const school_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex?where=${encodeURIComponent(
-					`(nameTh,like,%${formatted_search_string}%)`
-				)}&limit=${SCHOOL_PER_REQUEST}&offset=${school_index}`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
+				`${PUBLIC_API_HOST}/schools?name=${encodeURIComponent(
+					formatted_search_string
+				)}&limit=${SCHOOL_PER_REQUEST}&offset=${school_index}`
 			);
 			const school_json = await school_resp.json();
 			school_result = [...school_result, ...(school_json?.list ?? [])];
@@ -127,30 +110,22 @@
 			let related_school_list_tmp = [];
 
 			let school_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex?where=${encodeURIComponent(
-					`(district,eq,${district})~and(province,eq,${province})~and(schoolId,neq,${school_id})`
-				)}&limit=5`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
+				`${PUBLIC_API_HOST}/schools?district=${encodeURIComponent(
+					district
+				)}&province=${encodeURIComponent(province)}&exclude_school_id=${encodeURIComponent(
+					school_id
+				)}&limit=5`
 			);
 			let school_json = await school_resp.json();
 			related_school_list_tmp = school_json.list ?? [];
 
 			if (related_school_list.length < 5) {
 				school_resp = await fetch(
-					`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex?where=${encodeURIComponent(
-						`(district,neq,${district})~and(province,eq,${province})~and(schoolId,neq,${school_id})`
-					)}&limit=${5 - related_school_list.length}`,
-					{
-						method: 'GET',
-						headers: {
-							'xc-token': PUBLIC_NOCO_TOKEN_KEY
-						}
-					}
+					`${PUBLIC_API_HOST}/schools?exclude_district=${encodeURIComponent(
+						district
+					)}&province=${encodeURIComponent(province)}&exclude_school_id=${encodeURIComponent(
+						school_id
+					)}&limit=${5 - related_school_list.length}`
 				);
 				school_json = await school_resp.json();
 				related_school_list_tmp = related_school_list.concat(school_json.list ?? []);
@@ -190,15 +165,7 @@
 
 		try {
 			const school_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex?where=${encodeURIComponent(
-					`(province,like,${province})`
-				)}&limit=9999`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
+				`${PUBLIC_API_HOST}/schools?province=${encodeURIComponent(province)}&limit=1000`
 			);
 			const school_json = await school_resp.json();
 			if (school_json.list?.length) {

@@ -9,7 +9,7 @@ import { addComment, deleteComment } from './routes/comment/add-delete.js';
 import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
 import { getUserRatingRecord } from './routes/rating/get.js';
 import { setUserRatingRecord } from './routes/rating/set.js';
-import { searchSchool } from './routes/school/search.js';
+import { searchSchool, countSchool } from './routes/school/search.js';
 
 export const convertBodyToQuery = (body: SchoolCommentsBody): SchoolCommentsQuery => {
 	return {
@@ -42,6 +42,7 @@ export function registerRoutes(app: FastifyInstance) {
 		const query = z
 			.object({
 				name: z.string().optional(),
+				district: z.string().optional(),
 				province: z.string().optional(),
 				exclude_district: z.string().optional(),
 				exclude_school_id: z.string().optional(),
@@ -51,6 +52,16 @@ export function registerRoutes(app: FastifyInstance) {
 			.parse(req.query);
 
 		return searchSchool(query);
+	});
+
+	app.get('/schools/count', (req) => {
+		const query = z
+			.object({
+				name: z.string()
+			})
+			.parse(req.query);
+
+		return countSchool(query);
 	});
 
 	app.get('/schools/:schoolId/annoucements', (req) => {
