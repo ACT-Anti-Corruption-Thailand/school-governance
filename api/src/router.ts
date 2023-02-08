@@ -131,12 +131,7 @@ export function registerRoutes(app: FastifyInstance) {
 		})
 	);
 
-	app.post(
-		`/schools/upload`,
-		withAuth(({ body }: { body: any }) => {
-			return uploadImages(body);
-		})
-	);
+	app.post(`/schools/upload`, withAuth(uploadImages));
 
 	app.put(
 		'/schools/:schoolId/comments',
@@ -147,12 +142,12 @@ export function registerRoutes(app: FastifyInstance) {
 				})
 				.parse(params);
 
-			const { comments, location, schoolYear, uploadedFiles, schoolCommentsQuery } = z
+			const { comments, location, schoolYear, images, schoolCommentsQuery } = z
 				.object({
 					comments: z.string(),
 					location: z.string(),
 					schoolYear: z.number(),
-					uploadedFiles: z.string().array().optional(),
+					images: z.string().optional(),
 					schoolCommentsQuery: schoolCommentsBodySchema.optional()
 				})
 				.parse(body);
@@ -163,7 +158,7 @@ export function registerRoutes(app: FastifyInstance) {
 				comments,
 				location,
 				schoolYear,
-				uploadedFiles,
+				images,
 				convertBodyToQuery(schoolCommentsQuery)
 			);
 		})

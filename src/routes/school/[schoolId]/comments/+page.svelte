@@ -134,6 +134,7 @@
 	};
 
 	const addComment = async () => {
+		/* TODO - ADD LOADING STATE */
 		if (!$currentUser) return;
 		if (txt_comment.trim() === '' || chk_locations.length === 0) return;
 
@@ -143,26 +144,16 @@
 			for (const f of selected_files) {
 				formData.append('files', f);
 			}
-			formData.append('json', JSON.stringify({}));
+			formData.append('json', '{}');
 
-			// uploaded_files = await fetch(`${PUBLIC_API_HOST}/schools/upload`, {
-			// 	method: 'POST',
-			// 	headers: {
-			// 		Authorization: `Bearer ${$currentUser.accessToken}`
-			// 	},
-			// 	body: formData
-			// });
+			const resp = await fetch(`${PUBLIC_API_HOST}/schools/upload`, {
+				method: 'POST',
+				headers: {
+					Authorization: `Bearer ${$currentUser.accessToken}`
+				},
+				body: formData
+			});
 
-			const resp = await fetch(
-				'https://sheets.wevis.info/api/v1/db/storage/upload?path=noco%2FOpen-School-Test%2FSchoolComments%2Fimages',
-				{
-					method: 'POST',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					},
-					body: formData
-				}
-			);
 			uploaded_files = await resp.json();
 		}
 

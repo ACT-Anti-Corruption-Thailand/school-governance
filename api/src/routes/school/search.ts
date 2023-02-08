@@ -1,5 +1,5 @@
-import { nocoConfig, nocodb } from '../../utils/nocodb.js';
 import fetch from 'node-fetch';
+import { nocoConfig, nocodb } from '../../utils/nocodb.js';
 
 interface SearchSchoolQuery {
 	name?: string;

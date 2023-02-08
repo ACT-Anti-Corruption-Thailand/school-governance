@@ -2,12 +2,14 @@ import fastify from 'fastify';
 import { ZodError } from 'zod';
 import { fromZodError } from 'zod-validation-error';
 import { registerRoutes } from './router.js';
-
 import cors from '@fastify/cors';
 import { CORS_CONFIG, CorsError } from './utils/cors.js';
+import multipart from '@fastify/multipart';
 
 const app = fastify({ logger: true });
+
 app.register(cors, CORS_CONFIG);
+app.register(multipart);
 
 registerRoutes(app);
 

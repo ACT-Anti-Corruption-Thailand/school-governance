@@ -7,7 +7,7 @@ export async function addComment(
 	comments: string,
 	location: string,
 	schoolYear: number,
-	uploadedFiles?: string[],
+	images?: string,
 	query?: SchoolCommentsQuery
 ) {
 	await nocodb.dbTableRow.create(...nocoConfig, 'SchoolComments', {
@@ -16,8 +16,8 @@ export async function addComment(
 		comments: comments,
 		location: location,
 		schoolYear: schoolYear,
-		approved: true || !uploadedFiles,
-		...(uploadedFiles ? { images: JSON.stringify(uploadedFiles) } : null)
+		approved: true || !images,
+		...(images ? { images } : null)
 	});
 
 	return getSchoolComments(schoolId, query);
