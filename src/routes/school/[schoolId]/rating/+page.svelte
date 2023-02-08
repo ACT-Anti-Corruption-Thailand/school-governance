@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import { PUBLIC_API_HOST } from '$env/static/public';
 
 	import { onMount } from 'svelte';
 
@@ -77,7 +77,49 @@
 
 	let quizfinish_isopen = false;
 
-	let school_data: any = {};
+	interface SchoolScoreData {
+		countC1: number;
+		countC2: number;
+		countC3: number;
+		countC4: number;
+		countC5: number;
+		countT1: number;
+		countT2: number;
+		countT3: number;
+		countT4: number;
+		countT5: number;
+		countF1: number;
+		countF2: number;
+		countF3: number;
+		countF4: number;
+		countF5: number;
+		countG1: number;
+		countG2: number;
+		countG3: number;
+		countG4: number;
+		countG5: number;
+		sumF1: number;
+		sumC1: number;
+		sumF2: number;
+		sumC2: number;
+		sumC3: number;
+		sumC4: number;
+		sumF3: number;
+		sumC5: number;
+		sumF4: number;
+		sumT1: number;
+		sumF5: number;
+		sumT2: number;
+		sumT3: number;
+		sumG1: number;
+		sumT4: number;
+		sumT5: number;
+		sumG3: number;
+		sumG4: number;
+		sumG5: number;
+		sumG2: number;
+	}
+	let school_data: SchoolScoreData;
 
 	$: school_classroom_avg =
 		+school_data?.countC1 === 0
@@ -200,19 +242,9 @@
 	const fetchData = async () => {
 		try {
 			// get school overall rating
-			const school_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex/views/SchoolRating?where=${encodeURIComponent(
-					`(schoolId,eq,${schoolId})`
-				)}&limit=1&nested%5BuserRating%5D%5Blimit%5D=1`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
-			);
+			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating`);
 			const school_json = await school_resp.json();
-			school_data = school_json?.list?.[0] ?? {};
+			school_data = school_json?.raw;
 		} catch (e) {
 			console.error(e);
 		}
@@ -222,25 +254,22 @@
 		if (!$currentUser) return;
 
 		try {
-			// get user rowId
-			const user_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating?fields=Id,cDone,tDone,fDone,gDone&where=${encodeURIComponent(
-					`(userId,eq,${$currentUser.uid})~and(schoolId,eq,${schoolId})`
-				)}&limit=1`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
+			const user_resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating/current-user`, {
+				method: 'GET',
+				headers: {
+					Authorization: `Bearer ${$currentUser.accessToken}`
 				}
-			);
+			});
+
 			const user_json = await user_resp.json();
 
-			user_record_id = user_json.list?.[0]?.Id ?? null;
-			quiz_classroom_done = user_json.list?.[0]?.cDone;
-			quiz_toilet_done = user_json.list?.[0]?.tDone;
-			quiz_canteen_done = user_json.list?.[0]?.fDone;
-			quiz_gym_done = user_json.list?.[0]?.gDone;
+			if (user_json) {
+				user_record_id = user_json?.Id ?? null;
+				quiz_classroom_done = user_json?.cDone ?? false;
+				quiz_toilet_done = user_json?.tDone ?? false;
+				quiz_canteen_done = user_json?.fDone ?? false;
+				quiz_gym_done = user_json?.gDone ?? false;
+			}
 		} catch (e) {
 			console.error(e);
 		}
@@ -273,51 +302,29 @@
 			[quiz_body_key + 5]: quiz_rating_values[4]
 		};
 
-		if (!user_record_id) {
-			await fetchUserRow();
-		}
-
+		const ustore = $currentUser;
 		try {
-			let sumbit_resp: Response;
-			if (!user_record_id) {
-				sumbit_resp = await fetch(
-					'https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating',
-					{
-						method: 'POST',
-						headers: {
-							'xc-token': PUBLIC_NOCO_TOKEN_KEY,
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify({
-							userId: $currentUser.uid,
-							schoolId: schoolId,
-							...quiz_body
-						})
-					}
-				);
-			} else {
-				sumbit_resp = await fetch(
-					`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolUserRating/${user_record_id}`,
-					{
-						method: 'PATCH',
-						headers: {
-							'xc-token': PUBLIC_NOCO_TOKEN_KEY,
-							'Content-Type': 'application/json'
-						},
-						body: JSON.stringify(quiz_body)
-					}
-				);
-			}
+			const submit_resp = await fetch(
+				`${PUBLIC_API_HOST}/schools/${schoolId}/rating/current-user`,
+				{
+					method: 'POST',
+					headers: {
+						Authorization: `Bearer ${ustore.accessToken}`,
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify(quiz_body)
+				}
+			);
 
-			const sumbit_resp_json = await sumbit_resp.json();
+			const { currentUser, school } = await submit_resp.json();
 
-			user_record_id = sumbit_resp_json.Id ?? null;
-			quiz_classroom_done = sumbit_resp_json.cDone;
-			quiz_toilet_done = sumbit_resp_json.tDone;
-			quiz_canteen_done = sumbit_resp_json.fDone;
-			quiz_gym_done = sumbit_resp_json.gDone;
+			user_record_id = currentUser.Id ?? null;
+			quiz_classroom_done = currentUser.cDone ?? false;
+			quiz_toilet_done = currentUser.tDone ?? false;
+			quiz_canteen_done = currentUser.fDone ?? false;
+			quiz_gym_done = currentUser.gDone ?? false;
 
-			fetchData();
+			school_data = school?.raw;
 
 			quiz_isopen = false;
 			requestAnimationFrame(() => {
