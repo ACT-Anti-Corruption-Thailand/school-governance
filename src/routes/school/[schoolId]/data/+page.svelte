@@ -1450,18 +1450,44 @@
 		<h2 bind:this={el_building_section} id="building-section" class="f">
 			<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 			<span class="f g8">
-				<CircularProgress percent={(d.building.stats.ดี / d.building.stats.รวม) * 100} />
-				{~~((d.building.stats.ดี / d.building.stats.รวม) * 100)}%
+				<CircularProgress
+					percent={(d.building.stats.ดี /
+						(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
+						100}
+				/>
+				{~~(
+					(d.building.stats.ดี /
+						(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
+					100
+				)}%
 			</span>
 		</h2>
 		<section style="margin-bottom:0;padding-bottom:0">
 			<dl class="f status-color">
 				<dt class="usable-color">เหลือง</dt>
-				<dd>ดี {~~((d.building.stats.ดี / d.building.stats.รวม) * 100)}%</dd>
+				<dd>
+					ดี {~~(
+						(d.building.stats.ดี /
+							(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
+						100
+					)}%
+				</dd>
 				<dt class="await2-color">เหลืองเข้ม</dt>
-				<dd>พอใช้ {~~((d.building.stats['พอใช้'] / d.building.stats.รวม) * 100)}%</dd>
+				<dd>
+					พอใช้ {~~(
+						(d.building.stats['พอใช้'] /
+							(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
+						100
+					)}%
+				</dd>
 				<dt class="unusable-color">แดง</dt>
-				<dd>ทรุดโทรม {~~((d.building.stats.ทรุดโทรม / d.building.stats.รวม) * 100)}%</dd>
+				<dd>
+					ทรุดโทรม {~~(
+						(d.building.stats.ทรุดโทรม /
+							(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
+						100
+					)}%
+				</dd>
 			</dl>
 		</section>
 		<section>
