@@ -1,12 +1,14 @@
 {
  "student": {
   "total": {
+   "all": 723,
+   "class": 31,
    "ป": 405,
    "ปวช": 0,
    "ม": 191,
-   "อ": 127,
-   "all": 723,
-   "class": 31
+   "มต": 191,
+   "มป": 0,
+   "อ": 127
   },
   "อ1": {
    "men": 9,
@@ -265,457 +267,465 @@
   "wireless_lan_network": "ไม่มีระบบเครือข่ายไร้สาย (Wireless LAN)"
  },
  "durable_goods": {
-  "ครุภัณฑ์การศึกษา": {
-   "working": 466,
-   "to_be_repaired": 6,
-   "to_be_removed": 6,
-   "total": 478,
-   "list": [
-    {
-     "code": "11002",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "ชุดฝึกทักษะนักเรียนก่อนประถมศึกษา",
-     "working": 17,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 17
-    },
-    {
-     "code": "11003",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "ตู้เก็บอุปกรณ์นักเรียนก่อนประถมศึกษา",
-     "working": 3,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 3
-    },
-    {
-     "code": "22003",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "ครุภัณฑ์การสอนวิทยาศาสตร์ ประถมศึกษา",
-     "working": 8,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 8
-    },
-    {
-     "code": "22004",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "ครุภัณฑ์อุปกรณ์วิทยาศาสตร์ ม.ต้น",
-     "working": 8,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 8
-    },
-    {
-     "code": "22006",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "หุ่นจำลองแสดงอวัยวะภายในมนุษย์",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "22007",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "ครุภัณฑ์ไฟฟ้า",
-     "working": 4,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 4
-    },
-    {
-     "code": "22008",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "ครุภัณฑ์งานอาหารและโภชนาการ",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "22018",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "ฃุดอุปกรณ์วิชาชีพเกษตรกรรม",
-     "working": 6,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 6
-    },
-    {
-     "code": "22020",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "เครื่องดนตรีสากล",
-     "working": 50,
-     "to_be_repaired": 2,
-     "to_be_removed": 0,
-     "total": 52
-    },
-    {
-     "code": "22021",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "เครื่องดนตรีไทย ชุดเล็ก ประถมศึกษา",
-     "working": 5,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 5
-    },
-    {
-     "code": "22022",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "เครื่องดนตรีไทย ชุดใหญ่ มัธยมศึกษา",
-     "working": 7,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 7
-    },
-    {
-     "code": "22023",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "ชุดอุปกรณ์วิชาพลานามัย",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": "22024",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "โต๊ะเทเบิลเทนนิส",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "22025",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "ชุดอุปกรณ์เปตอง",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "22026",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "โทรทัศน์สี",
-     "working": 20,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 20
-    },
-    {
-     "code": "22027",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "วิทยุ - เทป - ซีดี",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "22028",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "เครื่องเล่น ดีวีดี",
-     "working": 6,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 6
-    },
-    {
-     "code": "22029",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "จานรับสัญญาณดาวเทียม",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "22032",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "เครื่องมัลติมีเดียโปรเจคเตอร์ LCD",
-     "working": 10,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 10
-    },
-    {
-     "code": "22033",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "เครื่องไมโครคอมพิวเตอร์",
-     "working": 120,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 120
-    },
-    {
-     "code": "22034",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "เครื่องพิมพ์ (Printer)",
-     "working": 7,
-     "to_be_repaired": 0,
-     "to_be_removed": 6,
-     "total": 13
-    },
-    {
-     "code": "22035",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "อุปกรณ์ห้องสมุดรร.ระดับประถมศึกษา-มัธยมศึกษา",
-     "working": 6,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 6
-    },
-    {
-     "code": "22041",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "คอมพิวเตอร์พกพา (Tablet)",
-     "working": 120,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 120
-    },
-    {
-     "code": "22043",
-     "type": "ครุภัณฑ์การศึกษา",
-     "name": "โทรทัศน์สีชนิด จอแบน (LCD)",
-     "working": 56,
-     "to_be_repaired": 4,
-     "to_be_removed": 0,
-     "total": 60
-    }
-   ]
+  "stats": {
+   "working": 3743.0,
+   "to_be_repaired": 77.0,
+   "to_be_removed": 12.0,
+   "total": 3832.0
   },
-  "ครุภัณฑ์งานบ้านและงานครัว": {
-   "working": 38,
-   "to_be_repaired": 4,
-   "to_be_removed": 0,
-   "total": 42,
-   "list": [
-    {
-     "code": "24001",
-     "type": "ครุภัณฑ์งานบ้านและงานครัว",
-     "name": "เครื่องกรองน้ำ",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "24002",
-     "type": "ครุภัณฑ์งานบ้านและงานครัว",
-     "name": "เครื่องทำน้ำเย็น",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "24003",
-     "type": "ครุภัณฑ์งานบ้านและงานครัว",
-     "name": "ถังน้ำขนาด 2000 ลิตร แบบไฟเบอร์กลาส",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "24004",
-     "type": "ครุภัณฑ์งานบ้านและงานครัว",
-     "name": "เครื่องตัดหญ้า",
-     "working": 2,
-     "to_be_repaired": 2,
-     "to_be_removed": 0,
-     "total": 4
-    },
-    {
-     "code": "24005",
-     "type": "ครุภัณฑ์งานบ้านและงานครัว",
-     "name": "โต๊ะอาหารพร้อมเก้าอี้",
-     "working": 20,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 20
-    },
-    {
-     "code": "24006",
-     "type": "ครุภัณฑ์งานบ้านและงานครัว",
-     "name": "ตู้เย็น",
-     "working": 2,
-     "to_be_repaired": 2,
-     "to_be_removed": 0,
-     "total": 4
-    },
-    {
-     "code": "24007",
-     "type": "ครุภัณฑ์งานบ้านและงานครัว",
-     "name": "ถังน้ำขนาด 2000 ลิดร แบบพลาสติก",
-     "working": 8,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 8
-    }
-   ]
-  },
-  "ครุภัณฑ์ยานพาหนะ": {
-   "working": 0.0,
-   "to_be_repaired": 0.0,
-   "to_be_removed": 0.0,
-   "total": 0.0,
-   "list": []
-  },
-  "ครุภัณฑ์สำนักงาน/โรงเรียน": {
-   "working": 22,
-   "to_be_repaired": 1,
-   "to_be_removed": 6,
-   "total": 29,
-   "list": [
-    {
-     "code": "21001",
-     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-     "name": "เครื่องถ่ายเอกสาร",
-     "working": 0,
-     "to_be_repaired": 1,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": "21003",
-     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-     "name": "เครื่องโทรสาร",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": "21004",
-     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-     "name": "เครื่องอัดสำเนา",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": "21006",
-     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-     "name": "ตู้นิรภัย",
-     "working": 1,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 1
-    },
-    {
-     "code": "21007",
-     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-     "name": "เครื่องไมโครคอมพิวเตอร์",
-     "working": 7,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 7
-    },
-    {
-     "code": "21008",
-     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-     "name": "เครื่องพิมพ์ (Printer)",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 6,
-     "total": 8
-    },
-    {
-     "code": "21009",
-     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-     "name": "เครื่องเจาะกระดาษและเข้าเล่ม",
-     "working": 2,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 2
-    },
-    {
-     "code": "21010",
-     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-     "name": "เครื่องถ่ายภาพนิ่งระบบดิจิตอล",
-     "working": 3,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 3
-    },
-    {
-     "code": "21012",
-     "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-     "name": "เครื่องคอมพิวเตอร์พกพา (Notebook)",
-     "working": 5,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 5
-    }
-   ]
-  },
-  "ครุภัณฑ์ไฟฟ้าและวิทยุ": {
-   "working": 90,
-   "to_be_repaired": 27,
-   "to_be_removed": 0,
-   "total": 117,
-   "list": [
-    {
-     "code": "23003",
-     "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
-     "name": "เครื่องขยายเสียง",
-     "working": 3,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 3
-    },
-    {
-     "code": "23005",
-     "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
-     "name": "เครื่องปรับอากาศ",
-     "working": 87,
-     "to_be_repaired": 27,
-     "to_be_removed": 0,
-     "total": 114
-    }
-   ]
-  },
-  "โต๊ะเก้าอี้นักเรียน": {
-   "working": 3127,
-   "to_be_repaired": 39,
-   "to_be_removed": 0,
-   "total": 3166,
-   "list": [
-    {
-     "code": "11001",
-     "type": "โต๊ะเก้าอี้นักเรียน",
-     "name": "โต๊ะเก้าอี้นักเรียนก่อนประถมศึกษา",
-     "working": 37,
-     "to_be_repaired": 0,
-     "to_be_removed": 0,
-     "total": 37
-    },
-    {
-     "code": "22001",
-     "type": "โต๊ะเก้าอี้นักเรียน",
-     "name": "โต๊ะเก้าอี้นักเรียน ประถมศึกษา",
-     "working": 1510,
-     "to_be_repaired": 15,
-     "to_be_removed": 0,
-     "total": 1525
-    },
-    {
-     "code": "22002",
-     "type": "โต๊ะเก้าอี้นักเรียน",
-     "name": "โต๊ะเก้าอี้นักเรียน มัธยมศึกษา",
-     "working": 1580,
-     "to_be_repaired": 24,
-     "to_be_removed": 0,
-     "total": 1604
-    }
-   ]
+  "data": {
+   "ครุภัณฑ์การศึกษา": {
+    "working": 466,
+    "to_be_repaired": 6,
+    "to_be_removed": 6,
+    "total": 478,
+    "list": [
+     {
+      "code": "11002",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ชุดฝึกทักษะนักเรียนก่อนประถมศึกษา",
+      "working": 17,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 17
+     },
+     {
+      "code": "11003",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ตู้เก็บอุปกรณ์นักเรียนก่อนประถมศึกษา",
+      "working": 3,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 3
+     },
+     {
+      "code": "22003",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ครุภัณฑ์การสอนวิทยาศาสตร์ ประถมศึกษา",
+      "working": 8,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 8
+     },
+     {
+      "code": "22004",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ครุภัณฑ์อุปกรณ์วิทยาศาสตร์ ม.ต้น",
+      "working": 8,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 8
+     },
+     {
+      "code": "22006",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "หุ่นจำลองแสดงอวัยวะภายในมนุษย์",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "22007",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ครุภัณฑ์ไฟฟ้า",
+      "working": 4,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 4
+     },
+     {
+      "code": "22008",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ครุภัณฑ์งานอาหารและโภชนาการ",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "22018",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ฃุดอุปกรณ์วิชาชีพเกษตรกรรม",
+      "working": 6,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 6
+     },
+     {
+      "code": "22020",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "เครื่องดนตรีสากล",
+      "working": 50,
+      "to_be_repaired": 2,
+      "to_be_removed": 0,
+      "total": 52
+     },
+     {
+      "code": "22021",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "เครื่องดนตรีไทย ชุดเล็ก ประถมศึกษา",
+      "working": 5,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 5
+     },
+     {
+      "code": "22022",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "เครื่องดนตรีไทย ชุดใหญ่ มัธยมศึกษา",
+      "working": 7,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 7
+     },
+     {
+      "code": "22023",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ชุดอุปกรณ์วิชาพลานามัย",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "22024",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "โต๊ะเทเบิลเทนนิส",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "22025",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ชุดอุปกรณ์เปตอง",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "22026",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "โทรทัศน์สี",
+      "working": 20,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 20
+     },
+     {
+      "code": "22027",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "วิทยุ - เทป - ซีดี",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "22028",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "เครื่องเล่น ดีวีดี",
+      "working": 6,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 6
+     },
+     {
+      "code": "22029",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "จานรับสัญญาณดาวเทียม",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "22032",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "เครื่องมัลติมีเดียโปรเจคเตอร์ LCD",
+      "working": 10,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 10
+     },
+     {
+      "code": "22033",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "เครื่องไมโครคอมพิวเตอร์",
+      "working": 120,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 120
+     },
+     {
+      "code": "22034",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "เครื่องพิมพ์ (Printer)",
+      "working": 7,
+      "to_be_repaired": 0,
+      "to_be_removed": 6,
+      "total": 13
+     },
+     {
+      "code": "22035",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "อุปกรณ์ห้องสมุดรร.ระดับประถมศึกษา-มัธยมศึกษา",
+      "working": 6,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 6
+     },
+     {
+      "code": "22041",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "คอมพิวเตอร์พกพา (Tablet)",
+      "working": 120,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 120
+     },
+     {
+      "code": "22043",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "โทรทัศน์สีชนิด จอแบน (LCD)",
+      "working": 56,
+      "to_be_repaired": 4,
+      "to_be_removed": 0,
+      "total": 60
+     }
+    ]
+   },
+   "ครุภัณฑ์งานบ้านและงานครัว": {
+    "working": 38,
+    "to_be_repaired": 4,
+    "to_be_removed": 0,
+    "total": 42,
+    "list": [
+     {
+      "code": "24001",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "เครื่องกรองน้ำ",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "24002",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "เครื่องทำน้ำเย็น",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "24003",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "ถังน้ำขนาด 2000 ลิตร แบบไฟเบอร์กลาส",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "24004",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "เครื่องตัดหญ้า",
+      "working": 2,
+      "to_be_repaired": 2,
+      "to_be_removed": 0,
+      "total": 4
+     },
+     {
+      "code": "24005",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "โต๊ะอาหารพร้อมเก้าอี้",
+      "working": 20,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 20
+     },
+     {
+      "code": "24006",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "ตู้เย็น",
+      "working": 2,
+      "to_be_repaired": 2,
+      "to_be_removed": 0,
+      "total": 4
+     },
+     {
+      "code": "24007",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "ถังน้ำขนาด 2000 ลิดร แบบพลาสติก",
+      "working": 8,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 8
+     }
+    ]
+   },
+   "ครุภัณฑ์ยานพาหนะ": {
+    "working": 0.0,
+    "to_be_repaired": 0.0,
+    "to_be_removed": 0.0,
+    "total": 0.0,
+    "list": []
+   },
+   "ครุภัณฑ์สำนักงาน/โรงเรียน": {
+    "working": 22,
+    "to_be_repaired": 1,
+    "to_be_removed": 6,
+    "total": 29,
+    "list": [
+     {
+      "code": "21001",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องถ่ายเอกสาร",
+      "working": 0,
+      "to_be_repaired": 1,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "21003",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องโทรสาร",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "21004",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องอัดสำเนา",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "21006",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "ตู้นิรภัย",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "21007",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องไมโครคอมพิวเตอร์",
+      "working": 7,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 7
+     },
+     {
+      "code": "21008",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องพิมพ์ (Printer)",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 6,
+      "total": 8
+     },
+     {
+      "code": "21009",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องเจาะกระดาษและเข้าเล่ม",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "21010",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องถ่ายภาพนิ่งระบบดิจิตอล",
+      "working": 3,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 3
+     },
+     {
+      "code": "21012",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องคอมพิวเตอร์พกพา (Notebook)",
+      "working": 5,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 5
+     }
+    ]
+   },
+   "ครุภัณฑ์ไฟฟ้าและวิทยุ": {
+    "working": 90,
+    "to_be_repaired": 27,
+    "to_be_removed": 0,
+    "total": 117,
+    "list": [
+     {
+      "code": "23003",
+      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
+      "name": "เครื่องขยายเสียง",
+      "working": 3,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 3
+     },
+     {
+      "code": "23005",
+      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
+      "name": "เครื่องปรับอากาศ",
+      "working": 87,
+      "to_be_repaired": 27,
+      "to_be_removed": 0,
+      "total": 114
+     }
+    ]
+   },
+   "โต๊ะเก้าอี้นักเรียน": {
+    "working": 3127,
+    "to_be_repaired": 39,
+    "to_be_removed": 0,
+    "total": 3166,
+    "list": [
+     {
+      "code": "11001",
+      "type": "โต๊ะเก้าอี้นักเรียน",
+      "name": "โต๊ะเก้าอี้นักเรียนก่อนประถมศึกษา",
+      "working": 37,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 37
+     },
+     {
+      "code": "22001",
+      "type": "โต๊ะเก้าอี้นักเรียน",
+      "name": "โต๊ะเก้าอี้นักเรียน ประถมศึกษา",
+      "working": 1510,
+      "to_be_repaired": 15,
+      "to_be_removed": 0,
+      "total": 1525
+     },
+     {
+      "code": "22002",
+      "type": "โต๊ะเก้าอี้นักเรียน",
+      "name": "โต๊ะเก้าอี้นักเรียน มัธยมศึกษา",
+      "working": 1580,
+      "to_be_repaired": 24,
+      "to_be_removed": 0,
+      "total": 1604
+     }
+    ]
+   }
   }
  },
  "school_id": "1010720015",
@@ -891,12 +901,12 @@
    ]
   },
   "stats": {
-   "ดี": 0,
-   "พอใช้": 0,
+   "ดี": 5,
+   "พอใช้": 5,
    "ทรุดโทรม": 0,
    "จำนวนห้องในอาคารเรียน": 66
   }
  },
- "affiliation": "สพป.",
+ "affiliation": "สพป. กรุงเทพมหานคร",
  "school_size": "ใหญ่"
 }
