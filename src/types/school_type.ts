@@ -33,53 +33,47 @@ export interface SchoolData {
 }
 
 export interface Computer {
-	learning: Learning;
-	management: Learning;
+	learning: ComputerStats;
+	management: ComputerStats;
 	total: number;
 	working: number;
 	broken: number;
 }
 
-export interface Learning {
-	source: Source;
+export interface ComputerStats {
+	source: ComputerSource;
 	total: number;
 	working: number;
 	broken: number;
 }
 
-export interface Source {
+export interface ComputerSource {
 	obec: number;
 	self: number;
 }
 
+export interface GoodsStats {
+	working: number;
+	to_be_repaired: number;
+	to_be_removed: number;
+	total: number;
+}
+
 export interface DurableGoods {
-	stats: {
-		working: number;
-		to_be_repaired: number;
-		to_be_removed: number;
-		total: number;
-	};
+	stats: GoodsStats;
 	data: {
 		[key: string]: DurableGood;
 	};
 }
 
-export interface DurableGood {
-	working: number;
-	to_be_repaired: number;
-	to_be_removed: number;
-	total: number;
-	list: List[];
+export interface DurableGood extends GoodsStats {
+	list: GoodsList[];
 }
 
-export interface List {
+export interface GoodsList extends GoodsStats {
 	code: string;
 	type: string;
 	name: string;
-	working: number;
-	to_be_repaired: number;
-	to_be_removed: number;
-	total: number;
 }
 
 export interface Internet {
@@ -103,6 +97,12 @@ export interface Principal {
 	image_path: string;
 }
 
+export interface Gender {
+	men: number;
+	women: number;
+	total: number;
+}
+
 export interface Staff extends Gender {
 	ครู: ครู;
 	ผู้อำนวยการ: ครู;
@@ -122,20 +122,14 @@ export interface ครู {
 	ครูผู้ช่วย?: Gender;
 }
 
-export interface Gender {
-	men: number;
-	women: number;
-	total: number;
-}
-
-export interface GenderClass extends Gender {
-	class: number;
-}
-
 export interface พนักงาน extends Gender {
 	ลูกจ้างประจำ: Gender;
 	พนักงานราชการ: Gender;
 	ลูกจ้างชั่วคราว: Gender;
+}
+
+export interface GenderClass extends Gender {
+	class: number;
 }
 
 export interface Student {
@@ -171,9 +165,16 @@ export interface Total {
 	class: number;
 }
 
+export interface BuildingStats {
+	ดี: number;
+	พอใช้: number;
+	ทรุดโทรม: number;
+	จำนวนห้องในอาคารเรียน: number;
+}
+
 export interface Building {
+	stats: BuildingStats;
 	data: { [key: string]: BuildingData[] };
-	stats: { [key: string]: number };
 }
 
 export interface BuildingData {
