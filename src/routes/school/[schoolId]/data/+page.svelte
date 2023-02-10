@@ -15,6 +15,7 @@
 	import Waffle from 'components/school/Waffle.svelte';
 	import RatioChart from 'components/school/RatioChart.svelte';
 	import Modal from 'components/Modal.svelte';
+	import type { SchoolData } from 'types/school_type';
 
 	import { currentSchool, currentSchoolId, update_date, years, LATEST_YEAR } from 'stores/school';
 
@@ -34,7 +35,7 @@
 		});
 	};
 
-	const getUsableImage = async (...urls: string[]) => {
+	const getUsableImage = async (urls: string[]) => {
 		for (const url of urls) {
 			try {
 				await tryImage(url);
@@ -46,16 +47,17 @@
 		return FALLBACK_BUILDING_IMG;
 	};
 
-	const getUsableImageObject = async (schoolData: any) => {
-		const building_data = { ...schoolData.buildings.data };
+	const getUsableImageObject = async (schoolData: SchoolData) => {
+		const building_data = { ...schoolData.building.data };
+		let new_building_data: Record<string, any> = {};
 
 		for (const building_type in building_data) {
-			building_data[building_type] = await Promise.all(
-				building_data[building_type].map((e: any) => getUsableImage(e.image_url_0, e.image_url_1))
+			new_building_data[building_type] = await Promise.all(
+				building_data[building_type].map((e) => getUsableImage(e.images))
 			);
 		}
 
-		return building_data;
+		return new_building_data;
 	};
 
 	let building_imgs: Record<string, string[]> = {};
@@ -306,7 +308,11 @@
 				>
 			</div>
 			<hr />
-			<span class="mitr">โรงเรียนขนาดใหญ่ <!-- TODO: รอข้อมูลจากฟีน --></span>
+			{#if d.school_size}
+				<span class="mitr">
+					โรงเรียนขนาด{d.school_size}
+				</span>
+			{/if}
 			<details class="school-size-detail">
 				<summary>
 					<span class="f">
@@ -901,7 +907,7 @@
 						</div>
 					</details>
 				</div>
-				{#if d.staff.ครู.คศ5.total}
+				{#if d.staff.ครู.คศ5?.total}
 					<div class="f modal-section">
 						<span>ครูเชี่ยวชาญพิเศษ</span>
 						<span class="mitr">{d.staff.ครู.คศ5.total.toLocaleString()}</span>
@@ -931,7 +937,7 @@
 						<span class="mitr">{d.staff.ครู.คศ1.total.toLocaleString()}</span>
 					</div>
 				{/if}
-				{#if d.staff.ครู.ครูผู้ช่วย.total}
+				{#if d.staff.ครู.ครูผู้ช่วย?.total}
 					<div class="f modal-section">
 						<span>ครูผู้ช่วย</span>
 						<span class="mitr">{d.staff.ครู.ครูผู้ช่วย.total.toLocaleString()}</span>
@@ -1084,15 +1090,19 @@
 		<section class="f">
 			<div class="f directors">
 				<h3>ผู้อำนวยการ</h3>
-				<p class="fw500">ผศ.ดร. ปัญญา เลิศคุณธรรม <!-- TODO: รอข้อมูลจากฟีน --></p>
-				<small>ตำแหน่งผู้ชำนาญการพิเศษ</small>
+				{#if d.principal.name}
+					<p class="fw500">{d.principal.name}</p>
+				{/if}
+				{#if d.principal.position_title}
+					<small>{d.principal.position_title}</small>
+				{/if}
 			</div>
-			{#if d.principal_image_path}
+			{#if d.principal.image_path}
 				<img
 					loading="lazy"
 					decoding="async"
 					class="director-img"
-					src={d.principal_image_path}
+					src={d.principal.image_path}
 					alt=""
 				/>
 			{/if}
@@ -1438,18 +1448,18 @@
 		<h2 bind:this={el_building_section} id="building-section" class="f">
 			<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 			<span class="f g8">
-				<CircularProgress percent={(d.buildings.stats.ดี / d.buildings.stats.รวม) * 100} />
-				{~~((d.buildings.stats.ดี / d.buildings.stats.รวม) * 100)}%
+				<CircularProgress percent={(d.building.stats.ดี / d.building.stats.รวม) * 100} />
+				{~~((d.building.stats.ดี / d.building.stats.รวม) * 100)}%
 			</span>
 		</h2>
 		<section style="margin-bottom:0;padding-bottom:0">
 			<dl class="f status-color">
 				<dt class="usable-color">เหลือง</dt>
-				<dd>ดี {~~((d.buildings.stats.ดี / d.buildings.stats.รวม) * 100)}%</dd>
+				<dd>ดี {~~((d.building.stats.ดี / d.building.stats.รวม) * 100)}%</dd>
 				<dt class="await2-color">เหลืองเข้ม</dt>
-				<dd>พอใช้ {~~((d.buildings.stats['พอใช้'] / d.buildings.stats.รวม) * 100)}%</dd>
+				<dd>พอใช้ {~~((d.building.stats['พอใช้'] / d.building.stats.รวม) * 100)}%</dd>
 				<dt class="unusable-color">แดง</dt>
-				<dd>ทรุดโทรม {~~((d.buildings.stats.ทรุดโทรม / d.buildings.stats.รวม) * 100)}%</dd>
+				<dd>ทรุดโทรม {~~((d.building.stats.ทรุดโทรม / d.building.stats.รวม) * 100)}%</dd>
 			</dl>
 		</section>
 		<section>
@@ -1459,26 +1469,26 @@
 			</p>
 			<RatioChart
 				data={[
-					{ number: d.buildings.stats.ดี, color: '#FFC700' },
-					{ number: d.buildings.stats.พอใช้, color: '#7d5b05' },
-					{ number: d.buildings.stats.ทรุดโทรม, color: '#fc5858' }
+					{ number: d.building.stats.ดี, color: '#FFC700' },
+					{ number: d.building.stats.พอใช้, color: '#7d5b05' },
+					{ number: d.building.stats.ทรุดโทรม, color: '#fc5858' }
 				]}
 			/>
 		</section>
 		<section style="margin-bottom:0">
 			<h3 class="f">
 				<span>อาคารการศึกษา <small>(อาคาร)</small></span>
-				<span>{d.buildings.data.อาคารเรียน.length.toLocaleString()}</span>
+				<span>{d.building.data.อาคารเรียน.length.toLocaleString()}</span>
 			</h3>
 		</section>
 		<section>
 			<p class="f">
 				<span>ห้องทั้งหมด <small>(ห้อง)</small></span>
-				<span class="mitr">{d.buildings.stats.จำนวนห้องในอาคารเรียน.toLocaleString()}</span>
+				<span class="mitr">{d.building.stats.จำนวนห้องในอาคารเรียน.toLocaleString()}</span>
 			</p>
 			<hr />
 			<div class="col2-on-desktop">
-				{#each d.buildings.data.อาคารเรียน as b, bi}
+				{#each d.building.data.อาคารเรียน as b, bi}
 					<article class="building-card {getConditionClass(b.current_condition, true)}">
 						<img
 							loading="lazy"
@@ -1499,9 +1509,9 @@
 								สภาพการใช้งาน
 								<span class="building-status cv">{b.current_condition}</span>
 							</p>
-							<Waffle number={parseInt(b.room_number)} />
+							<Waffle number={b.room_number ?? 0} />
 							<div>
-								<span class="mitr">{parseInt(b.room_number).toLocaleString()}</span>
+								<span class="mitr">{(b.room_number ?? 0).toLocaleString()}</span>
 								<span class="fs10">ห้อง</span>
 							</div>
 						</div>
@@ -1539,11 +1549,11 @@
 				<dt class="unusable-color">แดง</dt>
 				<dd>ทรุดโทรม</dd>
 			</dl>
-			{#each Object.keys(d.buildings.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
-				{#if d.buildings.data[buildings_key].length}
+			{#each Object.keys(d.building.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
+				{#if d.building.data[buildings_key].length}
 					<div class="f modal-section-header mitr">{buildings_key}</div>
 					<div class="col2-on-desktop">
-						{#each d.buildings.data[buildings_key] as b, bi}
+						{#each d.building.data[buildings_key] as b, bi}
 							<div
 								class="modal-section building f jcs ais g8 {getConditionClass(
 									b.current_condition,
@@ -1591,7 +1601,7 @@
 
 		<section class="other-buildings">
 			<div>
-				{#each d.buildings.data.อาคารทั่วไป as b, bi}
+				{#each d.building.data.อาคารทั่วไป as b, bi}
 					<article class={getConditionClass(b.current_condition, true)}>
 						<img
 							class="building-image"
@@ -1609,13 +1619,13 @@
 				{/each}
 			</div>
 			<ul class="other-appliance-list">
-				{#each Object.keys(d.buildings.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
-					{#if d.buildings.data[buildings_key].length}
+				{#each Object.keys(d.building.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
+					{#if d.building.data[buildings_key].length}
 						<li>
 							<span class="mitr">{buildings_key}</span>
 							{#if buildings_key !== 'ห้องน้ำ'}
 								<span class="fs10">
-									{mergeGoodsName(d.buildings.data[buildings_key])}
+									{mergeGoodsName(d.building.data[buildings_key])}
 								</span>
 							{/if}
 						</li>
@@ -1682,11 +1692,13 @@
 						/>
 					</dt>
 					<dd>
-						{#if d.website}
+						{#if d.links.length}
 							<a
-								href={d.website.includes('http') ? d.website : `https://${d.website}`}
+								href={d.links[0].url.includes('http')
+									? d.links[0].url
+									: `https://${d.links[0].url}`}
 								target="_blank"
-								rel="nofollow noopener noreferrer">{d.website}</a
+								rel="nofollow noopener noreferrer">{d.links[0].text}</a
 							>
 						{:else}
 							<span>—</span>
@@ -1729,7 +1741,7 @@
 					<dt>รหัสโรงเรียน</dt>
 					<dd>{$currentSchoolId}</dd>
 					<dt>สังกัด</dt>
-					<dd><!-- TODO: รอข้อมูลจากฟีน --> ไม่มีข้อมูล</dd>
+					<dd>{d.affiliation ?? '—'}</dd>
 					<dt>ก่อตั้งเมื่อ</dt>
 					<dd>{d.established ?? '—'}</dd>
 					<dt>ระดับที่เปิดสอน</dt>

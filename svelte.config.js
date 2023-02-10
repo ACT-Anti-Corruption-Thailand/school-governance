@@ -17,6 +17,7 @@ const config = {
 			'data/*': 'src/data/*',
 			'stores/*': 'src/stores/*',
 			'styles/*': 'src/styles/*',
+			'types/*': 'src/types/*',
 			'utils/*': 'src/utils/*'
 		}
 	}

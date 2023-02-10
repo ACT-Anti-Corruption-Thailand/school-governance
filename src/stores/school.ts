@@ -1,4 +1,5 @@
 import { writable, derived } from 'svelte/store';
+import type { SchoolData } from 'types/school_type';
 
 function getCurrentSchoolYear() {
 	const now = new Date();
@@ -7,7 +8,7 @@ function getCurrentSchoolYear() {
 
 export const currentSchoolId = writable<number | null>(null);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const currentSchool = writable<any | null>(null);
+export const currentSchool = writable<SchoolData | null>(null);
 
 export const years = writable<number[]>([getCurrentSchoolYear()]);
 export const update_date = writable<Record<string, string>>({});
