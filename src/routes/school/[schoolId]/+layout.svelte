@@ -1,11 +1,12 @@
 <script lang="ts">
+	import { PUBLIC_DATA_HOST } from '$env/static/public';
 	import { page } from '$app/stores';
 	import SchoolNav from 'components/school/SchoolNav.svelte';
 	import { currentSchool, currentSchoolId, LATEST_YEAR } from 'stores/school';
 
 	const updateData = (schoolId: number) => {
 		$currentSchoolId = schoolId;
-		fetch(`/data/${$LATEST_YEAR}/${$page.params.schoolId}.json`)
+		fetch(`${PUBLIC_DATA_HOST}/data/${$LATEST_YEAR}/${$page.params.schoolId}.json`)
 			.then((resp) => resp.json())
 			.then((data) => ($currentSchool = data));
 	};

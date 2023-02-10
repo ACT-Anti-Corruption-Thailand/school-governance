@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { PUBLIC_DATA_HOST } from '$env/static/public';
+
 	import { onMount } from 'svelte';
 	import { scroll } from 'motion';
 
@@ -107,7 +109,7 @@
 	const fetchOtherYearData = () => {
 		if (other_years.length > 1) {
 			other_years.forEach((year, index) => {
-				fetch(`/data/${year}/${currentSchoolId}.json`)
+				fetch(`${PUBLIC_DATA_HOST}/data/${year}/${currentSchoolId}.json`)
 					.then((resp) => resp.json())
 					.then(
 						(data) =>
