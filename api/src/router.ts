@@ -11,6 +11,8 @@ import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
 import { getUserRatingRecord } from './routes/rating/get.js';
 import { setUserRatingRecord } from './routes/rating/set.js';
 import { searchSchool, countSchool } from './routes/school/search.js';
+import { topComment, topRating } from './routes/school/top.js';
+import { latestActivity } from './routes/school/latest.js';
 
 export const convertBodyToQuery = (body: SchoolCommentsBody): SchoolCommentsQuery => {
 	return {
@@ -55,6 +57,10 @@ export function registerRoutes(app: FastifyInstance) {
 
 		return searchSchool(query);
 	});
+
+	app.get('/schools/latest', latestActivity);
+	app.get('/schools/top/rating', topRating);
+	app.get('/schools/top/comment', topComment);
 
 	app.get('/schools/count', (req) => {
 		const query = z

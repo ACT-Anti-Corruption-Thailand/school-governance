@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { PUBLIC_API_HOST } from '$env/static/public';
-	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
 
 	import { onMount } from 'svelte';
 

@@ -26,7 +26,9 @@ export async function searchSchool({
 			...(district ? [`(district,eq,${district})`] : []),
 			...(province ? [`(province,eq,${province})`] : []),
 			...(exclude_district ? [`(district,neq,${exclude_district})`] : []),
-			...(exclude_school_id ? [`(schoolId,neq,${exclude_school_id})`] : [])
+			...(exclude_school_id
+				? exclude_school_id.split(',').map((id: string) => `(schoolId,neq,${id.trim()})`)
+				: [])
 		].join('~and'),
 		limit,
 		offset

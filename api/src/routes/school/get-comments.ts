@@ -18,7 +18,6 @@ export async function getSchoolComments(
 	schoolId: string,
 	{ locations, years, sort, limit }: SchoolCommentsQuery = {}
 ) {
-	console.log({ locations, years, sort, limit });
 	const schoolIdQuery = `schoolId,eq,${schoolId}`;
 	const approvedQuery = `approved,eq,true`;
 	const locationQuery = locations
