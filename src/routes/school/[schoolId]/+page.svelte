@@ -48,12 +48,11 @@
 			const location_query = 'classroom,toilet,canteen,gym,other';
 			const api_query = `locations=${encodeURIComponent(
 				location_query
-			)}&years=${$LATEST_YEAR}&sort=-createDate&limit=3`;
+			)}&years=${$LATEST_YEAR}&sort=latest&limit=3`;
 
 			const resp = await fetch(
 				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/comments?${api_query}`
 			);
-
 			const json = await resp.json();
 			posts = json?.list;
 		} catch (err) {
@@ -113,7 +112,9 @@
 					<span class="school-data-val">
 						<span class="mitr school-bignum"
 							>1:{fixNaN(
-								Math.ceil(d?.student?.total?.all / d?.staff?.ครู?.total).toLocaleString()
+								Math.ceil(
+									(d?.student?.total?.all ?? 0) / (d?.staff?.ครู?.total ?? 1)
+								).toLocaleString()
 							)}</span
 						> คน
 					</span>
@@ -123,7 +124,9 @@
 					<span class="school-data-val">
 						<span class="mitr school-bignum"
 							>{fixNaN(
-								Math.ceil(d?.student?.total?.all / d?.student?.total?.class).toLocaleString()
+								Math.ceil(
+									(d?.student?.total?.all ?? 0) / (d?.student?.total?.class ?? 1)
+								).toLocaleString()
 							)}</span
 						> คน
 					</span>
@@ -132,8 +135,10 @@
 					<span class="school-data-text">อุปกรณ์การเรียน</span>
 					<span class="school-data-val">
 						<span class="mitr school-bignum"
-							>{~~((d?.durable_goods?.stats?.working / d?.durable_goods?.stats?.total) * 100) ||
-								'—'}%</span
+							>{~~(
+								((d?.durable_goods?.stats?.working ?? 0) / (d?.durable_goods?.stats?.total ?? 1)) *
+								100
+							) || '—'}%</span
 						> ใช้งานได้
 					</span>
 				</div>
@@ -371,6 +376,7 @@
 		}
 
 		flex: 1 1 0;
+		margin-bottom: auto;
 	}
 
 	.mitr {
