@@ -3,7 +3,7 @@ export interface SchoolData {
 	staff: Staff;
 	computer: Computer;
 	internet: Internet;
-	durable_goods: { [key: string]: DurableGood };
+	durable_goods: DurableGoods;
 	school_id: string;
 	smis_id: string;
 	obec_id: string;
@@ -29,6 +29,7 @@ export interface SchoolData {
 	latlng: string[];
 	affiliation: string;
 	school_size: string;
+	building: Building;
 }
 
 export interface Computer {
@@ -49,6 +50,18 @@ export interface Learning {
 export interface Source {
 	obec: number;
 	self: number;
+}
+
+export interface DurableGoods {
+	stats: {
+		working: number;
+		to_be_repaired: number;
+		to_be_removed: number;
+		total: number;
+	};
+	data: {
+		[key: string]: DurableGood;
+	};
 }
 
 export interface DurableGood {
@@ -90,13 +103,10 @@ export interface Principal {
 	image_path: string;
 }
 
-export interface Staff {
+export interface Staff extends Gender {
 	ครู: ครู;
 	ผู้อำนวยการ: ครู;
 	พนักงาน: พนักงาน;
-	men: number;
-	women: number;
-	total: number;
 	รองผู้อำนวยการ: ครู;
 }
 
@@ -122,10 +132,7 @@ export interface GenderClass extends Gender {
 	class: number;
 }
 
-export interface พนักงาน {
-	men: number;
-	women: number;
-	total: number;
+export interface พนักงาน extends Gender {
 	ลูกจ้างประจำ: Gender;
 	พนักงานราชการ: Gender;
 	ลูกจ้างชั่วคราว: Gender;
@@ -157,7 +164,24 @@ export interface Total {
 	ป: number;
 	ปวช: number;
 	ม: number;
+	มต: number;
+	มป: number;
 	อ: number;
 	all: number;
 	class: number;
+}
+
+export interface Building {
+	data: { [key: string]: BuildingData[] };
+	stats: { [key: string]: number };
+}
+
+export interface BuildingData {
+	name: string;
+	raw_name: string;
+	model: string;
+	build_at: string;
+	current_condition: 'ดี' | 'พอใช้' | 'ทรุดโทรม';
+	room_number: number | null;
+	images: string[];
 }
