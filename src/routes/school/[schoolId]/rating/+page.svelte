@@ -121,54 +121,21 @@
 	}
 	let school_data: SchoolScoreData;
 
-	$: school_classroom_avg =
-		+school_data?.countC1 === 0
-			? 0
-			: (+school_data?.sumC1 + +school_data?.sumC2 + +school_data?.sumC3 + +school_data?.sumC4) /
-			  (4 * +school_data?.countC1);
-	$: school_toilet_avg =
-		+school_data?.countT1 === 0
-			? 0
-			: (+school_data?.sumT1 + +school_data?.sumT2 + +school_data?.sumT3 + +school_data?.sumT4) /
-			  (4 * +school_data?.countT1);
-	$: school_canteen_avg =
-		+school_data?.countF1 === 0
-			? 0
-			: (+school_data?.sumF1 + +school_data?.sumF2 + +school_data?.sumF3 + +school_data?.sumF4) /
-			  (4 * +school_data?.countF1);
-	$: school_gym_avg =
-		+school_data?.countG1 === 0
-			? 0
-			: (+school_data?.sumG1 + +school_data?.sumG2 + +school_data?.sumG3 + +school_data?.sumG4) /
-			  (4 * +school_data?.countG1);
-	$: school_total_count =
-		+school_data?.countC1 + +school_data?.countT1 + +school_data?.countF1 + +school_data?.countG1;
-	$: school_total_avg =
-		(school_classroom_avg + school_toilet_avg + school_canteen_avg + school_gym_avg) /
-		(+!!school_classroom_avg + +!!school_toilet_avg + +!!school_canteen_avg + +!!school_gym_avg);
-
 	// Avg จะเกิดจากอันที่ไม่ใช่ 0 ก็เลย conv เป็น bool แล้วทำให้เป็น num (0 1) จะได้นับได้ว่ามีกี่ตัวที่ไม่ใช่ 0
 	// วิธีการคิดแบบนี้ใช้กับตัวที่ cross-axis แบบ cleanliness, security, ... ด้วย
+	let school_total_count = 0;
 
-	$: school_total_pleasure_count =
-		+school_data?.countC5 + +school_data?.countT5 + +school_data?.countF5 + +school_data?.countG5;
-	$: school_pleasure_classroom_avg =
-		+school_data?.countC5 === 0 ? 0 : +school_data?.sumC5 / +school_data?.countC5;
-	$: school_pleasure_toilet_avg =
-		+school_data?.countT5 === 0 ? 0 : +school_data?.sumT5 / +school_data?.countT5;
-	$: school_pleasure_canteen_avg =
-		+school_data?.countF5 === 0 ? 0 : +school_data?.sumF5 / +school_data?.countF5;
-	$: school_pleasure_gym_avg =
-		+school_data?.countG5 === 0 ? 0 : +school_data?.sumG5 / +school_data?.countG5;
-	$: school_total_pleasure_avg =
-		(school_pleasure_classroom_avg +
-			school_pleasure_toilet_avg +
-			school_pleasure_canteen_avg +
-			school_pleasure_gym_avg) /
-		(+!!school_pleasure_classroom_avg +
-			+!!school_pleasure_toilet_avg +
-			+!!school_pleasure_canteen_avg +
-			+!!school_pleasure_gym_avg);
+	let school_classroom_avg = 0;
+	let school_toilet_avg = 0;
+	let school_canteen_avg = 0;
+	let school_gym_avg = 0;
+	let school_total_avg = 0;
+
+	let school_pleasure_classroom_avg = 0;
+	let school_pleasure_toilet_avg = 0;
+	let school_pleasure_canteen_avg = 0;
+	let school_pleasure_gym_avg = 0;
+	let school_total_pleasure_avg = 0;
 
 	let school_enough_avg = 0;
 	let school_beauty_avg = 0;
@@ -221,11 +188,6 @@
 		school_safe_avg = +school_data?.sumG3 / +school_data?.countG3;
 	}
 
-	/*
-		[Update] Login เข้า Noco ไม่ได้ เพราะเปลี่ยนรหัสผ่านแล้ว... เข้าไม่ได้ owo)??????
-		- เดะต้องทำ function field ไว้เช็คว่าทำ c t f g ครบไหม ตอนนี้เดี๋ยวใช้วิธีการดึงมาเช็คหน้าบ้านไปก่อน
-	*/
-
 	let mounted = false;
 	onMount(async () => {
 		mounted = true;
@@ -244,6 +206,20 @@
 			// get school overall rating
 			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating`);
 			const school_json = await school_resp.json();
+
+			school_total_count = school_json?.count.total;
+			school_classroom_avg = school_json?.rating.classroom;
+			school_toilet_avg = school_json?.rating.toilet;
+			school_canteen_avg = school_json?.rating.canteen;
+			school_gym_avg = school_json?.rating.gym;
+			school_total_avg = school_json?.rating.total;
+
+			school_pleasure_classroom_avg = school_json?.pleasure?.classroom;
+			school_pleasure_toilet_avg = school_json?.pleasure?.toilet;
+			school_pleasure_canteen_avg = school_json?.pleasure?.canteen;
+			school_pleasure_gym_avg = school_json?.pleasure?.gym;
+			school_total_pleasure_avg = school_json?.pleasure?.total;
+
 			school_data = school_json?.raw;
 		} catch (e) {
 			console.error(e);
@@ -1156,7 +1132,7 @@
 	<div class="card">
 		<div class="f">
 			<h3 class="mitr">คะแนนความพึงพอใจ</h3>
-			{#if school_total_pleasure_count}
+			{#if school_total_count}
 				<div class="total-rating-container">
 					<div class="f g4">
 						<img
@@ -1169,7 +1145,7 @@
 						/>
 						<span class="mitr total-rating">{school_total_pleasure_avg.toFixed(1)}</span>
 					</div>
-					<span>{school_total_pleasure_count} รีวิว</span>
+					<span>{school_total_count} รีวิว</span>
 				</div>
 			{/if}
 		</div>
