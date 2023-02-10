@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { z } from 'zod';
 import { withAuth } from './utils/auth.js';
 import { likeComment, unlikeComment } from './routes/comment/like-unlike.js';
-import { getSchoolComments } from './routes/school/get-comments.js';
+import { getSchoolComments, getSchoolCommentsCount } from './routes/school/get-comments.js';
 import type { SchoolCommentsQuery, SchoolCommentsBody } from './routes/school/get-comments.js';
 import { getSchoolRating } from './routes/school/get-rating.js';
 import { addComment, deleteComment } from './routes/comment/add-delete.js';
@@ -23,7 +23,8 @@ export const convertBodyToQuery = (body: SchoolCommentsBody): SchoolCommentsQuer
 const schoolCommentsQuerySchema = z.object({
 	locations: z.string().optional(),
 	years: z.string().optional(),
-	sort: z.string().optional()
+	sort: z.string().optional(),
+	limit: z.string().optional()
 });
 
 const schoolCommentsBodySchema = z.object({
@@ -89,6 +90,16 @@ export function registerRoutes(app: FastifyInstance) {
 		const query = schoolCommentsQuerySchema.parse(req.query);
 
 		return getSchoolComments(schoolId, query);
+	});
+
+	app.get('/schools/:schoolId/comments/count', (req) => {
+		const { schoolId } = z
+			.object({
+				schoolId: z.string()
+			})
+			.parse(req.params);
+
+		return getSchoolCommentsCount(schoolId);
 	});
 
 	app.post(

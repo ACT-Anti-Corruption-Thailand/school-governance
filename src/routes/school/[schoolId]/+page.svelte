@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import { PUBLIC_API_HOST } from '$env/static/public';
 	import { onMount } from 'svelte';
 
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
@@ -22,74 +22,15 @@
 		if (!$currentSchoolId) return;
 
 		try {
-			const comment_count_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments/count?where=${encodeURIComponent(
-					`(schoolId,eq,${$currentSchoolId})~and(approved,eq,true)`
-				)}`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
-			);
-			const comment_count_json = await comment_count_resp.json();
-			total_comment = comment_count_json.count;
+			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/rating`);
+			const school_json = await school_resp.json();
 
-			const rating_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex/views/SchoolRating?where=${encodeURIComponent(
-					`(schoolId,eq,${$currentSchoolId})`
-				)}&limit=1&nested%5BuserRating%5D%5Blimit%5D=1`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
-			);
-			const rating_json = await rating_resp.json();
-			const rating_data = rating_json?.list?.[0];
-
-			total_rating_count =
-				+rating_data?.countC1 +
-				+rating_data?.countT1 +
-				+rating_data?.countF1 +
-				+rating_data?.countG1;
-			classroom_avg =
-				+rating_data?.countC1 === 0
-					? 0
-					: (+rating_data?.sumC1 +
-							+rating_data?.sumC2 +
-							+rating_data?.sumC3 +
-							+rating_data?.sumC4) /
-					  (4 * +rating_data?.countC1);
-			toilet_avg =
-				+rating_data?.countT1 === 0
-					? 0
-					: (+rating_data?.sumT1 +
-							+rating_data?.sumT2 +
-							+rating_data?.sumT3 +
-							+rating_data?.sumT4) /
-					  (4 * +rating_data?.countT1);
-			canteen_avg =
-				+rating_data?.countF1 === 0
-					? 0
-					: (+rating_data?.sumF1 +
-							+rating_data?.sumF2 +
-							+rating_data?.sumF3 +
-							+rating_data?.sumF4) /
-					  (4 * +rating_data?.countF1);
-			gym_avg =
-				+rating_data?.countG1 === 0
-					? 0
-					: (+rating_data?.sumG1 +
-							+rating_data?.sumG2 +
-							+rating_data?.sumG3 +
-							+rating_data?.sumG4) /
-					  (4 * +rating_data?.countG1);
-			total_rating =
-				(classroom_avg + toilet_avg + canteen_avg + gym_avg) /
-				(+!!classroom_avg + +!!toilet_avg + +!!canteen_avg + +!!gym_avg);
+			total_rating_count = school_json.count.total;
+			classroom_avg = school_json.rating.classroom;
+			toilet_avg = school_json.rating.toilet;
+			canteen_avg = school_json.rating.canteen;
+			gym_avg = school_json.rating.gym;
+			total_rating = school_json.rating.total;
 		} catch (e) {
 			console.error(e);
 		}
@@ -97,30 +38,22 @@
 
 	let posts: any[] = [];
 	const fetchComments = async () => {
-		let schoolid_query = `schoolId,eq,${$currentSchoolId}`;
-		let approved_query = `approved,eq,true`;
-		let location_query = ['classroom', 'toilet', 'canteen', 'gym', 'other']
-			.map((loc) => `(location,like,${loc})`)
-			.join('~or');
-		let year_query = `(schoolYear,eq,${$LATEST_YEAR})`;
-		let where_query = [schoolid_query, approved_query, location_query, year_query]
-			.filter((e) => e)
-			.map((e) => `(${e})`)
-			.join('~and');
-		let sort_query = '-createDate';
-
 		try {
-			const resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?limit=3&where=${encodeURIComponent(
-					where_query
-				)}&sort=${encodeURIComponent(sort_query)}`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
+			const comment_count_resp = await fetch(
+				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/comments/count`
 			);
+			const comment_count_json = await comment_count_resp.json();
+			total_comment = comment_count_json.count;
+
+			const location_query = 'classroom,toilet,canteen,gym,other';
+			const api_query = `locations=${encodeURIComponent(
+				location_query
+			)}&years=${$LATEST_YEAR}&sort=-createDate&limit=3`;
+
+			const resp = await fetch(
+				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/comments?${api_query}`
+			);
+
 			const json = await resp.json();
 			posts = json?.list;
 		} catch (err) {

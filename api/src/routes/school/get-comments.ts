@@ -1,9 +1,11 @@
+import fetch from 'node-fetch';
 import { nocoConfig, nocodb } from '../../utils/nocodb.js';
 
 export interface SchoolCommentsQuery {
 	locations?: string;
 	years?: string;
 	sort?: string;
+	limit?: string;
 }
 
 export interface SchoolCommentsBody {
@@ -14,8 +16,9 @@ export interface SchoolCommentsBody {
 
 export async function getSchoolComments(
 	schoolId: string,
-	{ locations, years, sort }: SchoolCommentsQuery = {}
+	{ locations, years, sort, limit }: SchoolCommentsQuery = {}
 ) {
+	console.log({ locations, years, sort, limit });
 	const schoolIdQuery = `schoolId,eq,${schoolId}`;
 	const approvedQuery = `approved,eq,true`;
 	const locationQuery = locations
@@ -39,6 +42,24 @@ export async function getSchoolComments(
 
 	return nocodb.dbTableRow.list(...nocoConfig, 'SchoolComments', {
 		where: whereQuery,
-		sort: [sortQuery]
+		sort: [sortQuery],
+		limit
 	});
+}
+
+export async function getSchoolCommentsCount(schoolId: string) {
+	const resp = await fetch(
+		`${process.env.NOCODB_URL}/api/v1/db/data/v1/${
+			process.env.NOCODB_PROJECT
+		}/SchoolComments/count?where=${encodeURIComponent(
+			`(schoolId,eq,${schoolId})~and(approved,eq,true)`
+		)}`,
+		{
+			method: 'GET',
+			headers: {
+				'xc-token': process.env.NOCODB_TOKEN
+			}
+		}
+	);
+	return await resp.json();
 }
