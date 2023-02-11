@@ -278,6 +278,7 @@
 			[quiz_body_key + 5]: quiz_rating_values[4]
 		};
 
+		// fix svelte error a rai mai ru maybe eslint confusing
 		const ustore = $currentUser;
 		try {
 			const submit_resp = await fetch(
