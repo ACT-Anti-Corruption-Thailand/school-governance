@@ -71,8 +71,6 @@
 			await assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
-		} finally {
-			fetchComments();
 		}
 	};
 
@@ -132,31 +130,33 @@
 		}
 	};
 
+	let is_posting_comment = false;
 	const addComment = async () => {
-		/* TODO - ADD LOADING STATE */
 		if (!$currentUser) return;
 		if (txt_comment.trim() === '' || chk_locations.length === 0) return;
 
+		is_posting_comment = true;
+
 		let uploaded_files;
-		if (selected_files.length) {
-			const formData = new FormData();
-			for (const f of selected_files) {
-				formData.append('files', f);
-			}
-			formData.append('json', '{}');
-
-			const resp = await fetch(`${PUBLIC_API_HOST}/schools/upload`, {
-				method: 'POST',
-				headers: {
-					Authorization: `Bearer ${$currentUser.accessToken}`
-				},
-				body: formData
-			});
-
-			uploaded_files = await resp.json();
-		}
-
 		try {
+			if (selected_files.length) {
+				const formData = new FormData();
+				for (const f of selected_files) {
+					formData.append('files', f);
+				}
+				formData.append('json', '{}');
+
+				const resp = await fetch(`${PUBLIC_API_HOST}/schools/upload`, {
+					method: 'POST',
+					headers: {
+						Authorization: `Bearer ${$currentUser.accessToken}`
+					},
+					body: formData
+				});
+
+				uploaded_files = await resp.json();
+			}
+
 			const resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/comments`, {
 				method: 'PUT',
 				headers: {
@@ -183,7 +183,7 @@
 			last_post_has_image = !!uploaded_files;
 			comment_modal_isopen = false;
 			sent_comment_modal_isopen = true;
-			fetchComments();
+			is_posting_comment = false;
 		}
 	};
 
@@ -346,11 +346,15 @@
 		<button
 			class="cf-submit"
 			type="button"
-			disabled={txt_comment.trim() === '' || chk_locations.length === 0}
+			disabled={txt_comment.trim() === '' || chk_locations.length === 0 || is_posting_comment}
 			on:click={addComment}
 			slot="title"
 		>
-			ส่งความเห็น
+			{#if is_posting_comment}
+				กำลังโพสต์...
+			{:else}
+				ส่งความเห็น
+			{/if}
 		</button>
 
 		<!-- <p>Current user is: {$currentUser.uid}</p> -->
