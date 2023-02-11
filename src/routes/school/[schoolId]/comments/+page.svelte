@@ -16,7 +16,7 @@
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
-	import { LATEST_YEAR, years } from 'stores/school';
+	import { LATEST_COMPUTED_YEAR, computed_years } from 'stores/school';
 	import { login_modal_isopen } from 'stores/login_modal';
 
 	$: schoolId = $page.params.schoolId;
@@ -166,7 +166,7 @@
 				body: JSON.stringify({
 					comments: txt_comment.trim(),
 					location: chk_locations.join(),
-					schoolYear: $LATEST_YEAR,
+					schoolYear: $LATEST_COMPUTED_YEAR,
 					...(uploaded_files ? { images: JSON.stringify(uploaded_files) } : null),
 					schoolCommentsQuery: {
 						locations: filter_locations,
@@ -201,7 +201,7 @@
 		'gym',
 		'other'
 	];
-	let filter_years: number[] = $LATEST_YEAR ? [$LATEST_YEAR] : [];
+	let filter_years: number[] = $LATEST_COMPUTED_YEAR ? [$LATEST_COMPUTED_YEAR] : [];
 
 	$: ((_) => {
 		fetchComments();
@@ -587,8 +587,8 @@
 		<fieldset>
 			<legend>ปีการศึกษา</legend>
 			<div>
-				{#if $years}
-					{#each $years as year (year)}
+				{#if $computed_years}
+					{#each $computed_years as year (year)}
 						<label class="custom-control">
 							<input type="checkbox" bind:group={filter_years} value={year} />
 							<span>{year + 543}</span>

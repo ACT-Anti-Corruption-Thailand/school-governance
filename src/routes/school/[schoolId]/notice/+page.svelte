@@ -8,7 +8,7 @@
 	import ContactOfficer from 'components/ContactOfficer.svelte';
 
 	import { page } from '$app/stores';
-	import { years } from 'stores/school';
+	import { computed_years } from 'stores/school';
 
 	const MONTHS = [
 		'ธันวาคม',
@@ -25,7 +25,7 @@
 		'มกราคม'
 	];
 
-	const DROPDOWN_DATA = $years?.map((y) => ({ label: y + 543, value: y })) ?? [];
+	const DROPDOWN_DATA = $computed_years?.map((y) => ({ label: y + 543, value: y })) ?? [];
 	let dropdown_choice = DROPDOWN_DATA[0];
 
 	$: schoolId = $page.params.schoolId;

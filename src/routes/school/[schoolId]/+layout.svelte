@@ -2,16 +2,18 @@
 	import { PUBLIC_DATA_HOST } from '$env/static/public';
 	import { page } from '$app/stores';
 	import SchoolNav from 'components/school/SchoolNav.svelte';
-	import { currentSchool, currentSchoolId, LATEST_YEAR } from 'stores/school';
+	import { currentSchool, currentSchoolId, data_years } from 'stores/school';
+
+	const latest_year = $data_years[0].year;
 
 	const updateData = (schoolId: number) => {
 		$currentSchoolId = schoolId;
-		fetch(`${PUBLIC_DATA_HOST}/data/${$LATEST_YEAR}/${$page.params.schoolId}.json`)
+		fetch(`${PUBLIC_DATA_HOST}/data/${latest_year}/${$page.params.schoolId}.json`)
 			.then((resp) => resp.json())
 			.then((data) => ($currentSchool = data));
 	};
 
-	$: if ($LATEST_YEAR && $currentSchoolId !== +$page.params.schoolId)
+	$: if (latest_year && $currentSchoolId !== +$page.params.schoolId)
 		updateData(+$page.params.schoolId);
 </script>
 

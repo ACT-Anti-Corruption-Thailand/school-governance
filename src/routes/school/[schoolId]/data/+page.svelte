@@ -19,9 +19,12 @@
 	import Modal from 'components/Modal.svelte';
 	import type { SchoolData } from 'types/school_type';
 
-	import { currentSchool, currentSchoolId, update_date, years, LATEST_YEAR } from 'stores/school';
+	import { currentSchool, currentSchoolId, data_years } from 'stores/school';
 
-	const DROPDOWN_DATA = $years?.map((y) => ({ label: y + 543, value: y })) ?? [];
+	let years = $data_years.map((y) => y.year);
+	let update_date = $data_years?.[0]?.update_date ?? '(เกิดข้อผิดพลาด กรุณาโหลดใหม่อีกครั้ง)';
+
+	const DROPDOWN_DATA = years?.map((y) => ({ label: y + 543, value: y })) ?? [];
 	let dropdown_choice = DROPDOWN_DATA[0];
 
 	$: d = $currentSchool;
@@ -103,7 +106,7 @@
 		});
 	};
 
-	let [current_year, ...other_years] = [...($years ?? [])];
+	let [current_year, ...other_years] = [...(years ?? [])];
 	let school_other_years_data: { year: number; data: any }[] = [];
 
 	const fetchOtherYearData = () => {
@@ -196,7 +199,7 @@
 		mounted = true;
 	});
 
-	$: if (mounted && $years) {
+	$: if (mounted && years) {
 		fetchOtherYearData();
 	}
 
@@ -796,9 +799,9 @@
 			</div>
 		</section>
 
-		{#if $years && $years.length}
+		{#if years && years.length}
 			<section>
-				<h3 class="mb16">เปรียบเทียบจำนวนนักเรียน {$years.length} ปีที่ผ่านมา</h3>
+				<h3 class="mb16">เปรียบเทียบจำนวนนักเรียน {years.length} ปีที่ผ่านมา</h3>
 				<div class="f fw500">
 					<span>ปี</span>
 					<span>คน</span>
@@ -983,9 +986,9 @@
 			</div>
 		</section>
 
-		{#if $years && $years.length}
+		{#if years && years.length}
 			<section>
-				<h3 class="mb16">เปรียบเทียบจำนวนครู {$years.length} ปีที่ผ่านมา</h3>
+				<h3 class="mb16">เปรียบเทียบจำนวนครู {years.length} ปีที่ผ่านมา</h3>
 				<div class="f fw500">
 					<span>ปี</span>
 					<span>คน</span>
@@ -1792,7 +1795,7 @@
 					ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)
 				</a>
 			</p>
-			<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date[$LATEST_YEAR]}</p>
+			<p class="update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
 		</footer>
 	{/if}
 </div>
@@ -2246,6 +2249,8 @@
 	.other-data {
 		> .school-logo {
 			float: right;
+			object-fit: contain;
+			object-position: center;
 		}
 
 		dd {

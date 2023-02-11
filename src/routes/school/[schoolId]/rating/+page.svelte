@@ -17,12 +17,12 @@
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
-	import { years } from 'stores/school';
+	import { computed_years } from 'stores/school';
 	import { login_modal_isopen } from 'stores/login_modal';
 
 	$: schoolId = $page.params.schoolId;
 
-	const DROPDOWN_DATA = $years?.map((y) => ({ label: y + 543, value: y })) ?? [];
+	const DROPDOWN_DATA = $computed_years?.map((y) => ({ label: y + 543, value: y })) ?? [];
 	let dropdown_choice = DROPDOWN_DATA[0];
 
 	const METRIC_DROPDOWN = [

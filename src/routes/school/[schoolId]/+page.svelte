@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_API_HOST } from '$env/static/public';
+	import { PUBLIC_BASE_YEAR, PUBLIC_API_HOST, PUBLIC_DATA_HOST } from '$env/static/public';
 	import { onMount } from 'svelte';
 
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
@@ -7,8 +7,10 @@
 	import CommentStat from 'components/CommentStat.svelte';
 	import InViewLottie from 'components/InViewLottie.svelte';
 
-	import { currentSchool, currentSchoolId, update_date, LATEST_YEAR } from 'stores/school';
+	import { currentSchool, currentSchoolId, data_years, LATEST_COMPUTED_YEAR } from 'stores/school';
 	$: d = $currentSchool;
+	let latest_data_year = $data_years?.[0]?.year ?? +PUBLIC_BASE_YEAR;
+	let update_date = $data_years?.[0]?.update_date ?? '(เกิดข้อผิดพลาด กรุณาโหลดใหม่อีกครั้ง)';
 
 	let total_rating = 0;
 	let total_rating_count = 0;
@@ -48,7 +50,7 @@
 			const location_query = 'classroom,toilet,canteen,gym,other';
 			const api_query = `locations=${encodeURIComponent(
 				location_query
-			)}&years=${$LATEST_YEAR}&sort=latest&limit=3`;
+			)}&years=${$LATEST_COMPUTED_YEAR}&sort=latest&limit=3`;
 
 			const resp = await fetch(
 				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/comments?${api_query}`
@@ -343,19 +345,22 @@
 </div>
 
 <div class="overview-download">
-	<a class="download-btn" href="/data/{$LATEST_YEAR}/{$currentSchoolId}.json" download>
+	<a
+		class="download-btn"
+		href="{PUBLIC_DATA_HOST}/data/{latest_data_year}/{$currentSchoolId}.json"
+		download
+	>
 		<img loading="lazy" decoding="async" src="/icons/download.svg" alt="" width="24" height="24" />
 		<span>ดาวน์โหลดข้อมูลโรงเรียน</span>
 	</a>
 	<p>
 		สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่<br
 		/>
-		ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)<br />
 		<a href="https://data.bopp-obec.info/emis" target="_blank" rel="nofollow noopener noreferrer"
-			>https://data.bopp-obec.info/emis</a
+			>ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)</a
 		>
 	</p>
-	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date[$LATEST_YEAR]}</p>
+	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
 </div>
 
 <style lang="scss">
