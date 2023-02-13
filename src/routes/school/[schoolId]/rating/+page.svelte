@@ -201,26 +201,50 @@
 		fetchUserRow();
 	}
 
+	interface SchoolJsonSchema {
+		count?: {
+			total: number;
+		};
+		rating?: {
+			classroom: number;
+			toilet: number;
+			canteen: number;
+			gym: number;
+			total: number;
+		};
+		pleasure?: {
+			classroom: number;
+			toilet: number;
+			canteen: number;
+			gym: number;
+			total: number;
+		};
+		raw: SchoolScoreData;
+	}
+	const assignSchoolScore = (school_json: SchoolJsonSchema) => {
+		school_total_count = school_json?.count?.total ?? 0;
+		school_classroom_avg = school_json?.rating?.classroom ?? 0;
+		school_toilet_avg = school_json?.rating?.toilet ?? 0;
+		school_canteen_avg = school_json?.rating?.canteen ?? 0;
+		school_gym_avg = school_json?.rating?.gym ?? 0;
+		school_total_avg = school_json?.rating?.total ?? 0;
+
+		school_pleasure_classroom_avg = school_json?.pleasure?.classroom ?? 0;
+		school_pleasure_toilet_avg = school_json?.pleasure?.toilet ?? 0;
+		school_pleasure_canteen_avg = school_json?.pleasure?.canteen ?? 0;
+		school_pleasure_gym_avg = school_json?.pleasure?.gym ?? 0;
+		school_total_pleasure_avg = school_json?.pleasure?.total ?? 0;
+
+		school_data = school_json?.raw ?? {};
+	};
+
 	const fetchData = async () => {
 		try {
 			// get school overall rating
 			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating`);
 			const school_json = await school_resp.json();
 
-			school_total_count = school_json?.count.total;
-			school_classroom_avg = school_json?.rating.classroom;
-			school_toilet_avg = school_json?.rating.toilet;
-			school_canteen_avg = school_json?.rating.canteen;
-			school_gym_avg = school_json?.rating.gym;
-			school_total_avg = school_json?.rating.total;
-
-			school_pleasure_classroom_avg = school_json?.pleasure?.classroom;
-			school_pleasure_toilet_avg = school_json?.pleasure?.toilet;
-			school_pleasure_canteen_avg = school_json?.pleasure?.canteen;
-			school_pleasure_gym_avg = school_json?.pleasure?.gym;
-			school_total_pleasure_avg = school_json?.pleasure?.total;
-
-			school_data = school_json?.raw;
+			assignSchoolScore(school_json);
 		} catch (e) {
 			console.error(e);
 		}
@@ -301,7 +325,7 @@
 			quiz_canteen_done = currentUser.fDone ?? false;
 			quiz_gym_done = currentUser.gDone ?? false;
 
-			school_data = school?.raw;
+			assignSchoolScore(school);
 
 			quiz_isopen = false;
 			requestAnimationFrame(() => {
