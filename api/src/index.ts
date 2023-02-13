@@ -6,7 +6,7 @@ import cors from '@fastify/cors';
 import { CORS_CONFIG, CorsError } from './utils/cors.js';
 import multipart from '@fastify/multipart';
 
-const app = fastify({ logger: true });
+const app = fastify({ logger: { level: 'error' } });
 
 app.register(cors, CORS_CONFIG);
 app.register(multipart);
@@ -30,7 +30,7 @@ app.setErrorHandler(function (error, request, reply) {
 
 (async () => {
 	try {
-		await app.listen({ port: 3000 });
+		await app.listen({ port: 3000, host: '0.0.0.0' });
 		console.log('🏫 Server is running at //[::1]:3000/');
 	} catch (err) {
 		app.log.error(err);
