@@ -273,9 +273,17 @@
 		);
 	};
 
-	const parseImagesVal = (images: string) => {
-		const parsed = JSON.parse(images);
-		if (Array.isArray(parsed)) return parsed;
+	const parseImagesVal = (
+		images: any
+	): {
+		title: string;
+		url: string;
+	}[] => {
+		let _imgs = images;
+		if (typeof images === 'string') {
+			_imgs = JSON.parse(images);
+		}
+		if (Array.isArray(_imgs)) return _imgs;
 		return [];
 	};
 
