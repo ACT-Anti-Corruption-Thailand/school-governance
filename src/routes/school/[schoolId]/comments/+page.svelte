@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import { PUBLIC_API_HOST } from '$env/static/public';
 
 	import { onMount } from 'svelte';
 
@@ -16,7 +16,7 @@
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
-	import { LATEST_YEAR, years } from 'stores/school';
+	import { LATEST_COMPUTED_YEAR, computed_years } from 'stores/school';
 	import { login_modal_isopen } from 'stores/login_modal';
 
 	$: schoolId = $page.params.schoolId;
@@ -24,39 +24,23 @@
 	let txt_comment = '';
 	let chk_locations: string[] = [];
 
+	$: api_query = `locations=${encodeURIComponent(
+		filter_locations.join(',')
+	)}&years=${encodeURIComponent(filter_years.join(','))}&sort=${filter_sort_by}`;
+
+	const assignCommentsVariables = async (resp: Response) => {
+		const json = await resp.json();
+		posts = json?.list.map((e: any) => ({
+			...e,
+			likedByYourself: e.likedUserIds.find((e: any) => e.userId === $currentUser?.uid)
+		}));
+	};
+
 	const fetchComments = async () => {
-		let schoolid_query = `schoolId,eq,${schoolId}`;
-		let approved_query = `approved,eq,true`;
-		let location_query = filter_locations.length
-			? filter_locations.map((loc) => `(location,like,${loc})`).join('~or')
-			: null;
-		let year_query = filter_years.length
-			? filter_years.map((year) => `(schoolYear,eq,${year})`).join('~or')
-			: null;
-		let where_query = [schoolid_query, approved_query, location_query, year_query]
-			.filter((e) => e)
-			.map((e) => `(${e})`)
-			.join('~and');
-
-		let sort_query = filter_sort_by === 'latest' ? '-createDate' : '-likeCount';
-
 		try {
-			const resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?limit=999&where=${encodeURIComponent(
-					where_query
-				)}&sort=${encodeURIComponent(sort_query)}`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
-			);
-			const json = await resp.json();
-			posts = json?.list.map((e: any) => ({
-				...e,
-				likedByYourself: e.likedUserIds.find((e: any) => e.userId === $currentUser?.uid)
-			}));
+			const resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/comments?${api_query}`);
+
+			await assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
 		}
@@ -66,117 +50,140 @@
 		if (!$currentUser) return;
 
 		try {
-			await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolCommentLike`,
+			const resp = await fetch(
+				`${PUBLIC_API_HOST}/schools/${schoolId}/comments/${commentId}/like`,
 				{
 					method: 'POST',
 					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY,
+						Authorization: `Bearer ${$currentUser.accessToken}`,
 						'Content-Type': 'application/json'
 					},
 					body: JSON.stringify({
-						userId: $currentUser.uid,
-						commentId: commentId
+						schoolCommentsQuery: {
+							locations: filter_locations,
+							years: filter_years,
+							sort: filter_sort_by
+						}
 					})
 				}
 			);
+
+			await assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
-		} finally {
-			fetchComments();
 		}
 	};
 
 	const unlikeComment = async (likeId: number) => {
+		if (!$currentUser) return;
+
 		try {
-			await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolCommentLike/${likeId}`,
-				{
-					method: 'DELETE',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
+			const resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/likes/${likeId}`, {
+				method: 'DELETE',
+				headers: {
+					Authorization: `Bearer ${$currentUser.accessToken}`,
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({
+					schoolCommentsQuery: {
+						locations: filter_locations,
+						years: filter_years,
+						sort: filter_sort_by
 					}
-				}
-			);
+				})
+			});
+
+			await assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
-		} finally {
-			fetchComments();
 		}
 	};
 
 	const deleteComment = async () => {
-		const commentId = going_to_delete_id;
+		if (!$currentUser) return;
+
 		try {
-			await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments/${commentId}`,
+			const resp = await fetch(
+				`${PUBLIC_API_HOST}/schools/${schoolId}/comments/${going_to_delete_id}`,
 				{
 					method: 'DELETE',
 					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
+						Authorization: `Bearer ${$currentUser.accessToken}`,
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						schoolCommentsQuery: {
+							locations: filter_locations,
+							years: filter_years,
+							sort: filter_sort_by
+						}
+					})
 				}
 			);
+
+			await assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
 		} finally {
 			going_to_delete_id = null;
 			confirm_delete_isopen = false;
-			fetchComments();
 		}
 	};
 
-	const post = async () => {
+	let is_posting_comment = false;
+	const addComment = async () => {
 		if (!$currentUser) return;
 		if (txt_comment.trim() === '' || chk_locations.length === 0) return;
 
-		let uploaded_files;
-		if (selected_files.length) {
-			const formData = new FormData();
-			for (const f of selected_files) {
-				formData.append('files', f);
-			}
-			formData.append('json', JSON.stringify({}));
+		is_posting_comment = true;
 
-			const resp = await fetch(
-				'https://sheets.wevis.info/api/v1/db/storage/upload?path=noco%2FOpen-School-Test%2FSchoolComments%2Fimages',
-				{
+		let uploaded_files;
+		try {
+			if (selected_files.length) {
+				const formData = new FormData();
+				for (const f of selected_files) {
+					formData.append('files', f);
+				}
+				formData.append('json', '{}');
+
+				const resp = await fetch(`${PUBLIC_API_HOST}/schools/upload`, {
 					method: 'POST',
 					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
+						Authorization: `Bearer ${$currentUser.accessToken}`
 					},
 					body: formData
-				}
-			);
-			uploaded_files = await resp.json();
-		}
+				});
 
-		// console.log(uploaded_files);
+				uploaded_files = await resp.json();
+			}
 
-		try {
-			await fetch('https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments', {
-				method: 'POST',
+			const resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/comments`, {
+				method: 'PUT',
 				headers: {
-					'xc-token': PUBLIC_NOCO_TOKEN_KEY,
+					Authorization: `Bearer ${$currentUser.accessToken}`,
 					'Content-Type': 'application/json'
 				},
 				body: JSON.stringify({
-					schoolId: schoolId,
 					comments: txt_comment.trim(),
 					location: chk_locations.join(),
-					schoolYear: $LATEST_YEAR,
-					userId: $currentUser.uid,
-					approved: true || !uploaded_files,
-					...(uploaded_files ? { images: JSON.stringify(uploaded_files) } : null)
+					schoolYear: $LATEST_COMPUTED_YEAR,
+					...(uploaded_files ? { images: JSON.stringify(uploaded_files) } : null),
+					schoolCommentsQuery: {
+						locations: filter_locations,
+						years: filter_years,
+						sort: filter_sort_by
+					}
 				})
 			});
+
+			await assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
 		} finally {
 			last_post_has_image = !!uploaded_files;
 			comment_modal_isopen = false;
 			sent_comment_modal_isopen = true;
-			fetchComments();
+			is_posting_comment = false;
 		}
 	};
 
@@ -194,7 +201,7 @@
 		'gym',
 		'other'
 	];
-	let filter_years: number[] = $LATEST_YEAR ? [$LATEST_YEAR] : [];
+	let filter_years: number[] = $LATEST_COMPUTED_YEAR ? [$LATEST_COMPUTED_YEAR] : [];
 
 	$: ((_) => {
 		fetchComments();
@@ -266,9 +273,17 @@
 		);
 	};
 
-	const parseImagesVal = (images: string) => {
-		const parsed = JSON.parse(images);
-		if (Array.isArray(parsed)) return parsed;
+	const parseImagesVal = (
+		images: any
+	): {
+		title: string;
+		url: string;
+	}[] => {
+		let _imgs = images;
+		if (typeof images === 'string') {
+			_imgs = JSON.parse(images);
+		}
+		if (Array.isArray(_imgs)) return _imgs;
 		return [];
 	};
 
@@ -339,11 +354,15 @@
 		<button
 			class="cf-submit"
 			type="button"
-			disabled={txt_comment.trim() === '' || chk_locations.length === 0}
-			on:click={post}
+			disabled={txt_comment.trim() === '' || chk_locations.length === 0 || is_posting_comment}
+			on:click={addComment}
 			slot="title"
 		>
-			ส่งความเห็น
+			{#if is_posting_comment}
+				กำลังโพสต์...
+			{:else}
+				ส่งความเห็น
+			{/if}
 		</button>
 
 		<!-- <p>Current user is: {$currentUser.uid}</p> -->
@@ -580,8 +599,8 @@
 		<fieldset>
 			<legend>ปีการศึกษา</legend>
 			<div>
-				{#if $years}
-					{#each $years as year (year)}
+				{#if $computed_years}
+					{#each $computed_years as year (year)}
 						<label class="custom-control">
 							<input type="checkbox" bind:group={filter_years} value={year} />
 							<span>{year + 543}</span>

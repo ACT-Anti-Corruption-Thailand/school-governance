@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: schoolgov-api
+    env_file:
+      - .env
+    volumes:
+      - ./firebase-admin-key.json:/app/dist/firebase-admin-key.json
+    expose:
+      - 3000
+    ports:
+      - 3000:3000
+    restart: unless-stopped

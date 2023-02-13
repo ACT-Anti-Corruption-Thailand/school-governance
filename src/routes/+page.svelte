@@ -783,7 +783,7 @@
 	.information {
 		text-align: center;
 		color: #3c55ab;
-		padding: 0 16px 48px;
+		padding: 0 16px 24px;
 
 		> h2 {
 			font-family: 'Mitr';
@@ -1044,7 +1044,8 @@
 		.feature,
 		.ending,
 		.footer {
-			padding-inline: 25%;
+			padding-left: 25%;
+			padding-right: 25%;
 			font-size: 1rem;
 		}
 

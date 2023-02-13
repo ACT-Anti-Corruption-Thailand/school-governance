@@ -1,387 +1,14 @@
 {
- "smis_id": 57040161,
- "obec_id": 120742,
- "name_th": "สมถวิลจินตมัยบ้านห้วยแล้ง (ตชด.อนุสรณ์)",
- "name_en": "Somtawinjintamai Banhuaylang (Torchordor.anusorn)",
- "address": "หมู่ที่ 2 บ้านบ้านห้วยแล้ง",
- "subdistrict": "ตำบลท่าข้าม",
- "district": "อำเภอเวียงแก่น",
- "province": "เชียงราย",
- "postcode": "57310",
- "telephone": "931317070",
- "fax": null,
- "grades": "อนุบาล-ประถมศึกษา",
- "established": "11/06/2513",
- "email": "somtawinphoto@gmail.com",
- "url_text_0": "เว็บไซต์โรงเรียน (สารสนเทศ)",
- "url_0": "https://data.bopp-obec.info/emis/../web/?School_ID=157120742",
- "website": "เว็บไซต์โรงเรียน (สารสนเทศ)",
- "network_of_education_development_center": null,
- "local_gov_org": "ท่าข้าม",
- "distance_to_edu_area": "94 กม.",
- "distance_to_district": "14 กม.",
- "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/157120742.jpg",
- "principal_image_path": "https://data.bopp-obec.info/emis/pic/1057120721-20170815-134537.jpg",
- "latlng": "20.0234874,100.4837335",
- "school_id": "157120742",
- "buildings": {
-  "data": {
-   "อาคารเรียน": [],
-   "อาคารทั่วไป": [],
-   "ห้องน้ำ": [],
-   "บ้านพัก": [],
-   "การเกษตร": [],
-   "อื่นๆ": []
-  },
-  "stats": {
-   "ดี": 0,
-   "พอใช้": 0,
-   "ทรุดโทรม": 0,
-   "จำนวนห้องในอาคารเรียน": 0,
-   "รวม": 0
-  }
- },
- "computer": {
-  "working": 17,
-  "broken": 0,
-  "total": 17,
-  "learning": {
-   "working": 17,
-   "broken": 0,
-   "total": 17,
-   "source": {
-    "obec": 11,
-    "self": 6
-   }
-  },
-  "management": {
-   "working": 0,
-   "broken": 0,
-   "total": 0,
-   "source": {
-    "obec": 0,
-    "self": 0
-   }
-  }
- },
- "durable_goods": {
-  "data": {
-   "โต๊ะเก้าอี้นักเรียน": {
-    "working": 104,
-    "to_be_repaired": 0,
-    "to_be_removed": 0,
-    "total": 104,
-    "list": [
-     {
-      "code": 11001,
-      "type": "โต๊ะเก้าอี้นักเรียน",
-      "name": "โต๊ะเก้าอี้นักเรียนก่อนประถมศึกษา",
-      "working": 27,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 27
-     },
-     {
-      "code": 22001,
-      "type": "โต๊ะเก้าอี้นักเรียน",
-      "name": "โต๊ะเก้าอี้นักเรียน ประถมศึกษา",
-      "working": 77,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 77
-     }
-    ]
-   },
-   "ครุภัณฑ์การศึกษา": {
-    "working": 12,
-    "to_be_repaired": 2,
-    "to_be_removed": 0,
-    "total": 14,
-    "list": [
-     {
-      "code": 22026,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "โทรทัศน์สี",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     },
-     {
-      "code": 22029,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "จานรับสัญญาณดาวเทียม",
-      "working": 5,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 5
-     },
-     {
-      "code": 22030,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "ครุภัณฑ์ห้องสมุด ชุดเล็ก ประถมศึกษา",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     },
-     {
-      "code": 22032,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "เครื่องมัลติมีเดียโปรเจคเตอร์ Lcd",
-      "working": 3,
-      "to_be_repaired": 2,
-      "to_be_removed": 0,
-      "total": 5
-     },
-     {
-      "code": 22043,
-      "type": "ครุภัณฑ์การศึกษา",
-      "name": "โทรทัศน์สีชนิด จอแบน (Lcd)",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     }
-    ]
-   },
-   "ครุภัณฑ์สำนักงาน/โรงเรียน": {
-    "working": 3,
-    "to_be_repaired": 0,
-    "to_be_removed": 0,
-    "total": 3,
-    "list": [
-     {
-      "code": 21001,
-      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-      "name": "เครื่องถ่ายเอกสาร",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     },
-     {
-      "code": 21008,
-      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
-      "name": "เครื่องพิมพ์ (Printer)",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     }
-    ]
-   },
-   "ครุภัณฑ์ไฟฟ้าและวิทยุ": {
-    "working": 2,
-    "to_be_repaired": 0,
-    "to_be_removed": 0,
-    "total": 2,
-    "list": [
-     {
-      "code": 23003,
-      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
-      "name": "เครื่องขยายเสียง",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     },
-     {
-      "code": 23005,
-      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
-      "name": "เครื่องปรับอากาศ",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     }
-    ]
-   },
-   "ครุภัณฑ์งานบ้านและงานครัว": {
-    "working": 8,
-    "to_be_repaired": 0,
-    "to_be_removed": 0,
-    "total": 8,
-    "list": [
-     {
-      "code": 24001,
-      "type": "ครุภัณฑ์งานบ้านและงานครัว",
-      "name": "เครื่องกรองน้ำ",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     },
-     {
-      "code": 24002,
-      "type": "ครุภัณฑ์งานบ้านและงานครัว",
-      "name": "เครื่องทำน้ำเย็น",
-      "working": 1,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 1
-     },
-     {
-      "code": 24008,
-      "type": "ครุภัณฑ์งานบ้านและงานครัว",
-      "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบไฟเบอร์กลาส",
-      "working": 4,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 4
-     },
-     {
-      "code": 24009,
-      "type": "ครุภัณฑ์งานบ้านและงานครัว",
-      "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบพลาสติก",
-      "working": 2,
-      "to_be_repaired": 0,
-      "to_be_removed": 0,
-      "total": 2
-     }
-    ]
-   }
-  },
-  "stats": {
-   "working": 129,
-   "to_be_repaired": 2,
-   "to_be_removed": 0,
-   "total": 131
-  }
- },
- "internet": {
-  "provider": null,
-  "type": null,
-  "speed": null,
-  "status": null,
-  "monthly_price": null,
-  "lan_network": "ไม่มีระบบเครือข่าย LAN",
-  "wireless_lan_network": "ไม่มีระบบเครือข่ายไร้สาย (Wireless LAN)"
- },
- "staff": {
-  "men": 3,
-  "women": 7,
-  "total": 10,
-  "ผู้อำนวยการ": {
-   "men": 1,
-   "women": 0,
-   "total": 1,
-   "คศ1": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ2": {
-    "men": 1,
-    "women": 0,
-    "total": 1
-   },
-   "คศ3": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ4": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ5": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   }
-  },
-  "รองผู้อำนวยการ": {
-   "men": 0,
-   "women": 0,
-   "total": 0,
-   "คศ1": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ2": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ3": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ4": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   }
-  },
-  "ครู": {
-   "men": 2,
-   "women": 5,
-   "total": 7,
-   "ครูผู้ช่วย": {
-    "men": 0,
-    "women": 1,
-    "total": 1
-   },
-   "คศ1": {
-    "men": 1,
-    "women": 4,
-    "total": 5
-   },
-   "คศ2": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ3": {
-    "men": 1,
-    "women": 0,
-    "total": 1
-   },
-   "คศ4": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "คศ5": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   }
-  },
-  "พนักงาน": {
-   "men": 0,
-   "women": 2,
-   "total": 2,
-   "ลูกจ้างประจำ": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "พนักงานราชการ": {
-    "men": 0,
-    "women": 0,
-    "total": 0
-   },
-   "ลูกจ้างชั่วคราว": {
-    "men": 0,
-    "women": 2,
-    "total": 2
-   }
-  }
- },
  "student": {
   "total": {
-   "อ": 53,
+   "all": 127,
+   "class": 9,
    "ป": 74,
+   "ปวช": 0,
+   "ม": 0,
    "มต": 0,
    "มป": 0,
-   "ม": 0,
-   "class": 9,
-   "all": 127
+   "อ": 53
   },
   "อ1": {
    "men": 4,
@@ -491,5 +118,381 @@
    "total": 0,
    "class": 0
   }
- }
+ },
+ "staff": {
+  "ครู": {
+   "men": 2,
+   "women": 5,
+   "total": 7,
+   "คศ1": {
+    "men": 1,
+    "women": 4,
+    "total": 5
+   },
+   "คศ2": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ3": {
+    "men": 1,
+    "women": 0,
+    "total": 1
+   },
+   "คศ4": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ5": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "ครูผู้ช่วย": {
+    "men": 0,
+    "women": 1,
+    "total": 1
+   }
+  },
+  "ผู้อำนวยการ": {
+   "men": 1,
+   "women": 0,
+   "total": 1,
+   "คศ1": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ2": {
+    "men": 1,
+    "women": 0,
+    "total": 1
+   },
+   "คศ3": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ4": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ5": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   }
+  },
+  "พนักงาน": {
+   "men": 0,
+   "women": 2,
+   "total": 2,
+   "ลูกจ้างประจำ": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "พนักงานราชการ": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "ลูกจ้างชั่วคราว": {
+    "men": 0,
+    "women": 2,
+    "total": 2
+   }
+  },
+  "men": 3,
+  "women": 7,
+  "total": 10,
+  "รองผู้อำนวยการ": {
+   "men": 0,
+   "women": 0,
+   "total": 0,
+   "คศ1": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ2": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ3": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   },
+   "คศ4": {
+    "men": 0,
+    "women": 0,
+    "total": 0
+   }
+  }
+ },
+ "computer": {
+  "learning": {
+   "source": {
+    "obec": 11,
+    "self": 6
+   },
+   "total": 17,
+   "working": 17,
+   "broken": 0
+  },
+  "management": {
+   "source": {
+    "obec": 0,
+    "self": 0
+   },
+   "total": 0,
+   "working": 0,
+   "broken": 0
+  },
+  "total": 17,
+  "working": 17,
+  "broken": 0
+ },
+ "internet": {
+  "provider": null,
+  "type": null,
+  "speed": null,
+  "status": null,
+  "monthly_price": null,
+  "lan_network": "ไม่มีระบบเครือข่าย LAN",
+  "wireless_lan_network": "ไม่มีระบบเครือข่ายไร้สาย (Wireless LAN)"
+ },
+ "durable_goods": {
+  "stats": {
+   "working": 129.0,
+   "to_be_repaired": 2.0,
+   "to_be_removed": 0.0,
+   "total": 131.0
+  },
+  "data": {
+   "ครุภัณฑ์การศึกษา": {
+    "working": 12,
+    "to_be_repaired": 2,
+    "to_be_removed": 0,
+    "total": 14,
+    "list": [
+     {
+      "code": "22026",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "โทรทัศน์สี",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     },
+     {
+      "code": "22029",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "จานรับสัญญาณดาวเทียม",
+      "working": 5,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 5
+     },
+     {
+      "code": "22030",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "ครุภัณฑ์ห้องสมุด ชุดเล็ก ประถมศึกษา",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "22032",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "เครื่องมัลติมีเดียโปรเจคเตอร์ LCD",
+      "working": 3,
+      "to_be_repaired": 2,
+      "to_be_removed": 0,
+      "total": 5
+     },
+     {
+      "code": "22043",
+      "type": "ครุภัณฑ์การศึกษา",
+      "name": "โทรทัศน์สีชนิด จอแบน (LCD)",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     }
+    ]
+   },
+   "ครุภัณฑ์งานบ้านและงานครัว": {
+    "working": 8,
+    "to_be_repaired": 0,
+    "to_be_removed": 0,
+    "total": 8,
+    "list": [
+     {
+      "code": "24001",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "เครื่องกรองน้ำ",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "24002",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "เครื่องทำน้ำเย็น",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "24008",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบไฟเบอร์กลาส",
+      "working": 4,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 4
+     },
+     {
+      "code": "24009",
+      "type": "ครุภัณฑ์งานบ้านและงานครัว",
+      "name": "ถังน้ำขนาด 1000 ลิตร ขึ้นไป แบบพลาสติก",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     }
+    ]
+   },
+   "ครุภัณฑ์ยานพาหนะ": {
+    "working": 0.0,
+    "to_be_repaired": 0.0,
+    "to_be_removed": 0.0,
+    "total": 0.0,
+    "list": []
+   },
+   "ครุภัณฑ์สำนักงาน/โรงเรียน": {
+    "working": 3,
+    "to_be_repaired": 0,
+    "to_be_removed": 0,
+    "total": 3,
+    "list": [
+     {
+      "code": "21001",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องถ่ายเอกสาร",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "21008",
+      "type": "ครุภัณฑ์สำนักงาน/โรงเรียน",
+      "name": "เครื่องพิมพ์ (Printer)",
+      "working": 2,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 2
+     }
+    ]
+   },
+   "ครุภัณฑ์ไฟฟ้าและวิทยุ": {
+    "working": 2,
+    "to_be_repaired": 0,
+    "to_be_removed": 0,
+    "total": 2,
+    "list": [
+     {
+      "code": "23003",
+      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
+      "name": "เครื่องขยายเสียง",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     },
+     {
+      "code": "23005",
+      "type": "ครุภัณฑ์ไฟฟ้าและวิทยุ",
+      "name": "เครื่องปรับอากาศ",
+      "working": 1,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 1
+     }
+    ]
+   },
+   "โต๊ะเก้าอี้นักเรียน": {
+    "working": 104,
+    "to_be_repaired": 0,
+    "to_be_removed": 0,
+    "total": 104,
+    "list": [
+     {
+      "code": "11001",
+      "type": "โต๊ะเก้าอี้นักเรียน",
+      "name": "โต๊ะเก้าอี้นักเรียนก่อนประถมศึกษา",
+      "working": 27,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 27
+     },
+     {
+      "code": "22001",
+      "type": "โต๊ะเก้าอี้นักเรียน",
+      "name": "โต๊ะเก้าอี้นักเรียน ประถมศึกษา",
+      "working": 77,
+      "to_be_repaired": 0,
+      "to_be_removed": 0,
+      "total": 77
+     }
+    ]
+   }
+  }
+ },
+ "school_id": "157120742",
+ "smis_id": "57040161",
+ "obec_id": "120742",
+ "name_th": "สมถวิลจินตมัยบ้านห้วยแล้ง(ตชด.อนุสรณ์)",
+ "name_en": "Somtawinjintamai banhuaylang (torchordor.anusorn)",
+ "address": "หมู่ที่ 2 บ้านบ้านห้วยแล้ง",
+ "subdistrict": "ท่าข้าม",
+ "district": "เวียงแก่น",
+ "province": "เชียงราย",
+ "postcode": "57310",
+ "telephone": "0931317070",
+ "fax": "",
+ "grades": "อนุบาล-ประถมศึกษา",
+ "established": "11/06/2513",
+ "email": "somtawinphoto@gmail.com",
+ "links": [
+  {
+   "text": "เว็บไซต์โรงเรียน (สารสนเทศ)",
+   "url": "https://data.bopp-obec.info/emis/../web/?School_ID=157120742"
+  }
+ ],
+ "network_of_education_development_center": "",
+ "local_gov_org": "ท่าข้าม",
+ "distance_to_edu_area": "94 กม.",
+ "distance_to_district": "14 กม.",
+ "logo_image_path": "https://data.bopp-obec.info/emis/pic_school/157120742.jpg",
+ "principal": {
+  "name": "นายเชิดชู ถุงปัญญา",
+  "position_title": "ผู้อำนวยการโรงเรียนสมถวิลจินตมัยบ้านห้วยแล้ง(ตชด.อนุสรณ์)",
+  "image_path": "https://data.bopp-obec.info/emis/pic/1057120721-20170815-134537.jpg"
+ },
+ "latlng": [
+  "20.0234874",
+  "100.4837335"
+ ],
+ "affiliation": "สพป. เชียงราย เขต 4",
+ "school_size": "กลาง"
 }

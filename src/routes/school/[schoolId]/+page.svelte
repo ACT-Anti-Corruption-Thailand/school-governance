@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import { PUBLIC_BASE_YEAR, PUBLIC_API_HOST, PUBLIC_DATA_HOST } from '$env/static/public';
 	import { onMount } from 'svelte';
 
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
@@ -7,8 +7,10 @@
 	import CommentStat from 'components/CommentStat.svelte';
 	import InViewLottie from 'components/InViewLottie.svelte';
 
-	import { currentSchool, currentSchoolId, update_date, LATEST_YEAR } from 'stores/school';
+	import { currentSchool, currentSchoolId, data_years, LATEST_COMPUTED_YEAR } from 'stores/school';
 	$: d = $currentSchool;
+	let latest_data_year = $data_years?.[0]?.year ?? +PUBLIC_BASE_YEAR;
+	let update_date = $data_years?.[0]?.update_date ?? '(เกิดข้อผิดพลาด กรุณาโหลดใหม่อีกครั้ง)';
 
 	let total_rating = 0;
 	let total_rating_count = 0;
@@ -22,74 +24,15 @@
 		if (!$currentSchoolId) return;
 
 		try {
-			const comment_count_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments/count?where=${encodeURIComponent(
-					`(schoolId,eq,${$currentSchoolId})~and(approved,eq,true)`
-				)}`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
-			);
-			const comment_count_json = await comment_count_resp.json();
-			total_comment = comment_count_json.count;
+			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/rating`);
+			const school_json = await school_resp.json();
 
-			const rating_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex/views/SchoolRating?where=${encodeURIComponent(
-					`(schoolId,eq,${$currentSchoolId})`
-				)}&limit=1&nested%5BuserRating%5D%5Blimit%5D=1`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
-			);
-			const rating_json = await rating_resp.json();
-			const rating_data = rating_json?.list?.[0];
-
-			total_rating_count =
-				+rating_data?.countC1 +
-				+rating_data?.countT1 +
-				+rating_data?.countF1 +
-				+rating_data?.countG1;
-			classroom_avg =
-				+rating_data?.countC1 === 0
-					? 0
-					: (+rating_data?.sumC1 +
-							+rating_data?.sumC2 +
-							+rating_data?.sumC3 +
-							+rating_data?.sumC4) /
-					  (4 * +rating_data?.countC1);
-			toilet_avg =
-				+rating_data?.countT1 === 0
-					? 0
-					: (+rating_data?.sumT1 +
-							+rating_data?.sumT2 +
-							+rating_data?.sumT3 +
-							+rating_data?.sumT4) /
-					  (4 * +rating_data?.countT1);
-			canteen_avg =
-				+rating_data?.countF1 === 0
-					? 0
-					: (+rating_data?.sumF1 +
-							+rating_data?.sumF2 +
-							+rating_data?.sumF3 +
-							+rating_data?.sumF4) /
-					  (4 * +rating_data?.countF1);
-			gym_avg =
-				+rating_data?.countG1 === 0
-					? 0
-					: (+rating_data?.sumG1 +
-							+rating_data?.sumG2 +
-							+rating_data?.sumG3 +
-							+rating_data?.sumG4) /
-					  (4 * +rating_data?.countG1);
-			total_rating =
-				(classroom_avg + toilet_avg + canteen_avg + gym_avg) /
-				(+!!classroom_avg + +!!toilet_avg + +!!canteen_avg + +!!gym_avg);
+			total_rating_count = school_json.count.total;
+			classroom_avg = school_json.rating.classroom;
+			toilet_avg = school_json.rating.toilet;
+			canteen_avg = school_json.rating.canteen;
+			gym_avg = school_json.rating.gym;
+			total_rating = school_json.rating.total;
 		} catch (e) {
 			console.error(e);
 		}
@@ -97,29 +40,20 @@
 
 	let posts: any[] = [];
 	const fetchComments = async () => {
-		let schoolid_query = `schoolId,eq,${$currentSchoolId}`;
-		let approved_query = `approved,eq,true`;
-		let location_query = ['classroom', 'toilet', 'canteen', 'gym', 'other']
-			.map((loc) => `(location,like,${loc})`)
-			.join('~or');
-		let year_query = `(schoolYear,eq,${$LATEST_YEAR})`;
-		let where_query = [schoolid_query, approved_query, location_query, year_query]
-			.filter((e) => e)
-			.map((e) => `(${e})`)
-			.join('~and');
-		let sort_query = '-createDate';
-
 		try {
+			const comment_count_resp = await fetch(
+				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/comments/count`
+			);
+			const comment_count_json = await comment_count_resp.json();
+			total_comment = comment_count_json.count;
+
+			const location_query = 'classroom,toilet,canteen,gym,other';
+			const api_query = `locations=${encodeURIComponent(
+				location_query
+			)}&years=${$LATEST_COMPUTED_YEAR}&sort=latest&limit=3`;
+
 			const resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments?limit=3&where=${encodeURIComponent(
-					where_query
-				)}&sort=${encodeURIComponent(sort_query)}`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
+				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/comments?${api_query}`
 			);
 			const json = await resp.json();
 			posts = json?.list;
@@ -180,7 +114,9 @@
 					<span class="school-data-val">
 						<span class="mitr school-bignum"
 							>1:{fixNaN(
-								Math.ceil(d?.student?.total?.all / d?.staff?.ครู?.total).toLocaleString()
+								Math.ceil(
+									(d?.student?.total?.all ?? 0) / (d?.staff?.ครู?.total ?? 1)
+								).toLocaleString()
 							)}</span
 						> คน
 					</span>
@@ -190,7 +126,9 @@
 					<span class="school-data-val">
 						<span class="mitr school-bignum"
 							>{fixNaN(
-								Math.ceil(d?.student?.total?.all / d?.student?.total?.class).toLocaleString()
+								Math.ceil(
+									(d?.student?.total?.all ?? 0) / (d?.student?.total?.class ?? 1)
+								).toLocaleString()
 							)}</span
 						> คน
 					</span>
@@ -199,8 +137,10 @@
 					<span class="school-data-text">อุปกรณ์การเรียน</span>
 					<span class="school-data-val">
 						<span class="mitr school-bignum"
-							>{~~((d?.durable_goods?.stats?.working / d?.durable_goods?.stats?.total) * 100) ||
-								'—'}%</span
+							>{~~(
+								((d?.durable_goods?.stats?.working ?? 0) / (d?.durable_goods?.stats?.total ?? 1)) *
+								100
+							) || '—'}%</span
 						> ใช้งานได้
 					</span>
 				</div>
@@ -405,19 +345,22 @@
 </div>
 
 <div class="overview-download">
-	<a class="download-btn" href="/data/{$LATEST_YEAR}/{$currentSchoolId}.json" download>
+	<a
+		class="download-btn"
+		href="{PUBLIC_DATA_HOST}/data/{latest_data_year}/{$currentSchoolId}.json"
+		download
+	>
 		<img loading="lazy" decoding="async" src="/icons/download.svg" alt="" width="24" height="24" />
 		<span>ดาวน์โหลดข้อมูลโรงเรียน</span>
 	</a>
 	<p>
 		สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่<br
 		/>
-		ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)<br />
 		<a href="https://data.bopp-obec.info/emis" target="_blank" rel="nofollow noopener noreferrer"
-			>https://data.bopp-obec.info/emis</a
+			>ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)</a
 		>
 	</p>
-	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {$update_date[$LATEST_YEAR]}</p>
+	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
 </div>
 
 <style lang="scss">
@@ -438,6 +381,7 @@
 		}
 
 		flex: 1 1 0;
+		margin-bottom: auto;
 	}
 
 	.mitr {

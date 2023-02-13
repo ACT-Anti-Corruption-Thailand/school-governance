@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_NOCO_TOKEN_KEY } from '$env/static/public';
+	import { PUBLIC_API_HOST } from '$env/static/public';
 
 	import { onMount } from 'svelte';
 
@@ -26,71 +26,14 @@
 
 		try {
 			const comment_count_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolComments/count?where=${encodeURIComponent(
-					`(schoolId,eq,${schoolId})~and(approved,eq,true)`
-				)}`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
+				`${PUBLIC_API_HOST}/schools/${schoolId}/comments/count`
 			);
 			const comment_count_json = await comment_count_resp.json();
 			_comment = comment_count_json.count;
 
-			const rating_resp = await fetch(
-				`https://sheets.wevis.info/api/v1/db/data/v1/Open-School-Test/SchoolIndex/views/SchoolRating?where=${encodeURIComponent(
-					`(schoolId,eq,${schoolId})`
-				)}&limit=1&nested%5BuserRating%5D%5Blimit%5D=1`,
-				{
-					method: 'GET',
-					headers: {
-						'xc-token': PUBLIC_NOCO_TOKEN_KEY
-					}
-				}
-			);
-			const rating_json = await rating_resp.json();
-			const rating_data = rating_json?.list?.[0];
-
-			let school_classroom_avg =
-				+rating_data?.countC1 === 0
-					? 0
-					: (+rating_data?.sumC1 +
-							+rating_data?.sumC2 +
-							+rating_data?.sumC3 +
-							+rating_data?.sumC4) /
-					  (4 * +rating_data?.countC1);
-			let school_toilet_avg =
-				+rating_data?.countT1 === 0
-					? 0
-					: (+rating_data?.sumT1 +
-							+rating_data?.sumT2 +
-							+rating_data?.sumT3 +
-							+rating_data?.sumT4) /
-					  (4 * +rating_data?.countT1);
-			let school_canteen_avg =
-				+rating_data?.countF1 === 0
-					? 0
-					: (+rating_data?.sumF1 +
-							+rating_data?.sumF2 +
-							+rating_data?.sumF3 +
-							+rating_data?.sumF4) /
-					  (4 * +rating_data?.countF1);
-			let school_gym_avg =
-				+rating_data?.countG1 === 0
-					? 0
-					: (+rating_data?.sumG1 +
-							+rating_data?.sumG2 +
-							+rating_data?.sumG3 +
-							+rating_data?.sumG4) /
-					  (4 * +rating_data?.countG1);
-			_rating =
-				(school_classroom_avg + school_toilet_avg + school_canteen_avg + school_gym_avg) /
-				(+!!school_classroom_avg +
-					+!!school_toilet_avg +
-					+!!school_canteen_avg +
-					+!!school_gym_avg);
+			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating`);
+			const school_json = await school_resp.json();
+			_rating = school_json.rating.total;
 
 			$schoolStatsCache = {
 				...$schoolStatsCache,
