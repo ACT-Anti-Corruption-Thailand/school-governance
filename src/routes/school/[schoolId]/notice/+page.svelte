@@ -62,6 +62,8 @@
 
 <svelte:head>
 	<title>ประกาศโรงเรียน — โปร่งใสวิทยาคม</title>
+	<meta property="og:title" content="ประกาศโรงเรียน — โปร่งใสวิทยาคม">
+	<meta name="twitter:title" content="ประกาศโรงเรียน — โปร่งใสวิทยาคม">
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ประกาศ', color: '#FC5858' }}>

@@ -70,52 +70,84 @@
 
 <svelte:head>
 	<title>โปร่งใสวิทยาคม</title>
+	<meta property="og:title" content="โปร่งใสวิทยาคม">
+	<meta name="twitter:title" content="โปร่งใสวิทยาคม">
 </svelte:head>
 
 <header class="f header">
 	<div />
-	<p>
-		อยากเห็นโรงเรียนของพวกเรา<br class="hide-desktop" />
-		เปลี่ยนไปในทางที่ดีขึ้นไหม?
-	</p>
-	<img
-		loading="lazy"
-		decoding="async"
-		class="header-logo"
-		src="/logos/school_gov.svg"
-		alt=""
-		width="224"
-		height="83"
-	/>
-	<p>
-		ชวนทุกคนมาแลกเปลี่ยน<br class="hide-desktop" />
-		เพื่อพัฒนาโรงเรียนไปด้วยกัน
-	</p>
-	<div class="header-detail">
-		<div class="f header-detail-col">
-			<img loading="lazy" decoding="async" src="/mascots/data.svg" alt="" width="40" height="40" />
-			<span
-				><span class="nobr">ส่องฐาน</span><br class="hide-desktop" /><span class="nobr">ข้อมูล</span
-				></span
-			>
-		</div>
-		<div class="f header-detail-col">
-			<img loading="lazy" decoding="async" src="/mascots/star.svg" alt="" width="40" height="40" />
-			<span
-				><span class="nobr">ให้คะแนน</span><br class="hide-desktop" /><span class="nobr"
-					>โรงเรียน</span
-				></span
-			>
-		</div>
-		<div class="f header-detail-col">
-			<img loading="lazy" decoding="async" src="/mascots/speak.svg" alt="" width="40" height="40" />
-			<span
-				><span class="nobr">แลกเปลี่ยน</span><br class="hide-desktop" /><span class="nobr"
-					>ความคิดเห็น</span
-				></span
-			>
+	<div class="f header-logo-group">
+		<img
+			loading="lazy"
+			decoding="async"
+			class="heading-text-img"
+			src="/index/heading.svg"
+			alt="ทำโรงเรียนให้โปร่งใส"
+			width="200"
+			height="130"
+		/>
+		<img
+			loading="lazy"
+			decoding="async"
+			class="header-logo"
+			src="/logos/school_gov.svg"
+			alt=""
+			width="200"
+			height="130"
+		/>
+		<p class="header-bridge-text">
+			ชวนทุกคนมาแลกเปลี่ยน<br class="hide-desktop" />
+			เพื่อพัฒนาโรงเรียนไปด้วยกัน
+		</p>
+		<div class="header-detail">
+			<div class="f header-detail-col">
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/mascots/data.svg"
+					alt=""
+					width="40"
+					height="40"
+				/>
+				<span
+					><span class="nobr">ส่องฐาน</span><br class="hide-desktop" /><span class="nobr"
+						>ข้อมูล</span
+					></span
+				>
+			</div>
+			<div class="f header-detail-col">
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/mascots/star.svg"
+					alt=""
+					width="40"
+					height="40"
+				/>
+				<span
+					><span class="nobr">ให้คะแนน</span><br class="hide-desktop" /><span class="nobr"
+						>โรงเรียน</span
+					></span
+				>
+			</div>
+			<div class="f header-detail-col">
+				<img
+					loading="lazy"
+					decoding="async"
+					src="/mascots/speak.svg"
+					alt=""
+					width="40"
+					height="40"
+				/>
+				<span
+					><span class="nobr">แลกเปลี่ยน</span><br class="hide-desktop" /><span class="nobr"
+						>ความคิดเห็น</span
+					></span
+				>
+			</div>
 		</div>
 	</div>
+	<div />
 	<a class="f search-box" href="/search">
 		<img
 			loading="lazy"
@@ -282,8 +314,8 @@
 		class="origin-logo"
 		src="/logos/school_gov.svg"
 		alt=""
-		width="224"
-		height="83"
+		width="200"
+		height="130"
 	/>
 	<p style="line-height:1.7">
 		เครื่องมือที่จะแสดง <a
@@ -627,6 +659,15 @@
 			loading="lazy"
 			decoding="async"
 			class="footer-img footer3"
+			src="/logos/siamlab.png"
+			alt=""
+			width="31"
+			height="32"
+		/>
+		<img
+			loading="lazy"
+			decoding="async"
+			class="footer-img footer3"
 			src="/logos/act_full.svg"
 			alt=""
 			width="66"
@@ -694,9 +735,43 @@
 		margin-bottom: 20px;
 	}
 
-	.header-logo {
-		width: 70%;
+	.heading-text-img {
+		transform: scale(1.04);
+		transform-origin: center;
+
+		width: 100%;
 		height: auto;
+		margin-inline: auto;
+
+		@media screen and (min-width: 768px) {
+			max-width: 420px;
+			width: 60%;
+			transform: scale(1);
+		}
+	}
+
+	.header-logo {
+		width: 50%;
+		height: auto;
+		max-width: 350px;
+	}
+
+	.header-bridge-text {
+		margin: 16px 0;
+
+		@media screen and (min-width: 768px) {
+			margin: 32px 0;
+		}
+	}
+
+	.header-logo-group {
+		flex-direction: column;
+		margin-top: 40px;
+		width: 100%;
+
+		@media screen and (min-width: 768px) {
+			// margin-top: 56px;
+		}
 	}
 
 	.header-detail {
@@ -834,6 +909,7 @@
 
 		.origin-logo {
 			margin: 16px 0;
+			height: auto;
 		}
 
 		a {
@@ -858,7 +934,7 @@
 
 			@media screen and (min-width: 768px) {
 				flex-direction: row;
-				margin-inline: calc(-50% + 56px);
+				margin-inline: -30%;
 			}
 
 			> .card {
@@ -870,7 +946,7 @@
 					margin-bottom: 8px;
 
 					display: flex;
-					align-items: center;
+					align-items: baseline;
 					justify-content: space-between;
 					gap: 8px;
 				}
@@ -1044,8 +1120,8 @@
 		.feature,
 		.ending,
 		.footer {
-			padding-left: 25%;
-			padding-right: 25%;
+			padding-left: 20%;
+			padding-right: 20%;
 			font-size: 1rem;
 		}
 

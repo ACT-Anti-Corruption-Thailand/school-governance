@@ -952,6 +952,8 @@
 
 	.login-modal-logo {
 		width: 50%;
+		height: auto;
+		max-width: 224px;
 		margin: 16px 0;
 
 		&:first-child {

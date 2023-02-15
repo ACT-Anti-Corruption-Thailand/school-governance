@@ -227,6 +227,8 @@
 
 <svelte:head>
 	<title>ค้นหาโรงเรียน — โปร่งใสวิทยาคม</title>
+	<meta property="og:title" content="ค้นหาโรงเรียน — โปร่งใสวิทยาคม" />
+	<meta name="twitter:title" content="ค้นหาโรงเรียน — โปร่งใสวิทยาคม" />
 </svelte:head>
 
 <div class="search-container">
@@ -385,7 +387,6 @@
 			overflow: hidden auto;
 
 			@media screen and (min-width: 768px) {
-				inset: calc(var(--navbar-height) + 72px) 0 0;
 				padding: 0 10%;
 				background: #ecf7f7;
 			}

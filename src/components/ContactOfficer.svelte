@@ -81,6 +81,8 @@
 
 	.login-modal-logo {
 		width: 50%;
+		height: auto;
+		max-width: 224px;
 	}
 
 	.contact-text {

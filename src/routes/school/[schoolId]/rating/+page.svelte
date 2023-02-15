@@ -347,6 +347,8 @@
 
 <svelte:head>
 	<title>คะแนนโรงเรียน — โปร่งใสวิทยาคม</title>
+	<meta property="og:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม">
+	<meta name="twitter:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม">
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }} />
@@ -1658,8 +1660,8 @@
 	}
 
 	.quiz-img {
-		width: 90%;
-		height: 120px;
+		width: 100%;
+		height: 140px;
 		object-fit: contain;
 
 		@media screen and (min-width: 768px) {

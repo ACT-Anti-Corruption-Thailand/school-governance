@@ -108,11 +108,15 @@
 
 		z-index: 8;
 
-		justify-content: center;
-		gap: 32px;
-
 		background: #fff;
 		box-shadow: 0 -2px 5px rgba(12, 22, 107, 0.2);
+
+		justify-content: space-around;
+
+		@media screen and (min-width: 412px) {
+			justify-content: center;
+			gap: 32px;
+		}
 	}
 
 	.nav-menu {

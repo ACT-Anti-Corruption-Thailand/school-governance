@@ -75,6 +75,8 @@
 
 <svelte:head>
 	<title>ภาพรวมโรงเรียน — โปร่งใสวิทยาคม</title>
+	<meta property="og:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม">
+	<meta name="twitter:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม">
 </svelte:head>
 
 <SchoolHeader>
