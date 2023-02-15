@@ -89,7 +89,7 @@
 			top: 50%;
 			transform: translate(-50%, -50%);
 			width: var(--modal-box-width, 480px);
-			max-height: var(--modal-box-height, 600px);
+			max-height: min(90vh, var(--modal-box-height, 600px));
 		}
 	}
 

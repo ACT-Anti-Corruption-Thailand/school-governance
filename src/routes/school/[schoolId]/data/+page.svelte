@@ -240,8 +240,8 @@
 
 <svelte:head>
 	<title>ข้อมูลโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="ข้อมูลโรงเรียน — โปร่งใสวิทยาคม">
-	<meta name="twitter:title" content="ข้อมูลโรงเรียน — โปร่งใสวิทยาคม">
+	<meta property="og:title" content="ข้อมูลโรงเรียน — โปร่งใสวิทยาคม" />
+	<meta name="twitter:title" content="ข้อมูลโรงเรียน — โปร่งใสวิทยาคม" />
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
@@ -393,7 +393,10 @@
 						}}
 					>
 						<span class="student-color-1 std-size-color" />
-						<span>อนุบาล</span>
+						<span>
+							อนุบาล
+							<span class="std-unit fs10">(คน)</span>
+						</span>
 						<span class="std-size-count">{d.student.total.อ.toLocaleString()}</span>
 						<img
 							loading="lazy"
@@ -470,7 +473,10 @@
 						}}
 					>
 						<span class="student-color-2 std-size-color" />
-						<span>ประถม</span>
+						<span>
+							ประถม
+							<span class="std-unit fs10">(คน)</span>
+						</span>
 						<span class="std-size-count">{d.student.total.ป.toLocaleString()}</span>
 						<img
 							loading="lazy"
@@ -598,7 +604,10 @@
 						}}
 					>
 						<span class="student-color-3 std-size-color" />
-						<span>มัธยมต้น</span>
+						<span>
+							มัธยมต้น
+							<span class="std-unit fs10">(คน)</span>
+						</span>
 						<span class="std-size-count">{d.student.total.มต.toLocaleString()}</span>
 						<img
 							loading="lazy"
@@ -675,7 +684,10 @@
 						}}
 					>
 						<span class="student-color-4 std-size-color" />
-						<span>มัธยมปลาย</span>
+						<span>
+							มัธยมปลาย
+							<span class="std-unit fs10">(คน)</span>
+						</span>
 						<span class="std-size-count">{d.student.total.มป.toLocaleString()}</span>
 						<img
 							loading="lazy"
@@ -973,7 +985,7 @@
 						height="24"
 					/>
 				</div>
-				<div class="f">
+				<div class="f special">
 					{#each Array(Math.ceil(d.student.total.all / d.staff.ครู.total)) as _}
 						<img
 							loading="lazy"
@@ -2117,11 +2129,18 @@
 			flex: 0 0 12px;
 
 			background: var(--std-color);
+
+			&:nth-of-type(2) {
+				margin-left: auto;
+			}
 		}
 
 		dd {
-			flex: 1 1 0;
 			white-space: nowrap;
+
+			&:nth-of-type(2) {
+				margin-right: auto;
+			}
 		}
 	}
 
@@ -2132,6 +2151,20 @@
 		> div {
 			flex-wrap: wrap;
 			justify-content: flex-start;
+		}
+
+		> div.special {
+			flex-direction: row-reverse;
+			margin-left: auto;
+			max-width: 240px;
+
+			@media screen and (min-width: 450px) {
+				max-width: 360px;
+			}
+
+			@media screen and (min-width: 550px) {
+				max-width: 480px;
+			}
 		}
 	}
 
@@ -2468,5 +2501,12 @@
 			transform: translateX(-50%);
 			max-width: 640px;
 		}
+	}
+
+	.std-unit {
+		font-family: 'IBM Plex Sans Thai Looped';
+		font-weight: 400;
+		line-height: 136%;
+		color: #9daad5;
 	}
 </style>

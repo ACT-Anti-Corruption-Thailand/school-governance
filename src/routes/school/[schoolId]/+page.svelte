@@ -75,8 +75,8 @@
 
 <svelte:head>
 	<title>ภาพรวมโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม">
-	<meta name="twitter:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม">
+	<meta property="og:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม" />
+	<meta name="twitter:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม" />
 </svelte:head>
 
 <SchoolHeader>
@@ -383,7 +383,6 @@
 		}
 
 		flex: 1 1 0;
-		margin-bottom: auto;
 	}
 
 	.mitr {
@@ -403,6 +402,11 @@
 		gap: 8px;
 
 		margin-bottom: 16px;
+
+		@media screen and (min-width: 768px) {
+			height: 100%;
+			margin-bottom: 0;
+		}
 	}
 
 	.section-header {

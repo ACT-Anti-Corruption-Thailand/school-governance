@@ -211,7 +211,7 @@
 </section>
 
 <section class="information" id="information">
-	<h2 class="f jcc">
+	<h2 class="f jcc" style="margin-bottom:-8px">
 		<img loading="lazy" decoding="async" src="/index/q1.svg" alt="" width="38" height="39" />
 		<span>
 			"โปร่งใสวิทยาคม" <br class="hide-desktop" />คืออะไร?<br />
@@ -226,7 +226,9 @@
 		</span>
 		<img loading="lazy" decoding="async" src="/index/q2.svg" alt="" width="33" height="40" />
 	</h2>
-	<p class="info-title1">เมื่อการแก้ไขปัญหาโรงเรียนแบบเดิม ๆ ไม่ตอบโจทย์...</p>
+	<p class="info-title1">
+		เมื่อการแก้ไขปัญหาโรงเรียนแบบ<span class="nobr">เดิม ๆ</span> ไม่ตอบโจทย์...
+	</p>
 	<p>
 		ในอดีตเมื่อนักเรียนอย่างพวกเรา อยากร่วมแสดงความคิดเห็น หรือคิดจะพัฒนาอะไรสักอย่างในโรงเรียน
 		การส่งจดหมายร้องทุกข์ หรือเขียนโน๊ตไปหย่อนในกล่องรับเรื่องหน้าห้อง ผอ.
@@ -307,7 +309,9 @@
 </section>
 
 <section class="origin">
-	<p class="origin-title">เพราะการมีส่วนร่วมคือกุญแจสำคัญในการพัฒนาโรงเรียน นี่จึงเป็นที่มาของ</p>
+	<p class="origin-title">
+		เพราะการมีส่วนร่วมคือกุญแจสำคัญในการพัฒนาโรงเรียน <span class="nobr">นี่จึงเป็นที่มาของ</span>
+	</p>
 	<img
 		loading="lazy"
 		decoding="async"
@@ -323,8 +327,9 @@
 			target="_blank"
 			rel="nofollow noopener noreferrer">ฐานข้อมูลโรงเรียน</a
 		>
-		ซึ่งรวบรวมโดยสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน (สพฐ.) เพื่อช่วยให้ทุกคนสามารถตรวจสอบข้อมูลสำคัญต่าง
-		ๆ ที่เกี่ยวข้องกับโรงเรียนได้
+		ซึ่งรวบรวมโดยสำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน (สพฐ.) เพื่อช่วยให้ทุกคนสามารถตรวจสอบข้อมูลสำคัญ<span
+			class="nobr">ต่าง ๆ</span
+		> ที่เกี่ยวข้องกับโรงเรียนได้
 	</p>
 	<h3 class="f jcc">
 		<InViewLottie class="lottie-mini" src="/lotties/data_ch.json" loop autoplay />
@@ -405,7 +410,9 @@
 						height="16"
 					/>
 				</h4>
-				<p>ตรวจดูวัสดุ อุปกรณ์การเรียนต่าง ๆ ใช้งานได้จริงครบถ้วนหรือไม่</p>
+				<p>
+					ตรวจดูวัสดุ อุปกรณ์การเรียน<span class="nobr">ต่าง ๆ</span> ใช้งานได้จริงครบถ้วนหรือไม่
+				</p>
 			</div>
 			<div class="card">
 				<h4>
@@ -417,7 +424,7 @@
 						width="16"
 						height="16"
 					/>
-					<span>ข้อมูลสิ่งปลูกสร้าง</span>
+					<span>ข้อมูล<span class="nobr">สิ่งปลูกสร้าง</span></span>
 					<img
 						src="/icons/school.svg"
 						alt=""
@@ -452,7 +459,7 @@
 	</h2>
 	<p>
 		กระบวนการ Open Join Learn คือกลไกสำคัญ ที่จะช่วยส่งเสริมให้การพัฒนาขับเคลื่อนโรงเรียน
-		ของเราเกิดขึ้นได้จริง โดยนอกจากทุกคนจะต้องมี โอกาสรับรู้ข้อมูลของโรงเรียนแล้ว
+		ของเราเกิดขึ้นได้จริง โดยนอกจากทุกคนจะต้องมีโอกาสรับรู้ข้อมูลของโรงเรียนแล้ว
 		<strong
 			><span class="nobr">ยังต้องมี</span><span class="nobr">พื้นที่สำหรับ</span><span class="nobr"
 				>ตรวจสอบ</span
@@ -472,25 +479,25 @@
 			><span class="nobr">เกิดบรรยากาศ</span><span class="nobr">ของการบริหาร</span><span
 				class="nobr">จัดการ</span
 			><span class="nobr">ที่โปร่งใส</span></strong
-		> และเราในฐานะนักเรียนก็จะได้ ฝึกฝนบทบาทการตั้งคำถามตรวจสอบและ แลกเปลี่ยนความคิดเห็นไปด้วย…ก่อนก้าวไปเป็น
+		> และเราในฐานะนักเรียนก็จะได้ฝึกฝนบทบาทการตั้งคำถามตรวจสอบ และแลกเปลี่ยนความคิดเห็นไปด้วย…ก่อนก้าวไปเป็น
 		พลเมืองในโลกแห่งความเป็นจริง
 	</p>
 </section>
 
 <section class="f feature">
 	<p>
-		"โปร่งใสวิทยาคม" จึงไม่ได้มีแค่ข้อมูลโรงเรียนให้ได้ส่องกันเท่านั้น แต่เพื่อน ๆ
+		"โปร่งใสวิทยาคม" จึงไม่ได้มีแค่ข้อมูลโรงเรียนให้ได้ส่องกันเท่านั้น แต่<span class="nobr"
+			>เพื่อน ๆ</span
+		>
 		ยังสามารถเข้ามาช่วยกัน
 		<strong>
 			<span class="nobr">เปรียบเทียบ</span><span class="nobr">สิ่ง</span><span class="nobr"
 				>อำนวยความสะดวก</span
 			><span class="nobr">ต่าง ๆ&nbsp;</span><span class="nobr">ในโรงเรียน</span><span class="nobr"
-				>ว่า</span
-			><span class="nobr">ได้มาตรฐาน</span><span class="nobr">หรือไม่</span>&nbsp;<span class="nobr"
-				>ไปจนถึง</span
-			><span class="nobr">ส่ง Feedback</span>
+				>ว่าได้มาตรฐานหรือไม่</span
+			>&nbsp;<span class="nobr">ไปจนถึง</span><span class="nobr">ส่ง Feedback</span>
 		</strong>
-		กลับไปยังโรงเรียนและผู้บริหารที่มีส่วนเกี่ยวข้องกับโรงเรียนของเรา
+		กลับไปยังโรงเรียนและผู้บริหารที่มีส่วนเกี่ยวข้องกับ<span class="nobr">โรงเรียนของเรา</span>
 	</p>
 	<div class="f feature-card-container">
 		<div class="feature-card">
@@ -499,7 +506,10 @@
 				<span>ให้คะแนนโรงเรียน</span>
 				<InViewLottie class="lottie-mini flip" src="/lotties/rating_completed.json" loop autoplay />
 			</h3>
-			<p>เทียบบริการในโรงเรียนกับเกณฑ์มาตรฐาน พร้อมประเมิน ให้คะแนนโรงเรียนในแต่ละด้าน</p>
+			<p>
+				เทียบบริการในโรงเรียนกับเกณฑ์มาตรฐาน <span class="nobr">พร้อมประเมิน</span
+				>ให้คะแนนโรงเรียนในแต่ละด้าน
+			</p>
 		</div>
 		<div class="feature-card">
 			<h3 class="f">
@@ -513,7 +523,7 @@
 				/>
 			</h3>
 			<p>
-				แสดงความคิดเห็นโดยไม่ระบุตัวตน ส่งประเด็น ปัญหาต่าง ๆ ไปยังบุคคลที่เกี่ยวข้อง
+				แสดงความคิดเห็นโดยไม่ระบุตัวตน ส่งประเด็น ปัญหา<span class="nobr">ต่าง ๆ</span> ไปยังบุคคลที่เกี่ยวข้อง
 				ดูนโยบายข้อมูลส่วนบุคคล
 			</p>
 		</div>
@@ -523,7 +533,9 @@
 				<span>ติดตามประกาศ</span>
 				<InViewLottie class="lottie-mini flip" src="/lotties/announce_ch.json" loop autoplay />
 			</h3>
-			<p>ช่องทางสำหรับสื่อสารหรือตอบกลับข้อคิดเห็นของเพื่อน ๆ โดยตรงจากโรงเรียน</p>
+			<p>
+				ช่องทางสำหรับสื่อสารหรือตอบกลับข้อคิดเห็นของ<span class="nobr">เพื่อน ๆ</span> โดยตรงจากโรงเรียน
+			</p>
 		</div>
 	</div>
 	<a class="f search-box" href="/search">
@@ -587,7 +599,7 @@
 		</div>
 	</div>
 	<p>
-		แชร์ให้เพื่อน ๆ มาร่วมตรวจสอบด้วยกัน<br />
+		แชร์ให้<span class="nobr">เพื่อน ๆ</span> มาร่วมตรวจสอบด้วยกัน<br />
 		<strong>#โปร่งใสวิทยาคม</strong>
 	</p>
 	<div class="f social-links">
@@ -825,7 +837,7 @@
 	}
 
 	.school-list-container {
-		padding: 32px 16px 24px;
+		padding: 32px 16px 56px;
 	}
 
 	.school-list-header {
@@ -893,7 +905,7 @@
 
 			color: #3c55ab;
 
-			margin: 48px 0 24px;
+			margin: 40px 0 24px;
 		}
 
 		.info-title2 {
@@ -1174,7 +1186,7 @@
 		}
 
 		.school-list-container {
-			padding-block: 40px;
+			padding-top: 40px;
 
 			.school-list-header {
 				font-size: 1rem;
@@ -1326,6 +1338,10 @@
 		gap: 16px;
 
 		margin: 16px 0 24px;
+
+		@media screen and (min-width: 768px) {
+			grid-template-columns: repeat(3, 1fr);
+		}
 	}
 
 	.socialmedia-card {
