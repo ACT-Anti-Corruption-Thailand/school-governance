@@ -70,8 +70,8 @@
 
 <svelte:head>
 	<title>โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="โปร่งใสวิทยาคม">
-	<meta name="twitter:title" content="โปร่งใสวิทยาคม">
+	<meta property="og:title" content="โปร่งใสวิทยาคม" />
+	<meta name="twitter:title" content="โปร่งใสวิทยาคม" />
 </svelte:head>
 
 <header class="f header">
@@ -331,88 +331,104 @@
 		<span>ส่องข้อมูลโรงเรียนของเรา</span>
 		<InViewLottie class="lottie-mini flip" src="/lotties/data_ch.json" loop autoplay />
 	</h3>
-	<div class="f data-cards">
-		<div class="card">
-			<h4>
-				<img
-					src="/icons/location-b.svg"
-					alt=""
-					loading="lazy"
-					decoding="async"
-					width="16"
-					height="16"
-				/>
-				<span>ข้อมูลพื้นฐานโรงเรียน</span>
-				<img
-					src="/icons/location-b.svg"
-					alt=""
-					loading="lazy"
-					decoding="async"
-					width="16"
-					height="16"
-				/>
-			</h4>
-			<p>เช็ครหัส ที่อยู่ เบอร์โทรโรงเรียน ฯลฯ</p>
-		</div>
-		<div class="card">
-			<h4>
-				<img src="/icons/cap.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
-				<span>ข้อมูลนักเรียน</span>
-				<img src="/icons/cap.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
-			</h4>
-			<p>นับจำนวนเพื่อนพี่น้องร่วมสถาบัน</p>
-		</div>
-		<div class="card">
-			<h4>
-				<img
-					src="/icons/person-b.svg"
-					alt=""
-					loading="lazy"
-					decoding="async"
-					width="16"
-					height="16"
-				/>
-				<span>ข้อมูลบุคลากร</span>
-				<img
-					src="/icons/person-b.svg"
-					alt=""
-					loading="lazy"
-					decoding="async"
-					width="16"
-					height="16"
-				/>
-			</h4>
-			<p>เช็คจำนวนครูมีสัดส่วนเท่าไรเมื่อเทียบกับนักเรียน</p>
-		</div>
-		<div class="card">
-			<h4>
-				<img src="/icons/chair.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
-				<span>ข้อมูลอุปกรณ์</span>
-				<img src="/icons/chair.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
-			</h4>
-			<p>ตรวจดูวัสดุ อุปกรณ์การเรียนต่าง ๆ ใช้งานได้จริงครบถ้วนหรือไม่</p>
-		</div>
-		<div class="card">
-			<h4>
-				<img
-					src="/icons/school.svg"
-					alt=""
-					loading="lazy"
-					decoding="async"
-					width="16"
-					height="16"
-				/>
-				<span>ข้อมูลสิ่งปลูกสร้าง</span>
-				<img
-					src="/icons/school.svg"
-					alt=""
-					loading="lazy"
-					decoding="async"
-					width="16"
-					height="16"
-				/>
-			</h4>
-			<p>เช็คสภาพสิ่งปลูกสร้าง จำนวนห้องเรียน ตรงกับความเป็นจริงแค่ไหน</p>
+	<div class="data-cards-container">
+		<div class="f data-cards">
+			<div class="card">
+				<h4>
+					<img
+						src="/icons/location-b.svg"
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="16"
+						height="16"
+					/>
+					<span>ข้อมูลพื้นฐานโรงเรียน</span>
+					<img
+						src="/icons/location-b.svg"
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="16"
+						height="16"
+					/>
+				</h4>
+				<p>เช็ครหัส ที่อยู่ เบอร์โทรโรงเรียน ฯลฯ</p>
+			</div>
+			<div class="card">
+				<h4>
+					<img src="/icons/cap.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
+					<span>ข้อมูลนักเรียน</span>
+					<img src="/icons/cap.svg" alt="" loading="lazy" decoding="async" width="16" height="16" />
+				</h4>
+				<p>นับจำนวนเพื่อนพี่น้องร่วมสถาบัน</p>
+			</div>
+			<div class="card">
+				<h4>
+					<img
+						src="/icons/person-b.svg"
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="16"
+						height="16"
+					/>
+					<span>ข้อมูลบุคลากร</span>
+					<img
+						src="/icons/person-b.svg"
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="16"
+						height="16"
+					/>
+				</h4>
+				<p>เช็คจำนวนครูมีสัดส่วนเท่าไรเมื่อเทียบกับนักเรียน</p>
+			</div>
+			<div class="card">
+				<h4>
+					<img
+						src="/icons/chair.svg"
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="16"
+						height="16"
+					/>
+					<span>ข้อมูลอุปกรณ์</span>
+					<img
+						src="/icons/chair.svg"
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="16"
+						height="16"
+					/>
+				</h4>
+				<p>ตรวจดูวัสดุ อุปกรณ์การเรียนต่าง ๆ ใช้งานได้จริงครบถ้วนหรือไม่</p>
+			</div>
+			<div class="card">
+				<h4>
+					<img
+						src="/icons/school.svg"
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="16"
+						height="16"
+					/>
+					<span>ข้อมูลสิ่งปลูกสร้าง</span>
+					<img
+						src="/icons/school.svg"
+						alt=""
+						loading="lazy"
+						decoding="async"
+						width="16"
+						height="16"
+					/>
+				</h4>
+				<p>เช็คสภาพสิ่งปลูกสร้าง จำนวนห้องเรียน ตรงกับความเป็นจริงแค่ไหน</p>
+			</div>
 		</div>
 	</div>
 	<div class="act-banner">
@@ -768,10 +784,7 @@
 		flex-direction: column;
 		margin-top: 40px;
 		width: 100%;
-
-		@media screen and (min-width: 768px) {
-			// margin-top: 56px;
-		}
+		overflow: hidden;
 	}
 
 	.header-detail {
@@ -927,14 +940,22 @@
 			margin: 24px 0;
 		}
 
+		.data-cards-container {
+			@media screen and (min-width: 992px) {
+				margin-inline: -30%;
+			}
+		}
+
 		.data-cards {
 			gap: 16px;
 			flex-direction: column;
 			align-items: stretch;
 
-			@media screen and (min-width: 768px) {
+			@media screen and (min-width: 992px) {
 				flex-direction: row;
-				margin-inline: -30%;
+				max-width: 1200px;
+				margin: auto;
+				justify-content: center;
 			}
 
 			> .card {
