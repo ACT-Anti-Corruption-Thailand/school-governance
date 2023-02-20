@@ -349,7 +349,7 @@
 <div class="overview-download">
 	<a
 		class="download-btn"
-		href="{PUBLIC_DATA_HOST}/data/{latest_data_year}/{$currentSchoolId}.json"
+		href="{PUBLIC_DATA_HOST}/{latest_data_year}/{$currentSchoolId}.json"
 		download
 	>
 		<img loading="lazy" decoding="async" src="/icons/download.svg" alt="" width="24" height="24" />

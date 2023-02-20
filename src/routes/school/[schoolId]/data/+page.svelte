@@ -112,7 +112,7 @@
 	const fetchOtherYearData = () => {
 		if (other_years.length > 1) {
 			other_years.forEach((year, index) => {
-				fetch(`${PUBLIC_DATA_HOST}/data/${year}/${currentSchoolId}.json`)
+				fetch(`${PUBLIC_DATA_HOST}/${year}/${currentSchoolId}.json`)
 					.then((resp) => resp.json())
 					.then(
 						(data) =>

@@ -14,7 +14,7 @@
 	const LOCALSTORAGE_SCHOOL_DATA_YEARS = 'schoolDataYears';
 
 	const fetchYearsData = () => {
-		fetch(`${PUBLIC_DATA_HOST}/data/years_data.json`)
+		fetch(`${PUBLIC_DATA_HOST}/years_data.json`)
 			.then((resp) => resp.json())
 			.then((data) => {
 				$data_years = data;

@@ -8,7 +8,7 @@
 
 	const updateData = (schoolId: number) => {
 		$currentSchoolId = schoolId;
-		fetch(`${PUBLIC_DATA_HOST}/data/${latest_year}/${$page.params.schoolId}.json`)
+		fetch(`${PUBLIC_DATA_HOST}/${latest_year}/${$page.params.schoolId}.json`)
 			.then((resp) => resp.json())
 			.then((data) => ($currentSchool = data));
 	};
