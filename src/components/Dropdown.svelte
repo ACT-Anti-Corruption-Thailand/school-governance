@@ -48,6 +48,7 @@
 <style lang="scss">
 	:global(.dropdown-root) {
 		position: relative;
+		z-index: 10;
 	}
 
 	:global(.dropdown-button) {

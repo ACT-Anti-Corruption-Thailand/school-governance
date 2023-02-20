@@ -245,58 +245,58 @@
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
+	<div class="jumpnav-wrapper">
+		<menu class="f jumpnav">
+			<li>
+				<button
+					type="button"
+					class:j-active={active_section === 'student'}
+					on:click={() => scrollToSection('student')}
+				>
+					นักเรียน
+				</button>
+			</li>
+			<li>
+				<button
+					type="button"
+					class:j-active={active_section === 'employee'}
+					on:click={() => scrollToSection('employee')}
+				>
+					ครู/บุคลากร
+				</button>
+			</li>
+			<li>
+				<button
+					type="button"
+					class:j-active={active_section === 'goods'}
+					on:click={() => scrollToSection('goods')}
+				>
+					อุปกรณ์
+				</button>
+			</li>
+			<li>
+				<button
+					type="button"
+					class:j-active={active_section === 'building'}
+					on:click={() => scrollToSection('building')}
+				>
+					สิ่งก่อสร้าง
+				</button>
+			</li>
+			<li>
+				<button
+					type="button"
+					class:j-active={active_section === 'general'}
+					on:click={() => scrollToSection('general')}
+				>
+					ทั่วไป
+				</button>
+			</li>
+		</menu>
+	</div>
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
 
-<div class="jumpnav-wrapper">
-	<menu class="f jumpnav">
-		<li>
-			<button
-				type="button"
-				class:j-active={active_section === 'student'}
-				on:click={() => scrollToSection('student')}
-			>
-				นักเรียน
-			</button>
-		</li>
-		<li>
-			<button
-				type="button"
-				class:j-active={active_section === 'employee'}
-				on:click={() => scrollToSection('employee')}
-			>
-				ครู/บุคลากร
-			</button>
-		</li>
-		<li>
-			<button
-				type="button"
-				class:j-active={active_section === 'goods'}
-				on:click={() => scrollToSection('goods')}
-			>
-				อุปกรณ์
-			</button>
-		</li>
-		<li>
-			<button
-				type="button"
-				class:j-active={active_section === 'building'}
-				on:click={() => scrollToSection('building')}
-			>
-				สิ่งก่อสร้าง
-			</button>
-		</li>
-		<li>
-			<button
-				type="button"
-				class:j-active={active_section === 'general'}
-				on:click={() => scrollToSection('general')}
-			>
-				ทั่วไป
-			</button>
-		</li>
-	</menu>
-</div>
 <div class="jumpnav-compensate" />
 
 <div class="desktop-margin">
