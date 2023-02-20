@@ -4,11 +4,7 @@ export class CorsError extends Error {
 	}
 }
 
-const ALLOWED_HOSTNAME = [
-	'localhost',
-	'127.0.0.1',
-	...(process.env.ALLOWED_HOSTNAME?.split(',') || [])
-];
+const ALLOWED_HOSTNAME = process.env.ALLOWED_HOSTNAME?.split(',') || [];
 
 export const CORS_CONFIG = {
 	origin: (origin, cb) => {
