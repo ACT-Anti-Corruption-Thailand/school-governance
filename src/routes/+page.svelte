@@ -752,7 +752,6 @@
 	.header {
 		background: #3c55ab;
 		border-radius: 0 0 24px 24px;
-		min-height: 70vh;
 
 		flex-direction: column;
 		justify-content: space-between;
@@ -764,15 +763,12 @@
 	}
 
 	.heading-text-img {
-		transform: scale(1.04);
-		transform-origin: center;
-
 		width: 100%;
 		height: auto;
 		margin-inline: auto;
+		max-width: 420px;
 
 		@media screen and (min-width: 768px) {
-			max-width: 420px;
 			width: 60%;
 			transform: scale(1);
 		}
@@ -785,6 +781,7 @@
 	}
 
 	.header-bridge-text {
+		font-size: 1.2em;
 		margin: 16px 0;
 
 		@media screen and (min-width: 768px) {
@@ -803,6 +800,7 @@
 		display: grid;
 		grid-template-columns: repeat(3, 1fr);
 		gap: 24px;
+		margin-bottom: 16px;
 	}
 
 	.header-detail-col {
