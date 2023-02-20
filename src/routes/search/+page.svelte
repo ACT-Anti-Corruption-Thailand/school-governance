@@ -291,10 +291,10 @@
 				<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
 				<SchoolList school_list={mostCommentList} />
 			</section>
-			<section>
+			<!-- <section>
 				<h2>โรงเรียนที่เอาไว้ Debug</h2>
 				<SchoolList school_list={DEBUG_SCHOOL_LIST} />
-			</section>
+			</section> -->
 		</div>
 	{/if}
 

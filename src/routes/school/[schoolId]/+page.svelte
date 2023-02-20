@@ -159,7 +159,7 @@
 					loop
 					autoplay
 				/>
-				{#if fixNaN(total_rating.toFixed(1)) === '—'}
+				{#if fixNaN((total_rating ?? NaN).toFixed(1)) === '—'}
 					<span class="f header-text-adjust mitr">ยังไม่มีคะแนน</span>
 				{:else}
 					<span class="f header-text-adjust">
@@ -244,7 +244,7 @@
 							width="16"
 							height="16"
 						/>
-						<span class="location-star">{fixNaN(classroom_avg.toFixed(1))}</span>
+						<span class="location-star">{fixNaN((classroom_avg ?? NaN).toFixed(1))}</span>
 					</div>
 				</div>
 				<div class="f score-location">
@@ -258,7 +258,7 @@
 							width="16"
 							height="16"
 						/>
-						<span class="location-star">{fixNaN(toilet_avg.toFixed(1))}</span>
+						<span class="location-star">{fixNaN((toilet_avg ?? NaN).toFixed(1))}</span>
 					</div>
 				</div>
 				<div class="f score-location">
@@ -272,7 +272,7 @@
 							width="16"
 							height="16"
 						/>
-						<span class="location-star">{fixNaN(canteen_avg.toFixed(1))}</span>
+						<span class="location-star">{fixNaN((canteen_avg ?? NaN).toFixed(1))}</span>
 					</div>
 				</div>
 				<div class="f score-location">
@@ -286,7 +286,7 @@
 							width="16"
 							height="16"
 						/>
-						<span class="location-star">{fixNaN(gym_avg.toFixed(1))}</span>
+						<span class="location-star">{fixNaN((gym_avg ?? NaN).toFixed(1))}</span>
 					</div>
 				</div>
 			</div>

@@ -813,7 +813,7 @@
 			</div>
 		</section>
 
-		{#if years && years.length}
+		{#if years && years.length > 1}
 			<section>
 				<h3 class="mb16">เปรียบเทียบจำนวนนักเรียน {years.length} ปีที่ผ่านมา</h3>
 				<div class="f fw500">
@@ -1000,7 +1000,7 @@
 			</div>
 		</section>
 
-		{#if years && years.length}
+		{#if years && years.length > 1}
 			<section>
 				<h3 class="mb16">เปรียบเทียบจำนวนครู {years.length} ปีที่ผ่านมา</h3>
 				<div class="f fw500">

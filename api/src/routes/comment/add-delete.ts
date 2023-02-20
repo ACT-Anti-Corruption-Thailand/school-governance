@@ -16,7 +16,7 @@ export async function addComment(
 		comments: comments,
 		location: location,
 		schoolYear: schoolYear,
-		approved: true || !images,
+		approved: !images,
 		...(images ? { images } : null)
 	});
 
