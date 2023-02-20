@@ -523,10 +523,15 @@
 		}
 	}
 
+	.overview-container {
+		display: flex;
+		gap: 16px;
+		flex-direction: column;
+	}
+
 	@media screen and (min-width: 992px) {
 		.overview-container {
-			display: flex;
-			gap: 16px;
+			flex-direction: row;
 			padding: 40px 40px 0;
 		}
 
