@@ -1,10 +1,6 @@
 <script lang="ts">
-	import {
-		Dialog,
-		DialogOverlay,
-		DialogTitle,
-		DialogDescription
-	} from '@rgossiaux/svelte-headlessui';
+	import { tick } from 'svelte';
+	import { Dialog, DialogTitle, DialogDescription } from '@rgossiaux/svelte-headlessui';
 
 	export let title: string;
 	export let hideTitle = false;
@@ -14,34 +10,19 @@
 	export let onCloseCallback = () => {};
 	export let boxWidth = '480px';
 	export let boxHeight = '600px';
-	export let boxLeftShift = '0px';
+
+	$: closeFn = () => {
+		isOpen = false;
+		tick().then(onCloseCallback);
+	};
 </script>
 
-<Dialog
-	open={isOpen}
-	on:close={() => {
-		isOpen = false;
-		requestAnimationFrame(onCloseCallback);
-	}}
->
-	<!-- <DialogOverlay class="modal-backdrop" /> -->
+<Dialog open={isOpen} on:close={closeFn}>
 	<DialogDescription>{description}</DialogDescription>
 
-	<div
-		class="modal-box"
-		style:--modal-box-width={boxWidth}
-		style:--modal-box-height={boxHeight}
-		style:--modal-box-left-shift={boxLeftShift}
-	>
+	<div class="modal-box" style:--modal-box-width={boxWidth} style:--modal-box-height={boxHeight}>
 		<header class="f modal-header" class:header-background={!hideTitle || $$slots.title}>
-			<button
-				type="button"
-				class="f"
-				on:click={() => {
-					isOpen = false;
-					requestAnimationFrame(onCloseCallback);
-				}}
-			>
+			<button type="button" class="f" on:click={closeFn}>
 				<img
 					src="/icons/close.svg"
 					alt="ปิด"
@@ -85,7 +66,7 @@
 			border-radius: 8px;
 
 			inset: unset;
-			left: calc(50% + var(--modal-box-left-shift, 0px));
+			left: calc(50% + 32px);
 			top: 50%;
 			transform: translate(-50%, -50%);
 			width: var(--modal-box-width, 480px);

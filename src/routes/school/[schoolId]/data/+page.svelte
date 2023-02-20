@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PUBLIC_DATA_HOST } from '$env/static/public';
 
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { scroll } from 'motion';
 
 	import {
@@ -101,7 +101,7 @@
 		lightbox_building_name = name;
 		lightbox_url = url;
 		lightbox_callback = callback;
-		requestAnimationFrame(() => {
+		tick().then(() => {
 			lightbox_open = true;
 		});
 	};
@@ -1819,7 +1819,7 @@
 	open={lightbox_open}
 	on:close={() => {
 		lightbox_open = false;
-		requestAnimationFrame(lightbox_callback);
+		tick().then(lightbox_callback);
 	}}
 >
 	<DialogOverlay class="lightbox-backdrop" />
@@ -1832,7 +1832,7 @@
 		type="button"
 		on:click={() => {
 			lightbox_open = false;
-			requestAnimationFrame(lightbox_callback);
+			tick().then(lightbox_callback);
 		}}
 	>
 		<img

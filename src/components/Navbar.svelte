@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { scroll } from 'motion';
 	import {
 		signInWithPopup,
@@ -403,7 +403,7 @@
 						type="button"
 						on:click={() => {
 							$login_modal_isopen = false;
-							requestAnimationFrame(() => {
+							tick().then(() => {
 								term_isopen = true;
 							});
 						}}>นโยบายข้อมูลส่วนบุคคล</button

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PUBLIC_API_HOST } from '$env/static/public';
 
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	import { Lottie } from 'lottie-svelte';
 	import {
@@ -319,7 +319,7 @@
 	const openCommentModal = () => {
 		if ($currentUser) {
 			comment_modal_isopen = true;
-			requestAnimationFrame(() => {
+			tick().then(() => {
 				el_comment_modal_txtarea.focus();
 			});
 		} else {

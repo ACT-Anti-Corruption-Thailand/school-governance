@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { PUBLIC_API_HOST } from '$env/static/public';
 
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 
 	import {
 		QUIZ_QUESTIONS_DESC,
@@ -328,7 +328,7 @@
 			assignSchoolScore(school);
 
 			quiz_isopen = false;
-			requestAnimationFrame(() => {
+			tick().then(() => {
 				quizfinish_isopen = true;
 			});
 		} catch (e) {
@@ -347,8 +347,8 @@
 
 <svelte:head>
 	<title>คะแนนโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม">
-	<meta name="twitter:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม">
+	<meta property="og:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม" />
+	<meta name="twitter:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม" />
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }} />
@@ -374,7 +374,6 @@
 	onCloseCallback={quiz_onclose}
 	boxWidth="640px"
 	boxHeight="700px"
-	boxLeftShift="24px"
 >
 	<div class="quiz-location" slot="title">
 		{#if quiz_location}
@@ -622,7 +621,7 @@
 					}[quiz_location]
 				};
 			}
-			requestAnimationFrame(() => {
+			tick().then(() => {
 				detail_modal_isopen = true;
 			});
 		}}>อ่านเกณฑ์มาตรฐานเพิ่มเติม</button
@@ -643,7 +642,6 @@
 	body_class="quiz-body f"
 	onCloseCallback={quiz_onclose}
 	boxWidth="640px"
-	boxLeftShift="24px"
 >
 	<div class="quiz-body-spacer" />
 
@@ -699,7 +697,7 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(openQuizModal);
+				tick().then(openQuizModal);
 			}}
 		>
 			<img
@@ -722,7 +720,7 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(openQuizModal);
+				tick().then(openQuizModal);
 			}}
 		>
 			<img
@@ -745,7 +743,7 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(openQuizModal);
+				tick().then(openQuizModal);
 			}}
 		>
 			<img
@@ -768,7 +766,7 @@
 				quiz_current_step = 0;
 
 				quizfinish_isopen = false;
-				requestAnimationFrame(openQuizModal);
+				tick().then(openQuizModal);
 			}}
 		>
 			<img loading="lazy" decoding="async" src="/ratings/gym.svg" alt="" width="16" height="16" />
