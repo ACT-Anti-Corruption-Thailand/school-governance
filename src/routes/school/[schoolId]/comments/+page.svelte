@@ -8,7 +8,10 @@
 		Dialog,
 		DialogOverlay,
 		DialogTitle,
-		DialogDescription
+		DialogDescription,
+		Popover,
+		PopoverButton,
+		PopoverPanel
 	} from '@rgossiaux/svelte-headlessui';
 	import Modal from 'components/Modal.svelte';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
@@ -327,8 +330,8 @@
 
 <svelte:head>
 	<title>ความคิดเห็นโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="ความคิดเห็นโรงเรียน — โปร่งใสวิทยาคม">
-	<meta name="twitter:title" content="ความคิดเห็นโรงเรียน — โปร่งใสวิทยาคม">
+	<meta property="og:title" content="ความคิดเห็นโรงเรียน — โปร่งใสวิทยาคม" />
+	<meta name="twitter:title" content="ความคิดเห็นโรงเรียน — โปร่งใสวิทยาคม" />
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
@@ -536,8 +539,8 @@
 	</Dialog>
 {/if}
 
-<details class="filter-container">
-	<summary class="filter-bar">
+<Popover class="comment-filter-container">
+	<PopoverButton class="comment-filter-bar">
 		<span class="f">
 			<img loading="lazy" decoding="async" src="/icons/filter.svg" alt="" width="24" height="24" />
 			<span class="filter-field">{filter_sort_by_lbl}</span>
@@ -548,8 +551,9 @@
 				<span class="filter-field">{filter_years.map((y) => y + 543).join(', ')}</span>
 			{/if}
 		</span>
-	</summary>
-	<div class="filter-box">
+	</PopoverButton>
+
+	<PopoverPanel class="comment-filter-box">
 		<fieldset>
 			<legend>เรียงตาม</legend>
 			<div>
@@ -611,8 +615,8 @@
 				{/if}
 			</div>
 		</fieldset>
-	</div>
-</details>
+	</PopoverPanel>
+</Popover>
 <div class="filter-compensate" />
 
 <div class="desktop-margin">
@@ -874,7 +878,7 @@
 		}
 	}
 
-	.filter-container {
+	:global(.comment-filter-container) {
 		position: fixed;
 		top: calc(var(--navbar-height) + 60px);
 		transition: top 0.3s;
@@ -893,10 +897,11 @@
 		height: 46px;
 	}
 
-	.filter-bar {
+	:global(.comment-filter-bar) {
+		display: block;
 		padding: 8px 16px;
+		width: 100%;
 		background: #fff;
-
 		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 
 		cursor: pointer;
@@ -920,7 +925,7 @@
 	}
 
 	@media screen and (min-width: 768px) {
-		.filter-bar {
+		:global(.comment-filter-bar) {
 			width: 100%;
 			max-width: 640px;
 			margin: auto;
@@ -928,14 +933,13 @@
 		}
 	}
 
-	.filter-box {
+	:global(.comment-filter-box) {
 		padding: 8px 16px 16px;
 		position: absolute;
 		background: #fff;
 		box-shadow: 0 1px 4px rgba(12, 22, 107, 0.2);
 		left: 0;
 		right: 0;
-		height: calc(100vh - var(--navbar-height) - 60px - 46px - 64px);
 		box-sizing: border-box;
 		transition: height 0.3s;
 		will-change: height;
@@ -954,7 +958,7 @@
 	}
 
 	@media screen and (min-width: 768px) {
-		.filter-box {
+		:global(.comment-filter-box) {
 			width: 100%;
 			max-width: 640px;
 			margin: auto;
