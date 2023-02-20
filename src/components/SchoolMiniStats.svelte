@@ -13,7 +13,7 @@
 	export let rating = 0;
 	export let comment = 0;
 
-	let _rating = 0;
+	let _rating: undefined | number = undefined;
 	let _comment = 0;
 
 	const fetchScore = async () => {
