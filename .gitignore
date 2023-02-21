@@ -9,3 +9,9 @@ node_modules
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 local
+
+data/schoolId.csv
+data/schoolIndex.csv
+data/csv
+data/json
+# static/data

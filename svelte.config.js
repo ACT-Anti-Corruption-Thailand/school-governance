@@ -11,7 +11,15 @@ const config = {
 		adapter: adapter({
 			fallback: 'index.html'
 		}),
-		prerender: { entries: [] }
+		prerender: { entries: [] },
+		alias: {
+			'components/*': 'src/components/*',
+			'data/*': 'src/data/*',
+			'stores/*': 'src/stores/*',
+			'styles/*': 'src/styles/*',
+			'types/*': 'src/types/*',
+			'utils/*': 'src/utils/*'
+		}
 	}
 };
 
