@@ -25,23 +25,27 @@
 		content="อยากเห็นโรงเรียนของพวกเรา เปลี่ยนไปในทางที่ดีขึ้นมั้ย? #โปร่งใสวิทยาคม ชวนทุกคนมาแลกเปลี่ยน เพื่อพัฒนาโรงเรียนไปด้วยกัน">
 
 	<!-- Facebook Meta Tags -->
-	<meta property="og:url" content="https://sparkling-custard-884dae.netlify.app/">
+	<meta property="og:url" content="http://schoolgov.actai.co/">
 	<meta property="og:type" content="website">
 	<meta property="og:title" content="โปร่งใสวิทยาคม">
 	<meta property="og:description"
 		content="อยากเห็นโรงเรียนของพวกเรา เปลี่ยนไปในทางที่ดีขึ้นมั้ย? #โปร่งใสวิทยาคม ชวนทุกคนมาแลกเปลี่ยน เพื่อพัฒนาโรงเรียนไปด้วยกัน">
-	<meta property="og:image" content="https://sparkling-custard-884dae.netlify.app/og.png">
+	<meta property="og:image" content="http://schoolgov.actai.co/og.png">
 
 	<!-- Twitter Meta Tags -->
 	<meta name="twitter:card" content="summary_large_image">
-	<meta property="twitter:domain" content="sparkling-custard-884dae.netlify.app">
-	<meta property="twitter:url" content="https://sparkling-custard-884dae.netlify.app/">
+	<meta property="twitter:domain" content="schoolgov.actai.co">
+	<meta property="twitter:url" content="http://schoolgov.actai.co/">
 	<meta name="twitter:title" content="โปร่งใสวิทยาคม">
 	<meta name="twitter:description"
 		content="อยากเห็นโรงเรียนของพวกเรา เปลี่ยนไปในทางที่ดีขึ้นมั้ย? #โปร่งใสวิทยาคม ชวนทุกคนมาแลกเปลี่ยน เพื่อพัฒนาโรงเรียนไปด้วยกัน">
-	<meta name="twitter:image"
-		content="https://sparkling-custard-884dae.netlify.app/og.png">
+	<meta name="twitter:image" content="http://schoolgov.actai.co/og.png">
 
+	%sveltekit.head%
+</head>
+
+<body>
+	<div>%sveltekit.body%</div>
 	<link
 		href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@400;500;700&family=Mitr:wght@400;500;700&display=swap"
 		rel="stylesheet"
@@ -55,11 +59,6 @@
 	<script defer>
 		[...document.querySelectorAll("[data-lazy]")].forEach(l => l.media = "all")
 	</script>
-	%sveltekit.head%
-</head>
-
-<body>
-	<div>%sveltekit.body%</div>
 </body>
 
 </html>
