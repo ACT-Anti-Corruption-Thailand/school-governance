@@ -9,38 +9,23 @@
 	const COOKIT_OPTIONS = ['Functionality', 'Performance'] as const;
 	const DAYS_TO_EXPIRE = 30;
 
+	export let ga: any;
+	let ga_enabled = false;
+
 	const initAnalytics = (options: Record<typeof COOKIT_OPTIONS[number], boolean>) => {
-		// if (options.Functionality) {
-		// enable functionality analytics
-		// }
 		if (options.Performance) {
-			// enable performance analytics
+			ga_enabled = true;
 		}
 	};
+
+	$: if (ga_enabled && ga && ga?.init) {
+		ga.init();
+	}
 
 	let selectedCookies: Record<typeof COOKIT_OPTIONS[number], boolean> = {
 		Functionality: true,
 		Performance: true
 	};
-
-	// function createCookieSetting<T extends boolean>(
-	// 	value: T
-	// ): Record<typeof COOKIT_OPTIONS[number], T> | {} {
-	// 	return COOKIT_OPTIONS.length
-	// 		? COOKIT_OPTIONS.reduce(
-	// 				(obj, option) => ({
-	// 					...obj,
-	// 					[option]: value
-	// 				}),
-	// 				{}
-	// 		  )
-	// 		: {};
-	// }
-
-	// function openSetting() {
-	// 	selectedCookies = createCookieSetting(false);
-	// 	isSettingOpen = true;
-	// }
 
 	const save = (all = false) => {
 		const expiredAtMs = new Date().getTime() + DAYS_TO_EXPIRE * 24 * 60 * 60 * 1000;

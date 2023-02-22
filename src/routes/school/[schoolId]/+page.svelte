@@ -9,8 +9,16 @@
 
 	import { currentSchool, currentSchoolId, data_years, LATEST_COMPUTED_YEAR } from 'stores/school';
 	$: d = $currentSchool;
-	let latest_data_year = $data_years?.[0]?.year ?? +PUBLIC_BASE_YEAR;
-	let update_date = $data_years?.[0]?.update_date ?? '(เกิดข้อผิดพลาด กรุณาโหลดใหม่อีกครั้ง)';
+	let latest_data_year: undefined | number;
+	let update_date: undefined | string;
+
+	$: if ($data_years?.[0]?.year) {
+		latest_data_year = $data_years[0].year ?? +PUBLIC_BASE_YEAR;
+	}
+
+	$: if ($data_years?.[0]?.update_date) {
+		update_date = $data_years[0].update_date ?? '(เกิดข้อผิดพลาด กรุณาโหลดใหม่อีกครั้ง)';
+	}
 
 	let total_rating = 0;
 	let total_rating_count = 0;
@@ -40,6 +48,8 @@
 
 	let posts: any[] = [];
 	const fetchComments = async () => {
+		if (!$currentSchoolId) return;
+
 		try {
 			const comment_count_resp = await fetch(
 				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/comments/count`
@@ -67,9 +77,14 @@
 		return Number.isNaN(val) ? defaultVal : val;
 	};
 
-	onMount(() => {
+	$: if (mounted && $currentSchoolId) {
 		fetchScore();
 		fetchComments();
+	}
+
+	let mounted = false;
+	onMount(() => {
+		mounted = true;
 	});
 </script>
 

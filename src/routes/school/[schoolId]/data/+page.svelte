@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_DATA_HOST } from '$env/static/public';
+	import { PUBLIC_DATA_HOST, PUBLIC_BASE_YEAR } from '$env/static/public';
 
 	import { onMount, tick } from 'svelte';
 	import { scroll } from 'motion';
@@ -21,11 +21,17 @@
 
 	import { currentSchool, currentSchoolId, data_years } from 'stores/school';
 
-	let years = $data_years.map((y) => y.year);
-	let update_date = $data_years?.[0]?.update_date ?? '(เกิดข้อผิดพลาด กรุณาโหลดใหม่อีกครั้ง)';
+	let years: undefined | number[];
+	let update_date: undefined | string;
+	let DROPDOWN_DATA: undefined | { label: number; value: number }[];
+	let dropdown_choice: undefined | { label: number; value: number };
 
-	const DROPDOWN_DATA = years?.map((y) => ({ label: y + 543, value: y })) ?? [];
-	let dropdown_choice = DROPDOWN_DATA[0];
+	$: if ($data_years) {
+		years = $data_years?.map((y) => y.year) ?? [+PUBLIC_BASE_YEAR];
+		update_date = $data_years?.[0]?.update_date ?? '(เกิดข้อผิดพลาด กรุณาโหลดใหม่อีกครั้ง)';
+		DROPDOWN_DATA = years?.map((y) => ({ label: y + 543, value: y }));
+		dropdown_choice = DROPDOWN_DATA[0];
+	}
 
 	$: d = $currentSchool;
 
@@ -294,7 +300,9 @@
 			</li>
 		</menu>
 	</div>
-	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+	{#if DROPDOWN_DATA}
+		<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+	{/if}
 </SchoolHeader>
 
 <div class="jumpnav-compensate" />
