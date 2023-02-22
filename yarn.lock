@@ -2,6 +2,18 @@
 # yarn lockfile v1
 
 
+"@beyonk/async-script-loader@^2.2.2":
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/@beyonk/async-script-loader/-/async-script-loader-2.3.0.tgz#60868bff547f2122488f58b3b31b6bcde9a13dce"
+  integrity sha512-/vbDM5j8OHmtnWLx87sef0T/jGWVvZV6ILm3QFLpfRwSg0KmhQoAZnOT4XSaUL/EjOC9eMzgX5qtS2jztKzY2A==
+
+"@beyonk/svelte-google-analytics@^2.6.4":
+  version "2.6.4"
+  resolved "https://registry.yarnpkg.com/@beyonk/svelte-google-analytics/-/svelte-google-analytics-2.6.4.tgz#b4458d14cd749d9169b9251a24f2e8260c3bcd7c"
+  integrity sha512-m2P1fs36qObCLtIZ9edLC62RHLrGVknaKuE4uEBQk5+Jfy1apa7DOIT0Jq1PvScyrndV62FvyjUUrWwrXjYbmw==
+  dependencies:
+    "@beyonk/async-script-loader" "^2.2.2"
+
 "@esbuild/android-arm64@0.16.7":
   version "0.16.7"
   resolved "https://registry.yarnpkg.com/@esbuild/android-arm64/-/android-arm64-0.16.7.tgz#2df472016c77dba3e79596a84da74c541698910f"

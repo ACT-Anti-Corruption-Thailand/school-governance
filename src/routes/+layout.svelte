@@ -8,10 +8,12 @@
 	import MainNav from 'components/Navbar.svelte';
 	import CookieConsent from 'components/CookieConsent.svelte';
 	import GoTop from 'components/GoTop.svelte';
+	import { GoogleAnalytics } from '@beyonk/svelte-google-analytics';
 
 	import { data_years } from 'stores/school';
 
 	const LOCALSTORAGE_SCHOOL_DATA_YEARS = 'schoolDataYears';
+	let ga: any;
 
 	const fetchYearsData = () => {
 		fetch(`${PUBLIC_DATA_HOST}/years_data.json`)
@@ -33,9 +35,10 @@
 	});
 </script>
 
+<GoogleAnalytics bind:this={ga} properties={['G-2ZELRCMLRK']} enabled={false} />
 <Firebase />
 <MainNav />
-<CookieConsent />
+<CookieConsent {ga} />
 <main id="#main">
 	<slot />
 </main>
