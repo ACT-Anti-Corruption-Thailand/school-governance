@@ -25,12 +25,7 @@ interface DataYears {
 }
 
 export const computed_years = writable<number[]>(getSchoolYearList());
-export const data_years = writable<DataYears[]>([
-	{
-		year: +PUBLIC_BASE_YEAR,
-		update_date: '(เกิดข้อผิดพลาด กรุณาโหลดใหม่อีกครั้ง)'
-	}
-]);
+export const data_years = writable<null | DataYears[]>(null);
 
 export const LATEST_COMPUTED_YEAR = derived(computed_years, ($years) => $years?.[0]);
 export const REST_COMPUTED_YEAR = derived(computed_years, ($years) => {
