@@ -115,7 +115,7 @@
 		<a href="/" on:click={() => (show_menu = false)}>
 			<img
 				src="/logos/school_gov.svg"
-				alt=""
+				alt="home"
 				width="108"
 				height="40"
 				loading="lazy"
