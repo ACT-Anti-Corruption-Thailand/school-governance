@@ -3,6 +3,7 @@
 
 	import { onMount, tick } from 'svelte';
 	import { scroll } from 'motion';
+	import { balancer } from 'svelte-action-balancer';
 
 	import {
 		Dialog,
@@ -1258,7 +1259,7 @@
 						height="24"
 					/>
 				</div>
-				<div class="f">
+				<div class="f special">
 					{#each Array(Math.ceil(d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working)) as _}
 						<img
 							loading="lazy"
@@ -1306,7 +1307,7 @@
 				<div class="f">
 					<img loading="lazy" decoding="async" src="/icons/tv.svg" alt="" width="24" height="24" />
 				</div>
-				<div class="f">
+				<div class="f special">
 					{#each Array(Math.ceil(d.student.total.all / d.computer.learning.working)) as _}
 						<img
 							loading="lazy"
@@ -1806,9 +1807,11 @@
 		</div>
 
 		<footer>
-			<p>
+			<p use:balancer style="margin:auto">
 				สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่<br
 				/>
+			</p>
+			<p use:balancer style="margin:auto">
 				<a
 					href="https://data.bopp-obec.info/emis"
 					target="_blank"

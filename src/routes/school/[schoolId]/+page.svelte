@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { PUBLIC_BASE_YEAR, PUBLIC_API_HOST, PUBLIC_DATA_HOST } from '$env/static/public';
+
 	import { onMount } from 'svelte';
+	import { balancer } from 'svelte-action-balancer';
 
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import RatingStat from 'components/RatingStat.svelte';
@@ -370,12 +372,13 @@
 		<img loading="lazy" decoding="async" src="/icons/download.svg" alt="" width="24" height="24" />
 		<span>ดาวน์โหลดข้อมูลโรงเรียน</span>
 	</a>
-	<p>
-		สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่<br
-		/>
-		<a href="https://data.bopp-obec.info/emis" target="_blank" rel="nofollow noopener noreferrer"
-			>ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)</a
-		>
+	<p use:balancer style="margin:16px auto 0">
+		สามารถตรวจสอบความถูกต้องของข้อมูลเพื่อใช้ประกอบการอ้างอิงหรือติดต่อหน่วยงานต้นทางข้อมูลได้ที่
+	</p>
+	<p use:balancer style="margin:auto">
+		<a href="https://data.bopp-obec.info/emis" target="_blank" rel="nofollow noopener noreferrer">
+			ระบบสารสนเทศเพื่อการบริหารการศึกษา (Education Management Information System : EMIS)
+		</a>
 	</p>
 	<p class="download-update">อัปเดตข้อมูลล่าสุดเมื่อ {update_date}</p>
 </div>

@@ -97,7 +97,7 @@
 		/>
 		<p class="header-bridge-text">
 			ชวนทุกคนมาแลกเปลี่ยน<br class="hide-desktop" />
-			เพื่อพัฒนาโรงเรียนไปด้วยกัน
+			<span class="nobr">เพื่อพัฒนาโรงเรียนไปด้วยกัน</span>
 		</p>
 		<div class="header-detail">
 			<div class="f header-detail-col">
@@ -765,7 +765,8 @@
 	.heading-text-img {
 		width: 100%;
 		height: auto;
-		margin-inline: auto;
+		margin-left: auto;
+		margin-right: auto;
 		max-width: 420px;
 
 		@media screen and (min-width: 768px) {
@@ -952,7 +953,8 @@
 
 		.data-cards-container {
 			@media screen and (min-width: 992px) {
-				margin-inline: -30%;
+				margin-left: -30%;
+				margin-right: -30%;
 			}
 		}
 
@@ -1032,7 +1034,8 @@
 
 			@media screen and (min-width: 768px) {
 				flex-direction: row;
-				margin-inline: calc(-50% + 56px);
+				margin-left: calc(-50% + 56px);
+				margin-right: calc(-50% + 56px);
 			}
 
 			.feature-card {
@@ -1344,7 +1347,7 @@
 
 	.socialmedia-card {
 		padding: 16px;
-		margin-bottom: 16px;
+		margin: 0 auto 16px;
 		gap: 8px;
 
 		background: #fff;
@@ -1355,6 +1358,8 @@
 
 		transform: scale(0.8) translateY(50%);
 		opacity: 0;
+
+		max-width: 650px;
 
 		.smc-profile {
 			gap: 16px;
