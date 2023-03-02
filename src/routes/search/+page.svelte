@@ -548,12 +548,19 @@
 	@media screen and (min-width: 768px) {
 		.desktop-grid {
 			display: grid;
-			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 1fr 1fr;
 			gap: 40px;
+		}
+	}
+
+	@media screen and (min-width: 992px) {
+		.desktop-grid {
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: unset;
 
 			&.four {
 				grid-template-columns: 1fr 1fr;
-				grid-template-rows: 1fr 1fr;
 			}
 		}
 	}
