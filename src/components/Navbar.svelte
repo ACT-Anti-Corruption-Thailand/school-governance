@@ -854,6 +854,9 @@
 
 				> .nav-search {
 					width: 50%;
+					position: absolute;
+					left: 50%;
+					transform: translateX(-50%);
 				}
 			}
 		}
@@ -871,7 +874,8 @@
 
 				.nav-menu > li {
 					> a > span,
-					> .nav-btn {
+					> .nav-btn,
+					&.search-desktop-nav-list {
 						display: none;
 					}
 				}
