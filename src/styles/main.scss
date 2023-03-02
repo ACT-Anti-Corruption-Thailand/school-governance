@@ -64,15 +64,3 @@ button {
 .nobr {
 	white-space: nowrap;
 }
-
-html[style*='overflow'] {
-	position: fixed;
-	overflow: initial !important;
-	overflow-y: scroll !important;
-	width: 100%;
-	padding-right: 0 !important;
-
-	> body {
-		overflow-y: hidden;
-	}
-}

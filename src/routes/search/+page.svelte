@@ -39,14 +39,21 @@
 	const escapeRegExp = (string: string) => string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
 	let formatted_search_string: string;
+	let search_stats: 'blur' | 'searching' | 'showing_results' | 'error' = 'blur';
+	let search_controller = new AbortController();
 	const search = async (search_string: string) => {
+		search_controller.abort(); // abort all previous fetch
+
 		formatted_search_string = search_string.trim();
 		if (!formatted_search_string || formatted_search_string.length < 2) {
 			province_query = school_result = [];
 			school_result_count = 0;
+			search_stats = 'blur';
 			return;
 		}
 
+		search_controller = new AbortController();
+		search_stats = 'searching';
 		province_query = PROVINCES.filter((p) => p.match(escapeRegExp(formatted_search_string)));
 		province_display_list = province_query.slice(0, 5);
 		show_all_province = false;
@@ -54,17 +61,23 @@
 		try {
 			// ที่ต้องใช้ตัวนี้ เพราะต้องลิสต์ออกมาทั้งหมดก่อนเลย แต่ไม่ต้องการทุกตัวออกมาในเวลาเดียวกัน
 			const school_count_resp = await fetch(
-				`${PUBLIC_API_HOST}/schools/count?name=${encodeURIComponent(formatted_search_string)}`
+				`${PUBLIC_API_HOST}/schools/count?name=${encodeURIComponent(formatted_search_string)}`,
+				{ signal: search_controller.signal }
 			);
 			const school_count_json = await school_count_resp.json();
 			school_result_count = +school_count_json?.count ?? 0;
-		} catch (e) {
+		} catch (e: any) {
+			if ((e?.name ?? '') === 'AbortError') return;
 			console.error(e);
 			school_result_count = 0;
+			school_result = [];
+			search_stats = 'error';
+			return;
 		}
 
 		if (!school_result_count) {
 			school_result = [];
+			search_stats = 'showing_results';
 			return;
 		}
 		school_index = 10;
@@ -73,16 +86,18 @@
 			const school_data_resp = await fetch(
 				`${PUBLIC_API_HOST}/schools?name=${encodeURIComponent(
 					formatted_search_string
-				)}&limit=${SCHOOL_PER_REQUEST}`
+				)}&limit=${SCHOOL_PER_REQUEST}`,
+				{ signal: search_controller.signal }
 			);
 			const school_data_json = await school_data_resp.json();
 			school_result = school_data_json?.list ?? [];
-			if (school_result.length === 0) {
-			}
-		} catch (e) {
+			search_stats = 'showing_results';
+		} catch (e: any) {
+			if ((e?.name ?? '') === 'AbortError') return;
 			console.error(e);
 			school_result_count = 0;
 			school_result = [];
+			search_stats = 'error';
 		}
 	};
 
@@ -160,12 +175,23 @@
 		district: string;
 	};
 	let school_by_province: [string, SchoolMetadataType[]][] = [];
+	let school_by_province_stats: 'blur' | 'searching' | 'showing_results' | 'error' = 'blur';
+	let school_province_controller: AbortController = new AbortController();
 	const getSchoolByProvince = async (province: any) => {
-		if (province === 'เลือกจังหวัด') return (school_by_province = []);
+		school_province_controller.abort();
 
+		if (province === 'เลือกจังหวัด') {
+			school_by_province = [];
+			school_by_province_stats = 'blur';
+			return;
+		}
+
+		school_province_controller = new AbortController();
+		school_by_province_stats = 'searching';
 		try {
 			const school_resp = await fetch(
-				`${PUBLIC_API_HOST}/schools?province=${encodeURIComponent(province)}&limit=1000`
+				`${PUBLIC_API_HOST}/schools?province=${encodeURIComponent(province)}&limit=1000`,
+				{ signal: school_province_controller.signal }
 			);
 			const school_json = await school_resp.json();
 			if (school_json.list?.length) {
@@ -176,8 +202,11 @@
 			} else {
 				school_by_province = [];
 			}
-		} catch (e) {
+			school_by_province_stats = 'showing_results';
+		} catch (e: any) {
+			if ((e?.name ?? '') === 'AbortError') return;
 			console.error(e);
+			school_by_province_stats = 'error';
 		}
 	};
 
@@ -236,40 +265,60 @@
 		<ProvinceDropdown options={PROVINCES_CHOICE} bind:selected_option={selected_province} />
 	</div>
 
-	{#if school_by_province.length}
-		<section class="search-result inline">
-			{#each school_by_province as [district, school_data] (district)}
-				<details>
-					<summary>
-						<h2 class="f">
-							<span>{formatDistrict(district)}</span>
-							<small>พบ {school_data.length} โรงเรียน</small>
-							<img
-								class="summary-chevron"
-								loading="lazy"
-								decoding="async"
-								src="/chevrons/bottom.svg"
-								alt=""
-								width="20"
-								height="20"
-							/>
-						</h2>
-					</summary>
-					<ul>
-						{#each school_data as { schoolId, nameTh } (schoolId)}
-							<li>
-								<a
-									class="f"
-									href="/school/{schoolId}"
-									on:click={() => (($show_search = false), ($search_string = ''))}
-								>
-									{nameTh}
-								</a>
-							</li>
-						{/each}
-					</ul>
-				</details>
-			{/each}
+	{#if school_by_province_stats === 'showing_results'}
+		{#if school_by_province.length}
+			<section class="search-result inline">
+				{#each school_by_province as [district, school_data] (district)}
+					<details>
+						<summary>
+							<h2 class="f">
+								<span>{formatDistrict(district)}</span>
+								<small>พบ {school_data.length} โรงเรียน</small>
+								<img
+									class="summary-chevron"
+									loading="lazy"
+									decoding="async"
+									src="/chevrons/bottom.svg"
+									alt=""
+									width="20"
+									height="20"
+								/>
+							</h2>
+						</summary>
+						<ul>
+							{#each school_data as { schoolId, nameTh } (schoolId)}
+								<li>
+									<a
+										class="f"
+										href="/school/{schoolId}"
+										on:click={() => (($show_search = false), ($search_string = ''))}
+									>
+										{nameTh}
+									</a>
+								</li>
+							{/each}
+						</ul>
+					</details>
+				{/each}
+			</section>
+		{:else}
+			<section style="text-align:center;padding-top:32px">
+				<p style="font-size:1.2em;font-weight:700;margin-bottom:8px">
+					ไม่พบโรงเรียนในจังหวัด{selected_province}
+				</p>
+			</section>
+		{/if}
+	{:else if school_by_province_stats === 'searching'}
+		<section style="text-align:center;padding-top:32px">
+			<p style="font-size:1.2em;font-weight:700;margin-bottom:8px">
+				กำลังโหลดข้อมูลโรงเรียนในจังหวัด{selected_province}...
+			</p>
+		</section>
+	{:else if school_by_province_stats === 'error'}
+		<section style="text-align:center;padding-top:32px">
+			<p style="font-size:1.2em;font-weight:700;margin-bottom:8px">
+				เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง
+			</p>
 		</section>
 	{:else}
 		<div class="desktop-grid" class:four={$currentSchool}>
@@ -298,61 +347,82 @@
 		</div>
 	{/if}
 
-	{#if school_result.length || province_query.length}
-		<section class="search-result">
-			{#if province_query.length}
-				<h2 class="f">
-					<span>จังหวัด</span>
-					<small>พบ {province_query.length} จังหวัด</small>
-				</h2>
-				<ul>
-					{#each province_display_list as p}
-						<li>
-							<button type="button" on:click={setProvince(p)}>
-								{p}
-							</button>
-						</li>
-					{/each}
-					{#if province_query.length > 5 && !show_all_province}
-						<li>
-							<span class="f jcc more-button">
-								<button
-									type="button"
-									on:click={() => {
-										show_all_province = true;
-									}}>ดูทั้งหมด</button
+	{#if search_stats === 'showing_results'}
+		{#if school_result.length || province_query.length}
+			<section class="search-result">
+				{#if province_query.length}
+					<h2 class="f">
+						<span>จังหวัด</span>
+						<small>พบ {province_query.length} จังหวัด</small>
+					</h2>
+					<ul>
+						{#each province_display_list as p}
+							<li>
+								<button type="button" on:click={setProvince(p)}>
+									{p}
+								</button>
+							</li>
+						{/each}
+						{#if province_query.length > 5 && !show_all_province}
+							<li>
+								<span class="f jcc more-button">
+									<button
+										type="button"
+										on:click={() => {
+											show_all_province = true;
+										}}>ดูทั้งหมด</button
+									>
+								</span>
+							</li>
+						{/if}
+					</ul>
+				{/if}
+				{#if school_result.length}
+					<h2 class="f">
+						<span>โรงเรียน</span>
+						<small>พบ {school_result_count.toLocaleString()} โรงเรียน</small>
+					</h2>
+					<ul>
+						{#each school_result as { schoolId, nameTh } (schoolId)}
+							<li>
+								<a
+									class="f"
+									href="/school/{schoolId}"
+									on:click={() => (($show_search = false), ($search_string = ''))}
 								>
-							</span>
-						</li>
-					{/if}
-				</ul>
-			{/if}
-			{#if school_result.length}
-				<h2 class="f">
-					<span>โรงเรียน</span>
-					<small>พบ {school_result_count.toLocaleString()} โรงเรียน</small>
-				</h2>
-				<ul>
-					{#each school_result as { schoolId, nameTh } (schoolId)}
-						<li>
-							<a
-								class="f"
-								href="/school/{schoolId}"
-								on:click={() => (($show_search = false), ($search_string = ''))}
-							>
-								{nameTh}
-							</a>
-						</li>
-					{/each}
-					{#if school_index < school_result_count}
-						<li>
-							<span class="f jcc more-button">
-								<button type="button" on:click={appendSchool}>ดูเพิ่มเติม...</button>
-							</span>
-						</li>
-					{/if}
-				</ul>
-			{/if}
+									{nameTh}
+								</a>
+							</li>
+						{/each}
+						{#if school_index < school_result_count}
+							<li>
+								<span class="f jcc more-button">
+									<button type="button" on:click={appendSchool}>ดูเพิ่มเติม...</button>
+								</span>
+							</li>
+						{/if}
+					</ul>
+				{/if}
+			</section>
+		{:else}
+			<section class="search-result" style="text-align:center;padding-top:32px">
+				<p style="font-size:1.2em;font-weight:700;margin-bottom:8px">
+					ไม่พบโรงเรียน/จังหวัด "{formatted_search_string}"
+				</p>
+				<p>กรุณาลองค้นหาด้วยคำค้นหาอื่น</p>
+			</section>
+		{/if}
+	{:else if search_stats === 'searching'}
+		<section class="search-result" style="text-align:center;padding-top:32px">
+			<p style="font-size:1.2em;font-weight:700;margin-bottom:8px">
+				กำลังค้นหา "{formatted_search_string}"...
+			</p>
+		</section>
+	{:else if search_stats === 'error'}
+		<section class="search-result" style="text-align:center;padding-top:32px">
+			<p style="font-size:1.2em;font-weight:700;margin-bottom:8px">
+				เกิดข้อผิดพลาด กรุณาลองค้นหาด้วยคำค้นหาอื่น
+			</p>
 		</section>
 	{/if}
 </div>
@@ -478,12 +548,19 @@
 	@media screen and (min-width: 768px) {
 		.desktop-grid {
 			display: grid;
-			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-columns: 1fr 1fr;
+			grid-template-rows: 1fr 1fr;
 			gap: 40px;
+		}
+	}
+
+	@media screen and (min-width: 992px) {
+		.desktop-grid {
+			grid-template-columns: 1fr 1fr 1fr;
+			grid-template-rows: unset;
 
 			&.four {
 				grid-template-columns: 1fr 1fr;
-				grid-template-rows: 1fr 1fr;
 			}
 		}
 	}
