@@ -40,7 +40,10 @@
 
 	let formatted_search_string: string;
 	let search_stats: 'blur' | 'searching' | 'showing_results' | 'error' = 'blur';
+	let search_controller = new AbortController();
 	const search = async (search_string: string) => {
+		search_controller.abort(); // abort all previous fetch
+
 		formatted_search_string = search_string.trim();
 		if (!formatted_search_string || formatted_search_string.length < 2) {
 			province_query = school_result = [];
@@ -49,6 +52,7 @@
 			return;
 		}
 
+		search_controller = new AbortController();
 		search_stats = 'searching';
 		province_query = PROVINCES.filter((p) => p.match(escapeRegExp(formatted_search_string)));
 		province_display_list = province_query.slice(0, 5);
@@ -57,11 +61,13 @@
 		try {
 			// ที่ต้องใช้ตัวนี้ เพราะต้องลิสต์ออกมาทั้งหมดก่อนเลย แต่ไม่ต้องการทุกตัวออกมาในเวลาเดียวกัน
 			const school_count_resp = await fetch(
-				`${PUBLIC_API_HOST}/schools/count?name=${encodeURIComponent(formatted_search_string)}`
+				`${PUBLIC_API_HOST}/schools/count?name=${encodeURIComponent(formatted_search_string)}`,
+				{ signal: search_controller.signal }
 			);
 			const school_count_json = await school_count_resp.json();
 			school_result_count = +school_count_json?.count ?? 0;
-		} catch (e) {
+		} catch (e: any) {
+			if ((e?.name ?? '') === 'AbortError') return;
 			console.error(e);
 			school_result_count = 0;
 			school_result = [];
@@ -80,12 +86,14 @@
 			const school_data_resp = await fetch(
 				`${PUBLIC_API_HOST}/schools?name=${encodeURIComponent(
 					formatted_search_string
-				)}&limit=${SCHOOL_PER_REQUEST}`
+				)}&limit=${SCHOOL_PER_REQUEST}`,
+				{ signal: search_controller.signal }
 			);
 			const school_data_json = await school_data_resp.json();
 			school_result = school_data_json?.list ?? [];
 			search_stats = 'showing_results';
-		} catch (e) {
+		} catch (e: any) {
+			if ((e?.name ?? '') === 'AbortError') return;
 			console.error(e);
 			school_result_count = 0;
 			school_result = [];
@@ -168,17 +176,22 @@
 	};
 	let school_by_province: [string, SchoolMetadataType[]][] = [];
 	let school_by_province_stats: 'blur' | 'searching' | 'showing_results' | 'error' = 'blur';
+	let school_province_controller: AbortController = new AbortController();
 	const getSchoolByProvince = async (province: any) => {
+		school_province_controller.abort();
+
 		if (province === 'เลือกจังหวัด') {
 			school_by_province = [];
 			school_by_province_stats = 'blur';
 			return;
 		}
 
+		school_province_controller = new AbortController();
 		school_by_province_stats = 'searching';
 		try {
 			const school_resp = await fetch(
-				`${PUBLIC_API_HOST}/schools?province=${encodeURIComponent(province)}&limit=1000`
+				`${PUBLIC_API_HOST}/schools?province=${encodeURIComponent(province)}&limit=1000`,
+				{ signal: school_province_controller.signal }
 			);
 			const school_json = await school_resp.json();
 			if (school_json.list?.length) {
@@ -190,7 +203,8 @@
 				school_by_province = [];
 			}
 			school_by_province_stats = 'showing_results';
-		} catch (e) {
+		} catch (e: any) {
+			if ((e?.name ?? '') === 'AbortError') return;
 			console.error(e);
 			school_by_province_stats = 'error';
 		}
