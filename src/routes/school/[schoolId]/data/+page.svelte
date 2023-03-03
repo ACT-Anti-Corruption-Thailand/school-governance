@@ -2220,6 +2220,7 @@
 			aspect-ratio: 1;
 			border-top: 2px var(--std-color) solid;
 			cursor: zoom-in;
+			object-fit: cover;
 
 			&.no-zoom {
 				cursor: auto;
@@ -2267,6 +2268,7 @@
 					aspect-ratio: 1;
 					border-top: 2px var(--std-color) solid;
 					cursor: zoom-in;
+					object-fit: cover;
 
 					&.no-zoom {
 						cursor: auto;
