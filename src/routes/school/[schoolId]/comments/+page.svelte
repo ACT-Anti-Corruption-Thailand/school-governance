@@ -814,6 +814,7 @@
 
 	.comment-images:not(:empty) {
 		margin: 4px 0;
+		overflow-x: auto;
 	}
 
 	.comment-images > button {
