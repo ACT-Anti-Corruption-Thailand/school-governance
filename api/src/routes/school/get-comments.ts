@@ -1,4 +1,3 @@
-import fetch from 'node-fetch';
 import { nocoConfig, nocodb } from '../../utils/nocodb.js';
 
 export interface SchoolCommentsQuery {
@@ -47,18 +46,7 @@ export async function getSchoolComments(
 }
 
 export async function getSchoolCommentsCount(schoolId: string) {
-	const resp = await fetch(
-		`${process.env.NOCODB_URL}/api/v1/db/data/v1/${
-			process.env.NOCODB_PROJECT
-		}/SchoolComments/count?where=${encodeURIComponent(
-			`(schoolId,eq,${schoolId})~and(approved,eq,true)`
-		)}`,
-		{
-			method: 'GET',
-			headers: {
-				'xc-token': process.env.NOCODB_TOKEN
-			}
-		}
-	);
-	return await resp.json();
+	return nocodb.dbViewRow.count(...nocoConfig, 'SchoolComments', 'SchoolComments', {
+		where: `(schoolId,eq,${schoolId})~and(approved,eq,true)`
+	});
 }

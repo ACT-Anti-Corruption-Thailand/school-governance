@@ -333,8 +333,8 @@
 				<SchoolList school_list={latestActivityList} />
 			</section>
 			<section>
-				<h2>โรงเรียนที่มีคะแนนเสียงมากที่สุด</h2>
-				<SchoolList school_list={mostRatingList} />
+				<h2>โรงเรียนที่มีจำนวนรีวิวมากที่สุด</h2>
+				<SchoolList school_list={mostRatingList} is_count_rating />
 			</section>
 			<section>
 				<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>

@@ -1,4 +1,5 @@
 <script lang="ts">
+	export let noFormat = false;
 	export let rating: number | undefined;
 </script>
 
@@ -12,6 +13,8 @@
 />
 {#if rating === null || rating === undefined || Number.isNaN(rating) || typeof rating !== 'number'}
 	<span class="header-score-text">—</span>
+{:else if noFormat}
+	<span class="header-score-text">{rating || 0}</span>
 {:else}
 	<span class="header-score-text">{(rating || 0).toFixed(1)}</span>
 {/if}

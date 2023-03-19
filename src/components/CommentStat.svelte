@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let comment: number;
+	export let comment: number | undefined;
 </script>
 
 <img
@@ -10,7 +10,11 @@
 	loading="lazy"
 	decoding="async"
 />
-<span class="header-score-text">{comment}</span>
+{#if comment === null || comment === undefined || Number.isNaN(comment) || typeof comment !== 'number'}
+	<span class="header-score-text">...</span>
+{:else}
+	<span class="header-score-text">{comment}</span>
+{/if}
 
 <style lang="scss">
 	.header-score-text {

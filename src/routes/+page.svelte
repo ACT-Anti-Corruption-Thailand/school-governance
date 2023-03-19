@@ -183,7 +183,7 @@
 				value="score"
 			/>
 			<label for="school-list-choice2" class="f radio-pill">
-				<span>คะแนนเสียงมากที่สุด</span>
+				<span>จำนวนรีวิว</span>
 			</label>
 			<input
 				id="school-list-choice3"
@@ -207,7 +207,7 @@
 			</label>
 		</div>
 	</div>
-	<SchoolList school_list={schoolList} />
+	<SchoolList is_count_rating={schoolListType === 'score'} school_list={schoolList} />
 </section>
 
 <section class="information" id="information">

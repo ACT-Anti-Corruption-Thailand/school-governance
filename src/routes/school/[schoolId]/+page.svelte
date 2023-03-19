@@ -30,19 +30,32 @@
 	let gym_avg = 0;
 	let total_comment = 0;
 
+	interface SchoolJsonSchema {
+		count?: {
+			total: number;
+		};
+		rating?: {
+			classroom: number;
+			toilet: number;
+			canteen: number;
+			gym: number;
+			total: number;
+		};
+	}
+
 	const fetchScore = async () => {
 		if (!$currentSchoolId) return;
 
 		try {
 			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/rating`);
-			const school_json = await school_resp.json();
+			const school_json = (await school_resp.json()) as SchoolJsonSchema;
 
-			total_rating_count = school_json.count.total;
-			classroom_avg = school_json.rating.classroom;
-			toilet_avg = school_json.rating.toilet;
-			canteen_avg = school_json.rating.canteen;
-			gym_avg = school_json.rating.gym;
-			total_rating = school_json.rating.total;
+			total_rating_count = school_json?.count?.total ?? 0;
+			classroom_avg = school_json?.rating?.classroom ?? 0;
+			toilet_avg = school_json?.rating?.toilet ?? 0;
+			canteen_avg = school_json?.rating?.canteen ?? 0;
+			gym_avg = school_json?.rating?.gym ?? 0;
+			total_rating = school_json?.rating?.total ?? 0;
 		} catch (e) {
 			console.error(e);
 		}
@@ -57,7 +70,7 @@
 				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/comments/count`
 			);
 			const comment_count_json = await comment_count_resp.json();
-			total_comment = comment_count_json.count;
+			total_comment = +comment_count_json.count;
 
 			const location_query = 'classroom,toilet,canteen,gym,other';
 			const api_query = `locations=${encodeURIComponent(

@@ -10,6 +10,7 @@
 	import SchoolRating from './SchoolMiniStats.svelte';
 	import { Lottie } from 'lottie-svelte';
 
+	export let is_count_rating = false;
 	export let school_list: SchoolData[];
 </script>
 
@@ -26,7 +27,7 @@
 							</div>
 						{/if}
 					</div>
-					<SchoolRating schoolId={school.id} />
+					<SchoolRating count_score={is_count_rating} schoolId={school.id} />
 				</a>
 			</li>
 		{/each}

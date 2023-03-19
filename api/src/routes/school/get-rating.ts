@@ -9,15 +9,6 @@ const schoolRatingColumes = ['count', 'sum'].flatMap((col) =>
 export async function getSchoolRating(schoolId?: string) {
 	if (!schoolId) return;
 
-	const { count } = await nocodb.dbViewRow.count(
-		...nocoConfig,
-		'SchoolComments',
-		'SchoolComments',
-		{
-			where: `(schoolId,eq,${schoolId})~and(approved,eq,true)`
-		}
-	);
-
 	let ratingData = await nocodb.dbViewRow.findOne(...nocoConfig, 'SchoolIndex', 'SchoolRating', {
 		fields: schoolRatingColumes,
 		where: `(schoolId,eq,${schoolId})`
@@ -65,7 +56,6 @@ export async function getSchoolRating(schoolId?: string) {
 
 	return {
 		count: {
-			row: +count,
 			total: total_rating_count,
 			classroom: +ratingData?.countC1,
 			toilet: +ratingData?.countT1,
