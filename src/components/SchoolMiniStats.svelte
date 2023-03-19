@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { PUBLIC_API_HOST } from '$env/static/public';
-
 	import { onMount } from 'svelte';
 
 	import RatingStat from './RatingStat.svelte';
 	import CommentStat from './CommentStat.svelte';
 
-	import { schoolStatsCache } from 'stores/school_stats_cache';
+	import { fetchSchoolStats, schoolStatsCache } from 'stores/school_stats_cache';
 
 	export let schoolId: string = '';
 	export let noFetch = false;
@@ -16,9 +14,9 @@
 	export let ratingCount = 0;
 	export let comment = 0;
 
-	let _rating: undefined | number = undefined;
-	let _ratingCount: undefined | number = undefined;
 	let _comment: undefined | number = undefined;
+	let _ratingCount: undefined | number = undefined;
+	let _rating: undefined | number = undefined;
 
 	const fetchScore = async () => {
 		if (!schoolId) return;
@@ -29,36 +27,12 @@
 			return;
 		}
 
-		try {
-			fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/comments/count`)
-				.then((resp) => resp.json())
-				.then((json) => {
-					_comment = +json.count;
+		[_comment, _ratingCount, _rating] = await fetchSchoolStats(schoolId);
 
-					updateStore();
-				});
-
-			fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating`)
-				.then((resp) => resp.json())
-				.then((json) => {
-					_ratingCount = +json.count.total;
-					_rating = +json.rating.total;
-
-					updateStore();
-				});
-		} catch (e) {
-			console.error(e);
-		}
-	};
-
-	// called when score and rating is fetched. it will check if we have both
-	// `_comment`, `_ratingCount`, and `_rating` and update the store
-	const updateStore = () => {
 		if (_comment === undefined || _ratingCount === undefined || _rating === undefined) return;
-
 		$schoolStatsCache = {
 			...$schoolStatsCache,
-			[schoolId]: { comment: _comment, rating: _rating, ratingCount: _ratingCount }
+			[schoolId]: { comment: _comment, ratingCount: _ratingCount, rating: _rating }
 		};
 	};
 

@@ -21,6 +21,7 @@
 	import { currentUser } from 'stores/firebaseapp';
 	import { LATEST_COMPUTED_YEAR, computed_years } from 'stores/school';
 	import { login_modal_isopen } from 'stores/login_modal';
+	import { fetchSchoolStats, schoolStatsCache } from 'stores/school_stats_cache';
 
 	$: schoolId = $page.params.schoolId;
 
@@ -43,7 +44,7 @@
 		try {
 			const resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/comments?${api_query}`);
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
 		}
@@ -71,7 +72,7 @@
 				}
 			);
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
 		}
@@ -96,7 +97,7 @@
 				})
 			});
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
 		}
@@ -124,7 +125,8 @@
 				}
 			);
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
+			updateStats();
 		} catch (err) {
 			console.error(err);
 		} finally {
@@ -179,7 +181,8 @@
 				})
 			});
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
+			updateStats();
 		} catch (err) {
 			console.error(err);
 		} finally {
@@ -188,6 +191,16 @@
 			sent_comment_modal_isopen = true;
 			is_posting_comment = false;
 		}
+	};
+
+	const updateStats = async () => {
+		const [_comment, _ratingCount, _rating] = await fetchSchoolStats(schoolId);
+
+		if (_comment === undefined || _ratingCount === undefined || _rating === undefined) return;
+		$schoolStatsCache = {
+			...$schoolStatsCache,
+			[schoolId]: { comment: _comment, ratingCount: _ratingCount, rating: _rating }
+		};
 	};
 
 	let posts: any[] = [];

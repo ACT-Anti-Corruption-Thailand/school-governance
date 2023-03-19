@@ -19,6 +19,7 @@
 	import { currentUser } from 'stores/firebaseapp';
 	import { computed_years } from 'stores/school';
 	import { login_modal_isopen } from 'stores/login_modal';
+	import { fetchSchoolStats, schoolStatsCache } from 'stores/school_stats_cache';
 
 	$: schoolId = $page.params.schoolId;
 
@@ -328,6 +329,7 @@
 			quiz_gym_done = currentUser.gDone ?? false;
 
 			assignSchoolScore(school);
+			updateStats();
 
 			quiz_isopen = false;
 			tick().then(() => {
@@ -338,6 +340,16 @@
 		} finally {
 			is_submitting = false;
 		}
+	};
+
+	const updateStats = async () => {
+		const [_comment, _ratingCount, _rating] = await fetchSchoolStats(schoolId);
+
+		if (_comment === undefined || _ratingCount === undefined || _rating === undefined) return;
+		$schoolStatsCache = {
+			...$schoolStatsCache,
+			[schoolId]: { comment: _comment, ratingCount: _ratingCount, rating: _rating }
+		};
 	};
 
 	const openQuizModal = () => {
