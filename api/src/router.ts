@@ -13,6 +13,7 @@ import { setUserRatingRecord } from './routes/rating/set.js';
 import { searchSchool, countSchool } from './routes/school/search.js';
 import { topComment, topRating } from './routes/school/top.js';
 import { latestActivity } from './routes/school/latest.js';
+// import { backup } from './rating/backup.js';
 
 export const convertBodyToQuery = (body: SchoolCommentsBody): SchoolCommentsQuery => {
 	return {
@@ -41,6 +42,7 @@ export function registerRoutes(app: FastifyInstance) {
 		'/testauth',
 		withAuth((_req, _resp, uid) => `Welcome ${uid} Auth is good :)`)
 	);
+	// app.get('/testbak', backup);
 
 	app.get('/schools', (req) => {
 		const query = z
