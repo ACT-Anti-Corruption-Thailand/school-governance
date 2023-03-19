@@ -355,7 +355,12 @@
 <div class="comment-btn-compensate" />
 
 {#if $currentUser}
-	<Modal title="เพิ่มความเห็นใหม่" hideTitle bind:isOpen={comment_modal_isopen}>
+	<Modal
+		title="เพิ่มความเห็นใหม่"
+		hideTitle
+		bind:isOpen={comment_modal_isopen}
+		disabled_close={is_posting_comment}
+	>
 		<button
 			class="cf-submit"
 			type="button"
@@ -364,7 +369,7 @@
 			slot="title"
 		>
 			{#if is_posting_comment}
-				กำลังโพสต์...
+				กำลังส่งความเห็น...
 			{:else}
 				ส่งความเห็น
 			{/if}
