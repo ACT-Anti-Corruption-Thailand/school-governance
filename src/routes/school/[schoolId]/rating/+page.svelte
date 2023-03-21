@@ -1171,7 +1171,7 @@
 	<div class="card">
 		<div class="f">
 			<h3 class="fw400">แบ่งตามด้าน</h3>
-			<Dropdown options={METRIC_DROPDOWN} bind:selected_option={metric_choice} />
+			<Dropdown options={METRIC_DROPDOWN} bind:selected_option={metric_choice} noZ />
 		</div>
 		<ScoreDiagram
 			score_enough={school_enough_avg}

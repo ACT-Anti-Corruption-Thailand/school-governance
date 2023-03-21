@@ -12,10 +12,11 @@
 		icon?: string;
 	}[];
 	export let selected_option = options[0];
+	export let noZ = false;
 </script>
 
 <Listbox
-	class="dropdown-root"
+	class="dropdown-root {noZ ? 'no-z' : ''}"
 	value={selected_option}
 	on:change={(e) => (selected_option = e.detail)}
 >
@@ -48,6 +49,9 @@
 <style lang="scss">
 	:global(.dropdown-root) {
 		position: relative;
+	}
+
+	:global(.dropdown-root:not(.no-z)) {
 		z-index: 10;
 	}
 
