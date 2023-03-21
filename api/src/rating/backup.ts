@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import fetch from 'node-fetch';
+import { getCurrentSchoolYear } from '../utils/school.js';
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
-
-function getCurrentSchoolYear() {
-	const now = new Date();
-	return now.getFullYear() - +(now.getMonth() < 4);
-}
 
 export async function backup() {
 	console.time('MOVE TABLE');

@@ -1,5 +1,6 @@
 import { PUBLIC_API_HOST } from '$env/static/public';
 import { writable } from 'svelte/store';
+import { getCurrentSchoolYear } from 'stores/school';
 
 export const schoolStatsCache = writable<
 	Record<string, { rating?: number; ratingCount?: number; comment?: number }>
@@ -19,7 +20,9 @@ export const fetchSchoolStats = async (
 				_comment = +json.count;
 			});
 
-		const rating_fetch = fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating`)
+		const rating_fetch = fetch(
+			`${PUBLIC_API_HOST}/schools/${schoolId}/rating/${getCurrentSchoolYear()}`
+		)
 			.then((resp) => resp.json())
 			.then((json) => {
 				_ratingCount = +json.count.total;

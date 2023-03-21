@@ -194,11 +194,11 @@
 		mounted = true;
 	});
 
-	$: if (mounted && schoolId) {
+	$: if (mounted && schoolId && dropdown_choice) {
 		fetchData();
 	}
 
-	$: if (mounted && schoolId && $currentUser) {
+	$: if (mounted && schoolId && $currentUser && dropdown_choice) {
 		fetchUserRow();
 	}
 
@@ -240,9 +240,11 @@
 	};
 
 	const fetchData = async () => {
+		const { value: year } = dropdown_choice;
+
 		try {
 			// get school overall rating
-			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating`);
+			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating/${year}`);
 			const school_json = await school_resp.json();
 
 			assignSchoolScore(school_json);
@@ -367,7 +369,9 @@
 	<meta name="twitter:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม" />
 </svelte:head>
 
-<SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }} />
+<SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
+	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+</SchoolHeader>
 
 <button type="button" class="f rate-btn" on:click={openQuizModal}>
 	<span>แล้วคุณละ ให้กี่คะแนน?</span>

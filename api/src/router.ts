@@ -204,14 +204,15 @@ export function registerRoutes(app: FastifyInstance) {
 		})
 	);
 
-	app.get('/schools/:schoolId/rating', ({ params }) => {
-		const { schoolId } = z
+	app.get('/schools/:schoolId/rating/:year', ({ params }) => {
+		const { schoolId, year } = z
 			.object({
-				schoolId: z.string()
+				schoolId: z.string(),
+				year: z.string()
 			})
 			.parse(params);
 
-		return getSchoolRating(schoolId);
+		return getSchoolRating(schoolId, year);
 	});
 
 	app.get(

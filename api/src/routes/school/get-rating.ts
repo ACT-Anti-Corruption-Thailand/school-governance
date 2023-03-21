@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { nocoConfig, nocodb } from '../../utils/nocodb.js';
+import { getCurrentSchoolYear } from '../../utils/school.js';
 
 const MAX_RATING = 4;
 
@@ -6,13 +8,28 @@ const schoolRatingColumes = ['count', 'sum'].flatMap((col) =>
 	['C', 'T', 'F', 'G'].flatMap((char) => [1, 2, 3, 4, 5].map((num) => `${col}${char}${num}`))
 );
 
-export async function getSchoolRating(schoolId?: string) {
+export async function getSchoolRating(schoolId?: string, year?: string) {
 	if (!schoolId) return;
 
-	let ratingData = await nocodb.dbViewRow.findOne(...nocoConfig, 'SchoolIndex', 'SchoolRating', {
-		fields: schoolRatingColumes,
-		where: `(schoolId,eq,${schoolId})`
-	});
+	const currentYear = getCurrentSchoolYear();
+
+	let ratingData: any;
+	if (+year >= (process.env.BASE_YEAR ?? 2022) && +year < currentYear) {
+		ratingData = await nocodb.dbViewRow.findOne(
+			...nocoConfig,
+			'SchoolIndexRatingHistory',
+			'SchoolIndexRatingHistory',
+			{
+				fields: schoolRatingColumes,
+				where: `(schoolId,eq,${schoolId})~and(year,eq,${year})`
+			}
+		);
+	} else {
+		ratingData = await nocodb.dbViewRow.findOne(...nocoConfig, 'SchoolIndex', 'SchoolRating', {
+			fields: schoolRatingColumes,
+			where: `(schoolId,eq,${schoolId})`
+		});
+	}
 
 	ratingData = Object.entries(ratingData).reduce(
 		(obj, [key, value]) => ({ ...obj, [key]: +value }),

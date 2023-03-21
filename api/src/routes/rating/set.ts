@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { nocoConfig, nocodb } from '../../utils/nocodb.js';
+import { getCurrentSchoolYear } from '../../utils/school.js';
 import { getSchoolRating } from '../school/get-rating.js';
 import { getUserRatingRecord } from './get.js';
 
@@ -7,14 +8,10 @@ type QuizBody = {
 	[key: string]: number;
 };
 
-function getCurrentSchoolYear() {
-	const now = new Date();
-	return now.getFullYear() - +(now.getMonth() < 4);
-}
-
 export async function setUserRatingRecord(userId: string, schoolId: string, quizBody: QuizBody) {
 	const existingRecord = await getUserRatingRecord(userId, schoolId);
 
+	const currentSchoolYear = getCurrentSchoolYear();
 	let currentUser: any;
 	if (existingRecord?.Id) {
 		currentUser = await nocodb.dbTableRow.update(
@@ -33,7 +30,7 @@ export async function setUserRatingRecord(userId: string, schoolId: string, quiz
 			'SchoolUserRatingHistory',
 			{
 				fields: ['userId'],
-				where: `(userId,eq,${userId})~and(schoolId,eq,${schoolId})`
+				where: `(userId,eq,${userId})~and(schoolId,eq,${schoolId})~and(year,eq,${currentSchoolYear})`
 			}
 		);
 
@@ -48,7 +45,7 @@ export async function setUserRatingRecord(userId: string, schoolId: string, quiz
 			await nocodb.dbTableRow.create(...nocoConfig, 'SchoolUserRatingHistory', {
 				userId,
 				schoolId,
-				year: getCurrentSchoolYear(),
+				year: currentSchoolYear,
 				...quizBody
 			});
 		}
@@ -63,7 +60,7 @@ export async function setUserRatingRecord(userId: string, schoolId: string, quiz
 		await nocodb.dbTableRow.create(...nocoConfig, 'SchoolUserRatingHistory', {
 			userId,
 			schoolId,
-			year: getCurrentSchoolYear(),
+			year: currentSchoolYear,
 			...quizBody
 		});
 	}

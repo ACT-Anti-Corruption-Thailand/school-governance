@@ -45,9 +45,12 @@
 
 	const fetchScore = async () => {
 		if (!$currentSchoolId) return;
+		if (!$LATEST_COMPUTED_YEAR) return;
 
 		try {
-			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/rating`);
+			const school_resp = await fetch(
+				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/rating/${$LATEST_COMPUTED_YEAR}`
+			);
 			const school_json = (await school_resp.json()) as SchoolJsonSchema;
 
 			total_rating_count = school_json?.count?.total ?? 0;
@@ -64,6 +67,7 @@
 	let posts: any[] = [];
 	const fetchComments = async () => {
 		if (!$currentSchoolId) return;
+		if (!$LATEST_COMPUTED_YEAR) return;
 
 		try {
 			const comment_count_resp = await fetch(
@@ -92,7 +96,7 @@
 		return Number.isNaN(val) ? defaultVal : val;
 	};
 
-	$: if (mounted && $currentSchoolId) {
+	$: if (mounted && $currentSchoolId && $LATEST_COMPUTED_YEAR) {
 		fetchScore();
 		fetchComments();
 	}
