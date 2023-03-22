@@ -17,7 +17,7 @@
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
-	import { computed_years } from 'stores/school';
+	import { computed_years, LATEST_COMPUTED_YEAR } from 'stores/school';
 	import { login_modal_isopen } from 'stores/login_modal';
 	import { fetchSchoolStats, schoolStatsCache } from 'stores/school_stats_cache';
 
@@ -373,12 +373,14 @@
 	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
 </SchoolHeader>
 
-<button type="button" class="f rate-btn" on:click={openQuizModal}>
-	<span>แล้วคุณละ ให้กี่คะแนน?</span>
-	<div class="school-quiz-lottie">
-		<Lottie path="/lotties/littlestar.json" loop={true} autoplay={true} />
-	</div>
-</button>
+{#if dropdown_choice && +dropdown_choice.value === +$LATEST_COMPUTED_YEAR}
+	<button type="button" class="f rate-btn" on:click={openQuizModal}>
+		<span>แล้วคุณละ ให้กี่คะแนน?</span>
+		<div class="school-quiz-lottie">
+			<Lottie path="/lotties/littlestar.json" loop={true} autoplay={true} />
+		</div>
+	</button>
+{/if}
 
 <!--  ██████╗ ██╗   ██╗██╗███████╗ -->
 <!-- ██╔═══██╗██║   ██║██║╚══███╔╝ -->
@@ -802,7 +804,10 @@
 	</div>
 </Modal>
 
-<div class="desktop-margin">
+<div
+	class="desktop-margin"
+	class:top-margin={dropdown_choice && +dropdown_choice.value === +$LATEST_COMPUTED_YEAR}
+>
 	<div class="card">
 		<div class="f">
 			<h3 class="mitr">คะแนนตามเกณฑ์มาตรฐาน</h3>
@@ -1313,7 +1318,10 @@
 			width: 100%;
 			max-width: 640px;
 			margin: auto;
-			margin-top: 73px;
+
+			&.top-margin {
+				margin-top: 73px;
+			}
 		}
 	}
 
