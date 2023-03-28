@@ -1,4 +1,5 @@
 import { nocoConfig, nocodb } from '../../utils/nocodb.js';
+import { getCurrentSchoolYear } from '../../utils/school.js';
 
 export interface SchoolCommentsQuery {
 	locations?: string;
@@ -47,6 +48,6 @@ export async function getSchoolComments(
 
 export async function getSchoolCommentsCount(schoolId: string) {
 	return nocodb.dbViewRow.count(...nocoConfig, 'SchoolComments', 'SchoolComments', {
-		where: `(schoolId,eq,${schoolId})~and(approved,eq,true)`
+		where: `(schoolId,eq,${schoolId})~and(approved,eq,true)~and(schoolYear,eq,${getCurrentSchoolYear()})`
 	});
 }
