@@ -883,6 +883,7 @@
 		text-align: center;
 		color: #3c55ab;
 		padding: 0 16px 24px;
+		scroll-margin-top: 104px;
 
 		> h2 {
 			font-family: 'Mitr';
@@ -1195,6 +1196,7 @@
 		}
 
 		.information {
+			scroll-margin-top: 128px;
 			> h2 {
 				gap: 32px;
 
