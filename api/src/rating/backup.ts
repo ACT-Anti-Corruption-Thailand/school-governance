@@ -5,6 +5,7 @@ import { getCurrentSchoolYear } from '../utils/school.js';
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export async function backup() {
+	console.log('🗃 Backup Function Called');
 	console.time('MOVE TABLE');
 	try {
 		//  ██████╗ ██████╗ ██████╗ ██╗   ██╗

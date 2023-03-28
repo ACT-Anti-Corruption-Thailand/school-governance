@@ -37,12 +37,20 @@ app.setErrorHandler(function (error, request, reply) {
 	try {
 		await app.listen({ port: 3000, host: '0.0.0.0' });
 		console.log('🏫 Server is running at //[::1]:3000/');
+		console.log(`TS: ${Date.now()} (${new Date().toLocaleString('th-TH')})`);
 	} catch (err) {
 		app.log.error(err);
 		process.exit(1);
 	}
 })();
 
-cron.schedule('55 23 30 4 *', () => {
-	backup();
-});
+cron.schedule(
+	'55 23 30 4 *',
+	() => {
+		console.log('⏲ Backup Cron Called');
+		backup();
+	},
+	{
+		timezone: 'Asia/Bangkok'
+	}
+);
