@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { PUBLIC_API_HOST } from '$env/static/public';
+	import { PUBLIC_API_HOST, PUBLIC_SITE_HOST } from '$env/static/public';
 
 	import { onMount, tick } from 'svelte';
 
@@ -159,6 +159,10 @@
 					body: formData
 				});
 
+				if (!resp.ok) {
+					throw new Error('Upload Error', { cause: resp });
+				}
+
 				uploaded_files = await resp.json();
 			}
 
@@ -289,6 +293,8 @@
 		);
 	};
 
+	// check if images is parseable
+	// because it may be string
 	const parseImagesVal = (
 		images: any
 	): {
@@ -299,7 +305,9 @@
 		if (typeof images === 'string') {
 			_imgs = JSON.parse(images);
 		}
-		if (Array.isArray(_imgs)) return _imgs;
+		if (Array.isArray(_imgs)) {
+			return _imgs.map((i) => ('url' in i ? i : { ...i, url: PUBLIC_SITE_HOST + '/' + i.path }));
+		}
 		return [];
 	};
 

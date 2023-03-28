@@ -25,6 +25,7 @@ export function withAuth(handler: HandlerWithUserId): RouteHandler {
 			const decodedToken = await getAuth().verifyIdToken(token.trim());
 			return handler(request, reply, decodedToken.uid);
 		} catch (err) {
+			console.log('🔥 Firebase auth error');
 			reply.code(401).send(err.errorInfo);
 		}
 	};
