@@ -23,7 +23,7 @@
 						<div class="school-list-title">โรงเรียน{school.name}</div>
 						{#if school.latestPost}
 							<div class="school-list-date">
-								โพสต์ล่าสุด {new Date(school.latestPost).toLocaleDateString()}
+								โพสต์ล่าสุด {new Date(school.latestPost).toLocaleDateString('th-TH')}
 							</div>
 						{/if}
 					</div>

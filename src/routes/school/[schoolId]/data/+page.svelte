@@ -312,7 +312,7 @@
 	{#if d}
 		<h2 bind:this={el_student_section} id="student-section" class="f">
 			<span>นักเรียน <small>(คน)</small></span>
-			<span>{d.student.total.all.toLocaleString()}</span>
+			<span>{d.student.total.all.toLocaleString('th-TH')}</span>
 		</h2>
 		<section>
 			<div class="f">
@@ -320,7 +320,7 @@
 					เฉลี่ยนักเรียนห้องละ <small>(คน)</small>
 				</span>
 				<span class="mitr"
-					>{Math.ceil(d.student.total.all / d.student.total.class).toLocaleString()}</span
+					>{Math.ceil(d.student.total.all / d.student.total.class).toLocaleString('th-TH')}</span
 				>
 			</div>
 			<hr />
@@ -406,7 +406,7 @@
 							อนุบาล
 							<span class="std-unit fs10">(คน)</span>
 						</span>
-						<span class="std-size-count">{d.student.total.อ.toLocaleString()}</span>
+						<span class="std-size-count">{d.student.total.อ.toLocaleString('th-TH')}</span>
 						<img
 							loading="lazy"
 							decoding="async"
@@ -417,58 +417,58 @@
 						/>
 					</button>
 					<Modal
-						title={`อนุบาล ${d.student.total.อ.toLocaleString()} คน`}
+						title={`อนุบาล ${d.student.total.อ.toLocaleString('th-TH')} คน`}
 						bind:isOpen={อ_modal_open}
 					>
 						<div class="f mitr modal-section-header">
 							<span>อนุบาล 1</span>
-							<span class="mitr">{d.student.อ1.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.อ1.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.อ1.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.อ1.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.อ1.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ1.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.อ1.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ1.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
 							<span>อนุบาล 2</span>
-							<span class="mitr">{d.student.อ2.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.อ2.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.อ2.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.อ2.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.อ2.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ2.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.อ2.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ2.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
 							<span>อนุบาล 3</span>
-							<span class="mitr">{d.student.อ3.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.อ3.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.อ3.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.อ3.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.อ3.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ3.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.อ3.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.อ3.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 					</Modal>
@@ -486,7 +486,7 @@
 							ประถม
 							<span class="std-unit fs10">(คน)</span>
 						</span>
-						<span class="std-size-count">{d.student.total.ป.toLocaleString()}</span>
+						<span class="std-size-count">{d.student.total.ป.toLocaleString('th-TH')}</span>
 						<img
 							loading="lazy"
 							decoding="async"
@@ -497,109 +497,109 @@
 						/>
 					</button>
 					<Modal
-						title={`ประถม ${d.student.total.ป.toLocaleString()} คน`}
+						title={`ประถม ${d.student.total.ป.toLocaleString('th-TH')} คน`}
 						bind:isOpen={ป_modal_open}
 					>
 						<div class="f mitr modal-section-header">
 							<span>ประถม 1</span>
-							<span class="mitr">{d.student.ป1.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป1.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ป1.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป1.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ป1.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป1.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.ป1.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป1.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
 							<span>ประถม 2</span>
-							<span class="mitr">{d.student.ป2.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป2.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ป2.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป2.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ป2.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป2.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.ป2.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป2.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
 							<span>ประถม 3</span>
-							<span class="mitr">{d.student.ป3.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป3.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ป3.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป3.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ป3.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป3.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.ป3.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป3.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
 							<span>ประถม 4</span>
-							<span class="mitr">{d.student.ป4.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป4.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ป4.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป4.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ป4.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป4.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.ป4.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป4.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
 							<span>ประถม 5</span>
-							<span class="mitr">{d.student.ป5.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป5.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ป5.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป5.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ป5.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป5.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.ป5.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป5.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
 							<span>ประถม 6</span>
-							<span class="mitr">{d.student.ป6.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป6.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ป6.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ป6.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ป6.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป6.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.ป6.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ป6.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 					</Modal>
@@ -617,7 +617,7 @@
 							มัธยมต้น
 							<span class="std-unit fs10">(คน)</span>
 						</span>
-						<span class="std-size-count">{d.student.total.มต.toLocaleString()}</span>
+						<span class="std-size-count">{d.student.total.มต.toLocaleString('th-TH')}</span>
 						<img
 							loading="lazy"
 							decoding="async"
@@ -628,58 +628,58 @@
 						/>
 					</button>
 					<Modal
-						title={`มัธยมต้น ${d.student.total.มต.toLocaleString()} คน`}
+						title={`มัธยมต้น ${d.student.total.มต.toLocaleString('th-TH')} คน`}
 						bind:isOpen={มต_modal_open}
 					>
 						<div class="f mitr modal-section-header">
 							<span>มัธยม 1</span>
-							<span class="mitr">{d.student.ม1.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.ม1.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ม1.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ม1.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ม1.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม1.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.ม1.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม1.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
 							<span>มัธยม 2</span>
-							<span class="mitr">{d.student.ม2.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.ม2.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ม2.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ม2.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ม2.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม2.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.ม2.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม2.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 						<div class="f mitr modal-section-header">
 							<span>มัธยม 3</span>
-							<span class="mitr">{d.student.ม3.total.toLocaleString()}</span>
+							<span class="mitr">{d.student.ม3.total.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-							<span class="mitr">{d.student.ม3.class.toLocaleString()}</span>
+							<span class="mitr">{d.student.ม3.class.toLocaleString('th-TH')}</span>
 						</div>
 						<div class="f modal-section">
 							<span>แบ่งตามเพศ</span>
 							<span>
 								หญิง
-								<span class="mitr">{d.student.ม3.women.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม3.women.toLocaleString('th-TH')}</span>
 								ชาย
-								<span class="mitr">{d.student.ม3.men.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม3.men.toLocaleString('th-TH')}</span>
 							</span>
 						</div>
 					</Modal>
@@ -697,7 +697,7 @@
 							มัธยมปลาย
 							<span class="std-unit fs10">(คน)</span>
 						</span>
-						<span class="std-size-count">{d.student.total.มป.toLocaleString()}</span>
+						<span class="std-size-count">{d.student.total.มป.toLocaleString('th-TH')}</span>
 						<img
 							loading="lazy"
 							decoding="async"
@@ -708,112 +708,112 @@
 						/>
 					</button>
 					<Modal
-						title={`มัธยมปลาย ${d.student.total.มป.toLocaleString()} คน`}
+						title={`มัธยมปลาย ${d.student.total.มป.toLocaleString('th-TH')} คน`}
 						bind:isOpen={มป_modal_open}
 					>
 						{#if d.student.ม4.total + d.student.ม5.total + d.student.ม6.total}
 							<div class="f mitr modal-section-header">
 								<span>มัธยม 4</span>
-								<span class="mitr">{d.student.ม4.total.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม4.total.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-								<span class="mitr">{d.student.ม4.class.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม4.class.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>แบ่งตามเพศ</span>
 								<span>
 									หญิง
-									<span class="mitr">{d.student.ม4.women.toLocaleString()}</span>
+									<span class="mitr">{d.student.ม4.women.toLocaleString('th-TH')}</span>
 									ชาย
-									<span class="mitr">{d.student.ม4.men.toLocaleString()}</span>
+									<span class="mitr">{d.student.ม4.men.toLocaleString('th-TH')}</span>
 								</span>
 							</div>
 							<div class="f mitr modal-section-header">
 								<span>มัธยม 5</span>
-								<span class="mitr">{d.student.ม5.total.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม5.total.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-								<span class="mitr">{d.student.ม5.class.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม5.class.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>แบ่งตามเพศ</span>
 								<span>
 									หญิง
-									<span class="mitr">{d.student.ม5.women.toLocaleString()}</span>
+									<span class="mitr">{d.student.ม5.women.toLocaleString('th-TH')}</span>
 									ชาย
-									<span class="mitr">{d.student.ม5.men.toLocaleString()}</span>
+									<span class="mitr">{d.student.ม5.men.toLocaleString('th-TH')}</span>
 								</span>
 							</div>
 							<div class="f mitr modal-section-header">
 								<span>มัธยม 6</span>
-								<span class="mitr">{d.student.ม6.total.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม6.total.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-								<span class="mitr">{d.student.ม6.class.toLocaleString()}</span>
+								<span class="mitr">{d.student.ม6.class.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>แบ่งตามเพศ</span>
 								<span>
 									หญิง
-									<span class="mitr">{d.student.ม6.women.toLocaleString()}</span>
+									<span class="mitr">{d.student.ม6.women.toLocaleString('th-TH')}</span>
 									ชาย
-									<span class="mitr">{d.student.ม6.men.toLocaleString()}</span>
+									<span class="mitr">{d.student.ม6.men.toLocaleString('th-TH')}</span>
 								</span>
 							</div>
 						{/if}
 						{#if d.student.ปวช1.total + d.student.ปวช2.total + d.student.ปวช3.total}
 							<div class="f mitr modal-section-header">
 								<span>ปวช 1</span>
-								<span class="mitr">{d.student.ปวช1.total.toLocaleString()}</span>
+								<span class="mitr">{d.student.ปวช1.total.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-								<span class="mitr">{d.student.ปวช1.class.toLocaleString()}</span>
+								<span class="mitr">{d.student.ปวช1.class.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>แบ่งตามเพศ</span>
 								<span>
 									หญิง
-									<span class="mitr">{d.student.ปวช1.women.toLocaleString()}</span>
+									<span class="mitr">{d.student.ปวช1.women.toLocaleString('th-TH')}</span>
 									ชาย
-									<span class="mitr">{d.student.ปวช1.men.toLocaleString()}</span>
+									<span class="mitr">{d.student.ปวช1.men.toLocaleString('th-TH')}</span>
 								</span>
 							</div>
 							<div class="f mitr modal-section-header">
 								<span>ปวช 2</span>
-								<span class="mitr">{d.student.ปวช2.total.toLocaleString()}</span>
+								<span class="mitr">{d.student.ปวช2.total.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-								<span class="mitr">{d.student.ปวช2.class.toLocaleString()}</span>
+								<span class="mitr">{d.student.ปวช2.class.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>แบ่งตามเพศ</span>
 								<span>
 									หญิง
-									<span class="mitr">{d.student.ปวช2.women.toLocaleString()}</span>
+									<span class="mitr">{d.student.ปวช2.women.toLocaleString('th-TH')}</span>
 									ชาย
-									<span class="mitr">{d.student.ปวช2.men.toLocaleString()}</span>
+									<span class="mitr">{d.student.ปวช2.men.toLocaleString('th-TH')}</span>
 								</span>
 							</div>
 							<div class="f mitr modal-section-header">
 								<span>ปวช 3</span>
-								<span class="mitr">{d.student.ปวช3.total.toLocaleString()}</span>
+								<span class="mitr">{d.student.ปวช3.total.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>จำนวนห้องเรียน <small>(ห้อง)</small></span>
-								<span class="mitr">{d.student.ปวช3.class.toLocaleString()}</span>
+								<span class="mitr">{d.student.ปวช3.class.toLocaleString('th-TH')}</span>
 							</div>
 							<div class="f modal-section">
 								<span>แบ่งตามเพศ</span>
 								<span>
 									หญิง
-									<span class="mitr">{d.student.ปวช3.women.toLocaleString()}</span>
+									<span class="mitr">{d.student.ปวช3.women.toLocaleString('th-TH')}</span>
 									ชาย
-									<span class="mitr">{d.student.ปวช3.men.toLocaleString()}</span>
+									<span class="mitr">{d.student.ปวช3.men.toLocaleString('th-TH')}</span>
 								</span>
 							</div>
 						{/if}
@@ -839,7 +839,7 @@
 							{ number: d.student.total.มป, color: '#ffc700' }
 						]}
 					/>
-					<div>{d.student.total.all.toLocaleString()}</div>
+					<div>{d.student.total.all.toLocaleString('th-TH')}</div>
 					{#each school_other_years_data as yd}
 						<div>{`${yd.year + 543}`.substring(2, 4)}</div>
 						<RatioChart
@@ -850,7 +850,7 @@
 								{ number: yd.data?.student?.total?.มป, color: '#ffc700' }
 							]}
 						/>
-						<div>{yd.data?.student?.total?.all?.toLocaleString()}</div>
+						<div>{yd.data?.student?.total?.all?.toLocaleString('th-TH')}</div>
 					{/each}
 				</div>
 			</section>
@@ -858,7 +858,7 @@
 
 		<h2 bind:this={el_employee_section} id="employee-section" class="f">
 			<span>ครู/บุคลากร <small>(คน)</small></span>
-			<span>{d.staff.total.toLocaleString()}</span>
+			<span>{d.staff.total.toLocaleString('th-TH')}</span>
 		</h2>
 		<section>
 			<button
@@ -870,7 +870,7 @@
 			>
 				<h3 class="mitr f">
 					<span>ครู</span>
-					<span class="mla">{d.staff.ครู.total.toLocaleString()}</span>
+					<span class="mla">{d.staff.ครู.total.toLocaleString('th-TH')}</span>
 					<img
 						loading="lazy"
 						decoding="async"
@@ -882,7 +882,7 @@
 				</h3>
 				<p>ครูทั่วไป, ครูผู้ช่วย, ชำนาญการ, ชำนาญการพิเศษ...</p>
 			</button>
-			<Modal title={`ครู ${d.staff.ครู.total.toLocaleString()} คน`} bind:isOpen={ครู_modal_open}>
+			<Modal title={`ครู ${d.staff.ครู.total.toLocaleString('th-TH')} คน`} bind:isOpen={ครู_modal_open}>
 				<div class="modal-section-header p16">
 					<div class="f ais fs10 g8">
 						<img
@@ -938,44 +938,44 @@
 				{#if d.staff.ครู.คศ5?.total}
 					<div class="f modal-section">
 						<span>ครูเชี่ยวชาญพิเศษ</span>
-						<span class="mitr">{d.staff.ครู.คศ5.total.toLocaleString()}</span>
+						<span class="mitr">{d.staff.ครู.คศ5.total.toLocaleString('th-TH')}</span>
 					</div>
 				{/if}
 				{#if d.staff.ครู.คศ4.total}
 					<div class="f modal-section">
 						<span>ครูเชี่ยวชาญ</span>
-						<span class="mitr">{d.staff.ครู.คศ4.total.toLocaleString()}</span>
+						<span class="mitr">{d.staff.ครู.คศ4.total.toLocaleString('th-TH')}</span>
 					</div>
 				{/if}
 				{#if d.staff.ครู.คศ3.total}
 					<div class="f modal-section">
 						<span>ครูชำนาญการพิเศษ</span>
-						<span class="mitr">{d.staff.ครู.คศ3.total.toLocaleString()}</span>
+						<span class="mitr">{d.staff.ครู.คศ3.total.toLocaleString('th-TH')}</span>
 					</div>
 				{/if}
 				{#if d.staff.ครู.คศ2.total}
 					<div class="f modal-section">
 						<span>ครูชำนาญการ</span>
-						<span class="mitr">{d.staff.ครู.คศ2.total.toLocaleString()}</span>
+						<span class="mitr">{d.staff.ครู.คศ2.total.toLocaleString('th-TH')}</span>
 					</div>
 				{/if}
 				{#if d.staff.ครู.คศ1.total}
 					<div class="f modal-section">
 						<span>ครู คศ. 1</span>
-						<span class="mitr">{d.staff.ครู.คศ1.total.toLocaleString()}</span>
+						<span class="mitr">{d.staff.ครู.คศ1.total.toLocaleString('th-TH')}</span>
 					</div>
 				{/if}
 				{#if d.staff.ครู.ครูผู้ช่วย?.total}
 					<div class="f modal-section">
 						<span>ครูผู้ช่วย</span>
-						<span class="mitr">{d.staff.ครู.ครูผู้ช่วย.total.toLocaleString()}</span>
+						<span class="mitr">{d.staff.ครู.ครูผู้ช่วย.total.toLocaleString('th-TH')}</span>
 					</div>
 				{/if}
 			</Modal>
 			<div class="f">
 				<span>สัดส่วนครู ต่อ นักเรียน</span>
 				<span class="mitr fs20"
-					>1:{Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString()}</span
+					>1:{Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString('th-TH')}</span
 				>
 			</div>
 			<hr />
@@ -1026,11 +1026,11 @@
 								number: d.student.total.all,
 								color: '#FFC700',
 								font_color: '#3c55ab',
-								label: `1:${Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString()}`
+								label: `1:${Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString('th-TH')}`
 							}
 						]}
 					/>
-					<div>{d.staff.ครู.total.toLocaleString()}</div>
+					<div>{d.staff.ครู.total.toLocaleString('th-TH')}</div>
 					{#each school_other_years_data as yd}
 						<div>{`${yd.year + 543}`.substring(2, 4)}</div>
 						<RatioChart
@@ -1043,11 +1043,11 @@
 									font_color: '#3c55ab',
 									label: `1:${Math.ceil(
 										yd.data?.student?.total?.all / yd.data?.staff?.ครู?.total
-									).toLocaleString()}`
+									).toLocaleString('th-TH')}`
 								}
 							]}
 						/>
-						<div>{yd.data?.staff?.ครู?.total?.toLocaleString()}</div>
+						<div>{yd.data?.staff?.ครู?.total?.toLocaleString('th-TH')}</div>
 					{/each}
 				</div>
 			</section>
@@ -1062,7 +1062,7 @@
 		>
 			<h3 class="mitr f">
 				<span>บุคลากร</span>
-				<span class="mla">{d.staff.พนักงาน.total.toLocaleString()}</span>
+				<span class="mla">{d.staff.พนักงาน.total.toLocaleString('th-TH')}</span>
 				<img
 					loading="lazy"
 					decoding="async"
@@ -1075,7 +1075,7 @@
 			<p>พนักงานธุรการ การเงิน บัญชี นักโภชนาการ นักการ-ภารโรง</p>
 		</button>
 		<Modal
-			title={`บุคลากร ${d.staff.พนักงาน.total.toLocaleString()} คน`}
+			title={`บุคลากร ${d.staff.พนักงาน.total.toLocaleString('th-TH')} คน`}
 			bind:isOpen={บุคลากร_modal_open}
 		>
 			<div class="modal-section-header p16">
@@ -1098,19 +1098,19 @@
 			{#if d.staff.พนักงาน.ลูกจ้างประจำ.total}
 				<div class="f modal-section">
 					<span>ลูกจ้างประจำ</span>
-					<span class="mitr">{d.staff.พนักงาน.ลูกจ้างประจำ.total.toLocaleString()}</span>
+					<span class="mitr">{d.staff.พนักงาน.ลูกจ้างประจำ.total.toLocaleString('th-TH')}</span>
 				</div>
 			{/if}
 			{#if d.staff.พนักงาน.ลูกจ้างชั่วคราว.total}
 				<div class="f modal-section">
 					<span>ลูกจ้างชั่วคราว</span>
-					<span class="mitr">{d.staff.พนักงาน.ลูกจ้างชั่วคราว.total.toLocaleString()}</span>
+					<span class="mitr">{d.staff.พนักงาน.ลูกจ้างชั่วคราว.total.toLocaleString('th-TH')}</span>
 				</div>
 			{/if}
 			{#if d.staff.พนักงาน.พนักงานราชการ.total}
 				<div class="f modal-section">
 					<span>พนักงานราชการ</span>
-					<span class="mitr">{d.staff.พนักงาน.พนักงานราชการ.total.toLocaleString()}</span>
+					<span class="mitr">{d.staff.พนักงาน.พนักงานราชการ.total.toLocaleString('th-TH')}</span>
 				</div>
 			{/if}
 		</Modal>
@@ -1191,7 +1191,7 @@
 						{eduitem.name}
 						<!-- <small>(ชิ้น)</small> -->
 					</span>
-					<span>{eduitem.total.toLocaleString()}</span>
+					<span>{eduitem.total.toLocaleString('th-TH')}</span>
 				</div>
 				<RatioChart
 					data={[
@@ -1201,11 +1201,11 @@
 					]}
 				/>
 				<p class="mb8 fs10 ratio-stat-text">
-					<span class="cv usable-color">{eduitem.working.toLocaleString()}</span>
+					<span class="cv usable-color">{eduitem.working.toLocaleString('th-TH')}</span>
 					|
-					<span class="cv await-color">{eduitem.to_be_repaired.toLocaleString()}</span>
+					<span class="cv await-color">{eduitem.to_be_repaired.toLocaleString('th-TH')}</span>
 					|
-					<span class="cv unusable-color">{eduitem.to_be_removed.toLocaleString()}</span>
+					<span class="cv unusable-color">{eduitem.to_be_removed.toLocaleString('th-TH')}</span>
 					<!-- ชิ้น -->
 				</p>
 			{/each}
@@ -1217,7 +1217,7 @@
 					โต๊ะเก้าอี้นักเรียน
 					<small>(ตัว)</small>
 				</span>
-				<span>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.total.toLocaleString()}</span>
+				<span>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.total.toLocaleString('th-TH')}</span>
 			</h3>
 			<RatioChart
 				data={[
@@ -1228,15 +1228,15 @@
 			/>
 			<p class="mb8 fs10 ratio-stat-text">
 				<span class="cv usable-color"
-					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working.toLocaleString()}</span
+					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working.toLocaleString('th-TH')}</span
 				>
 				|
 				<span class="cv await-color"
-					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired.toLocaleString()}</span
+					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired.toLocaleString('th-TH')}</span
 				>
 				|
 				<span class="cv unusable-color"
-					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed.toLocaleString()}</span
+					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed.toLocaleString('th-TH')}</span
 				> ตัว
 			</p>
 			<div class="f">
@@ -1244,7 +1244,7 @@
 				<span class="mitr fs20"
 					>1:{Math.ceil(
 						d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working
-					).toLocaleString()}</span
+					).toLocaleString('th-TH')}</span
 				>
 			</div>
 			<hr />
@@ -1279,7 +1279,7 @@
 					คอมพิวเตอร์
 					<small>(เครื่อง)</small>
 				</span>
-				<span>{d.computer.learning.total.toLocaleString()}</span>
+				<span>{d.computer.learning.total.toLocaleString('th-TH')}</span>
 			</h3>
 			<p class="fs10 mb8">
 				ใช้วิธีการวัดคนละแบบกับอุปกรณ์อื่น <span class="cv usable-color"
@@ -1293,13 +1293,13 @@
 				]}
 			/>
 			<p class="mb8 fs10 ratio-stat-text">
-				<span class="cv usable-color">{d.computer.learning.working.toLocaleString()}</span> |
-				<span class="cv unusable-color">{d.computer.learning.broken.toLocaleString()}</span> เครื่อง
+				<span class="cv usable-color">{d.computer.learning.working.toLocaleString('th-TH')}</span> |
+				<span class="cv unusable-color">{d.computer.learning.broken.toLocaleString('th-TH')}</span> เครื่อง
 			</p>
 			<div class="f">
 				<span>สัดส่วนคอมพิวเตอร์ ต่อ นักเรียน</span>
 				<span class="mitr fs20"
-					>1:{Math.ceil(d.student.total.all / d.computer.learning.working).toLocaleString()}</span
+					>1:{Math.ceil(d.student.total.all / d.computer.learning.working).toLocaleString('th-TH')}</span
 				>
 			</div>
 			<hr />
@@ -1413,7 +1413,7 @@
 				<dt>งบประมาณ:</dt>
 				<dd>
 					{#if d.internet.monthly_price}
-						{+d.internet.monthly_price.toLocaleString()} บาท/เดือน
+						{(+d.internet.monthly_price).toLocaleString('th-TH')} บาท/เดือน
 					{:else}
 						<span class="no-data">ไม่มีข้อมูล</span>
 					{/if}
@@ -1461,7 +1461,7 @@
 					{#each d.durable_goods.data[appliance_key].list as good (good.code)}
 						<div class="f modal-section">
 							<span>{good.name}</span>
-							<span class="mitr">{good.total.toLocaleString()}</span>
+							<span class="mitr">{good.total.toLocaleString('th-TH')}</span>
 						</div>
 					{/each}
 				{/if}
@@ -1470,7 +1470,7 @@
 
 		<ActAiBanner
 			margin
-			href="https://actai.co/Project?search=โรงเรียน{encodeURIComponent(d.name_th)}"
+			href="https://actai.co/Project?search={encodeURIComponent(`"โรงเรียน${d.name_th}"`)}"
 		/>
 
 		<h2 bind:this={el_building_section} id="building-section" class="f">
@@ -1532,13 +1532,13 @@
 		<section style="margin-bottom:0">
 			<h3 class="f">
 				<span>อาคารการศึกษา <small>(อาคาร)</small></span>
-				<span>{d.building.data.อาคารเรียน.length.toLocaleString()}</span>
+				<span>{d.building.data.อาคารเรียน.length.toLocaleString('th-TH')}</span>
 			</h3>
 		</section>
 		<section>
 			<p class="f">
 				<span>ห้องทั้งหมด <small>(ห้อง)</small></span>
-				<span class="mitr">{d.building.stats.จำนวนห้องในอาคารเรียน.toLocaleString()}</span>
+				<span class="mitr">{d.building.stats.จำนวนห้องในอาคารเรียน.toLocaleString('th-TH')}</span>
 			</p>
 			<hr />
 			<div class="col2-on-desktop">
@@ -1565,7 +1565,7 @@
 							</p>
 							<Waffle number={b.room_number ?? 0} />
 							<div>
-								<span class="mitr">{(b.room_number ?? 0).toLocaleString()}</span>
+								<span class="mitr">{(b.room_number ?? 0).toLocaleString('th-TH')}</span>
 								<span class="fs10">ห้อง</span>
 							</div>
 						</div>
@@ -1691,7 +1691,7 @@
 		<ActAiBanner
 			margin
 			text="ค้นหาข้อมูลการจัดซื้อจัดจ้างเกี่ยวกับอุปกรณ์และการก่อสร้างอาคารของโรงเรียนเพิ่มเติมได้ที่เครื่องมือ"
-			href="https://actai.co/Project?search=โรงเรียน{encodeURIComponent(d.name_th)}"
+			href="https://actai.co/Project?search={encodeURIComponent(`"โรงเรียน${d.name_th}"`)}"
 		/>
 
 		<h2 bind:this={el_general_section} id="general-section" class="f mb8">
@@ -2502,6 +2502,7 @@
 	.jumpnav-wrapper {
 		position: fixed;
 		top: calc(var(--navbar-height) + 60px);
+		left: 0;
 		width: 100%;
 		overflow-x: auto;
 

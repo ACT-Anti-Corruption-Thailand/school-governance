@@ -141,7 +141,8 @@
 				<div class="f school-data-block">
 					<span class="school-data-text">นักเรียนทั้งหมด</span>
 					<span class="school-data-val">
-						<span class="mitr school-bignum">{d?.student?.total?.all?.toLocaleString() || '—'}</span
+						<span class="mitr school-bignum"
+							>{d?.student?.total?.all?.toLocaleString('th-TH') || '—'}</span
 						> คน
 					</span>
 				</div>
@@ -152,7 +153,7 @@
 							>1:{fixNaN(
 								Math.ceil(
 									(d?.student?.total?.all ?? 0) / (d?.staff?.ครู?.total ?? 1)
-								).toLocaleString()
+								).toLocaleString('th-TH')
 							)}</span
 						> คน
 					</span>
@@ -164,7 +165,7 @@
 							>{fixNaN(
 								Math.ceil(
 									(d?.student?.total?.all ?? 0) / (d?.student?.total?.class ?? 1)
-								).toLocaleString()
+								).toLocaleString('th-TH')
 							)}</span
 						> คน
 					</span>
@@ -199,7 +200,7 @@
 					<span class="f header-text-adjust">
 						<span class="mitr header-bignum">{fixNaN(total_rating.toFixed(1))}</span>
 						<span class="mitr"> คะแนน </span>
-						<small>| {fixNaN(total_rating_count.toLocaleString())} รีวิว</small>
+						<small>| {fixNaN(total_rating_count.toLocaleString('th-TH'))} รีวิว</small>
 					</span>
 				{/if}
 				<img
@@ -337,7 +338,7 @@
 					autoplay
 				/>
 				<span class="f header-text-adjust">
-					<span class="header-bignum">{total_comment.toLocaleString()}</span>
+					<span class="header-bignum">{total_comment.toLocaleString('th-TH')}</span>
 					ความคิดเห็น
 				</span>
 				<img
@@ -355,7 +356,7 @@
 						<p class="comment-text">{post.comments}</p>
 						<div>
 							<div class="comment-date">
-								โพสต์เมื่อ {new Date(post.createDate).toLocaleDateString('th')}
+								โพสต์เมื่อ {new Date(post.createDate).toLocaleDateString('th-TH')}
 							</div>
 							<div class="f comment-like">
 								<img
@@ -367,7 +368,7 @@
 									height="16"
 								/>
 								{#if +post.likeCount}
-									<span>{post.likeCount.toLocaleString()} คนเห็นด้วยกับสิ่งนี้</span>
+									<span>{post.likeCount.toLocaleString('th-TH')} คนเห็นด้วยกับสิ่งนี้</span>
 								{:else}
 									<span>ยังไม่มีใครเห็นด้วยกับสิ่งนี้</span>
 								{/if}

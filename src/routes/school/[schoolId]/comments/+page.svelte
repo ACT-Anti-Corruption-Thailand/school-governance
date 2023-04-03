@@ -650,7 +650,7 @@
 		{#each posts as post (post.Id)}
 			<article class="comment-container">
 				<div class="f jcsb comment-header">
-					<p class="comment-small">{new Date(post.createDate).toLocaleDateString('th')}</p>
+					<p class="comment-small">{new Date(post.createDate).toLocaleDateString('th-TH')}</p>
 					{#if $currentUser?.uid === post.userId}
 						<button
 							class="f"

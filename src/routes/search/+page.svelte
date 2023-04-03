@@ -380,7 +380,7 @@
 				{#if school_result.length}
 					<h2 class="f">
 						<span>โรงเรียน</span>
-						<small>พบ {school_result_count.toLocaleString()} โรงเรียน</small>
+						<small>พบ {school_result_count.toLocaleString('th-TH')} โรงเรียน</small>
 					</h2>
 					<ul>
 						{#each school_result as { schoolId, nameTh } (schoolId)}

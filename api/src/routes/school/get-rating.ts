@@ -14,7 +14,7 @@ export async function getSchoolRating(schoolId?: string, year?: string) {
 	const currentYear = getCurrentSchoolYear();
 
 	let ratingData: any;
-	if (+year >= (process.env.BASE_YEAR ?? 2022) && +year < currentYear) {
+	if (+year >= +(process.env.BASE_YEAR ?? 2022) && +year < currentYear) {
 		ratingData = await nocodb.dbViewRow.findOne(
 			...nocoConfig,
 			'SchoolIndexRatingHistory',

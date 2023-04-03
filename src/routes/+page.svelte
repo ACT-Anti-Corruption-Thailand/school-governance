@@ -557,7 +557,7 @@
 		<div class="login-success-aligner">
 			<a
 				class="f login-modal-btn"
-				href="https://www.facebook.com/wethestudentsTH"
+				href="https://www.facebook.com/schoolgovTH"
 				target="_blank"
 				rel="nofollow noopener noreferrer"
 			>
