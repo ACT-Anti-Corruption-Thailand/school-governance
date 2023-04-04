@@ -645,7 +645,9 @@
 			</div>
 		</fieldset>
 		<fieldset>
-			<legend>ปีการศึกษา (นับจาก พ.ค. ของปีนั้นๆ &ndash; เม.ย. ของปีถัดไป)</legend>
+			<legend>
+				ปีการศึกษา <span style="color:#9DAAD5">(นับตั้งแต่เดือน พ.ค. &ndash; เม.ย. ปีถัดไป)</span>
+			</legend>
 			<div>
 				{#if $computed_years}
 					{#each $computed_years as year (year)}
