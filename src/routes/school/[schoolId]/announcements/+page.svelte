@@ -75,10 +75,11 @@
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ประกาศ', color: '#FC5858' }}>
-	<div>
-		<span class="schoolyear-dropdown-label">ปีการศึกษา</span>
-		<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
-	</div>
+	<Dropdown
+		options={DROPDOWN_DATA}
+		bind:selected_option={dropdown_choice}
+		explaination="ปีการศึกษา"
+	/>
 </SchoolHeader>
 <div class="desktop-margin">
 	{#if has_data}
@@ -207,14 +208,6 @@
 		padding: 8px 16px;
 		border-bottom: 1px solid #ced5ea;
 		width: 100%;
-	}
-
-	.schoolyear-dropdown-label {
-		font-size: 0.8em;
-		line-height: 1;
-		height: 12px;
-		display: block;
-		text-align: center;
 	}
 
 	:global(.announce-link) {

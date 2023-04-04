@@ -376,10 +376,7 @@
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
-	<div>
-		<span class="schoolyear-dropdown-label">ปีการศึกษา</span>
-		<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
-	</div>
+	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} explaination="ปีการศึกษา" />
 </SchoolHeader>
 
 {#if dropdown_choice && +dropdown_choice.value === +$LATEST_COMPUTED_YEAR}
@@ -1771,14 +1768,6 @@
 	.school-quiz-lottie {
 		width: 25px;
 		height: 25px;
-	}
-
-	.schoolyear-dropdown-label {
-		font-size: 0.8em;
-		line-height: 1;
-		height: 12px;
-		display: block;
-		text-align: center;
 	}
 
 	// #region UTILS

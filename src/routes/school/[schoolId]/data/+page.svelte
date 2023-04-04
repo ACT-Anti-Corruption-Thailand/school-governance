@@ -308,10 +308,7 @@
 		</menu>
 	</div>
 	{#if DROPDOWN_DATA}
-		<div>
-			<span class="schoolyear-dropdown-label">ปีการศึกษา</span>
-			<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
-		</div>
+		<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} explaination="ปีการศึกษา" />
 	{/if}
 </SchoolHeader>
 
@@ -2554,13 +2551,5 @@
 		font-weight: 400;
 		line-height: 136%;
 		color: #9daad5;
-	}
-
-	.schoolyear-dropdown-label {
-		font-size: 0.8em;
-		line-height: 1;
-		height: 12px;
-		display: block;
-		text-align: center;
 	}
 </style>
