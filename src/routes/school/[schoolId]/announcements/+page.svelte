@@ -1,10 +1,16 @@
 <script lang="ts">
-	import { PUBLIC_API_HOST } from '$env/static/public';
+	import { PUBLIC_API_HOST, PUBLIC_SITE_HOST } from '$env/static/public';
 
-	import { onMount } from 'svelte';
 	import linkifyHtml from 'linkify-html';
 	import sanitizeHtml from 'sanitize-html';
+	import { onMount } from 'svelte';
 
+	import {
+		Dialog,
+		DialogDescription,
+		DialogOverlay,
+		DialogTitle
+	} from '@rgossiaux/svelte-headlessui';
 	import ContactOfficer from 'components/ContactOfficer.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
 	import SchoolHeader from 'components/school/SchoolHeader.svelte';
@@ -37,6 +43,8 @@
 		announcePerson: string;
 		announceContent: string;
 		announceDate: string;
+		announceExternalLink: string;
+		announceImage: any;
 	};
 
 	let has_data = false;
@@ -60,6 +68,28 @@
 	$: if (mounted && dropdown_choice) fetchAnnouncements();
 
 	let contact_modal_isopen = false;
+
+	const parseImagesVal = (images: any): null | string => {
+		let _imgs = images;
+		if (typeof images === 'string') {
+			_imgs = JSON.parse(images);
+		}
+		if (Array.isArray(_imgs)) {
+			const res = _imgs.find((i) => i.mimetype && i.mimetype.includes('image'));
+			if (res) {
+				if ('url' in res) return res.url;
+				return PUBLIC_SITE_HOST + '/' + res.path;
+			}
+		}
+		return null;
+	};
+
+	let lightbox_open = false;
+	let lightbox_url = '';
+	const openLightbox = (url: string) => {
+		lightbox_url = url;
+		lightbox_open = true;
+	};
 </script>
 
 <svelte:head>
@@ -109,6 +139,31 @@
 									}
 								)}
 							</p>
+							{#if news.announceExternalLink}
+								<a
+									class="news-external"
+									href={news.announceExternalLink}
+									target="_blank"
+									rel="nofollow noopener noreferrer">ดูรายละเอียดเพิ่มเติม</a
+								>
+							{/if}
+							{#if parseImagesVal(news.announceImage)}
+								<button
+									class="news-img-btn"
+									type="button"
+									on:click={() => openLightbox(parseImagesVal(news.announceImage) ?? '')}
+								>
+									<img
+										class="news-img"
+										loading="lazy"
+										decoding="async"
+										src={parseImagesVal(news.announceImage)}
+										alt=""
+										width="64"
+										height="64"
+									/>
+								</button>
+							{/if}
 						</article>
 					{/each}
 				{/if}
@@ -131,6 +186,24 @@
 </div>
 
 <ContactOfficer bind:contact_modal_isopen />
+<Dialog open={lightbox_open} on:close={() => (lightbox_open = false)}>
+	<DialogOverlay class="lightbox-backdrop" />
+
+	<DialogTitle class="sr-only">ภาพประกอบประกาศ</DialogTitle>
+	<DialogDescription>URL: {lightbox_url}</DialogDescription>
+
+	<button class="lightbox-close" type="button" on:click={() => (lightbox_open = false)}>
+		<img
+			loading="lazy"
+			decoding="async"
+			src="/icons/close-w.svg"
+			alt="ปิด"
+			width="32"
+			height="32"
+		/>
+	</button>
+	<img loading="lazy" decoding="async" src={lightbox_url} alt="" class="lightbox-image" />
+</Dialog>
 
 <style lang="scss">
 	@media screen and (min-width: 768px) {
@@ -212,5 +285,79 @@
 
 	:global(.announce-link) {
 		color: inherit;
+	}
+
+	.news-external {
+		color: inherit;
+		display: block;
+		margin-top: 8px;
+		font-size: 0.625rem;
+	}
+
+	@media screen and (min-width: 768px) {
+		.news-external {
+			font-size: 0.8125rem;
+		}
+	}
+
+	.news-img-btn {
+		width: 100%;
+		height: auto;
+		aspect-ratio: 4/3;
+		cursor: zoom-in;
+		margin-top: 8px;
+		display: block;
+	}
+
+	.news-img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		display: block;
+	}
+
+	:global(.lightbox-backdrop) {
+		position: fixed;
+		inset: 0;
+		background: rgb(0, 0, 0);
+		cursor: zoom-out;
+
+		z-index: 20;
+	}
+
+	.lightbox-close {
+		position: fixed;
+		top: 8px;
+		left: 8px;
+		z-index: 20;
+	}
+
+	.lightbox-image {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		z-index: 20;
+
+		object-fit: contain;
+		object-position: center;
+
+		cursor: zoom-out;
+		pointer-events: none;
+	}
+
+	@media screen and (min-width: 768px) {
+		.lightbox-close {
+			top: 32px;
+			left: 32px;
+		}
+
+		.lightbox-image {
+			top: 10vh;
+			left: 10vw;
+			width: 80vw;
+			height: 80vh;
+		}
 	}
 </style>
