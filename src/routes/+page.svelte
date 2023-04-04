@@ -184,7 +184,7 @@
 				value="comment"
 			/>
 			<label for="school-list-choice3" class="f radio-pill">
-				<span>ความเห็นมากสุด</span>
+				<span>จำนวนความเห็น</span>
 			</label>
 		</div>
 	</div>
@@ -193,6 +193,7 @@
 		is_count_all_comments={schoolListType === 'comment'}
 		school_list={schoolList}
 	/>
+	<p class="schoollist-footnote">*จำนวนรีวิวและความเห็นนับรวมทั้งหมดทุกปีการศึกษา</p>
 </section>
 
 <section class="information" id="information">
@@ -1372,6 +1373,21 @@
 				width: 24px;
 				height: 24px;
 			}
+		}
+	}
+
+	.schoollist-footnote {
+		font-family: 'IBM Plex Sans Thai Looped';
+		font-size: 10px;
+		line-height: 136%;
+		text-align: center;
+		color: #9daad5;
+		margin-top: 16px;
+	}
+
+	@media screen and (min-width: 768px) {
+		.schoollist-footnote {
+			font-size: 13px;
 		}
 	}
 </style>

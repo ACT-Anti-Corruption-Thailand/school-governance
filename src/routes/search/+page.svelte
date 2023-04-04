@@ -337,7 +337,7 @@
 				<SchoolList school_list={mostRatingList} is_count_rating />
 			</section>
 			<section>
-				<h2>โรงเรียนที่มีความเห็นรวมมากที่สุด</h2>
+				<h2>โรงเรียนที่มีจำนวนความเห็นมากที่สุด</h2>
 				<SchoolList school_list={mostCommentList} is_count_all_comments />
 			</section>
 		</div>
