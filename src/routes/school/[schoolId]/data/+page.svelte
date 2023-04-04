@@ -1288,110 +1288,126 @@
 			</div>
 		</section>
 		<section>
-			<h3 class="f mb8">
-				<span>
-					คอมพิวเตอร์
-					<small>(เครื่อง)</small>
-				</span>
-				<span>{d.computer.learning.total.toLocaleString('th-TH')}</span>
-			</h3>
-			<p class="fs10 mb8">
-				ใช้วิธีการวัดคนละแบบกับอุปกรณ์อื่น <span class="cv usable-color"
-					>(ไม่มีสถานะรอซ่อม/จำหน่าย)</span
-				>
-			</p>
-			<RatioChart
-				data={[
-					{ number: d.computer.learning.working, color: '#FFC700' },
-					{ number: d.computer.learning.broken, color: '#fc5858' }
-				]}
-			/>
-			<p class="mb8 fs10 ratio-stat-text">
-				<span class="cv usable-color">{d.computer.learning.working.toLocaleString('th-TH')}</span> |
-				<span class="cv unusable-color">{d.computer.learning.broken.toLocaleString('th-TH')}</span> เครื่อง
-			</p>
-			<div class="f">
-				<span>สัดส่วนคอมพิวเตอร์ ต่อ นักเรียน</span>
-				<span class="mitr fs20"
-					>1:{Math.ceil(d.student.total.all / d.computer.learning.working).toLocaleString(
-						'th-TH'
-					)}</span
-				>
-			</div>
-			<hr />
-			<div class="f ratio-chart">
-				<div class="f">
-					<img loading="lazy" decoding="async" src="/icons/tv.svg" alt="" width="24" height="24" />
-				</div>
-				<div class="f special">
-					{#each Array(Math.ceil(d.student.total.all / d.computer.learning.working)) as _}
-						<img
-							loading="lazy"
-							decoding="async"
-							src="/icons/person-y.svg"
-							alt=""
-							width="24"
-							height="24"
-						/>
-					{/each}
-				</div>
-			</div>
-			<details class="computer-details" open>
-				<summary>
-					<span class="f">
-						<span class="mitr">ดูแหล่งที่มาของคอมพิวเตอร์ <small>(เครื่อง)</small></span>
-						<img
-							loading="lazy"
-							decoding="async"
-							class="chevron"
-							src="/chevrons/bottom.svg"
-							alt=""
-							width="24"
-							height="24"
-						/>
+			{#if Object.keys(d.computer).length === 0 || d.computer === null || d.computer === undefined}
+				<h3 class="f">
+					<span>คอมพิวเตอร์</span>
+					<span class="no-data ibm" style="font-size:.85em;font-weight:400">ไม่มีข้อมูล</span>
+				</h3>
+			{:else}
+				<h3 class="f mb8">
+					<span>
+						คอมพิวเตอร์
+						<small>(เครื่อง)</small>
 					</span>
-				</summary>
-				<div class="f" style="margin:8px 0 4px">
-					{#if d.computer.learning.source.obec}
-						<span style="color:#0c166b">งบประมาณ สพฐ</span>
-					{/if}
-					{#if d.computer.learning.source.self}
-						<span>จัดหาเอง/บริจาค</span>
-					{/if}
-				</div>
+					<span>{d.computer.learning.total.toLocaleString('th-TH')}</span>
+				</h3>
+				<p class="fs10 mb8">
+					ใช้วิธีการวัดคนละแบบกับอุปกรณ์อื่น <span class="cv usable-color"
+						>(ไม่มีสถานะรอซ่อม/จำหน่าย)</span
+					>
+				</p>
 				<RatioChart
 					data={[
-						{ number: d.computer.learning.source.obec, color: '#0c166b' },
-						{ number: d.computer.learning.source.self, color: '#3c55ab' }
+						{ number: d.computer.learning.working, color: '#FFC700' },
+						{ number: d.computer.learning.broken, color: '#fc5858' }
 					]}
 				/>
-				<p class="f mb8 fs10 ratio-stat-text">
-					{#if d.computer.learning.source.obec}
-						<span
-							><span class="cv primary-color">{d.computer.learning.source.obec}</span> เครื่อง</span
-						>
-					{/if}
-					{#if d.computer.learning.source.self}
-						<span
-							><span class="cv primary-color">{d.computer.learning.source.self}</span> เครื่อง</span
-						>
-					{/if}
+				<p class="mb8 fs10 ratio-stat-text">
+					<span class="cv usable-color">{d.computer.learning.working.toLocaleString('th-TH')}</span>
+					|
+					<span class="cv unusable-color">{d.computer.learning.broken.toLocaleString('th-TH')}</span
+					> เครื่อง
 				</p>
-				<div class="f g8 ais">
-					<img
-						loading="lazy"
-						decoding="async"
-						src="/icons/info.svg"
-						alt=""
-						width="16"
-						height="16"
-					/>
-					<p class="fs10">
-						แหล่งที่มาของคอมพิวเตอร์สามารถช่วยประกอบการประเมินได้ว่า สพฐ. หรือ
-						ตัวโรงเรียนเองได้จัดสรรงบประมาณที่เพียงพอสำหรับจัดหาคอมพิวเตอร์หรือไม่
-					</p>
+				<div class="f">
+					<span>สัดส่วนคอมพิวเตอร์ ต่อ นักเรียน</span>
+					<span class="mitr fs20"
+						>1:{Math.ceil(d.student.total.all / d.computer.learning.working).toLocaleString(
+							'th-TH'
+						)}</span
+					>
 				</div>
-			</details>
+				<hr />
+				<div class="f ratio-chart">
+					<div class="f">
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/tv.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
+					</div>
+					<div class="f special">
+						{#each Array(Math.ceil(d.student.total.all / d.computer.learning.working)) as _}
+							<img
+								loading="lazy"
+								decoding="async"
+								src="/icons/person-y.svg"
+								alt=""
+								width="24"
+								height="24"
+							/>
+						{/each}
+					</div>
+				</div>
+				<details class="computer-details" open>
+					<summary>
+						<span class="f">
+							<span class="mitr">ดูแหล่งที่มาของคอมพิวเตอร์ <small>(เครื่อง)</small></span>
+							<img
+								loading="lazy"
+								decoding="async"
+								class="chevron"
+								src="/chevrons/bottom.svg"
+								alt=""
+								width="24"
+								height="24"
+							/>
+						</span>
+					</summary>
+					<div class="f" style="margin:8px 0 4px">
+						{#if d.computer.learning.source.obec}
+							<span style="color:#0c166b">งบประมาณ สพฐ</span>
+						{/if}
+						{#if d.computer.learning.source.self}
+							<span>จัดหาเอง/บริจาค</span>
+						{/if}
+					</div>
+					<RatioChart
+						data={[
+							{ number: d.computer.learning.source.obec, color: '#0c166b' },
+							{ number: d.computer.learning.source.self, color: '#3c55ab' }
+						]}
+					/>
+					<p class="f mb8 fs10 ratio-stat-text">
+						{#if d.computer.learning.source.obec}
+							<span
+								><span class="cv primary-color">{d.computer.learning.source.obec}</span> เครื่อง</span
+							>
+						{/if}
+						{#if d.computer.learning.source.self}
+							<span
+								><span class="cv primary-color">{d.computer.learning.source.self}</span> เครื่อง</span
+							>
+						{/if}
+					</p>
+					<div class="f g8 ais">
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/icons/info.svg"
+							alt=""
+							width="16"
+							height="16"
+						/>
+						<p class="fs10">
+							แหล่งที่มาของคอมพิวเตอร์สามารถช่วยประกอบการประเมินได้ว่า สพฐ. หรือ
+							ตัวโรงเรียนเองได้จัดสรรงบประมาณที่เพียงพอสำหรับจัดหาคอมพิวเตอร์หรือไม่
+						</p>
+					</div>
+				</details>
+			{/if}
 		</section>
 		<section>
 			<h3 class="f jcs g8 mb8">
