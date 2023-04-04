@@ -2,6 +2,8 @@
 	import { PUBLIC_API_HOST } from '$env/static/public';
 
 	import { onMount } from 'svelte';
+	import linkifyHtml from 'linkify-html';
+	import sanitizeHtml from 'sanitize-html';
 
 	import ContactOfficer from 'components/ContactOfficer.svelte';
 	import Dropdown from 'components/Dropdown.svelte';
@@ -93,7 +95,19 @@
 									<small>{new Date(news.announceDate).toLocaleDateString('th-TH')}</small>
 								</div>
 							</header>
-							<p>{news.announceContent}</p>
+							<p>
+								{@html linkifyHtml(
+									sanitizeHtml(news.announceContent, {
+										allowedTags: ['br'],
+										allowedAttributes: {}
+									}),
+									{
+										className: 'announce-link',
+										rel: 'nofollow noopener noreferrer',
+										target: '_blank'
+									}
+								)}
+							</p>
 						</article>
 					{/each}
 				{/if}
@@ -201,5 +215,9 @@
 		height: 12px;
 		display: block;
 		text-align: center;
+	}
+
+	:global(.announce-link) {
+		color: inherit;
 	}
 </style>
