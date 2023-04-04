@@ -1,23 +1,23 @@
 <script lang="ts">
-	import { PUBLIC_DATA_HOST, PUBLIC_BASE_YEAR } from '$env/static/public';
+	import { PUBLIC_BASE_YEAR, PUBLIC_DATA_HOST } from '$env/static/public';
 
-	import { onMount, tick } from 'svelte';
 	import { scroll } from 'motion';
+	import { onMount, tick } from 'svelte';
 	import { balancer } from 'svelte-action-balancer';
 
 	import {
 		Dialog,
+		DialogDescription,
 		DialogOverlay,
-		DialogTitle,
-		DialogDescription
+		DialogTitle
 	} from '@rgossiaux/svelte-headlessui';
-	import SchoolHeader from 'components/school/SchoolHeader.svelte';
-	import Dropdown from 'components/Dropdown.svelte';
-	import CircularProgress from 'components/school/CircularProgress.svelte';
 	import ActAiBanner from 'components/ActAiBanner.svelte';
-	import Waffle from 'components/school/Waffle.svelte';
-	import RatioChart from 'components/school/RatioChart.svelte';
+	import Dropdown from 'components/Dropdown.svelte';
 	import Modal from 'components/Modal.svelte';
+	import CircularProgress from 'components/school/CircularProgress.svelte';
+	import RatioChart from 'components/school/RatioChart.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
+	import Waffle from 'components/school/Waffle.svelte';
 	import type { SchoolData } from 'types/school_type';
 
 	import { currentSchool, currentSchoolId, data_years } from 'stores/school';
@@ -246,9 +246,15 @@
 </script>
 
 <svelte:head>
-	<title>ข้อมูลโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="ข้อมูลโรงเรียน — โปร่งใสวิทยาคม" />
-	<meta name="twitter:title" content="ข้อมูลโรงเรียน — โปร่งใสวิทยาคม" />
+	<title>ข้อมูลโรงเรียน{d?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<meta
+		property="og:title"
+		content="ข้อมูลโรงเรียน{d?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
+	<meta
+		name="twitter:title"
+		content="ข้อมูลโรงเรียน{d?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ข้อมูลโรงเรียน', color: '#DDAB29' }}>
@@ -302,7 +308,10 @@
 		</menu>
 	</div>
 	{#if DROPDOWN_DATA}
-		<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+		<div>
+			<span class="schoolyear-dropdown-label">ปีการศึกษา</span>
+			<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+		</div>
 	{/if}
 </SchoolHeader>
 
@@ -882,7 +891,10 @@
 				</h3>
 				<p>ครูทั่วไป, ครูผู้ช่วย, ชำนาญการ, ชำนาญการพิเศษ...</p>
 			</button>
-			<Modal title={`ครู ${d.staff.ครู.total.toLocaleString('th-TH')} คน`} bind:isOpen={ครู_modal_open}>
+			<Modal
+				title={`ครู ${d.staff.ครู.total.toLocaleString('th-TH')} คน`}
+				bind:isOpen={ครู_modal_open}
+			>
 				<div class="modal-section-header p16">
 					<div class="f ais fs10 g8">
 						<img
@@ -1026,7 +1038,9 @@
 								number: d.student.total.all,
 								color: '#FFC700',
 								font_color: '#3c55ab',
-								label: `1:${Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString('th-TH')}`
+								label: `1:${Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString(
+									'th-TH'
+								)}`
 							}
 						]}
 					/>
@@ -1299,7 +1313,9 @@
 			<div class="f">
 				<span>สัดส่วนคอมพิวเตอร์ ต่อ นักเรียน</span>
 				<span class="mitr fs20"
-					>1:{Math.ceil(d.student.total.all / d.computer.learning.working).toLocaleString('th-TH')}</span
+					>1:{Math.ceil(d.student.total.all / d.computer.learning.working).toLocaleString(
+						'th-TH'
+					)}</span
 				>
 			</div>
 			<hr />
@@ -2522,5 +2538,13 @@
 		font-weight: 400;
 		line-height: 136%;
 		color: #9daad5;
+	}
+
+	.schoolyear-dropdown-label {
+		font-size: 0.8em;
+		line-height: 1;
+		height: 12px;
+		display: block;
+		text-align: center;
 	}
 </style>

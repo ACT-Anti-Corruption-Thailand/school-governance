@@ -3,12 +3,12 @@
 
 	import { onMount } from 'svelte';
 
-	import SchoolHeader from 'components/school/SchoolHeader.svelte';
-	import Dropdown from 'components/Dropdown.svelte';
 	import ContactOfficer from 'components/ContactOfficer.svelte';
+	import Dropdown from 'components/Dropdown.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 
 	import { page } from '$app/stores';
-	import { computed_years } from 'stores/school';
+	import { computed_years, currentSchool } from 'stores/school';
 
 	const MONTHS = [
 		'ธันวาคม',
@@ -61,13 +61,22 @@
 </script>
 
 <svelte:head>
-	<title>ประกาศโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="ประกาศโรงเรียน — โปร่งใสวิทยาคม" />
-	<meta name="twitter:title" content="ประกาศโรงเรียน — โปร่งใสวิทยาคม" />
+	<title>ประกาศโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<meta
+		property="og:title"
+		content="ประกาศโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
+	<meta
+		name="twitter:title"
+		content="ประกาศโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ประกาศ', color: '#FC5858' }}>
-	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+	<div>
+		<span class="schoolyear-dropdown-label">ปีการศึกษา</span>
+		<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+	</div>
 </SchoolHeader>
 <div class="desktop-margin">
 	{#if has_data}
@@ -184,5 +193,13 @@
 		padding: 8px 16px;
 		border-bottom: 1px solid #ced5ea;
 		width: 100%;
+	}
+
+	.schoolyear-dropdown-label {
+		font-size: 0.8em;
+		line-height: 1;
+		height: 12px;
+		display: block;
+		text-align: center;
 	}
 </style>

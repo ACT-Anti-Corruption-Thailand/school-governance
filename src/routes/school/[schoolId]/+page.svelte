@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { PUBLIC_BASE_YEAR, PUBLIC_API_HOST, PUBLIC_DATA_HOST } from '$env/static/public';
+	import { PUBLIC_API_HOST, PUBLIC_BASE_YEAR, PUBLIC_DATA_HOST } from '$env/static/public';
 
 	import { onMount } from 'svelte';
 	import { balancer } from 'svelte-action-balancer';
 
-	import SchoolHeader from 'components/school/SchoolHeader.svelte';
-	import RatingStat from 'components/RatingStat.svelte';
 	import CommentStat from 'components/CommentStat.svelte';
 	import InViewLottie from 'components/InViewLottie.svelte';
+	import RatingStat from 'components/RatingStat.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 
 	import { currentSchool, currentSchoolId, data_years, LATEST_COMPUTED_YEAR } from 'stores/school';
 	$: d = $currentSchool;
@@ -108,9 +108,15 @@
 </script>
 
 <svelte:head>
-	<title>ภาพรวมโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม" />
-	<meta name="twitter:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม" />
+	<title>ภาพรวมโรงเรียน{d?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<meta
+		property="og:title"
+		content="ภาพรวมโรงเรียน{d?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
+	<meta
+		name="twitter:title"
+		content="ภาพรวมโรงเรียน{d?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
 </svelte:head>
 
 <SchoolHeader>

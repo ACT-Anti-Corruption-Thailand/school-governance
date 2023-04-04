@@ -5,8 +5,8 @@
 
 	import {
 		QUIZ_QUESTIONS_DESC,
-		QUIZ_QUESTIONS_TITLE,
-		QUIZ_QUESTIONS_IMAGE
+		QUIZ_QUESTIONS_IMAGE,
+		QUIZ_QUESTIONS_TITLE
 	} from 'data/quiz-questions';
 
 	import Dropdown from 'components/Dropdown.svelte';
@@ -17,8 +17,8 @@
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
-	import { computed_years, LATEST_COMPUTED_YEAR } from 'stores/school';
 	import { login_modal_isopen } from 'stores/login_modal';
+	import { computed_years, currentSchool, LATEST_COMPUTED_YEAR } from 'stores/school';
 	import { fetchSchoolStats, schoolStatsCache } from 'stores/school_stats_cache';
 
 	$: schoolId = $page.params.schoolId;
@@ -364,13 +364,22 @@
 </script>
 
 <svelte:head>
-	<title>คะแนนโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม" />
-	<meta name="twitter:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม" />
+	<title>คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<meta
+		property="og:title"
+		content="คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
+	<meta
+		name="twitter:title"
+		content="คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
-	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+	<div>
+		<span class="schoolyear-dropdown-label">ปีการศึกษา</span>
+		<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} />
+	</div>
 </SchoolHeader>
 
 {#if dropdown_choice && +dropdown_choice.value === +$LATEST_COMPUTED_YEAR}
@@ -1762,6 +1771,14 @@
 	.school-quiz-lottie {
 		width: 25px;
 		height: 25px;
+	}
+
+	.schoolyear-dropdown-label {
+		font-size: 0.8em;
+		line-height: 1;
+		height: 12px;
+		display: block;
+		text-align: center;
 	}
 
 	// #region UTILS

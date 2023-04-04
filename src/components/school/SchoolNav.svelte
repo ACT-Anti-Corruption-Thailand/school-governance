@@ -73,8 +73,8 @@
 	</a>
 	<a
 		class="f nav-menu"
-		class:active={PAGE_BASE === 'notice'}
-		href="/school/{$currentSchoolId}/notice"
+		class:active={PAGE_BASE === 'announcements'}
+		href="/school/{$currentSchoolId}/announcements"
 	>
 		<svg class="notice-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20"
 			><path
