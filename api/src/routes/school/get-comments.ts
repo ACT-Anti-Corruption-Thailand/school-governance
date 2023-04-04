@@ -46,8 +46,10 @@ export async function getSchoolComments(
 	});
 }
 
-export async function getSchoolCommentsCount(schoolId: string) {
+export async function getSchoolCommentsCount(schoolId: string, countAll = false) {
 	return nocodb.dbViewRow.count(...nocoConfig, 'SchoolComments', 'SchoolComments', {
-		where: `(schoolId,eq,${schoolId})~and(approved,eq,true)~and(schoolYear,eq,${getCurrentSchoolYear()})`
+		where: `(schoolId,eq,${schoolId})~and(approved,eq,true)${
+			countAll ? '' : `~and(schoolYear,eq,${getCurrentSchoolYear()})`
+		}`
 	});
 }

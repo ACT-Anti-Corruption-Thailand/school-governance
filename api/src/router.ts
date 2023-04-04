@@ -1,18 +1,18 @@
 import { FastifyInstance } from 'fastify';
 import { z } from 'zod';
-import { withAuth } from './utils/auth.js';
-import { likeComment, unlikeComment } from './routes/comment/like-unlike.js';
-import { getSchoolComments, getSchoolCommentsCount } from './routes/school/get-comments.js';
-import type { SchoolCommentsQuery, SchoolCommentsBody } from './routes/school/get-comments.js';
-import { getSchoolRating } from './routes/school/get-rating.js';
 import { addComment, deleteComment } from './routes/comment/add-delete.js';
+import { likeComment, unlikeComment } from './routes/comment/like-unlike.js';
 import { uploadImages } from './routes/comment/upload.js';
-import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
 import { getUserRatingRecord } from './routes/rating/get.js';
 import { setUserRatingRecord } from './routes/rating/set.js';
-import { searchSchool, countSchool } from './routes/school/search.js';
-import { topComment, topRating } from './routes/school/top.js';
+import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
+import type { SchoolCommentsBody, SchoolCommentsQuery } from './routes/school/get-comments.js';
+import { getSchoolComments, getSchoolCommentsCount } from './routes/school/get-comments.js';
+import { getSchoolRating } from './routes/school/get-rating.js';
 import { latestActivity } from './routes/school/latest.js';
+import { countSchool, searchSchool } from './routes/school/search.js';
+import { topComment, topRating } from './routes/school/top.js';
+import { withAuth } from './utils/auth.js';
 // import { backup } from './rating/backup.js';
 
 export const convertBodyToQuery = (body: SchoolCommentsBody): SchoolCommentsQuery => {
@@ -108,6 +108,16 @@ export function registerRoutes(app: FastifyInstance) {
 			.parse(req.params);
 
 		return getSchoolCommentsCount(schoolId);
+	});
+
+	app.get('/schools/:schoolId/comments/count/all', (req) => {
+		const { schoolId } = z
+			.object({
+				schoolId: z.string()
+			})
+			.parse(req.params);
+
+		return getSchoolCommentsCount(schoolId, true);
 	});
 
 	app.post(

@@ -7,10 +7,11 @@
 </script>
 
 <script lang="ts">
-	import SchoolRating from './SchoolMiniStats.svelte';
 	import { Lottie } from 'lottie-svelte';
+	import SchoolRating from './SchoolMiniStats.svelte';
 
 	export let is_count_rating = false;
+	export let is_count_all_comments = false;
 	export let school_list: SchoolData[];
 </script>
 
@@ -27,7 +28,11 @@
 							</div>
 						{/if}
 					</div>
-					<SchoolRating count_score={is_count_rating} schoolId={school.id} />
+					<SchoolRating
+						count_score={is_count_rating}
+						count_comment={is_count_all_comments}
+						schoolId={school.id}
+					/>
 				</a>
 			</li>
 		{/each}

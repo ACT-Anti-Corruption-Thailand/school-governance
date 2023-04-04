@@ -1,35 +1,26 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { animate, inView } from 'motion';
+	import { onMount } from 'svelte';
 
-	import SchoolList from 'components/SchoolList.svelte';
 	import ActAiBanner from 'components/ActAiBanner.svelte';
 	import InViewLottie from 'components/InViewLottie.svelte';
+	import SchoolList from 'components/SchoolList.svelte';
 
 	import { getLatestActivityList, getStatsList } from 'utils/data_fetching';
 
-	const DEBUG_SCHOOL_LIST = [
-		{ id: '1010720001', name: 'พญาไท' },
-		{ id: '1010720002', name: 'โฆสิตสโมสร' },
-		{ id: '1010720003', name: 'ราชวินิต' },
-		{ id: '1010720004', name: 'ทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
-		{ id: '1010720005', name: 'วัดโสมนัส' }
-	];
 	let latestActivityList: any[] = [];
 	let mostCommentList: any[] = [];
 	let mostRatingList: any[] = [];
 
 	let schoolListType: 'latest' | 'score' | 'comment' | 'debug' = 'latest';
-	let schoolList: any[] = DEBUG_SCHOOL_LIST;
+	let schoolList: any[] = [];
 
-	$: if (schoolListType === 'latest') {
-		schoolList = latestActivityList;
-	} else if (schoolListType === 'score') {
+	$: if (schoolListType === 'score') {
 		schoolList = mostRatingList;
 	} else if (schoolListType === 'comment') {
 		schoolList = mostCommentList;
 	} else {
-		schoolList = DEBUG_SCHOOL_LIST;
+		schoolList = latestActivityList;
 	}
 
 	const _getLatestActivityList = async () => {
@@ -195,19 +186,13 @@
 			<label for="school-list-choice3" class="f radio-pill">
 				<span>ความเห็นมากสุด</span>
 			</label>
-			<input
-				id="school-list-choice4"
-				class="school-list-radio"
-				type="radio"
-				bind:group={schoolListType}
-				value="debug"
-			/>
-			<label for="school-list-choice4" class="f radio-pill">
-				<span>ทดสอบระบบ</span>
-			</label>
 		</div>
 	</div>
-	<SchoolList is_count_rating={schoolListType === 'score'} school_list={schoolList} />
+	<SchoolList
+		is_count_rating={schoolListType === 'score'}
+		is_count_all_comments={schoolListType === 'comment'}
+		school_list={schoolList}
+	/>
 </section>
 
 <section class="information" id="information">

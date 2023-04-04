@@ -5,12 +5,12 @@
 
 	import { PROVINCES } from 'data/provinces';
 
-	import ProvinceDropdown from 'components/search/ProvinceDropdown.svelte';
-	import SchoolList from 'components/SchoolList.svelte';
 	import type { SchoolData } from 'components/SchoolList.svelte';
+	import SchoolList from 'components/SchoolList.svelte';
+	import ProvinceDropdown from 'components/search/ProvinceDropdown.svelte';
 
-	import { show_search, search_string } from 'stores/search';
 	import { currentSchool, currentSchoolId } from 'stores/school';
+	import { search_string, show_search } from 'stores/search';
 
 	import { getLatestActivityList, getStatsList } from 'utils/data_fetching';
 
@@ -337,13 +337,9 @@
 				<SchoolList school_list={mostRatingList} is_count_rating />
 			</section>
 			<section>
-				<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
-				<SchoolList school_list={mostCommentList} />
+				<h2>โรงเรียนที่มีความเห็นรวมมากที่สุด</h2>
+				<SchoolList school_list={mostCommentList} is_count_all_comments />
 			</section>
-			<!-- <section>
-				<h2>โรงเรียนที่เอาไว้ Debug</h2>
-				<SchoolList school_list={DEBUG_SCHOOL_LIST} />
-			</section> -->
 		</div>
 	{/if}
 
