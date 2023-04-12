@@ -308,7 +308,11 @@
 		</menu>
 	</div>
 	{#if DROPDOWN_DATA}
-		<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} explaination="ปีการศึกษา" />
+		<Dropdown
+			options={DROPDOWN_DATA}
+			bind:selected_option={dropdown_choice}
+			explaination="ปีการศึกษา"
+		/>
 	{/if}
 </SchoolHeader>
 
@@ -326,7 +330,9 @@
 					เฉลี่ยนักเรียนห้องละ <small>(คน)</small>
 				</span>
 				<span class="mitr"
-					>{Math.ceil(d.student.total.all / d.student.total.class).toLocaleString('th-TH')}</span
+					>{Math.ceil(d.student.total.all / (d.student.total.class || 1)).toLocaleString(
+						'th-TH'
+					)}</span
 				>
 			</div>
 			<hr />
@@ -984,7 +990,9 @@
 			<div class="f">
 				<span>สัดส่วนครู ต่อ นักเรียน</span>
 				<span class="mitr fs20"
-					>1:{Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString('th-TH')}</span
+					>1:{Math.ceil(d.student.total.all / (d.staff.ครู.total || 1)).toLocaleString(
+						'th-TH'
+					)}</span
 				>
 			</div>
 			<hr />
@@ -1004,7 +1012,7 @@
 					/>
 				</div>
 				<div class="f special">
-					{#each Array(Math.ceil(d.student.total.all / d.staff.ครู.total)) as _}
+					{#each Array(Math.ceil(d.student.total.all / (d.staff.ครู.total || 1))) as _}
 						<img
 							loading="lazy"
 							decoding="async"
@@ -1035,9 +1043,9 @@
 								number: d.student.total.all,
 								color: '#FFC700',
 								font_color: '#3c55ab',
-								label: `1:${Math.ceil(d.student.total.all / d.staff.ครู.total).toLocaleString(
-									'th-TH'
-								)}`
+								label: `1:${Math.ceil(
+									d.student.total.all / (d.staff.ครู.total || 1)
+								).toLocaleString('th-TH')}`
 							}
 						]}
 					/>
@@ -1053,7 +1061,7 @@
 									color: '#FFC700',
 									font_color: '#3c55ab',
 									label: `1:${Math.ceil(
-										yd.data?.student?.total?.all / yd.data?.staff?.ครู?.total
+										yd.data?.student?.total?.all / (yd.data?.staff?.ครู?.total || 1)
 									).toLocaleString('th-TH')}`
 								}
 							]}
@@ -1147,143 +1155,151 @@
 			{/if}
 		</section>
 
-		<h2 bind:this={el_goods_section} id="goods-section" class="f">
-			<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
-			<span class="f g8">
-				<CircularProgress
-					percent={(d.durable_goods.stats.working / d.durable_goods.stats.total) * 100}
-				/>
-				{~~((d.durable_goods.stats.working / d.durable_goods.stats.total) * 100)}%
-			</span>
-		</h2>
-		<section>
-			<dl class="f status-color">
-				<dt class="usable-color">เหลือง</dt>
-				<dd>ใช้งานได้</dd>
-				<dt class="await-color">เหลืองเข้ม</dt>
-				<dd>รอซ่อม/จำหน่าย</dd>
-				<dt class="unusable-color">แดง</dt>
-				<dd>ใช้งานไม่ได้</dd>
-			</dl>
-		</section>
-
-		<button
-			type="button"
-			class="teacher-size-btn emp-btn mb8"
-			on:click={() => {
-				อุปกรณ์การเรียน_modal_open = true;
-			}}
-		>
-			<h3 class="f">
-				<span>อุปกรณ์การเรียน</span>
-				<span class="mla ibm fs10">ดูทั้งหมด</span>
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/chevrons/right.svg"
-					alt=""
-					width="24"
-					height="24"
-				/>
-			</h3>
-		</button>
-		<Modal title="อุปกรณ์การเรียน" bind:isOpen={อุปกรณ์การเรียน_modal_open}>
-			<dl class="f status-color fs10 mb16">
-				<dt class="usable-color">เหลือง</dt>
-				<dd>ใช้งานได้</dd>
-				<dt class="await-color">เหลืองเข้ม</dt>
-				<dd>รอซ่อม/จำหน่าย</dd>
-				<dt class="unusable-color">แดง</dt>
-				<dd>ใช้งานไม่ได้</dd>
-			</dl>
-			{#each d.durable_goods.data.ครุภัณฑ์การศึกษา.list as eduitem (eduitem.code)}
-				<div class="f mb8 mitr">
-					<span>
-						{eduitem.name}
-						<!-- <small>(ชิ้น)</small> -->
-					</span>
-					<span>{eduitem.total.toLocaleString('th-TH')}</span>
-				</div>
-				<RatioChart
-					data={[
-						{ number: eduitem.working, color: '#FFC700' },
-						{ number: eduitem.to_be_repaired, color: '#ddab29' },
-						{ number: eduitem.to_be_removed, color: '#fc5858' }
-					]}
-				/>
-				<p class="mb8 fs10 ratio-stat-text">
-					<span class="cv usable-color">{eduitem.working.toLocaleString('th-TH')}</span>
-					|
-					<span class="cv await-color">{eduitem.to_be_repaired.toLocaleString('th-TH')}</span>
-					|
-					<span class="cv unusable-color">{eduitem.to_be_removed.toLocaleString('th-TH')}</span>
-					<!-- ชิ้น -->
-				</p>
-			{/each}
-		</Modal>
-
-		<section>
-			<h3 class="f mb8">
-				<span>
-					โต๊ะเก้าอี้นักเรียน
-					<small>(ตัว)</small>
+		{#if !d.durable_goods.stats.total}
+			<h2 bind:this={el_goods_section} id="goods-section" class="f mb8">
+				<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
+				<span class="f g8">ไม่มีข้อมูล</span>
+			</h2>
+		{:else}
+			<h2 bind:this={el_goods_section} id="goods-section" class="f">
+				<span>อุปกรณ์ <small>ที่ใช้งานได้จากทั้งหมด</small></span>
+				<span class="f g8">
+					<CircularProgress
+						percent={(d.durable_goods.stats.working / d.durable_goods.stats.total) * 100}
+					/>
+					{~~((d.durable_goods.stats.working / d.durable_goods.stats.total) * 100)}%
 				</span>
-				<span>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.total.toLocaleString('th-TH')}</span>
-			</h3>
-			<RatioChart
-				data={[
-					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working, color: '#FFC700' },
-					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired, color: '#ddab29' },
-					{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed, color: '#fc5858' }
-				]}
-			/>
-			<p class="mb8 fs10 ratio-stat-text">
-				<span class="cv usable-color"
-					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working.toLocaleString('th-TH')}</span
-				>
-				|
-				<span class="cv await-color"
-					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired.toLocaleString('th-TH')}</span
-				>
-				|
-				<span class="cv unusable-color"
-					>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed.toLocaleString('th-TH')}</span
-				> ตัว
-			</p>
-			<div class="f">
-				<span>สัดส่วนโต๊ะเก้าอี้ ต่อ นักเรียน</span>
-				<span class="mitr fs20"
-					>1:{Math.ceil(
-						d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working
-					).toLocaleString('th-TH')}</span
-				>
-			</div>
-			<hr />
-			<div class="f ratio-chart">
-				<div class="f">
+			</h2>
+			<section>
+				<dl class="f status-color">
+					<dt class="usable-color">เหลือง</dt>
+					<dd>ใช้งานได้</dd>
+					<dt class="await-color">เหลืองเข้ม</dt>
+					<dd>รอซ่อม/จำหน่าย</dd>
+					<dt class="unusable-color">แดง</dt>
+					<dd>ใช้งานไม่ได้</dd>
+				</dl>
+			</section>
+
+			<button
+				type="button"
+				class="teacher-size-btn emp-btn mb8"
+				on:click={() => {
+					อุปกรณ์การเรียน_modal_open = true;
+				}}
+			>
+				<h3 class="f">
+					<span>อุปกรณ์การเรียน</span>
+					<span class="mla ibm fs10">ดูทั้งหมด</span>
 					<img
 						loading="lazy"
 						decoding="async"
-						src="/icons/chair.svg"
+						src="/chevrons/right.svg"
 						alt=""
 						width="24"
 						height="24"
 					/>
+				</h3>
+			</button>
+			<Modal title="อุปกรณ์การเรียน" bind:isOpen={อุปกรณ์การเรียน_modal_open}>
+				<dl class="f status-color fs10 mb16">
+					<dt class="usable-color">เหลือง</dt>
+					<dd>ใช้งานได้</dd>
+					<dt class="await-color">เหลืองเข้ม</dt>
+					<dd>รอซ่อม/จำหน่าย</dd>
+					<dt class="unusable-color">แดง</dt>
+					<dd>ใช้งานไม่ได้</dd>
+				</dl>
+				{#each d.durable_goods.data.ครุภัณฑ์การศึกษา.list as eduitem (eduitem.code)}
+					<div class="f mb8 mitr">
+						<span>
+							{eduitem.name}
+							<!-- <small>(ชิ้น)</small> -->
+						</span>
+						<span>{eduitem.total.toLocaleString('th-TH')}</span>
+					</div>
+					<RatioChart
+						data={[
+							{ number: eduitem.working, color: '#FFC700' },
+							{ number: eduitem.to_be_repaired, color: '#ddab29' },
+							{ number: eduitem.to_be_removed, color: '#fc5858' }
+						]}
+					/>
+					<p class="mb8 fs10 ratio-stat-text">
+						<span class="cv usable-color">{eduitem.working.toLocaleString('th-TH')}</span>
+						|
+						<span class="cv await-color">{eduitem.to_be_repaired.toLocaleString('th-TH')}</span>
+						|
+						<span class="cv unusable-color">{eduitem.to_be_removed.toLocaleString('th-TH')}</span>
+						<!-- ชิ้น -->
+					</p>
+				{/each}
+			</Modal>
+
+			<section>
+				<h3 class="f mb8">
+					<span>
+						โต๊ะเก้าอี้นักเรียน
+						<small>(ตัว)</small>
+					</span>
+					<span>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.total.toLocaleString('th-TH')}</span>
+				</h3>
+				<RatioChart
+					data={[
+						{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working, color: '#FFC700' },
+						{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired, color: '#ddab29' },
+						{ number: d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed, color: '#fc5858' }
+					]}
+				/>
+				<p class="mb8 fs10 ratio-stat-text">
+					<span class="cv usable-color"
+						>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working.toLocaleString('th-TH')}</span
+					>
+					|
+					<span class="cv await-color"
+						>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_repaired.toLocaleString('th-TH')}</span
+					>
+					|
+					<span class="cv unusable-color"
+						>{d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.to_be_removed.toLocaleString('th-TH')}</span
+					> ตัว
+				</p>
+				<div class="f">
+					<span>สัดส่วนโต๊ะเก้าอี้ ต่อ นักเรียน</span>
+					<span class="mitr fs20"
+						>1:{Math.ceil(
+							d.student.total.all / (d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working || 1)
+						).toLocaleString('th-TH')}</span
+					>
 				</div>
-				<div class="f special">
-					{#each Array(Math.ceil(d.student.total.all / d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working)) as _}
+				<hr />
+				<div class="f ratio-chart">
+					<div class="f">
 						<img
 							loading="lazy"
 							decoding="async"
-							src="/icons/person-y.svg"
+							src="/icons/chair.svg"
 							alt=""
 							width="24"
 							height="24"
 						/>
-					{/each}
+					</div>
+					<div class="f special">
+						{#each Array(Math.ceil(d.student.total.all / (d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.working || 1))) as _}
+							<img
+								loading="lazy"
+								decoding="async"
+								src="/icons/person-y.svg"
+								alt=""
+								width="24"
+								height="24"
+							/>
+						{/each}
+					</div>
 				</div>
-			</div>
-		</section>
+			</section>
+		{/if}
+
 		<section>
 			{#if Object.keys(d.computer).length === 0 || d.computer === null || d.computer === undefined}
 				<h3 class="f">
@@ -1318,7 +1334,7 @@
 				<div class="f">
 					<span>สัดส่วนคอมพิวเตอร์ ต่อ นักเรียน</span>
 					<span class="mitr fs20"
-						>1:{Math.ceil(d.student.total.all / d.computer.learning.working).toLocaleString(
+						>1:{Math.ceil(d.student.total.all / (d.computer.learning.working || 1)).toLocaleString(
 							'th-TH'
 						)}</span
 					>
@@ -1336,7 +1352,7 @@
 						/>
 					</div>
 					<div class="f special">
-						{#each Array(Math.ceil(d.student.total.all / d.computer.learning.working)) as _}
+						{#each Array(Math.ceil(d.student.total.all / (d.computer.learning.working || 1))) as _}
 							<img
 								loading="lazy"
 								decoding="async"
@@ -1449,53 +1465,56 @@
 				</dd>
 			</dl>
 		</section>
-		<section>
-			<button
-				class="teacher-size-btn"
-				type="button"
-				on:click={() => {
-					อุปกรณ์อื่น_modal_open = true;
-				}}
-			>
-				<h3 class="f">
-					<span>อุปกรณ์อื่น</span>
-					<span class="mla ibm fs10">ดูทั้งหมด</span>
-					<img
-						loading="lazy"
-						decoding="async"
-						src="/chevrons/right.svg"
-						alt=""
-						width="24"
-						height="24"
-					/>
-				</h3>
-			</button>
-			<ul class="other-appliance-list">
+
+		{#if d.durable_goods.stats.total}
+			<section>
+				<button
+					class="teacher-size-btn"
+					type="button"
+					on:click={() => {
+						อุปกรณ์อื่น_modal_open = true;
+					}}
+				>
+					<h3 class="f">
+						<span>อุปกรณ์อื่น</span>
+						<span class="mla ibm fs10">ดูทั้งหมด</span>
+						<img
+							loading="lazy"
+							decoding="async"
+							src="/chevrons/right.svg"
+							alt=""
+							width="24"
+							height="24"
+						/>
+					</h3>
+				</button>
+				<ul class="other-appliance-list">
+					{#each Object.keys(d.durable_goods.data).filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/)) as appliance_key (appliance_key)}
+						{#if d.durable_goods.data[appliance_key].total}
+							<li>
+								<span class="mitr">{appliance_key.replace('ครุภัณฑ์', '')}</span>
+								<span class="fs10">
+									{mergeGoodsName(d.durable_goods.data[appliance_key].list)}
+								</span>
+							</li>
+						{/if}
+					{/each}
+				</ul>
+			</section>
+			<Modal title="อุปกรณ์อื่นๆ" bind:isOpen={อุปกรณ์อื่น_modal_open}>
 				{#each Object.keys(d.durable_goods.data).filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/)) as appliance_key (appliance_key)}
 					{#if d.durable_goods.data[appliance_key].total}
-						<li>
-							<span class="mitr">{appliance_key.replace('ครุภัณฑ์', '')}</span>
-							<span class="fs10">
-								{mergeGoodsName(d.durable_goods.data[appliance_key].list)}
-							</span>
-						</li>
+						<div class="f modal-section-header mitr">{appliance_key}</div>
+						{#each d.durable_goods.data[appliance_key].list as good (good.code)}
+							<div class="f modal-section">
+								<span>{good.name}</span>
+								<span class="mitr">{good.total.toLocaleString('th-TH')}</span>
+							</div>
+						{/each}
 					{/if}
 				{/each}
-			</ul>
-		</section>
-		<Modal title="อุปกรณ์อื่นๆ" bind:isOpen={อุปกรณ์อื่น_modal_open}>
-			{#each Object.keys(d.durable_goods.data).filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/)) as appliance_key (appliance_key)}
-				{#if d.durable_goods.data[appliance_key].total}
-					<div class="f modal-section-header mitr">{appliance_key}</div>
-					{#each d.durable_goods.data[appliance_key].list as good (good.code)}
-						<div class="f modal-section">
-							<span>{good.name}</span>
-							<span class="mitr">{good.total.toLocaleString('th-TH')}</span>
-						</div>
-					{/each}
-				{/if}
-			{/each}
-		</Modal>
+			</Modal>
+		{/if}
 
 		<ActAiBanner
 			margin
@@ -1775,7 +1794,7 @@
 						/>
 					</dt>
 					<dd>
-						{#if d.links.length}
+						{#if d.links.length && d.links[0] && !['-', '–', '—'].includes(d.links[0].text)}
 							<a
 								href={d.links[0].url.includes('http')
 									? d.links[0].url
@@ -1798,7 +1817,7 @@
 						/>
 					</dt>
 					<dd>
-						{#if d.email}
+						{#if d.email && !['-', '–', '—'].includes(d.email)}
 							<a href="mailto:{d.email}" target="_blank" rel="nofollow noopener noreferrer"
 								>{d.email}</a
 							>
@@ -1824,11 +1843,11 @@
 					<dt>รหัสโรงเรียน</dt>
 					<dd>{$currentSchoolId}</dd>
 					<dt>สังกัด</dt>
-					<dd>{d.affiliation ?? '—'}</dd>
+					<dd>{d.affiliation.trim() || '—'}</dd>
 					<dt>ก่อตั้งเมื่อ</dt>
-					<dd>{d.established ?? '—'}</dd>
+					<dd>{d.established.trim() || '—'}</dd>
 					<dt>ระดับที่เปิดสอน</dt>
-					<dd>{d.grades ?? '—'}</dd>
+					<dd>{d.grades.trim() || '—'}</dd>
 					<dt>ประเภทโรงเรียน</dt>
 					<dd>รัฐบาล</dd>
 				</dl>
