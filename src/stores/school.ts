@@ -5,9 +5,16 @@ import type { SchoolData } from 'types/school_type';
 export const currentSchoolId = writable<number | null>(null);
 export const currentSchool = writable<SchoolData | null>(null);
 
+// Debug function
+function getYear(specifiedTime: Date): number {
+	const now = new Date();
+	return now.getFullYear() - +(now < specifiedTime);
+}
+
 export function getCurrentSchoolYear() {
 	const now = new Date();
 	return now.getFullYear() - +(now.getMonth() < 4);
+	// return getYear(new Date(2023, 2, 25));
 }
 
 // enumerate school year
