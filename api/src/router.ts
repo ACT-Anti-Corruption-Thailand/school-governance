@@ -13,7 +13,7 @@ import { latestActivity } from './routes/school/latest.js';
 import { countSchool, searchSchool } from './routes/school/search.js';
 import { topComment, topRating } from './routes/school/top.js';
 import { withAuth } from './utils/auth.js';
-// import { backup } from './rating/backup.js';
+import { backup } from './rating/backup.js';
 
 export const convertBodyToQuery = (body: SchoolCommentsBody): SchoolCommentsQuery => {
 	return {
@@ -42,7 +42,22 @@ export function registerRoutes(app: FastifyInstance) {
 		'/testauth',
 		withAuth((_req, _resp, uid) => `Welcome ${uid} Auth is good :)`)
 	);
-	// app.get('/testbak', backup);
+
+	// manually trigger backup with password
+	app.post('/schools/rating-backup', ({ body }) => {
+		if (typeof body !== 'string') throw new Error('Body is not string?');
+
+		const { password } = z
+			.object({
+				password: z.string()
+			})
+			.parse(JSON.parse(body));
+
+		if (password === process.env.PWD_BACKUP_WITHOUT_DROP) return backup({ dropRating: false });
+		if (password === process.env.PWD_BACKUP_WITH_DROP) return backup();
+
+		throw new Error('Wrong password, duh');
+	});
 
 	app.get('/schools', (req) => {
 		const query = z

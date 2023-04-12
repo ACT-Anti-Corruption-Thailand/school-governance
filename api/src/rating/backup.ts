@@ -4,8 +4,12 @@ import { getCurrentSchoolYear } from '../utils/school.js';
 
 const delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
-export async function backup() {
-	console.log('🗃 Backup Function Called');
+export async function backup(
+	options = {
+		dropRating: true
+	}
+) {
+	console.log(`🗃 Backup Function Called with${options.dropRating ? '' : 'out'} Drop Rating`);
 	console.time('MOVE TABLE');
 	try {
 		//  ██████╗ ██████╗ ██████╗ ██╗   ██╗
@@ -112,15 +116,17 @@ export async function backup() {
 		// ██║  ██║██║  ██║   ██║   ██║██║ ╚████║╚██████╔╝
 		// ╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝
 
-		await fetch(
-			`${process.env.NOCODB_URL}/api/v1/db/data/bulk/v1/${process.env.NOCODB_PROJECT}/SchoolUserRating/all`,
-			{
-				method: 'DELETE',
-				headers: {
-					'xc-token': process.env.NOCODB_TOKEN
+		if (options?.dropRating) {
+			await fetch(
+				`${process.env.NOCODB_URL}/api/v1/db/data/bulk/v1/${process.env.NOCODB_PROJECT}/SchoolUserRating/all`,
+				{
+					method: 'DELETE',
+					headers: {
+						'xc-token': process.env.NOCODB_TOKEN
+					}
 				}
-			}
-		);
+			);
+		}
 	} catch (e) {
 		console.timeEnd('MOVE TABLE');
 
