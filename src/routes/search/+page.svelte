@@ -212,13 +212,6 @@
 
 	$: getSchoolByProvince(selected_province);
 
-	const DEBUG_SCHOOL_LIST = [
-		{ id: '1010720001', name: 'พญาไท' },
-		{ id: '1010720002', name: 'โฆสิตสโมสร' },
-		{ id: '1010720003', name: 'ราชวินิต' },
-		{ id: '1010720004', name: 'ทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
-		{ id: '1010720005', name: 'วัดโสมนัส' }
-	];
 	let latestActivityList: any[] = [];
 	let mostCommentList: any[] = [];
 	let mostRatingList: any[] = [];

@@ -12,7 +12,7 @@
 	let mostCommentList: any[] = [];
 	let mostRatingList: any[] = [];
 
-	let schoolListType: 'latest' | 'score' | 'comment' | 'debug' = 'latest';
+	let schoolListType: 'latest' | 'score' | 'comment' = 'latest';
 	let schoolList: any[] = [];
 
 	$: if (schoolListType === 'score') {
@@ -189,7 +189,7 @@
 		</div>
 	</div>
 	<SchoolList
-		is_count_rating={schoolListType === 'score'}
+		is_count_rating={schoolListType !== 'latest'}
 		is_count_all_comments={schoolListType === 'comment'}
 		school_list={schoolList}
 	/>
