@@ -1180,7 +1180,9 @@
 					<dd>ใช้งานไม่ได้</dd>
 				</dl>
 			</section>
+		{/if}
 
+		{#if d.durable_goods.data.ครุภัณฑ์การศึกษา.total}
 			<button
 				type="button"
 				class="teacher-size-btn emp-btn mb8"
@@ -1235,7 +1237,9 @@
 					</p>
 				{/each}
 			</Modal>
+		{/if}
 
+		{#if d.durable_goods.data.โต๊ะเก้าอี้นักเรียน.total}
 			<section>
 				<h3 class="f mb8">
 					<span>
@@ -1466,10 +1470,13 @@
 			</dl>
 		</section>
 
-		{#if d.durable_goods.stats.total}
+		{#if Object.keys(d.durable_goods.data)
+			.filter((k) => !k.match(/โต๊ะเก้าอี้นักเรียน|ครุภัณฑ์การศึกษา/))
+			.map((k) => d?.durable_goods.data[k].total ?? 0)
+			.reduce((a, c) => a + c)}
 			<section>
 				<button
-					class="teacher-size-btn"
+					class="teacher-size-btn mb16"
 					type="button"
 					on:click={() => {
 						อุปกรณ์อื่น_modal_open = true;
@@ -1521,205 +1528,224 @@
 			href="https://actai.co/Project?search={encodeURIComponent(`"โรงเรียน${d.name_th}"`)}"
 		/>
 
-		<h2 bind:this={el_building_section} id="building-section" class="f">
-			<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
-			<span class="f g8">
-				<CircularProgress
-					percent={(d.building.stats.ดี /
-						(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
-						100}
-				/>
-				{~~(
-					(d.building.stats.ดี /
-						(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
-					100
-				)}%
-			</span>
-		</h2>
-		<section style="margin-bottom:0;padding-bottom:0">
-			<dl class="f status-color">
-				<dt class="usable-color">เหลือง</dt>
-				<dd>
-					ดี {~~(
+		{#if d.building.stats.ดี && d.building.stats['พอใช้'] && d.building.stats.ทรุดโทรม}
+			<h2 bind:this={el_building_section} id="building-section" class="f">
+				<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
+				<span class="f g8">
+					<CircularProgress
+						percent={(d.building.stats.ดี /
+							(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
+							100}
+					/>
+					{~~(
 						(d.building.stats.ดี /
 							(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
 						100
 					)}%
-				</dd>
-				<dt class="await2-color">เหลืองเข้ม</dt>
-				<dd>
-					พอใช้ {~~(
-						(d.building.stats['พอใช้'] /
-							(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
-						100
-					)}%
-				</dd>
-				<dt class="unusable-color">แดง</dt>
-				<dd>
-					ทรุดโทรม {~~(
-						(d.building.stats.ทรุดโทรม /
-							(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
-						100
-					)}%
-				</dd>
-			</dl>
-		</section>
-		<section>
-			<p class="f mb8">
-				<span>สภาพการใช้งาน</span>
-				<small>จากการประเมินของโรงเรียน</small>
-			</p>
-			<RatioChart
-				data={[
-					{ number: d.building.stats.ดี, color: '#FFC700' },
-					{ number: d.building.stats.พอใช้, color: '#7d5b05' },
-					{ number: d.building.stats.ทรุดโทรม, color: '#fc5858' }
-				]}
-			/>
-		</section>
-		<section style="margin-bottom:0">
-			<h3 class="f">
-				<span>อาคารการศึกษา <small>(อาคาร)</small></span>
-				<span>{d.building.data.อาคารเรียน.length.toLocaleString('th-TH')}</span>
-			</h3>
-		</section>
-		<section>
-			<p class="f">
-				<span>ห้องทั้งหมด <small>(ห้อง)</small></span>
-				<span class="mitr">{d.building.stats.จำนวนห้องในอาคารเรียน.toLocaleString('th-TH')}</span>
-			</p>
-			<hr />
-			<div class="col2-on-desktop">
-				{#each d.building.data.อาคารเรียน as b, bi}
-					<article class="building-card {getConditionClass(b.current_condition, true)}">
+				</span>
+			</h2>
+			<section style="margin-bottom:0;padding-bottom:0">
+				<dl class="f status-color">
+					<dt class="usable-color">เหลือง</dt>
+					<dd>
+						ดี {~~(
+							(d.building.stats.ดี /
+								(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
+							100
+						)}%
+					</dd>
+					<dt class="await2-color">เหลืองเข้ม</dt>
+					<dd>
+						พอใช้ {~~(
+							(d.building.stats['พอใช้'] /
+								(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
+							100
+						)}%
+					</dd>
+					<dt class="unusable-color">แดง</dt>
+					<dd>
+						ทรุดโทรม {~~(
+							(d.building.stats.ทรุดโทรม /
+								(d.building.stats.ดี + d.building.stats['พอใช้'] + d.building.stats.ทรุดโทรม)) *
+							100
+						)}%
+					</dd>
+				</dl>
+			</section>
+			<section>
+				<p class="f mb8">
+					<span>สภาพการใช้งาน</span>
+					<small>จากการประเมินของโรงเรียน</small>
+				</p>
+				<RatioChart
+					data={[
+						{ number: d.building.stats.ดี, color: '#FFC700' },
+						{ number: d.building.stats.พอใช้, color: '#7d5b05' },
+						{ number: d.building.stats.ทรุดโทรม, color: '#fc5858' }
+					]}
+				/>
+			</section>
+		{/if}
+
+		{#if d.building.data.อาคารเรียน.length}
+			<section style="margin-bottom:0">
+				<h3 class="f">
+					<span>อาคารการศึกษา <small>(อาคาร)</small></span>
+					<span>{d.building.data.อาคารเรียน.length.toLocaleString('th-TH')}</span>
+				</h3>
+			</section>
+			<section>
+				<p class="f">
+					<span>ห้องทั้งหมด <small>(ห้อง)</small></span>
+					<span class="mitr">{d.building.stats.จำนวนห้องในอาคารเรียน.toLocaleString('th-TH')}</span>
+				</p>
+				<hr />
+				<div class="col2-on-desktop">
+					{#each d.building.data.อาคารเรียน as b, bi}
+						<article class="building-card {getConditionClass(b.current_condition, true)}">
+							<img
+								loading="lazy"
+								decoding="async"
+								class="building-image"
+								class:no-zoom={building_imgs?.อาคารเรียน?.[bi] === FALLBACK_BUILDING_IMG}
+								src={building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG}
+								alt=""
+								on:click={() =>
+									openLightbox(b.name, building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG)}
+								on:keypress={() =>
+									openLightbox(b.name, building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG)}
+							/>
+							<div>
+								<h4>{b.name} {bi + 1}</h4>
+								<p>
+									สร้างปี {b.build_at}<br />
+									สภาพการใช้งาน
+									<span class="building-status cv">{b.current_condition}</span>
+								</p>
+								<Waffle number={b.room_number ?? 0} />
+								<div>
+									<span class="mitr">{(b.room_number ?? 0).toLocaleString('th-TH')}</span>
+									<span class="fs10">ห้อง</span>
+								</div>
+							</div>
+						</article>
+					{/each}
+				</div>
+			</section>
+		{/if}
+
+		{#if d.building.data.อาคารทั่วไป.length}
+			<button
+				type="button"
+				class="teacher-size-btn emp-btn"
+				on:click={() => {
+					อาคาร_modal_open = true;
+				}}
+			>
+				<h3 class="f">
+					<span>อาคารและสิ่งก่อสร้างอื่น</span>
+					{#if Object.keys(d.building.data)
+						.filter((k) => !k.match(/อาคาร/))
+						.map((k) => d?.building.data[k].length ?? 0)
+						.reduce((a, c) => a + c)}
+						<span class="mla ibm fs10">ดูรายละเอียด</span>
 						<img
 							loading="lazy"
 							decoding="async"
-							class="building-image"
-							class:no-zoom={building_imgs?.อาคารเรียน?.[bi] === FALLBACK_BUILDING_IMG}
-							src={building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG}
+							src="/chevrons/right.svg"
 							alt=""
-							on:click={() =>
-								openLightbox(b.name, building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG)}
-							on:keypress={() =>
-								openLightbox(b.name, building_imgs?.อาคารเรียน?.[bi] ?? FALLBACK_BUILDING_IMG)}
+							width="24"
+							height="24"
 						/>
-						<div>
-							<h4>{b.name} {bi + 1}</h4>
-							<p>
-								สร้างปี {b.build_at}<br />
-								สภาพการใช้งาน
-								<span class="building-status cv">{b.current_condition}</span>
-							</p>
-							<Waffle number={b.room_number ?? 0} />
-							<div>
-								<span class="mitr">{(b.room_number ?? 0).toLocaleString('th-TH')}</span>
-								<span class="fs10">ห้อง</span>
-							</div>
-						</div>
-					</article>
-				{/each}
-			</div>
-		</section>
-
-		<button
-			type="button"
-			class="teacher-size-btn emp-btn"
-			on:click={() => {
-				อาคาร_modal_open = true;
-			}}
-		>
-			<h3 class="f">
-				<span>อาคารและสิ่งก่อสร้างอื่น</span>
-				<span class="mla ibm fs10">ดูรายละเอียด</span>
-				<img
-					loading="lazy"
-					decoding="async"
-					src="/chevrons/right.svg"
-					alt=""
-					width="24"
-					height="24"
-				/>
-			</h3>
-		</button>
-		<Modal title="อาคารและสิ่งก่อสร้างอื่น" bind:isOpen={อาคาร_modal_open}>
-			<dl class="f status-color fs10 mb16">
-				<dt class="usable-color">เหลือง</dt>
-				<dd>ดี</dd>
-				<dt class="await2-color">เหลืองเข้ม</dt>
-				<dd>พอใช้</dd>
-				<dt class="unusable-color">แดง</dt>
-				<dd>ทรุดโทรม</dd>
-			</dl>
-			{#each Object.keys(d.building.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
-				{#if d.building.data[buildings_key].length}
-					<div class="f modal-section-header mitr">{buildings_key}</div>
-					<div class="col2-on-desktop">
-						{#each d.building.data[buildings_key] as b, bi}
-							<div
-								class="modal-section building f jcs ais g8 {getConditionClass(
-									b.current_condition,
-									true
-								)}"
-							>
-								<img
-									loading="lazy"
-									decoding="async"
-									class="building-image"
-									class:no-zoom={building_imgs?.[buildings_key]?.[bi] === FALLBACK_BUILDING_IMG}
-									src={building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG}
-									alt=""
-									on:click={() => {
-										อาคาร_modal_open = false;
-										openLightbox(
-											b.name,
-											building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG,
-											() => {
-												อาคาร_modal_open = true;
-											}
-										);
-									}}
-									on:keypress={() => {
-										อาคาร_modal_open = false;
-										openLightbox(
-											b.name,
-											building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG,
-											() => {
-												อาคาร_modal_open = true;
-											}
-										);
-									}}
-								/>
-								<span class="building-status cv" />
-								<div>
-									<span>{b.name}</span><br /><small>สร้างปี {b.build_at}</small>
+					{/if}
+				</h3>
+			</button>
+		{/if}
+		{#if Object.keys(d.building.data)
+			.filter((k) => !k.match(/อาคาร/))
+			.map((k) => d?.building.data[k].length ?? 0)
+			.reduce((a, c) => a + c)}
+			<Modal title="อาคารและสิ่งก่อสร้างอื่น" bind:isOpen={อาคาร_modal_open}>
+				<dl class="f status-color fs10 mb16">
+					<dt class="usable-color">เหลือง</dt>
+					<dd>ดี</dd>
+					<dt class="await2-color">เหลืองเข้ม</dt>
+					<dd>พอใช้</dd>
+					<dt class="unusable-color">แดง</dt>
+					<dd>ทรุดโทรม</dd>
+				</dl>
+				{#each Object.keys(d.building.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
+					{#if d.building.data[buildings_key].length}
+						<div class="f modal-section-header mitr">{buildings_key}</div>
+						<div class="col2-on-desktop">
+							{#each d.building.data[buildings_key] as b, bi}
+								<div
+									class="modal-section building f jcs ais g8 {getConditionClass(
+										b.current_condition,
+										true
+									)}"
+								>
+									<img
+										loading="lazy"
+										decoding="async"
+										class="building-image"
+										class:no-zoom={building_imgs?.[buildings_key]?.[bi] === FALLBACK_BUILDING_IMG}
+										src={building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG}
+										alt=""
+										on:click={() => {
+											อาคาร_modal_open = false;
+											openLightbox(
+												b.name,
+												building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG,
+												() => {
+													อาคาร_modal_open = true;
+												}
+											);
+										}}
+										on:keypress={() => {
+											อาคาร_modal_open = false;
+											openLightbox(
+												b.name,
+												building_imgs?.[buildings_key]?.[bi] ?? FALLBACK_BUILDING_IMG,
+												() => {
+													อาคาร_modal_open = true;
+												}
+											);
+										}}
+									/>
+									<span class="building-status cv" />
+									<div>
+										<span>{b.name}</span><br /><small>สร้างปี {b.build_at}</small>
+									</div>
 								</div>
-							</div>
-						{/each}
-					</div>
-				{/if}
-			{/each}
-		</Modal>
+							{/each}
+						</div>
+					{/if}
+				{/each}
+			</Modal>
+		{/if}
 
 		<section class="other-buildings">
-			<div>
-				{#each d.building.data.อาคารทั่วไป as b, bi}
-					<article class={getConditionClass(b.current_condition, true)}>
-						<img
-							class="building-image"
-							class:no-zoom={building_imgs?.อาคารทั่วไป?.[bi] === FALLBACK_BUILDING_IMG}
-							src={building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG}
-							alt=""
-							on:click={() =>
-								openLightbox(b.name, building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG)}
-							on:keypress={() =>
-								openLightbox(b.name, building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG)}
-						/>
-						<h4>{b.name}</h4>
-						<p>สร้างปี {b.build_at}</p>
-					</article>
-				{/each}
-			</div>
+			{#if d.building.data.อาคารทั่วไป.length}
+				<div>
+					{#each d.building.data.อาคารทั่วไป as b, bi}
+						<article class={getConditionClass(b.current_condition, true)}>
+							<img
+								class="building-image"
+								class:no-zoom={building_imgs?.อาคารทั่วไป?.[bi] === FALLBACK_BUILDING_IMG}
+								src={building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG}
+								alt=""
+								on:click={() =>
+									openLightbox(b.name, building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG)}
+								on:keypress={() =>
+									openLightbox(b.name, building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG)}
+							/>
+							<h4>{b.name}</h4>
+							<p>สร้างปี {b.build_at}</p>
+						</article>
+					{/each}
+				</div>
+			{/if}
 			<ul class="other-appliance-list">
 				{#each Object.keys(d.building.data).filter((k) => !k.match(/อาคาร/)) as buildings_key (buildings_key)}
 					{#if d.building.data[buildings_key].length}
@@ -2250,10 +2276,14 @@
 		margin: 0;
 
 		> li {
-			margin-top: 16px;
+			margin-bottom: 16px;
 			white-space: nowrap;
 			text-overflow: ellipsis;
 			overflow: hidden;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
 	}
 

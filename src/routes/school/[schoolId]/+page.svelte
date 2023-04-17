@@ -158,7 +158,7 @@
 						<span class="mitr school-bignum"
 							>1:{fixNaN(
 								Math.ceil(
-									(d?.student?.total?.all ?? 0) / (d?.staff?.ครู?.total ?? 1)
+									(d?.student?.total?.all ?? 0) / (d?.staff?.ครู?.total || 1)
 								).toLocaleString('th-TH')
 							)}</span
 						> คน
@@ -170,7 +170,7 @@
 						<span class="mitr school-bignum"
 							>{fixNaN(
 								Math.ceil(
-									(d?.student?.total?.all ?? 0) / (d?.student?.total?.class ?? 1)
+									(d?.student?.total?.all ?? 0) / (d?.student?.total?.class || 1)
 								).toLocaleString('th-TH')
 							)}</span
 						> คน
@@ -181,7 +181,7 @@
 					<span class="school-data-val">
 						<span class="mitr school-bignum"
 							>{~~(
-								((d?.durable_goods?.stats?.working ?? 0) / (d?.durable_goods?.stats?.total ?? 1)) *
+								((d?.durable_goods?.stats?.working ?? 0) / (d?.durable_goods?.stats?.total || 1)) *
 								100
 							) || '—'}%</span
 						> ใช้งานได้
