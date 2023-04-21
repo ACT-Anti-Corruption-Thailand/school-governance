@@ -6,7 +6,7 @@
 
 	import { fetchSchoolStats, schoolStatsCache } from 'stores/school_stats_cache';
 
-	export let schoolId: string = '';
+	export let schoolId = '';
 	export let noFetch = false;
 	export let count_score = false;
 	export let count_comment = false;

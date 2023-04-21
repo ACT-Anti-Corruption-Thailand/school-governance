@@ -1,4 +1,5 @@
 // Debug function
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function getYear(specifiedTime: Date): number {
 	const now = new Date();
 	return now.getFullYear() - +(now < specifiedTime);
