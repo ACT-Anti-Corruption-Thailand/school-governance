@@ -5,12 +5,12 @@
 
 	import { PROVINCES } from 'data/provinces';
 
-	import ProvinceDropdown from 'components/search/ProvinceDropdown.svelte';
-	import SchoolList from 'components/SchoolList.svelte';
 	import type { SchoolData } from 'components/SchoolList.svelte';
+	import SchoolList from 'components/SchoolList.svelte';
+	import ProvinceDropdown from 'components/search/ProvinceDropdown.svelte';
 
-	import { show_search, search_string } from 'stores/search';
 	import { currentSchool, currentSchoolId } from 'stores/school';
+	import { search_string, show_search } from 'stores/search';
 
 	import { getLatestActivityList, getStatsList } from 'utils/data_fetching';
 
@@ -212,13 +212,6 @@
 
 	$: getSchoolByProvince(selected_province);
 
-	const DEBUG_SCHOOL_LIST = [
-		{ id: '1010720001', name: 'พญาไท' },
-		{ id: '1010720002', name: 'โฆสิตสโมสร' },
-		{ id: '1010720003', name: 'ราชวินิต' },
-		{ id: '1010720004', name: 'ทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
-		{ id: '1010720005', name: 'วัดโสมนัส' }
-	];
 	let latestActivityList: any[] = [];
 	let mostCommentList: any[] = [];
 	let mostRatingList: any[] = [];
@@ -333,17 +326,13 @@
 				<SchoolList school_list={latestActivityList} />
 			</section>
 			<section>
-				<h2>โรงเรียนที่มีคะแนนเสียงมากที่สุด</h2>
-				<SchoolList school_list={mostRatingList} />
+				<h2>โรงเรียนที่มีจำนวนรีวิวมากที่สุด</h2>
+				<SchoolList school_list={mostRatingList} is_count_rating />
 			</section>
 			<section>
-				<h2>โรงเรียนที่แสดงความเห็นมากที่สุด</h2>
-				<SchoolList school_list={mostCommentList} />
+				<h2>โรงเรียนที่มีจำนวนความเห็นมากที่สุด</h2>
+				<SchoolList school_list={mostCommentList} is_count_all_comments />
 			</section>
-			<!-- <section>
-				<h2>โรงเรียนที่เอาไว้ Debug</h2>
-				<SchoolList school_list={DEBUG_SCHOOL_LIST} />
-			</section> -->
 		</div>
 	{/if}
 
@@ -380,7 +369,7 @@
 				{#if school_result.length}
 					<h2 class="f">
 						<span>โรงเรียน</span>
-						<small>พบ {school_result_count.toLocaleString()} โรงเรียน</small>
+						<small>พบ {school_result_count.toLocaleString('th-TH')} โรงเรียน</small>
 					</h2>
 					<ul>
 						{#each school_result as { schoolId, nameTh } (schoolId)}

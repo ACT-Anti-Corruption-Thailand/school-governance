@@ -5,8 +5,8 @@
 
 	import {
 		QUIZ_QUESTIONS_DESC,
-		QUIZ_QUESTIONS_TITLE,
-		QUIZ_QUESTIONS_IMAGE
+		QUIZ_QUESTIONS_IMAGE,
+		QUIZ_QUESTIONS_TITLE
 	} from 'data/quiz-questions';
 
 	import Dropdown from 'components/Dropdown.svelte';
@@ -17,8 +17,9 @@
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
-	import { computed_years } from 'stores/school';
 	import { login_modal_isopen } from 'stores/login_modal';
+	import { computed_years, currentSchool, LATEST_COMPUTED_YEAR } from 'stores/school';
+	import { fetchSchoolStats, schoolStatsCache } from 'stores/school_stats_cache';
 
 	$: schoolId = $page.params.schoolId;
 
@@ -193,11 +194,11 @@
 		mounted = true;
 	});
 
-	$: if (mounted && schoolId) {
+	$: if (mounted && schoolId && dropdown_choice) {
 		fetchData();
 	}
 
-	$: if (mounted && schoolId && $currentUser) {
+	$: if (mounted && schoolId && $currentUser && dropdown_choice) {
 		fetchUserRow();
 	}
 
@@ -239,9 +240,11 @@
 	};
 
 	const fetchData = async () => {
+		const { value: year } = dropdown_choice;
+
 		try {
 			// get school overall rating
-			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating`);
+			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/rating/${year}`);
 			const school_json = await school_resp.json();
 
 			assignSchoolScore(school_json);
@@ -276,6 +279,7 @@
 	};
 
 	let user_record_id: null | number = null;
+	let is_submitting = false;
 	const submitScore = async () => {
 		if (!$currentUser) return;
 		if (!quiz_location) return;
@@ -305,6 +309,7 @@
 		// fix svelte error a rai mai ru maybe eslint confusing
 		const ustore = $currentUser;
 		try {
+			is_submitting = true;
 			const submit_resp = await fetch(
 				`${PUBLIC_API_HOST}/schools/${schoolId}/rating/current-user`,
 				{
@@ -326,6 +331,7 @@
 			quiz_gym_done = currentUser.gDone ?? false;
 
 			assignSchoolScore(school);
+			updateStats();
 
 			quiz_isopen = false;
 			tick().then(() => {
@@ -333,7 +339,19 @@
 			});
 		} catch (e) {
 			console.error(e);
+		} finally {
+			is_submitting = false;
 		}
+	};
+
+	const updateStats = async () => {
+		const [_comment, _ratingCount, _rating] = await fetchSchoolStats(schoolId);
+
+		if (_comment === undefined || _ratingCount === undefined || _rating === undefined) return;
+		$schoolStatsCache = {
+			...$schoolStatsCache,
+			[schoolId]: { comment: _comment, ratingCount: _ratingCount, rating: _rating }
+		};
 	};
 
 	const openQuizModal = () => {
@@ -346,19 +364,29 @@
 </script>
 
 <svelte:head>
-	<title>คะแนนโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม" />
-	<meta name="twitter:title" content="คะแนนโรงเรียน — โปร่งใสวิทยาคม" />
+	<title>คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<meta
+		property="og:title"
+		content="คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
+	<meta
+		name="twitter:title"
+		content="คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
 </svelte:head>
 
-<SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }} />
+<SchoolHeader pageData={{ name: 'คะแนนเฉลี่ย', color: '#FA7CC7' }}>
+	<Dropdown options={DROPDOWN_DATA} bind:selected_option={dropdown_choice} explaination="ปีการศึกษา" />
+</SchoolHeader>
 
-<button type="button" class="f rate-btn" on:click={openQuizModal}>
-	<span>แล้วคุณละ ให้กี่คะแนน?</span>
-	<div class="school-quiz-lottie">
-		<Lottie path="/lotties/littlestar.json" loop={true} autoplay={true} />
-	</div>
-</button>
+{#if dropdown_choice && +dropdown_choice.value === +$LATEST_COMPUTED_YEAR}
+	<button type="button" class="f rate-btn" on:click={openQuizModal}>
+		<span>แล้วคุณละ ให้กี่คะแนน?</span>
+		<div class="school-quiz-lottie">
+			<Lottie path="/lotties/littlestar.json" loop={true} autoplay={true} />
+		</div>
+	</button>
+{/if}
 
 <!--  ██████╗ ██╗   ██╗██╗███████╗ -->
 <!-- ██╔═══██╗██║   ██║██║╚══███╔╝ -->
@@ -374,6 +402,7 @@
 	onCloseCallback={quiz_onclose}
 	boxWidth="640px"
 	boxHeight="700px"
+	disabled_close={is_submitting}
 >
 	<div class="quiz-location" slot="title">
 		{#if quiz_location}
@@ -483,6 +512,7 @@
 				<button
 					class="rating-form-btn secondary"
 					type="button"
+					disabled={is_submitting}
 					on:click={() => {
 						quiz_current_step -= 1;
 					}}>กลับ</button
@@ -492,7 +522,7 @@
 				<button
 					class="rating-form-btn"
 					type="button"
-					disabled={quiz_rating_values[quiz_current_step] === 0}
+					disabled={quiz_rating_values[quiz_current_step] === 0 || is_submitting}
 					on:click={() => {
 						quiz_current_step += 1;
 					}}>ไปต่อ</button
@@ -501,21 +531,25 @@
 				<button
 					class="rating-form-btn f"
 					type="button"
-					disabled={quiz_rating_values[quiz_current_step] === 0}
+					disabled={quiz_rating_values[quiz_current_step] === 0 || is_submitting}
 					on:click={submitScore}
 				>
-					<span>ส่งคะแนน</span>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						fill="none"
-						viewBox="0 0 16 16"
-						width="16"
-						height="16"
-						><path
-							fill="currentColor"
-							d="M13.286 5.705A1 1 0 0011.87 4.29l-5.88 5.88-1.876-1.868A1 1 0 002.702 9.72l2.581 2.575a1 1 0 001.413-.001l6.59-6.59z"
-						/></svg
-					>
+					{#if is_submitting}
+						<span>กำลังส่งคะแนน...</span>
+					{:else}
+						<span>ส่งคะแนน</span>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 16 16"
+							width="16"
+							height="16"
+							><path
+								fill="currentColor"
+								d="M13.286 5.705A1 1 0 0011.87 4.29l-5.88 5.88-1.876-1.868A1 1 0 002.702 9.72l2.581 2.575a1 1 0 001.413-.001l6.59-6.59z"
+							/></svg
+						>
+					{/if}
 				</button>
 			{/if}
 		</div>
@@ -532,7 +566,7 @@
 		<div class="quiz-location-selector">
 			<button
 				class="quiz-location-btn f"
-				class:qfm-done={quiz_classroom_done}
+				disabled={quiz_classroom_done}
 				type="button"
 				on:click={() => {
 					quiz_location = 'classroom';
@@ -550,7 +584,7 @@
 			</button>
 			<button
 				class="quiz-location-btn f"
-				class:qfm-done={quiz_toilet_done}
+				disabled={quiz_toilet_done}
 				type="button"
 				on:click={() => {
 					quiz_location = 'toilet';
@@ -568,7 +602,7 @@
 			</button>
 			<button
 				class="quiz-location-btn f"
-				class:qfm-done={quiz_canteen_done}
+				disabled={quiz_canteen_done}
 				type="button"
 				on:click={() => {
 					quiz_location = 'canteen';
@@ -586,7 +620,7 @@
 			</button>
 			<button
 				class="quiz-location-btn f"
-				class:qfm-done={quiz_gym_done}
+				disabled={quiz_gym_done}
 				type="button"
 				on:click={() => {
 					quiz_location = 'gym';
@@ -602,6 +636,7 @@
 	<button
 		class="metric-btn mlra"
 		type="button"
+		disabled={is_submitting}
 		on:click={() => {
 			detail_modal_callback = openQuizModal;
 			quiz_isopen = false;
@@ -689,7 +724,7 @@
 	<div class="quiz-location-selector">
 		<button
 			class="quiz-location-btn f"
-			class:qfm-done={quiz_classroom_done}
+			disabled={quiz_classroom_done}
 			type="button"
 			on:click={() => {
 				quiz_location = 'classroom';
@@ -712,7 +747,7 @@
 		</button>
 		<button
 			class="quiz-location-btn f"
-			class:qfm-done={quiz_toilet_done}
+			disabled={quiz_toilet_done}
 			type="button"
 			on:click={() => {
 				quiz_location = 'toilet';
@@ -735,7 +770,7 @@
 		</button>
 		<button
 			class="quiz-location-btn f"
-			class:qfm-done={quiz_canteen_done}
+			disabled={quiz_canteen_done}
 			type="button"
 			on:click={() => {
 				quiz_location = 'canteen';
@@ -758,7 +793,7 @@
 		</button>
 		<button
 			class="quiz-location-btn f"
-			class:qfm-done={quiz_gym_done}
+			disabled={quiz_gym_done}
 			type="button"
 			on:click={() => {
 				quiz_location = 'gym';
@@ -775,7 +810,10 @@
 	</div>
 </Modal>
 
-<div class="desktop-margin">
+<div
+	class="desktop-margin"
+	class:top-margin={dropdown_choice && +dropdown_choice.value === +$LATEST_COMPUTED_YEAR}
+>
 	<div class="card">
 		<div class="f">
 			<h3 class="mitr">คะแนนตามเกณฑ์มาตรฐาน</h3>
@@ -1144,7 +1182,7 @@
 	<div class="card">
 		<div class="f">
 			<h3 class="fw400">แบ่งตามด้าน</h3>
-			<Dropdown options={METRIC_DROPDOWN} bind:selected_option={metric_choice} />
+			<Dropdown options={METRIC_DROPDOWN} bind:selected_option={metric_choice} noZ />
 		</div>
 		<ScoreDiagram
 			score_enough={school_enough_avg}
@@ -1286,7 +1324,10 @@
 			width: 100%;
 			max-width: 640px;
 			margin: auto;
-			margin-top: 73px;
+
+			&.top-margin {
+				margin-top: 73px;
+			}
 		}
 	}
 
@@ -1336,6 +1377,10 @@
 		text-decoration: underline;
 		margin-right: auto;
 		width: max-content;
+	}
+
+	.metric-btn:disabled {
+		cursor: not-allowed;
 	}
 
 	.meter {
@@ -1632,8 +1677,9 @@
 		}
 	}
 
-	.qfm-done {
+	.quiz-location-btn:disabled {
 		background: #fcbde3;
+		cursor: not-allowed;
 
 		&::after {
 			content: '';

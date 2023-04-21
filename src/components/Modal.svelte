@@ -10,8 +10,10 @@
 	export let onCloseCallback = () => {};
 	export let boxWidth = '480px';
 	export let boxHeight = '600px';
+	export let disabled_close = false;
 
 	$: closeFn = () => {
+		if (disabled_close) return;
 		isOpen = false;
 		tick().then(onCloseCallback);
 	};
@@ -22,7 +24,7 @@
 
 	<div class="modal-box" style:--modal-box-width={boxWidth} style:--modal-box-height={boxHeight}>
 		<header class="f modal-header" class:header-background={!hideTitle || $$slots.title}>
-			<button type="button" class="f" on:click={closeFn}>
+			<button type="button" class="f modal-closebtn" on:click={closeFn} disabled={disabled_close}>
 				<img
 					src="/icons/close.svg"
 					alt="ปิด"
@@ -101,5 +103,9 @@
 
 	.modal-content {
 		padding: 0 16px 16px;
+	}
+
+	.modal-closebtn:disabled {
+		cursor: not-allowed;
 	}
 </style>

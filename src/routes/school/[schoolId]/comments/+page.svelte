@@ -1,26 +1,27 @@
 <script lang="ts">
-	import { PUBLIC_API_HOST } from '$env/static/public';
+	import { PUBLIC_API_HOST, PUBLIC_SITE_HOST } from '$env/static/public';
 
 	import { onMount, tick } from 'svelte';
 
-	import { Lottie } from 'lottie-svelte';
 	import {
 		Dialog,
+		DialogDescription,
 		DialogOverlay,
 		DialogTitle,
-		DialogDescription,
 		Popover,
 		PopoverButton,
 		PopoverPanel
 	} from '@rgossiaux/svelte-headlessui';
 	import Modal from 'components/Modal.svelte';
-	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 	import CommentReadmore from 'components/school/CommentReadmore.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
+	import { Lottie } from 'lottie-svelte';
 
 	import { page } from '$app/stores';
 	import { currentUser } from 'stores/firebaseapp';
-	import { LATEST_COMPUTED_YEAR, computed_years } from 'stores/school';
 	import { login_modal_isopen } from 'stores/login_modal';
+	import { computed_years, currentSchool, LATEST_COMPUTED_YEAR } from 'stores/school';
+	import { fetchSchoolStats, schoolStatsCache } from 'stores/school_stats_cache';
 
 	$: schoolId = $page.params.schoolId;
 
@@ -37,21 +38,25 @@
 			...e,
 			likedByYourself: e.likedUserIds.find((e: any) => e.userId === $currentUser?.uid)
 		}));
+		is_fetching = false;
 	};
 
 	const fetchComments = async () => {
+		is_fetching = true;
 		try {
 			const resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/comments?${api_query}`);
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
+			is_fetching = false;
 		}
 	};
 
 	const likeComment = async (commentId: number) => {
 		if (!$currentUser) return;
 
+		is_fetching = true;
 		try {
 			const resp = await fetch(
 				`${PUBLIC_API_HOST}/schools/${schoolId}/comments/${commentId}/like`,
@@ -71,15 +76,17 @@
 				}
 			);
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
+			is_fetching = false;
 		}
 	};
 
 	const unlikeComment = async (likeId: number) => {
 		if (!$currentUser) return;
 
+		is_fetching = true;
 		try {
 			const resp = await fetch(`${PUBLIC_API_HOST}/schools/${schoolId}/likes/${likeId}`, {
 				method: 'DELETE',
@@ -96,15 +103,17 @@
 				})
 			});
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
 		} catch (err) {
 			console.error(err);
+			is_fetching = false;
 		}
 	};
 
 	const deleteComment = async () => {
 		if (!$currentUser) return;
 
+		is_fetching = true;
 		try {
 			const resp = await fetch(
 				`${PUBLIC_API_HOST}/schools/${schoolId}/comments/${going_to_delete_id}`,
@@ -124,9 +133,11 @@
 				}
 			);
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
+			updateStats();
 		} catch (err) {
 			console.error(err);
+			is_fetching = false;
 		} finally {
 			going_to_delete_id = null;
 			confirm_delete_isopen = false;
@@ -157,6 +168,10 @@
 					body: formData
 				});
 
+				if (!resp.ok) {
+					throw new Error('Upload Error', { cause: resp });
+				}
+
 				uploaded_files = await resp.json();
 			}
 
@@ -179,7 +194,8 @@
 				})
 			});
 
-			await assignCommentsVariables(resp);
+			assignCommentsVariables(resp);
+			updateStats();
 		} catch (err) {
 			console.error(err);
 		} finally {
@@ -190,6 +206,17 @@
 		}
 	};
 
+	const updateStats = async () => {
+		const [_comment, _ratingCount, _rating] = await fetchSchoolStats(schoolId);
+
+		if (_comment === undefined || _ratingCount === undefined || _rating === undefined) return;
+		$schoolStatsCache = {
+			...$schoolStatsCache,
+			[schoolId]: { comment: _comment, ratingCount: _ratingCount, rating: _rating }
+		};
+	};
+
+	let is_fetching = false;
 	let posts: any[] = [];
 	onMount(() => {
 		fetchComments();
@@ -276,6 +303,8 @@
 		);
 	};
 
+	// check if images is parseable
+	// because it may be string
 	const parseImagesVal = (
 		images: any
 	): {
@@ -286,7 +315,9 @@
 		if (typeof images === 'string') {
 			_imgs = JSON.parse(images);
 		}
-		if (Array.isArray(_imgs)) return _imgs;
+		if (Array.isArray(_imgs)) {
+			return _imgs.map((i) => ('url' in i ? i : { ...i, url: PUBLIC_SITE_HOST + '/' + i.path }));
+		}
 		return [];
 	};
 
@@ -329,9 +360,15 @@
 </script>
 
 <svelte:head>
-	<title>ความคิดเห็นโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="ความคิดเห็นโรงเรียน — โปร่งใสวิทยาคม" />
-	<meta name="twitter:title" content="ความคิดเห็นโรงเรียน — โปร่งใสวิทยาคม" />
+	<title>ความคิดเห็นโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<meta
+		property="og:title"
+		content="ความคิดเห็นโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
+	<meta
+		name="twitter:title"
+		content="ความคิดเห็นโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
 </svelte:head>
 
 <SchoolHeader pageData={{ name: 'ความคิดเห็น', color: '#6BC9FF' }}>
@@ -355,7 +392,12 @@
 <div class="comment-btn-compensate" />
 
 {#if $currentUser}
-	<Modal title="เพิ่มความเห็นใหม่" hideTitle bind:isOpen={comment_modal_isopen}>
+	<Modal
+		title="เพิ่มความเห็นใหม่"
+		hideTitle
+		bind:isOpen={comment_modal_isopen}
+		disabled_close={is_posting_comment}
+	>
 		<button
 			class="cf-submit"
 			type="button"
@@ -364,7 +406,7 @@
 			slot="title"
 		>
 			{#if is_posting_comment}
-				กำลังโพสต์...
+				กำลังส่งความเห็น...
 			{:else}
 				ส่งความเห็น
 			{/if}
@@ -603,7 +645,9 @@
 			</div>
 		</fieldset>
 		<fieldset>
-			<legend>ปีการศึกษา</legend>
+			<legend>
+				ปีการศึกษา <span style="color:#9DAAD5">(นับตั้งแต่เดือน พ.ค. &ndash; เม.ย. ปีถัดไป)</span>
+			</legend>
 			<div>
 				{#if $computed_years}
 					{#each $computed_years as year (year)}
@@ -621,97 +665,101 @@
 
 <div class="desktop-margin">
 	<section class="comments">
-		{#each posts as post (post.Id)}
-			<article class="comment-container">
-				<div class="f jcsb comment-header">
-					<p class="comment-small">{new Date(post.createDate).toLocaleDateString('th')}</p>
-					{#if $currentUser?.uid === post.userId}
-						<button
-							class="f"
-							type="button"
-							on:click={() => {
-								going_to_delete_id = post.Id;
-								confirm_delete_isopen = true;
-							}}
-						>
-							<img
-								loading="lazy"
-								decoding="async"
-								src="/icons/delete.svg"
-								alt="ลบ"
-								width="24"
-								height="24"
-							/>
-						</button>
-					{/if}
-				</div>
-				<CommentReadmore comment={post.comments} />
-				<div class="f g4 comment-images">
-					{#each parseImagesVal(post.images) as img (img.title)}
-						<button type="button" on:click={() => openLightbox(img.url)}>
-							<img
-								loading="lazy"
-								decoding="async"
-								src={img.url}
-								alt={img.title}
-								width="64"
-								height="64"
-							/>
-						</button>
-					{/each}
-				</div>
-				<p class="f g4 comment-small comment-like">
-					{#if $currentUser}
-						<button
-							class="comment-like-btn"
-							type="button"
-							on:click={() => {
-								post.likedByYourself
-									? unlikeComment(post.likedByYourself.Id)
-									: likeComment(post.Id);
-							}}
-						>
-							{#if post.likedByYourself}
+		{#if is_fetching}
+			<div style="padding-top:32px;text-align:center">กำลังโหลด...</div>
+		{:else}
+			{#each posts as post (post.Id)}
+				<article class="comment-container">
+					<div class="f jcsb comment-header">
+						<p class="comment-small">{new Date(post.createDate).toLocaleDateString('th-TH')}</p>
+						{#if $currentUser?.uid === post.userId}
+							<button
+								class="f"
+								type="button"
+								on:click={() => {
+									going_to_delete_id = post.Id;
+									confirm_delete_isopen = true;
+								}}
+							>
 								<img
 									loading="lazy"
 									decoding="async"
-									src="/icons/like-filled.svg"
-									alt=""
-									width="16"
-									height="16"
+									src="/icons/delete.svg"
+									alt="ลบ"
+									width="24"
+									height="24"
 								/>
-							{:else}
+							</button>
+						{/if}
+					</div>
+					<CommentReadmore comment={post.comments} />
+					<div class="f g4 comment-images">
+						{#each parseImagesVal(post.images) as img (img.title)}
+							<button type="button" on:click={() => openLightbox(img.url)}>
 								<img
 									loading="lazy"
 									decoding="async"
-									src="/icons/like.svg"
-									alt=""
-									width="16"
-									height="16"
+									src={img.url}
+									alt={img.title}
+									width="64"
+									height="64"
 								/>
-							{/if}
-						</button>
-					{/if}
-					{formatLikeText(post.likeCount, post.likedByYourself)}
-				</p>
-				<div class="f g4">
-					{#each formatTag(post.location) as loc}
-						<span class="tag">
-							<img
-								loading="lazy"
-								decoding="async"
-								src="/icons/tag.svg"
-								alt=""
-								width="8"
-								height="8"
-							/>
-							{loc}
-						</span>
-					{/each}
-				</div>
-				<!-- <p>{JSON.stringify(post)}</p> -->
-			</article>
-		{/each}
+							</button>
+						{/each}
+					</div>
+					<p class="f g4 comment-small comment-like">
+						{#if $currentUser}
+							<button
+								class="comment-like-btn"
+								type="button"
+								on:click={() => {
+									post.likedByYourself
+										? unlikeComment(post.likedByYourself.Id)
+										: likeComment(post.Id);
+								}}
+							>
+								{#if post.likedByYourself}
+									<img
+										loading="lazy"
+										decoding="async"
+										src="/icons/like-filled.svg"
+										alt=""
+										width="16"
+										height="16"
+									/>
+								{:else}
+									<img
+										loading="lazy"
+										decoding="async"
+										src="/icons/like.svg"
+										alt=""
+										width="16"
+										height="16"
+									/>
+								{/if}
+							</button>
+						{/if}
+						{formatLikeText(post.likeCount, post.likedByYourself)}
+					</p>
+					<div class="f g4">
+						{#each formatTag(post.location) as loc}
+							<span class="tag">
+								<img
+									loading="lazy"
+									decoding="async"
+									src="/icons/tag.svg"
+									alt=""
+									width="8"
+									height="8"
+								/>
+								{loc}
+							</span>
+						{/each}
+					</div>
+					<!-- <p>{JSON.stringify(post)}</p> -->
+				</article>
+			{/each}
+		{/if}
 	</section>
 </div>
 
@@ -814,6 +862,7 @@
 
 	.comment-images:not(:empty) {
 		margin: 4px 0;
+		overflow-x: auto;
 	}
 
 	.comment-images > button {

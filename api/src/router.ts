@@ -1,18 +1,19 @@
 import { FastifyInstance } from 'fastify';
 import { z } from 'zod';
-import { withAuth } from './utils/auth.js';
-import { likeComment, unlikeComment } from './routes/comment/like-unlike.js';
-import { getSchoolComments, getSchoolCommentsCount } from './routes/school/get-comments.js';
-import type { SchoolCommentsQuery, SchoolCommentsBody } from './routes/school/get-comments.js';
-import { getSchoolRating } from './routes/school/get-rating.js';
 import { addComment, deleteComment } from './routes/comment/add-delete.js';
+import { likeComment, unlikeComment } from './routes/comment/like-unlike.js';
 import { uploadImages } from './routes/comment/upload.js';
-import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
 import { getUserRatingRecord } from './routes/rating/get.js';
 import { setUserRatingRecord } from './routes/rating/set.js';
-import { searchSchool, countSchool } from './routes/school/search.js';
-import { topComment, topRating } from './routes/school/top.js';
+import { getSchoolAnnoucement } from './routes/school/get-annoucement.js';
+import type { SchoolCommentsBody, SchoolCommentsQuery } from './routes/school/get-comments.js';
+import { getSchoolComments, getSchoolCommentsCount } from './routes/school/get-comments.js';
+import { getSchoolRating } from './routes/school/get-rating.js';
 import { latestActivity } from './routes/school/latest.js';
+import { countSchool, searchSchool } from './routes/school/search.js';
+import { topComment, topRating } from './routes/school/top.js';
+import { withAuth } from './utils/auth.js';
+import { backup } from './rating/backup.js';
 
 export const convertBodyToQuery = (body: SchoolCommentsBody): SchoolCommentsQuery => {
 	return {
@@ -41,6 +42,22 @@ export function registerRoutes(app: FastifyInstance) {
 		'/testauth',
 		withAuth((_req, _resp, uid) => `Welcome ${uid} Auth is good :)`)
 	);
+
+	// manually trigger backup with password
+	app.post('/schools/rating-backup', ({ body }) => {
+		if (typeof body !== 'string') throw new Error('Body is not string?');
+
+		const { password } = z
+			.object({
+				password: z.string()
+			})
+			.parse(JSON.parse(body));
+
+		if (password === process.env.PWD_BACKUP_WITHOUT_DROP) return backup({ dropRating: false });
+		if (password === process.env.PWD_BACKUP_WITH_DROP) return backup();
+
+		throw new Error('Wrong password, duh');
+	});
 
 	app.get('/schools', (req) => {
 		const query = z
@@ -106,6 +123,16 @@ export function registerRoutes(app: FastifyInstance) {
 			.parse(req.params);
 
 		return getSchoolCommentsCount(schoolId);
+	});
+
+	app.get('/schools/:schoolId/comments/count/all', (req) => {
+		const { schoolId } = z
+			.object({
+				schoolId: z.string()
+			})
+			.parse(req.params);
+
+		return getSchoolCommentsCount(schoolId, true);
 	});
 
 	app.post(
@@ -202,14 +229,15 @@ export function registerRoutes(app: FastifyInstance) {
 		})
 	);
 
-	app.get('/schools/:schoolId/rating', ({ params }) => {
-		const { schoolId } = z
+	app.get('/schools/:schoolId/rating/:year', ({ params }) => {
+		const { schoolId, year } = z
 			.object({
-				schoolId: z.string()
+				schoolId: z.string(),
+				year: z.string()
 			})
 			.parse(params);
 
-		return getSchoolRating(schoolId);
+		return getSchoolRating(schoolId, year);
 	});
 
 	app.get(

@@ -5,7 +5,6 @@
 		signInWithPopup,
 		FacebookAuthProvider,
 		GoogleAuthProvider,
-		signInAnonymously,
 		signOut
 	} from 'firebase/auth';
 
@@ -36,11 +35,6 @@
 	const loginGg = () => {
 		if ($auth) {
 			signInWithPopup($auth, ggProvider);
-		}
-	};
-	const loginAnon = () => {
-		if ($auth) {
-			signInAnonymously($auth);
 		}
 	};
 
@@ -433,22 +427,6 @@
 					decoding="async"
 				/>
 				<span>เชื่อมต่อกับ Facebook</span>
-			</button>
-			<button
-				class="f login-modal-btn"
-				type="button"
-				on:click={loginAnon}
-				disabled={!isread_checked}
-			>
-				<img
-					src="/icons/anon-b.svg"
-					alt=""
-					width="24"
-					height="24"
-					loading="lazy"
-					decoding="async"
-				/>
-				<span>(ทดสอบระบบ) ล็อกอินแบบ Anonymous</span>
 			</button>
 		</div>
 	{/if}

@@ -12,10 +12,12 @@
 		icon?: string;
 	}[];
 	export let selected_option = options[0];
+	export let noZ = false;
+	export let explaination = '';
 </script>
 
 <Listbox
-	class="dropdown-root"
+	class="dropdown-root {noZ ? 'no-z' : ''}"
 	value={selected_option}
 	on:change={(e) => (selected_option = e.detail)}
 >
@@ -34,6 +36,11 @@
 		<img src="/chevrons/bottom.svg" alt="" width="24" height="24" loading="lazy" decoding="async" />
 	</ListboxButton>
 	<ListboxOptions class="dropdown-list">
+		{#if explaination}
+			<ListboxOption class="explaination" value={null} disabled={true}>
+				<span class="nobr">{explaination}</span>
+			</ListboxOption>
+		{/if}
 		{#each options as option (option.value)}
 			<ListboxOption value={option} class={({ active }) => (active ? 'active' : '')}>
 				{#if option.icon}
@@ -48,6 +55,9 @@
 <style lang="scss">
 	:global(.dropdown-root) {
 		position: relative;
+	}
+
+	:global(.dropdown-root:not(.no-z)) {
 		z-index: 10;
 	}
 
@@ -114,5 +124,9 @@
 
 	:global(.dropdown-list > li.active) {
 		background: #ced5ea;
+	}
+
+	:global(.dropdown-list > li.explaination) {
+		border-bottom: 0.5px solid #9daad5;
 	}
 </style>

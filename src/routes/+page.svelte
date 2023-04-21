@@ -1,35 +1,26 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { animate, inView } from 'motion';
+	import { onMount } from 'svelte';
 
-	import SchoolList from 'components/SchoolList.svelte';
 	import ActAiBanner from 'components/ActAiBanner.svelte';
 	import InViewLottie from 'components/InViewLottie.svelte';
+	import SchoolList from 'components/SchoolList.svelte';
 
 	import { getLatestActivityList, getStatsList } from 'utils/data_fetching';
 
-	const DEBUG_SCHOOL_LIST = [
-		{ id: '1010720001', name: 'พญาไท' },
-		{ id: '1010720002', name: 'โฆสิตสโมสร' },
-		{ id: '1010720003', name: 'ราชวินิต' },
-		{ id: '1010720004', name: 'ทีปังกรวิทยาพัฒน์ (วัดโบสถ์) ในพระราชูปถัมภ์ฯ' },
-		{ id: '1010720005', name: 'วัดโสมนัส' }
-	];
 	let latestActivityList: any[] = [];
 	let mostCommentList: any[] = [];
 	let mostRatingList: any[] = [];
 
-	let schoolListType: 'latest' | 'score' | 'comment' | 'debug' = 'latest';
-	let schoolList: any[] = DEBUG_SCHOOL_LIST;
+	let schoolListType: 'latest' | 'score' | 'comment' = 'latest';
+	let schoolList: any[] = [];
 
-	$: if (schoolListType === 'latest') {
-		schoolList = latestActivityList;
-	} else if (schoolListType === 'score') {
+	$: if (schoolListType === 'score') {
 		schoolList = mostRatingList;
 	} else if (schoolListType === 'comment') {
 		schoolList = mostCommentList;
 	} else {
-		schoolList = DEBUG_SCHOOL_LIST;
+		schoolList = latestActivityList;
 	}
 
 	const _getLatestActivityList = async () => {
@@ -183,7 +174,7 @@
 				value="score"
 			/>
 			<label for="school-list-choice2" class="f radio-pill">
-				<span>คะแนนเสียงมากที่สุด</span>
+				<span>จำนวนรีวิว</span>
 			</label>
 			<input
 				id="school-list-choice3"
@@ -193,21 +184,16 @@
 				value="comment"
 			/>
 			<label for="school-list-choice3" class="f radio-pill">
-				<span>ความเห็นมากสุด</span>
-			</label>
-			<input
-				id="school-list-choice4"
-				class="school-list-radio"
-				type="radio"
-				bind:group={schoolListType}
-				value="debug"
-			/>
-			<label for="school-list-choice4" class="f radio-pill">
-				<span>ทดสอบระบบ</span>
+				<span>จำนวนความเห็น</span>
 			</label>
 		</div>
 	</div>
-	<SchoolList school_list={schoolList} />
+	<SchoolList
+		is_count_rating={schoolListType !== 'latest'}
+		is_count_all_comments={schoolListType === 'comment'}
+		school_list={schoolList}
+	/>
+	<p class="schoollist-footnote">*จำนวนรีวิวและความเห็นนับรวมทั้งหมดทุกปีการศึกษา</p>
 </section>
 
 <section class="information" id="information">
@@ -557,7 +543,7 @@
 		<div class="login-success-aligner">
 			<a
 				class="f login-modal-btn"
-				href="https://www.facebook.com/wethestudentsTH"
+				href="https://www.facebook.com/schoolgovTH"
 				target="_blank"
 				rel="nofollow noopener noreferrer"
 			>
@@ -883,6 +869,7 @@
 		text-align: center;
 		color: #3c55ab;
 		padding: 0 16px 24px;
+		scroll-margin-top: 104px;
 
 		> h2 {
 			font-family: 'Mitr';
@@ -1195,6 +1182,7 @@
 		}
 
 		.information {
+			scroll-margin-top: 128px;
 			> h2 {
 				gap: 32px;
 
@@ -1385,6 +1373,21 @@
 				width: 24px;
 				height: 24px;
 			}
+		}
+	}
+
+	.schoollist-footnote {
+		font-family: 'IBM Plex Sans Thai Looped';
+		font-size: 10px;
+		line-height: 136%;
+		text-align: center;
+		color: #9daad5;
+		margin-top: 16px;
+	}
+
+	@media screen and (min-width: 768px) {
+		.schoollist-footnote {
+			font-size: 13px;
 		}
 	}
 </style>

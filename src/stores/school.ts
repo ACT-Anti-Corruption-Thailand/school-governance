@@ -1,13 +1,21 @@
 import { PUBLIC_BASE_YEAR } from '$env/static/public';
-import { writable, derived } from 'svelte/store';
+import { derived, writable } from 'svelte/store';
 import type { SchoolData } from 'types/school_type';
 
 export const currentSchoolId = writable<number | null>(null);
 export const currentSchool = writable<SchoolData | null>(null);
 
-function getCurrentSchoolYear() {
+// Debug function
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function getYear(specifiedTime: Date): number {
+	const now = new Date();
+	return now.getFullYear() - +(now < specifiedTime);
+}
+
+export function getCurrentSchoolYear() {
 	const now = new Date();
 	return now.getFullYear() - +(now.getMonth() < 4);
+	// return getYear(new Date(2023, 2, 25));
 }
 
 // enumerate school year
@@ -16,7 +24,8 @@ function getSchoolYearList() {
 	const start = +PUBLIC_BASE_YEAR;
 	return Array(cur - start + 1)
 		.fill(0)
-		.map((_, i) => i + start);
+		.map((_, i) => i + start)
+		.reverse();
 }
 
 interface DataYears {

@@ -1,13 +1,13 @@
 <script lang="ts">
-	import { PUBLIC_BASE_YEAR, PUBLIC_API_HOST, PUBLIC_DATA_HOST } from '$env/static/public';
+	import { PUBLIC_API_HOST, PUBLIC_BASE_YEAR, PUBLIC_DATA_HOST } from '$env/static/public';
 
 	import { onMount } from 'svelte';
 	import { balancer } from 'svelte-action-balancer';
 
-	import SchoolHeader from 'components/school/SchoolHeader.svelte';
-	import RatingStat from 'components/RatingStat.svelte';
 	import CommentStat from 'components/CommentStat.svelte';
 	import InViewLottie from 'components/InViewLottie.svelte';
+	import RatingStat from 'components/RatingStat.svelte';
+	import SchoolHeader from 'components/school/SchoolHeader.svelte';
 
 	import { currentSchool, currentSchoolId, data_years, LATEST_COMPUTED_YEAR } from 'stores/school';
 	$: d = $currentSchool;
@@ -30,19 +30,35 @@
 	let gym_avg = 0;
 	let total_comment = 0;
 
+	interface SchoolJsonSchema {
+		count?: {
+			total: number;
+		};
+		rating?: {
+			classroom: number;
+			toilet: number;
+			canteen: number;
+			gym: number;
+			total: number;
+		};
+	}
+
 	const fetchScore = async () => {
 		if (!$currentSchoolId) return;
+		if (!$LATEST_COMPUTED_YEAR) return;
 
 		try {
-			const school_resp = await fetch(`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/rating`);
-			const school_json = await school_resp.json();
+			const school_resp = await fetch(
+				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/rating/${$LATEST_COMPUTED_YEAR}`
+			);
+			const school_json = (await school_resp.json()) as SchoolJsonSchema;
 
-			total_rating_count = school_json.count.total;
-			classroom_avg = school_json.rating.classroom;
-			toilet_avg = school_json.rating.toilet;
-			canteen_avg = school_json.rating.canteen;
-			gym_avg = school_json.rating.gym;
-			total_rating = school_json.rating.total;
+			total_rating_count = school_json?.count?.total ?? 0;
+			classroom_avg = school_json?.rating?.classroom ?? 0;
+			toilet_avg = school_json?.rating?.toilet ?? 0;
+			canteen_avg = school_json?.rating?.canteen ?? 0;
+			gym_avg = school_json?.rating?.gym ?? 0;
+			total_rating = school_json?.rating?.total ?? 0;
 		} catch (e) {
 			console.error(e);
 		}
@@ -51,13 +67,14 @@
 	let posts: any[] = [];
 	const fetchComments = async () => {
 		if (!$currentSchoolId) return;
+		if (!$LATEST_COMPUTED_YEAR) return;
 
 		try {
 			const comment_count_resp = await fetch(
 				`${PUBLIC_API_HOST}/schools/${$currentSchoolId}/comments/count`
 			);
 			const comment_count_json = await comment_count_resp.json();
-			total_comment = comment_count_json.count;
+			total_comment = +comment_count_json.count;
 
 			const location_query = 'classroom,toilet,canteen,gym,other';
 			const api_query = `locations=${encodeURIComponent(
@@ -79,7 +96,7 @@
 		return Number.isNaN(val) ? defaultVal : val;
 	};
 
-	$: if (mounted && $currentSchoolId) {
+	$: if (mounted && $currentSchoolId && $LATEST_COMPUTED_YEAR) {
 		fetchScore();
 		fetchComments();
 	}
@@ -91,9 +108,15 @@
 </script>
 
 <svelte:head>
-	<title>ภาพรวมโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม" />
-	<meta name="twitter:title" content="ภาพรวมโรงเรียน — โปร่งใสวิทยาคม" />
+	<title>ภาพรวมโรงเรียน{d?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<meta
+		property="og:title"
+		content="ภาพรวมโรงเรียน{d?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
+	<meta
+		name="twitter:title"
+		content="ภาพรวมโรงเรียน{d?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+	/>
 </svelte:head>
 
 <SchoolHeader>
@@ -124,7 +147,8 @@
 				<div class="f school-data-block">
 					<span class="school-data-text">นักเรียนทั้งหมด</span>
 					<span class="school-data-val">
-						<span class="mitr school-bignum">{d?.student?.total?.all?.toLocaleString() || '—'}</span
+						<span class="mitr school-bignum"
+							>{d?.student?.total?.all?.toLocaleString('th-TH') || '—'}</span
 						> คน
 					</span>
 				</div>
@@ -134,8 +158,8 @@
 						<span class="mitr school-bignum"
 							>1:{fixNaN(
 								Math.ceil(
-									(d?.student?.total?.all ?? 0) / (d?.staff?.ครู?.total ?? 1)
-								).toLocaleString()
+									(d?.student?.total?.all ?? 0) / (d?.staff?.ครู?.total || 1)
+								).toLocaleString('th-TH')
 							)}</span
 						> คน
 					</span>
@@ -146,8 +170,8 @@
 						<span class="mitr school-bignum"
 							>{fixNaN(
 								Math.ceil(
-									(d?.student?.total?.all ?? 0) / (d?.student?.total?.class ?? 1)
-								).toLocaleString()
+									(d?.student?.total?.all ?? 0) / (d?.student?.total?.class || 1)
+								).toLocaleString('th-TH')
 							)}</span
 						> คน
 					</span>
@@ -157,7 +181,7 @@
 					<span class="school-data-val">
 						<span class="mitr school-bignum"
 							>{~~(
-								((d?.durable_goods?.stats?.working ?? 0) / (d?.durable_goods?.stats?.total ?? 1)) *
+								((d?.durable_goods?.stats?.working ?? 0) / (d?.durable_goods?.stats?.total || 1)) *
 								100
 							) || '—'}%</span
 						> ใช้งานได้
@@ -182,7 +206,7 @@
 					<span class="f header-text-adjust">
 						<span class="mitr header-bignum">{fixNaN(total_rating.toFixed(1))}</span>
 						<span class="mitr"> คะแนน </span>
-						<small>| {fixNaN(total_rating_count.toLocaleString())} รีวิว</small>
+						<small>| {fixNaN(total_rating_count.toLocaleString('th-TH'))} รีวิว</small>
 					</span>
 				{/if}
 				<img
@@ -320,7 +344,7 @@
 					autoplay
 				/>
 				<span class="f header-text-adjust">
-					<span class="header-bignum">{total_comment.toLocaleString()}</span>
+					<span class="header-bignum">{total_comment.toLocaleString('th-TH')}</span>
 					ความคิดเห็น
 				</span>
 				<img
@@ -338,7 +362,7 @@
 						<p class="comment-text">{post.comments}</p>
 						<div>
 							<div class="comment-date">
-								โพสต์เมื่อ {new Date(post.createDate).toLocaleDateString('th')}
+								โพสต์เมื่อ {new Date(post.createDate).toLocaleDateString('th-TH')}
 							</div>
 							<div class="f comment-like">
 								<img
@@ -350,7 +374,7 @@
 									height="16"
 								/>
 								{#if +post.likeCount}
-									<span>{post.likeCount.toLocaleString()} คนเห็นด้วยกับสิ่งนี้</span>
+									<span>{post.likeCount.toLocaleString('th-TH')} คนเห็นด้วยกับสิ่งนี้</span>
 								{:else}
 									<span>ยังไม่มีใครเห็นด้วยกับสิ่งนี้</span>
 								{/if}

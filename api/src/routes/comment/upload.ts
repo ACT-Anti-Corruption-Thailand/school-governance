@@ -36,18 +36,21 @@ export async function uploadImages(req) {
 	}
 	formData.append('json', '{}');
 
-	const resp = await fetch(
-		`${process.env.NOCODB_URL}/api/v1/db/storage/upload?path=${encodeURIComponent(
-			`${process.env.NOCODB_ORG}/${process.env.NOCODB_PROJECT}/SchoolComments/images`
-		)}`,
-		{
-			method: 'POST',
-			headers: {
-				'xc-token': process.env.NOCODB_TOKEN
-			},
-			body: formData
-		}
+	const path = encodeURIComponent(
+		`${process.env.NOCODB_ORG}/${process.env.NOCODB_PROJECT}/SchoolComments/images`
 	);
+
+	const resp = await fetch(`${process.env.NOCODB_URL}/api/v1/db/storage/upload?path=${path}`, {
+		method: 'POST',
+		headers: {
+			'xc-token': process.env.NOCODB_TOKEN
+		},
+		body: formData
+	});
+
+	if (!resp.ok) {
+		throw new Error('📤 Upload Error', { cause: resp });
+	}
 
 	return await resp.json();
 }

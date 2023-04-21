@@ -15,11 +15,13 @@
 		"fastify": "^4.11.0",
 		"firebase-admin": "^11.5.0",
 		"nocodb-sdk": "^0.101.2",
+		"node-cron": "^3.0.2",
 		"node-fetch": "^3.3.0",
 		"zod": "^3.20.2",
 		"zod-validation-error": "^0.3.0"
 	},
 	"devDependencies": {
+		"@types/node-cron": "^3.0.7",
 		"dotenv": "^16.0.3",
 		"nodemon": "^2.0.20",
 		"ts-node": "^10.9.1",

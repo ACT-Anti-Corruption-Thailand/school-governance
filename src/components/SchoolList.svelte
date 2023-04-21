@@ -7,9 +7,11 @@
 </script>
 
 <script lang="ts">
-	import SchoolRating from './SchoolMiniStats.svelte';
 	import { Lottie } from 'lottie-svelte';
+	import SchoolRating from './SchoolMiniStats.svelte';
 
+	export let is_count_rating = false;
+	export let is_count_all_comments = false;
 	export let school_list: SchoolData[];
 </script>
 
@@ -22,11 +24,15 @@
 						<div class="school-list-title">โรงเรียน{school.name}</div>
 						{#if school.latestPost}
 							<div class="school-list-date">
-								โพสต์ล่าสุด {new Date(school.latestPost).toLocaleDateString()}
+								โพสต์ล่าสุด {new Date(school.latestPost).toLocaleDateString('th-TH')}
 							</div>
 						{/if}
 					</div>
-					<SchoolRating schoolId={school.id} />
+					<SchoolRating
+						count_score={is_count_rating}
+						count_comment={is_count_all_comments}
+						schoolId={school.id}
+					/>
 				</a>
 			</li>
 		{/each}
