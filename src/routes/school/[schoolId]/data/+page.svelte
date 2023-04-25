@@ -151,9 +151,16 @@
 	else active_section = 'student';
 
 	let current_scrolly = 0;
-	let section_pos = [0, 0, 0, 0, 0];
+	let section_pos: [
+		number | undefined,
+		number | undefined,
+		number | undefined,
+		number | undefined,
+		number | undefined
+	] = [undefined, undefined, undefined, undefined, undefined];
 
-	const getOffsetY = (el: HTMLElement, scrollY: number) => {
+	const getOffsetY = (el: HTMLElement | undefined, scrollY: number) => {
+		if (!el) return undefined;
 		const rect = el.getBoundingClientRect();
 		return rect.top + scrollY;
 	};
@@ -185,6 +192,8 @@
 		let is_desktop = window.matchMedia('(min-width: 768px)').matches;
 		let jumpnav_size = is_desktop ? 48 : 32;
 
+		if (section_offset === undefined) return;
+
 		if (section_offset > current_scrolly) {
 			// if scroll down, nav will hide
 			return scrollTo({
@@ -210,36 +219,36 @@
 		fetchOtherYearData();
 	}
 
-	$: if (
-		mounted &&
-		d &&
-		el_student_section &&
-		el_employee_section &&
-		el_goods_section &&
-		el_building_section &&
-		el_general_section
-	) {
+	$: if (mounted && d && el_student_section) {
 		calcHeaderPos();
 
-		scroll(({ y }) => (employee_section_intx = !!y.progress), {
-			target: el_employee_section,
-			offset: ['start 0.5', 'end start']
-		});
+		if (el_employee_section) {
+			scroll(({ y }) => (employee_section_intx = !!y.progress), {
+				target: el_employee_section,
+				offset: ['start 0.5', 'end start']
+			});
+		}
 
-		scroll(({ y }) => (goods_section_intx = !!y.progress), {
-			target: el_goods_section,
-			offset: ['start 0.5', 'end start']
-		});
+		if (el_goods_section) {
+			scroll(({ y }) => (goods_section_intx = !!y.progress), {
+				target: el_goods_section,
+				offset: ['start 0.5', 'end start']
+			});
+		}
 
-		scroll(({ y }) => (building_section_intx = !!y.progress), {
-			target: el_building_section,
-			offset: ['start 0.5', 'end start']
-		});
+		if (el_building_section) {
+			scroll(({ y }) => (building_section_intx = !!y.progress), {
+				target: el_building_section,
+				offset: ['start 0.5', 'end start']
+			});
+		}
 
-		scroll(({ y }) => (general_section_intx = !!y.progress), {
-			target: el_general_section,
-			offset: ['start 0.5', 'end start']
-		});
+		if (el_general_section) {
+			scroll(({ y }) => (general_section_intx = !!y.progress), {
+				target: el_general_section,
+				offset: ['start 0.5', 'end start']
+			});
+		}
 
 		scroll(({ y }) => (current_scrolly = y.current));
 	}
@@ -269,42 +278,50 @@
 					นักเรียน
 				</button>
 			</li>
-			<li>
-				<button
-					type="button"
-					class:j-active={active_section === 'employee'}
-					on:click={() => scrollToSection('employee')}
-				>
-					ครู/บุคลากร
-				</button>
-			</li>
-			<li>
-				<button
-					type="button"
-					class:j-active={active_section === 'goods'}
-					on:click={() => scrollToSection('goods')}
-				>
-					อุปกรณ์
-				</button>
-			</li>
-			<li>
-				<button
-					type="button"
-					class:j-active={active_section === 'building'}
-					on:click={() => scrollToSection('building')}
-				>
-					สิ่งก่อสร้าง
-				</button>
-			</li>
-			<li>
-				<button
-					type="button"
-					class:j-active={active_section === 'general'}
-					on:click={() => scrollToSection('general')}
-				>
-					ทั่วไป
-				</button>
-			</li>
+			{#if el_employee_section}
+				<li>
+					<button
+						type="button"
+						class:j-active={active_section === 'employee'}
+						on:click={() => scrollToSection('employee')}
+					>
+						ครู/บุคลากร
+					</button>
+				</li>
+			{/if}
+			{#if el_goods_section}
+				<li>
+					<button
+						type="button"
+						class:j-active={active_section === 'goods'}
+						on:click={() => scrollToSection('goods')}
+					>
+						อุปกรณ์
+					</button>
+				</li>
+			{/if}
+			{#if el_building_section}
+				<li>
+					<button
+						type="button"
+						class:j-active={active_section === 'building'}
+						on:click={() => scrollToSection('building')}
+					>
+						สิ่งก่อสร้าง
+					</button>
+				</li>
+			{/if}
+			{#if el_general_section}
+				<li>
+					<button
+						type="button"
+						class:j-active={active_section === 'general'}
+						on:click={() => scrollToSection('general')}
+					>
+						ทั่วไป
+					</button>
+				</li>
+			{/if}
 		</menu>
 	</div>
 	{#if DROPDOWN_DATA}
@@ -1528,7 +1545,7 @@
 			href="https://actai.co/Project?search={encodeURIComponent(`"โรงเรียน${d.name_th}"`)}"
 		/>
 
-		{#if d.building.stats.ดี && d.building.stats['พอใช้'] && d.building.stats.ทรุดโทรม}
+		{#if d.building.stats.ดี || d.building.stats['พอใช้'] || d.building.stats.ทรุดโทรม}
 			<h2 bind:this={el_building_section} id="building-section" class="f">
 				<span>สิ่งก่อสร้าง <small>สภาพดีจากทั้งหมด</small></span>
 				<span class="f g8">
