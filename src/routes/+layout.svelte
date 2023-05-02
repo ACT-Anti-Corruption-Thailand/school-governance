@@ -25,6 +25,8 @@
 	};
 
 	onMount(() => {
+		[...document.querySelectorAll('[data-lazy]')].forEach((el) => el.setAttribute('media', 'all'));
+
 		const localStorageSchoolDataYears = localStorage.getItem(LOCALSTORAGE_SCHOOL_DATA_YEARS);
 		if (localStorageSchoolDataYears) {
 			const parsed = JSON.parse(localStorageSchoolDataYears);
