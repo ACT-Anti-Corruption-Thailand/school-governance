@@ -1748,6 +1748,8 @@
 					{#each d.building.data.อาคารทั่วไป as b, bi}
 						<article class={getConditionClass(b.current_condition, true)}>
 							<img
+								loading="lazy"
+								decoding="async"
 								class="building-image"
 								class:no-zoom={building_imgs?.อาคารทั่วไป?.[bi] === FALLBACK_BUILDING_IMG}
 								src={building_imgs?.อาคารทั่วไป?.[bi] ?? FALLBACK_BUILDING_IMG}

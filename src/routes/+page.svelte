@@ -69,7 +69,7 @@
 	<div />
 	<div class="f header-logo-group">
 		<img
-			loading="lazy"
+			loading="eager"
 			decoding="async"
 			class="heading-text-img"
 			src="/index/heading.svg"
@@ -78,7 +78,7 @@
 			height="130"
 		/>
 		<img
-			loading="lazy"
+			loading="eager"
 			decoding="async"
 			class="header-logo"
 			src="/logos/school_gov.svg"
