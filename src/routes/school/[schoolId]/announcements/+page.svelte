@@ -93,14 +93,14 @@
 </script>
 
 <svelte:head>
-	<title>ประกาศโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<title>ประกาศโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โรงเรียนโปร่งใส</title>
 	<meta
 		property="og:title"
-		content="ประกาศโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+		content="ประกาศโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โรงเรียนโปร่งใส"
 	/>
 	<meta
 		name="twitter:title"
-		content="ประกาศโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+		content="ประกาศโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โรงเรียนโปร่งใส"
 	/>
 </svelte:head>
 

@@ -360,14 +360,14 @@
 </script>
 
 <svelte:head>
-	<title>ความคิดเห็นโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<title>ความคิดเห็นโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โรงเรียนโปร่งใส</title>
 	<meta
 		property="og:title"
-		content="ความคิดเห็นโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+		content="ความคิดเห็นโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โรงเรียนโปร่งใส"
 	/>
 	<meta
 		name="twitter:title"
-		content="ความคิดเห็นโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+		content="ความคิดเห็นโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โรงเรียนโปร่งใส"
 	/>
 </svelte:head>
 

@@ -248,9 +248,9 @@
 </script>
 
 <svelte:head>
-	<title>ค้นหาโรงเรียน — โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="ค้นหาโรงเรียน — โปร่งใสวิทยาคม" />
-	<meta name="twitter:title" content="ค้นหาโรงเรียน — โปร่งใสวิทยาคม" />
+	<title>ค้นหาโรงเรียน — โรงเรียนโปร่งใส</title>
+	<meta property="og:title" content="ค้นหาโรงเรียน — โรงเรียนโปร่งใส" />
+	<meta name="twitter:title" content="ค้นหาโรงเรียน — โรงเรียนโปร่งใส" />
 </svelte:head>
 
 <div class="search-container">

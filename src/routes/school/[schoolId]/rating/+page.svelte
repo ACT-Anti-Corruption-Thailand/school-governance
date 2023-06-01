@@ -364,14 +364,14 @@
 </script>
 
 <svelte:head>
-	<title>คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม</title>
+	<title>คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โรงเรียนโปร่งใส</title>
 	<meta
 		property="og:title"
-		content="คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+		content="คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โรงเรียนโปร่งใส"
 	/>
 	<meta
 		name="twitter:title"
-		content="คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โปร่งใสวิทยาคม"
+		content="คะแนนโรงเรียน{$currentSchool?.name_th ?? ' (ไม่พบชื่อ)'} — โรงเรียนโปร่งใส"
 	/>
 </svelte:head>
 
