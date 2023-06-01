@@ -60,9 +60,9 @@
 </script>
 
 <svelte:head>
-	<title>โปร่งใสวิทยาคม</title>
-	<meta property="og:title" content="โปร่งใสวิทยาคม" />
-	<meta name="twitter:title" content="โปร่งใสวิทยาคม" />
+	<title>โรงเรียนโปร่งใส</title>
+	<meta property="og:title" content="โรงเรียนโปร่งใส" />
+	<meta name="twitter:title" content="โรงเรียนโปร่งใส" />
 </svelte:head>
 
 <header class="f header">
@@ -200,7 +200,7 @@
 	<h2 class="f jcc" style="margin-bottom:-8px">
 		<img loading="lazy" decoding="async" src="/index/q1.svg" alt="" width="38" height="39" />
 		<span>
-			"โปร่งใสวิทยาคม" <br class="hide-desktop" />คืออะไร?<br />
+			"โรงเรียนโปร่งใส" <br class="hide-desktop" />คืออะไร?<br />
 			<img
 				loading="lazy"
 				decoding="async"
@@ -438,7 +438,7 @@
 <section class="f open-join-learn">
 	<h2>
 		<span class="nobr">การแสดงฐานข้อมูลโรงเรียน</span><br class="hide-desktop" /><span class="nobr"
-			>ของแพลตฟอร์ม "โปร่งใสวิทยาคม"</span
+			>ของแพลตฟอร์ม "โรงเรียนโปร่งใส"</span
 		><br />
 		<span class="nobr">เป็นส่วนหนึ่งของ</span><br class="hide-desktop" />
 		<span class="nobr">Open Join Learn</span>
@@ -472,7 +472,7 @@
 
 <section class="f feature">
 	<p>
-		"โปร่งใสวิทยาคม" จึงไม่ได้มีแค่ข้อมูลโรงเรียนให้ได้ส่องกันเท่านั้น แต่<span class="nobr"
+		"โรงเรียนโปร่งใส" จึงไม่ได้มีแค่ข้อมูลโรงเรียนให้ได้ส่องกันเท่านั้น แต่<span class="nobr"
 			>เพื่อน ๆ</span
 		>
 		ยังสามารถเข้ามาช่วยกัน
@@ -586,7 +586,7 @@
 	</div>
 	<p>
 		แชร์ให้<span class="nobr">เพื่อน ๆ</span> มาร่วมตรวจสอบด้วยกัน<br />
-		<strong>#โปร่งใสวิทยาคม</strong>
+		<strong>#โรงเรียนโปร่งใส</strong>
 	</p>
 	<div class="f social-links">
 		<a
@@ -716,7 +716,7 @@
 		/>
 	</div>
 	<p>
-		"โปร่งใสวิทยาคม" ต่อยอดจากแพลตฟอร์ม We The Students
+		"โรงเรียนโปร่งใส" ต่อยอดจากแพลตฟอร์ม We The Students
 		หนึ่งในผลการวิจัยภายใต้ชุดโครงการวิจัยเพื่อสังคมไทยไร้คอร์รัปชัน ระยะที่ 2 โดย ผศ. ดร.ธานี
 		ชัยวัฒน์ และคณะ<br class="hide-desktop" /> คณะเศรษฐศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย สนับสนุนโดย สำนักงานการวิจัยแห่งชาติ
 		(วช.) และสำนักงานคณะกรรมการส่งเสริมวิทยาศาสตร์ วิจัยและนวัตกรรม (สกสว.)
