@@ -71,15 +71,6 @@
 		<img
 			loading="eager"
 			decoding="async"
-			class="heading-text-img"
-			src="/index/heading.svg"
-			alt="ทำโรงเรียนให้โปร่งใส"
-			width="200"
-			height="130"
-		/>
-		<img
-			loading="eager"
-			decoding="async"
 			class="header-logo"
 			src="/logos/school_gov.svg"
 			alt=""
@@ -746,19 +737,6 @@
 		color: #fff;
 
 		margin-bottom: 20px;
-	}
-
-	.heading-text-img {
-		width: 100%;
-		height: auto;
-		margin-left: auto;
-		margin-right: auto;
-		max-width: 420px;
-
-		@media screen and (min-width: 768px) {
-			width: 60%;
-			transform: scale(1);
-		}
 	}
 
 	.header-logo {
