@@ -712,6 +712,7 @@
 		ชัยวัฒน์ และคณะ<br class="hide-desktop" /> คณะเศรษฐศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย สนับสนุนโดย สำนักงานการวิจัยแห่งชาติ
 		(วช.) และสำนักงานคณะกรรมการส่งเสริมวิทยาศาสตร์ วิจัยและนวัตกรรม (สกสว.)
 	</p>
+	<a href="/terms" class="terms"> นโยบายข้อมูลส่วนบุคคล </a>
 </footer>
 
 <style lang="scss">
@@ -724,6 +725,14 @@
 	.ending,
 	.footer {
 		font-size: 0.8125rem;
+	}
+
+	.terms {
+		color: #dddddd;
+
+		&:hover {
+			color: #fff;
+		}
 	}
 
 	.header {
@@ -1052,7 +1061,7 @@
 
 	.footer {
 		flex-direction: column;
-		padding: 24px 16px 40px;
+		padding: 24px 16px 184px;
 
 		background: #0c166b;
 		border-radius: 24px 24px 0 0;
@@ -1122,6 +1131,10 @@
 			padding-left: 20%;
 			padding-right: 20%;
 			font-size: 1rem;
+		}
+
+		.footer {
+			padding-bottom: 136px;
 		}
 
 		.hide-desktop {
